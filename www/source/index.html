@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <title>Macquaire River Trails</title>
+        <link rel="apple-touch-icon" href=""/>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+         <!-- scripts -->
+        <script src="js/jquery-1.7.1.min.js"></script>
+        <script src="js/jquery.mobile-1.1.0.min.js"></script>
+        <script src="js/cordova-1.8.0.js"></script>
+		<script src="js/jquery.flexslider.min.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            
+            // Wait for PhoneGap to load
+            //
+            document.addEventListener("deviceready", onDeviceReady, false);
+            
+            // PhoneGap is ready
+            
+            </script>
+		<!--  base js file.. load last -->
+        <script src="js/base.js"></script>
+        <!-- css -->
+        <link rel="stylesheet" href="css/style4.css">
+        <link rel="stylesheet" href="css/flexslider.min.css">
+    </head>
+    <body>
+        <body onload="onBodyLoad()">
+            <div data-role="page">
+            <!-- home page -->
+            <div data-role="header" id="mainheader">
+                <div class="mainlogo">
+                </div>
+            </div>
+			<!-- slider -->
+            <div style="width: 220px; text-align: center; margin: auto; padding-top: 10px;">
+                <div class="flexslider" id="homeImageSlider">
+                    <ul class="slides">
+                    <li>
+                            <a class="ui-link-inherit" href="River/index.html" rel="external" data-transition="slide">
+                            <img src="images/riverweb.jpg" />
+							</a>
+                        </li>
+                        <li>
+                            <a class="ui-link-inherit" href="Heritage/index.html" rel="external" data-transition="slide">
+                            <img src="images/heritageweb.jpg" />
+							</a>
+                        </li>
+                        <li>
+                            <a class="ui-link-inherit" href="Nature/index.html" rel="external" data-transition="slide">
+							<img src="images/natureweb.jpg" />
+							</a>
+                        </li>
+                        
+                        <li>
+                            <a class="ui-link-inherit" href="Produce/index.html" rel="external" data-transition="slide">
+                            <img src="images/produceweb.jpg" />
+							</a>
+                        </li>
+                        <li>
+                            <a class="ui-link-inherit" href="Cycle/index.html" rel="external" data-transition="slide">
+                            <img src="images/cycleweb.jpg" />
+							</a>
+                        </li>
+                        <li>
+                            <a class="ui-link-inherit" href="Riverbedz/index.html" rel="external" data-transition="slide">
+                            <img src="images/riverbedzweb.jpg" />
+							</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="shadow1box">
+                <img src="./images/shadow1.png" class="shadow1" alt="shadow">
+            </div><!-- /slider --><!-- main content -->
+            <div data-role="content">
+                <h3 class="home-title">Welcome to Macquarie River Trails</h3>
+                <p>
+                    The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias best kept secrets, until now.
+              	</p>
+                <p>
+			        The Macquarie River Trails are designed to let you explore the many attractions and treasures of this rich farming region, one that is blessed with a wonderful, vibrant river, friendly people and a laid back lifestyle.
+                </p>
+                <p>
+			       	As our slogan says, this is your chance to Relax, Recover, Unwind and Discover.
+                    Five trails for you to pick and choose from to create a lifetime of memories as you meander through our region let the river be your tour guide.
+                 </p>
+                <p>
+			       From the wonders of Lake Burrendong to the frontier country of the Macquarie Marshes if you only spend a week, you will probably have to come back.  But thats Ok, you are welcome anytime.
+                </p>
+                <!-- list begins -->
+                <div>
+                    <div class="thumbnail-list">
+                        <ul data-inset="true" data-role="listview" data-filter-theme="b">
+                                <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li" aria-hidden="true">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="River/index.html" rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/riverweb.jpg"><h3 class="ui-li-heading">RIVER TRAIL</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                            <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="Heritage/index.html" rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/heritageweb.jpg"><h3 class="ui-li-heading">HERITAGE TRAIL</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                            <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li" aria-hidden="true">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="Nature/index.html" rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/natureweb.jpg"><h3 class="ui-li-heading">NATURE TRAIL</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                    
+                            <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li" aria-hidden="true">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="Produce/index.html" rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/produceweb.jpg"><h3 class="ui-li-heading">PRODUCE TRAIL</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                            <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li" aria-hidden="true">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="Cycle/index.html"rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/cycleweb.jpg"><h3 class="ui-li-heading">CYCLE TRAIL</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                            <li class="ui-btn-icon-right">
+                                <div class="ui-btn-inner ui-li" aria-hidden="true">
+                                    <div class="ui-btn-text">
+                                        <a class="ui-link-inherit" href="Riverbedz/index.html" rel="external" data-transition="slide"><img class="ui-li-thumb" src="images/riverbedzweb.jpg"><h3 class="ui-li-heading">RIVER BEDZ</h3>
+                                            <p class="ui-li-desc">
+                                            </p>
+                                        </a>
+                                    </div>
+                                    <span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>
+                                </div>
+                            </li>
+                                           </ul>
+                    </div>
+                </div>
+                               <div class="social">
+                    <a href="#"><img src="images/DNSW logo.jpg" width="90px" height="50px" alt=""></a>
+                    <a href="#"><img src="images/INT-YR-Logo.jpg" width="90px" height="50px" alt=""></a>
+                    <a href="#"><img src="images/riversmart.jpg" width="70px" height="50px" alt=""></a>
+
+
+
+                    </div><!-- /social -->
+            </div><!-- /main content --><!-- footer -->
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" class="custom-icons" data-position="fixed" data-grid="c">
+                    <ul>
+                    
+                    <li>
+                            <a href="browse.html" id="browse" data-icon="custom" data-theme="b" data-ajax="false">BROWSE</a>
+                        </li>
+                        <li>
+                            <a href="nearby.html" id="nearby" data-icon="custom" data-theme="b" data-ajax="false">NEARBY</a>
+                        </li>
+                        <li>
+                            <a href="favorites.html" id="favorities" data-icon="custom" data-theme="b" data-ajax="false">FAVORITES</a>
+                        </li>
+                        
+                        <li>
+                            <a href="info.html" id="info" data-icon="custom" data-theme="b" data-ajax="false">INFO</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /footer -->
+        </div>
+        <!-- /page end -->
+    </body>
+</html>
