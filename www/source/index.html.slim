@@ -1,0 +1,45 @@
+---
+title: Macquaire River Trails
+list:
+  - { dir: River,      image: riverweb.jpg,     heading: RIVER TRAIL    }
+  - { dir: Heritage,   image: heritageweb.jpg,  heading: HERITAGE TRAIL }
+  - { dir: Nature,     image: natureweb.jpg,    heading: NATURE TRAIL   }
+  - { dir: Produce,    image: produceweb.jpg,   heading: PRODUCE TRAIL  }
+  - { dir: Cycle,      image: cycleweb.jpg,     heading: CYCLE TRAIL    }
+  - { dir: Riverbedz,  image: riverbedzweb.jpg, heading: RIVER BEDZ     }
+---
+/! home page
+div data-role="page"
+  = partial :header
+  = partial :slider
+
+  /! main content
+  div data-role="content"
+    h3.home-title Welcome to Macquarie River Trails
+
+    p The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias
+      best kept secrets, until now.
+
+    p The Macquarie River Trails are designed to let you explore the many attractions and treasures
+      of this rich farming region, one that is blessed with a wonderful, vibrant river, friendly
+      people and a laid back lifestyle.
+
+    p As our slogan says, this is your chance to Relax, Recover, Unwind and Discover.
+      Five trails for you to pick and choose from to create a lifetime of memories as you meander
+      through our region let the river be your tour guide.
+
+    p From the wonders of Lake Burrendong to the frontier country of the Macquarie Marshes if you
+      only spend a week, you will probably have to come back.  But thats Ok, you are welcome anytime.
+
+    /! list begins
+    div
+      div.thumbnail-list
+        ul data-inset="true" data-role="listview" data-filter-theme="b"
+          - current_page.data.list.each do |trail|
+            = partial :trail, :locals => {:trail=> trail}
+    /! end list
+
+    = partial :social
+  = partial :tabbar
+/! page end
+
