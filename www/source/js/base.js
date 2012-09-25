@@ -20,7 +20,7 @@ $(document).bind('pageinit', function(){
     });
 
 
-    $('#pageImageSlider').flexslider({
+    $('.pageImageSlider').flexslider({
         controlsContainer: ".flex-container",
         animation: "slide",
         pauseOnHover: true,
