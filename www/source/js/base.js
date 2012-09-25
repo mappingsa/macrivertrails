@@ -31,7 +31,7 @@ $(document).bind('pageinit', function(){
     });
 
 
-    $('#pageImageSliderAuto').flexslider({
+    $('.pageImageSliderAuto').flexslider({
         controlsContainer: ".flex-container",
         animation: "slide",
         pauseOnHover: true,
