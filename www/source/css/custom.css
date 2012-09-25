@@ -615,7 +615,7 @@ margin: 0 0 0px 0;
 }
 
 
-#mainheader {
+.ui-header.mainheader {
     border:0px;
     border-bottom:1px solid #bfc0c0;
     color:#eee;
