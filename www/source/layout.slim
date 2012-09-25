@@ -1,0 +1,20 @@
+doctype 5
+html
+  head
+    title = current_page.data.title
+    = partial :meta
+    /! Scripts
+    script src="js/jquery-1.7.1.min.js">
+    script src="js/jquery.mobile-1.1.0.min.js"
+    script src="js/cordova-1.8.0.js"
+    script src="js/jquery.flexslider.min.js"
+    script type="text/javascript" charset="utf-8"
+      | document.addEventListener("deviceready", onDeviceReady, false);
+    /!  base js file.. load last
+    script src="js/base.js"
+
+    /! css
+    link rel="stylesheet" href="css/style4.css"
+    link rel="stylesheet" href="css/flexslider.min.css"
+    = yield
+

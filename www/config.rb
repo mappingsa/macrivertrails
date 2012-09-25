@@ -1,3 +1,18 @@
+require 'slim'
+
+set :slim, {
+  :layout_engine => :slim,
+  :tabsize => 2,
+  :format => :html5,
+  :pretty => true,
+  :disable_escape => true,
+  #:shortcut => {'@' => 'data-role', '#' => 'id', '.' => 'class'}  # Doesn't seem to work
+  }
+
+set :erb, {
+  :layout_engine => :slim
+}
+
 ###
 # Compass
 ###
@@ -47,9 +62,19 @@
 #   end
 # end
 
-set :css_dir, 'stylesheets'
+helpers do
+  def blank_line
+    "\n\n"
+  end
 
-set :js_dir, 'javascripts'
+  def next_line
+    "\n"
+  end
+end
+
+set :css_dir, 'css'
+
+set :js_dir, 'js'
 
 set :images_dir, 'images'
 
@@ -65,7 +90,7 @@ configure :build do
   # activate :cache_buster
 
   # Use relative URLs
-  # activate :relative_assets
+  activate :relative_assets
 
   # Compress PNGs after build
   # First: gem install middleman-smusher
