@@ -14,6 +14,8 @@ $(document).bind('pageinit', function(){
 
     $('.homeImageSlider').flexslider({
         controlsContainer: ".flex-container",
+        controlNav: false,
+        directionNav: false,
         animation: "slide",
         randomize: false,
         touch: true
@@ -22,6 +24,8 @@ $(document).bind('pageinit', function(){
 
     $('.pageImageSlider').flexslider({
         controlsContainer: ".flex-container",
+        controlNav: false,
+        directionNav: false,
         animation: "slide",
         pauseOnHover: true,
         slideshow: true,
@@ -33,6 +37,8 @@ $(document).bind('pageinit', function(){
 
     $('.pageImageSliderAuto').flexslider({
         controlsContainer: ".flex-container",
+        controlNav: false,
+        directionNav: false,
         animation: "slide",
         pauseOnHover: true,
         slideshow: true,
