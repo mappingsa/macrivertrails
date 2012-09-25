@@ -1,0 +1,41 @@
+---
+title: River
+list:
+  - { file: lake_burrendong,      image: BurrendongStateParkweb2.jpg,     caption: Lake Burrendong State Park }
+  - { file: sport,                image: LakeBurrendongSportRecweb4.jpg,  caption: Lake Burrendong Sport and Recreation Centre }
+  - { file: mookereawa,           image: Mokwatersweb1.jpg,               caption: Mookerawa Waters State Park, Lake Burrendong }
+  - { file: macquaire_canoe,      image: CanoeTrailweb3.jpg,              caption: Macquarie river canoe and kayak trail }
+  - { file: wellington_cp,        image: RiversideVP3.jpg,                caption: Wellington Riverside Caravan Park }
+  - { file: john_oxley,           image: OxleyPkweb4.jpg,                 caption: John Oxley Park, Wellington }
+  - { file: big4,                 image: Big4web1.jpg,                    caption: BIG 4 Dubbo Parklands }
+  - { file: cameron_park,         image: PionerPkweb1.jpg,                caption: Cameron and Pioneer Parks, Wellington }
+  - { file: sirroden_park,        image: RodenCutlerPkweb3.jpg,           caption: Sir Roden Cutler Park, Dubbo }
+  - { file: riverbank_park,       image: RiverbankPkweb5.jpg,             caption: Riverbank Park, Dubbo }
+  - { file: lions_park,           image: LionsParkWestweb1.jpg,           caption: Lions Park West, Dubbo }
+  - { file: langleys,             image: Rivercruisesweb1.jpg,            caption: Langley's River Cruises, Dubbo }
+  - { file: sandy_beach,          image: sandybeachweb3.jpg,              caption: Sandy Beach, Dubbo }
+  - { file: terramungamine,       image: Terraweb3.jpg,                   caption: Terramungamine Reserve, Dubbo }
+  - { file: rotary_park,          image: RotaryPkweb1.jpg,                caption: Rotary Riverside Park, Narromine }
+  - { file: macquaire_cp,         image: Macvanparkweb5.jpg,              caption: Macquarie Caravan Park, Warren }
+  - { file: sandy_creek,          image: SandyCkweb1.jpg,                 caption: Sandy Creek Rest Area, Warren }
+  - { file: lion_macquarie_parks, image: WarrenMacqparksideweb4.jpg,      caption: Lions and Macquarie Parks, Warren }
+  - { file: more_parks,           image: WarrenVictPkareaweb5.jpg,        caption: Victoria, Oxley and more river parks, Warren }
+  - { file: willie_retreat,       image: Campingareaweb.jpg,              caption: Willie Retreat, Macquarie Marshes }
+  - { file: riverside_tp,         image: riversidenynganweb1.jpg,         caption: Nyngan Riverside Tourist Park }
+---
+div.river data-role="page"
+  div.riverheader.rtheader data-role="header"
+    a.backBtn.ui-btn-left href="javascript: history.back();" data-direction="reverse" data-role="none"
+    a.homeBtn.ui-btn-right href="../index.html" data-role="none" rel="external" data-transition="pop"
+    div.mainlogo
+
+  div data-role="content"
+
+    div.content-primary
+     ul data-role="listview" data-inset="true"
+       li data-role="list-divider" role="heading" RIVER TRAIL
+       - current_page.data.list.each do |place|
+         = partial :place, :locals => {:place=> place}
+
+  = partial '/tabbar'
+

@@ -649,7 +649,7 @@ margin: 0 0 0px 0;
     font-weight: normal;
 }
 
-#riverheader {
+.ui-header.riverheader {
     background-color:#015CAB;
     position:relative;
     width:100%;

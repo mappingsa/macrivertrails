@@ -1,0 +1,74 @@
+
+  <!-- slideout menu -->
+  <div id="menu">
+  <h3>MENU</h3>
+  <ul>
+    <li><a href="tel:0268467435"><img src="../images/75-phone.png" height="16px" width="18px"> PHONE</a></li>
+    <li><a href="http://www.stateparks.nsw.gov.au/lake_burrendong"  rel="external"><img src="../images/icon_blog.png" height="20px" width="20px"> WEB</a></li>
+    <li><a href="#" onclick="showAlert(); return false;"><img src="../images/icon_mail.png" height="20px" width="20px"> MAIL</a></li>
+    <li><a href="../map/index.html?section=River&item=lake_burrendong" rel="external" data-transition="slide"><img alt="" src="../map/images/River-pin.png" height="25px" width="18px"> GET DIRECTIONS</a></li>
+    <li><a href="../favorites.html?section=River&item=lake_burrendong&title=Lake%20Burrendong%20State%20Park" rel="external"><img src="../images/icon_favorities_add.png" height="20px" width="20px"> ADD TO FAVORITES</a></li>
+  </ul>
+</div>
+    <!-- /slideout menu -->
+
+<div data-role="page"><!-- home page -->
+
+     <!-- header -->
+  <div data-role="header" class="riverheader rtheader">
+    <a href="#" class="showMenu menuBtn">MENU</a>
+      <a href="./index.html" rel="external" data-role="none" class="backBtn ui-btn-right" data-transition="fade"></a>
+    <div class="mainlogo"></div>
+  </div>
+    <!--/header -->
+   <br>
+        <hr class="ornamental"/><h3 class="home-title">Lake Burrendong State Park</h3>
+                <hr class="ornamental"/>
+
+    <!-- slider -->
+   <div class="flex-container" style="width: 250px; min-height: 205px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 1px; padding-bottom: 1px;">
+    <div id="pageImageSliderAuto" class="flexslider">
+        <ul class="slides">
+            <li>
+    <img src="../images/BurrendongStateParkweb1.jpg">
+</li> <li>
+    <img src="../images/BurrendongStateParkweb2.jpg">
+</li> <li>
+    <img src="../images/BurrendongStateParkweb3.jpg">
+</li> <li>
+    <img src="../images/Burrendongaccomweb1.jpg">
+</li> <li>
+    <img src="../images/Burrendongaccomweb2.jpg">
+</li> <li>
+    <img src="../images/Burrendongaccomweb3.jpg">
+</li>
+      </ul>
+    </div>
+  </div>
+  <div class="shadow1box"><img src="../images/shadow1.png" class="shadow1" alt="shadow"></div>
+    <!-- /slider -->
+
+  <!-- main content -->
+  <div data-role="content">
+
+                <river>
+                    Lake Burrendong State Park offers year-round attractions for fishing enthusiasts, nature lovers, bushwalkers, campers and picnickers.
+                </river>
+                                <p>
+                    <strong>COORDINATES:</strong>
+                    32&#186;41'17.87"S, 149&#186; 6'30.67"E
+                </p>
+                <p>
+                    <strong>LOCATION:</strong>
+                    Lake Burrendong State Park is only a one hour drive from either Dubbo or Orange and five hours from Sydney. If you are coming from the north of the state, the park is 27km south-east of Wellington.
+                </p>
+                <!--p>
+                    <strong>THE CLOSEST OTHER RIVER TRAIL ATTRACTIONS ARE:</strong>
+                    Lake Burrendong State Park and the Lake Burrendong Sport and Recreation Centre are also found at this location and both offer accommodation and water sport facilities and activities. Nearby there is also the Burrendong Botanic Garden and Arboretum.  Eris Fleming Gallery is also a highlight (see Heritage trail).
+                </p-->
+                <div class="shadow2box">
+                    <img src="../images/shadow2.png" class="shadow2" alt="shadow"></div>
+                </div>
+    <!-- /main content -->
+
+  <%= partial '/tabbar' %>
