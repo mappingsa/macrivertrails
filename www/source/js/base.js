@@ -44,11 +44,11 @@ $(document).bind('pageinit', function(){
 
 
     $("#popup").click(function(){
-        alert("Sorry no conatct information available");
+        alert("Sorry no contact information available");
     });
 
     $(".popupalert").click(function(){
-        alert("Sorry no conatct information available");
+        alert("Sorry no contact information available");
     });
 
 
