@@ -8,18 +8,18 @@ $(document).bind("mobileinit", function(){
 
 
 $(document).bind('pageinit', function(){
-    
+
 
     var menuStatus;
-    
-    $('#homeImageSlider').flexslider({
+
+    $('.homeImageSlider').flexslider({
         controlsContainer: ".flex-container",
         animation: "slide",
         randomize: false,
         touch: true
     });
-    
-    
+
+
     $('#pageImageSlider').flexslider({
         controlsContainer: ".flex-container",
         animation: "slide",
@@ -29,7 +29,7 @@ $(document).bind('pageinit', function(){
         touch: true,
         smoothHeight: true
     });
-    
+
 
     $('#pageImageSliderAuto').flexslider({
         controlsContainer: ".flex-container",
@@ -41,8 +41,8 @@ $(document).bind('pageinit', function(){
         randomize: false,
         smoothHeight: true
     });
-    
-    
+
+
     $("#popup").click(function(){
         alert("Sorry no conatct information available");
     });
@@ -50,7 +50,7 @@ $(document).bind('pageinit', function(){
     $(".popupalert").click(function(){
         alert("Sorry no conatct information available");
     });
-    
+
 
         // Show menu
     $("a.showMenu").click(function() {
@@ -71,14 +71,14 @@ $(document).bind('pageinit', function(){
         }
     });
 
-    var pathname = window.location.pathname;    
-    var isFav = pathname.indexOf('favorites.html');    
+    var pathname = window.location.pathname;
+    var isFav = pathname.indexOf('favorites.html');
     if (isFav > 0){
         var urlVars = getUrlVars();
         if (urlVars.title){ // do we need to save a favorite?
-        
+
             favitem = {
-                    section: decodeURIComponent(urlVars.section), 
+                    section: decodeURIComponent(urlVars.section),
                     title: decodeURIComponent(urlVars.title),
                     item: decodeURIComponent(urlVars.item)
             };
@@ -88,126 +88,126 @@ $(document).bind('pageinit', function(){
         if (urlVars.remove){ // are we removing a favorite?
             localStore.doRemoveFavorite(urlVars.remove);
         }
-        
+
         interfaceBuild.buildFavoriteList();
-        
-        
+
+
     }
-    
-    
-    
+
+
+
 });
 
 
 
 var interfaceBuild = function(){
     function BuildFavoriteList(){
-        
-        
+
+
         var base = '<li><a href="../www/|itemdirectory|/|linkpage|" rel="external">|itemtitle|</a><a href="./favorites.html?remove=|item|"  rel="external">Remove</a></li>';
-        
+
         var savedItems = store.get('faves');
-        
+
         if (savedItems != undefined){
-        
+
             $.each(savedItems, function(i){
                 var thisBase = base;
-                
+
                 thisBase = thisBase.replace('|itemdirectory|', this.section);
                 thisBase = thisBase.replace('|linkpage|', this.item + '.html');
                 thisBase = thisBase.replace('|itemtitle|', this.title);
                 thisBase = thisBase.replace('|item|', i);
-                
-               
+
+
                $('#favoritesList').append(thisBase);
-               
+
             });
             $('#noFavesMsg').hide();
             $('#favoritesList').listview('refresh');
         }
-        
+
     }
-    
+
 
     return {
-        buildFavoriteList: function(){         
+        buildFavoriteList: function(){
             return BuildFavoriteList();
         }
     }
-    
-    
+
+
 }();
 
 
 
 
 var localStore = function(){
-    
+
     function getAllStorage(){
         return store.getAll()
     };
-   
+
 
     function saveFavorite(newItem){
        var found = false;
-        
+
        var savedItems = store.get('faves');
-       
+
        if (savedItems == undefined){
            savedItems = new Array();
            savedItems[0] = newItem;
-           store.set('faves', savedItems);   
+           store.set('faves', savedItems);
            return;
        } else {
-           
+
            $.each(savedItems, function(){
                if (this.item == newItem.item && this.section == newItem.section){
-                found = true;   
+                found = true;
                }
            });
-           
+
            if (!found) {
-               
+
                savedItems.push(newItem);
-               store.set('faves', savedItems);    
+               store.set('faves', savedItems);
            }
-               
+
            return;
        }
-        
+
     };
-   
-    
+
+
     function removeFavorite(item){
 
         var savedItems = store.get('faves');
-        
+
         if (savedItems == undefined){
             return;
         }
-        
+
         savedItems.splice(item, 1);
-          
+
         if (savedItems.length){
-            store.set('faves', savedItems);    
-        } else {            
+            store.set('faves', savedItems);
+        } else {
             store.remove('faves');
         }
-        
+
         return true;
     }
-    
-    
-    
+
+
+
     return {
-        doSaveFavorite: function(item){         
+        doSaveFavorite: function(item){
             return saveFavorite(item);
         },
-        doRemoveFavorite: function(item){         
+        doRemoveFavorite: function(item){
             return removeFavorite(item);
         }
     }
-    
+
 }();
 
 var removeArrItem = function(arr){
