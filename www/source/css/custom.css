@@ -389,11 +389,11 @@ li.ui-li-divider {
     -webkit-border-radius: 0 !important;
     border-radius: 0 !important;
 }
-#nearby .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 18px 18px; }
-#info .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 18px 18px; }
-#favorities .ui-icon { background: url('../images/icon_favorities_add.png') 50% 50% no-repeat; background-size: 20px 20px; }
-#map .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 18px 18px; }
-#browse .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 22px 16px; }
+.nearby .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.info .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.favorites .ui-icon { background: url('../images/icon_favorities_add.png') 50% 50% no-repeat; background-size: 20px 20px; }
+.map .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.browse .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 22px 16px; }
 
 
 
