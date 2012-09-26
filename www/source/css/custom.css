@@ -293,7 +293,8 @@ a.ui-link-inherit:hover {
 }
 
 .ui-content {
-    padding-top:0px
+    padding-top:0;
+    padding-bottom: 0;
 }
 
 .page-header .ui-icon {
