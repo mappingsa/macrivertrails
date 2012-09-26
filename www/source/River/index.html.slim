@@ -30,7 +30,7 @@ div.river data-role="page"
   div data-role="content"
     br
     div.flex-container style="width: 90%; min-height: 250px; text-align: center; margin: auto; padding-top: 10px;"
-      div.flexslider.pageImageSlider style="width: 100%;"
+      div.flexslider.pageImageSlider
         ul.slides
           - current_page.data.list.each do |place|
             = partial :slide, :locals => {:place => place}
