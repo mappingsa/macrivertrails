@@ -2,25 +2,26 @@
 title: Lake Burrendong State Park
 header_class: riverheader
 ---
-  <!-- slideout menu -->
-  <div id="menu">
-  <h3>MENU</h3>
-  <ul>
-    <li><a href="tel:0268467435"><img src="../images/75-phone.png" height="16px" width="18px"> PHONE</a></li>
-    <li><a href="http://www.stateparks.nsw.gov.au/lake_burrendong"  rel="external"><img src="../images/icon_blog.png" height="20px" width="20px"> WEB</a></li>
-    <li><a href="#" onclick="showAlert(); return false;"><img src="../images/icon_mail.png" height="20px" width="20px"> MAIL</a></li>
-    <li><a href="../map/index.html?section=River&item=lake_burrendong" rel="external" data-transition="slide"><img alt="" src="../map/images/River-pin.png" height="25px" width="18px"> GET DIRECTIONS</a></li>
-    <li><a href="../favorites.html?section=River&item=lake_burrendong&title=Lake%20Burrendong%20State%20Park" rel="external"><img src="../images/icon_favorities_add.png" height="20px" width="20px"> ADD TO FAVORITES</a></li>
-  </ul>
-</div>
-    <!-- /slideout menu -->
 
-<div data-role="page"><!-- home page -->
+<div data-role="page" class="place-page"><!-- home page -->
 
    <%= partial '../place_header' %>
 
+<!-- fade menu -->
+<div class="menu">
+<ul>
+  <li><a href="tel:0268467435"><img src="../images/75-phone.png" height="16px" width="18px"> PHONE</a></li>
+  <li><a href="http://www.stateparks.nsw.gov.au/lake_burrendong" rel="external"><img src="../images/icon_blog.png" height="20px" width="20px"> WEB</a></li>
+  <li><a href="#" onclick="showAlert(); return false;"><img src="../images/icon_mail.png" height="20px" width="20px"> MAIL</a></li>
+  <li><a href="../map/index.html?section=River&item=lake_burrendong" rel="external" data-transition="slide"><img alt="" src="../map/images/River-pin.png" height="25px" width="18px"> DIRECTIONS</a></li>
+  <li><a href="../favorites.html?section=River&item=lake_burrendong&title=Lake%20Burrendong%20State%20Park" rel="external"><img src="../images/icon_favorities_add.png" height="20px" width="20px"> FAVORITE</a></li>
+</ul>
+</div>
+  <!-- /fade menu -->
+
+
     <!-- slider -->
-   <div class="flex-container" style="width: 250px; min-height: 205px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 1px;">
+   <div class="flex-container" style="width: 250px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 10px;">
     <div class="pageImageSliderAuto flexslider">
         <ul class="slides">
             <li>
@@ -42,7 +43,7 @@ header_class: riverheader
     <!-- /slider -->
 
   <!-- main content -->
-  <div data-role="content">
+  <div data-role="content" class="place-content" style="clear: both;">
 
                 <river>
                     Lake Burrendong State Park offers year-round attractions for fishing enthusiasts, nature lovers, bushwalkers, campers and picnickers.

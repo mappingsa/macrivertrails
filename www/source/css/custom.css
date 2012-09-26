@@ -1,6 +1,87 @@
+
+
 .flexslider {
-  border: 2px solid #fff;
+  /* border: 2px solid #fff; */
+  border: none;
   margin-bottom: 0;
+}
+
+/* =============================================================================
+   (ex) Slide out menu (no longer slide-out)
+   ========================================================================== */
+
+.menu {
+  background:#262C3A;
+  -webkit-text-size-adjust:none !important;
+  opacity: 0;
+  z-index: -1;
+
+  display: block !important;
+  position: absolute;
+  right: 0;
+}
+
+.menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.menu img {
+  float: left;
+  margin-right: 5px;
+}
+
+.menu ul li {
+  list-style-type: none;
+  margin: 0px 0;
+}
+.menu ul li a:link, .menu ul li a:visited {
+ text-align: right;
+ border-top: 1px #3E4555 solid;
+  border-bottom: 1px #191D27 solid;
+  color: #DBE0E8;
+  font-size: 12px;
+  font-family: 'Cabin', sans-serif;
+  text-decoration: none;
+  display: block;
+  padding-top: 6px;
+  padding-right:  6px;
+  padding-bottom:  6px;
+  padding-left: 7px;
+  text-shadow: 0px 1px 1px #212631;
+}
+
+.menu ul li a:hover, .menu ul li a:active {
+  background-color: #32394A;
+}
+
+.ui-btn-up-a {
+  border:none !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+a.menuBtn{
+  background: transparent url(../images/icon_list_bullets.png) top left no-repeat !important;
+  width:31px;
+  height:31px;
+  background-size: 30px 30px;
+  text-indent:-999em !important;
+  display:block !important;
+  -webkit-box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
+  box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
+}
+a.menuBtn .ui-btn-inner{
+  border:none;
+}
+a.menuBtn:hover{
+  border:none !important;
+}
+
+.place-page {
+}
+
+.place-content {
+
 }
 
 /* =============================================================================

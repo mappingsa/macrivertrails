@@ -73,19 +73,21 @@ $(document).bind('pageinit', function(){
 
 
         // Show menu
-    $("a.showMenu").click(function() {
+    $("a.showMenu").bind("vclick", function() {
+        var $menu = $.mobile.activePage.find(".menu");
         if (menuStatus != true) {
-            $(".ui-page-active").animate({
-                marginLeft : "200px",
-            }, 300, function() {
-                menuStatus = true
+            $menu.css("z-index", 1).animate({
+              opacity: ".85",
+            }, 400, function() {
+                menuStatus = true;
             });
             return false;
         } else {
-            $(".ui-page-active").animate({
-                marginLeft : "0px",
-            }, 300, function() {
-                menuStatus = false
+            $menu.animate({
+              opacity: "0",
+            }, 400, function() {
+                $menu.css("z-index", -1);
+                menuStatus = false;
             });
             return false;
         }
