@@ -31,7 +31,6 @@ $(document).bind('pageinit', function(){
         slideshow: true,
         itemWidth: 500,
         touch: true,
-        smoothHeight: true
     });
 
 
@@ -45,7 +44,6 @@ $(document).bind('pageinit', function(){
         itemWidth: 500,
         touch: true,
         randomize: false,
-        smoothHeight: true
     });
 
 
