@@ -1,0 +1,8 @@
+/! slider
+.flex-container style="width: 250px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 10px;"
+  .pageImageSliderAuto.flexslider
+    ul.slides
+      - current_page.data.slides.each do |slide|
+        li
+          img src="/images/#{slide}"
+/! /slider
