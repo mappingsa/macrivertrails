@@ -6,46 +6,61 @@ $(document).bind("mobileinit", function(){
 });
 
 
+$(document).on('pageinit', ".ui-page", function() {
+
+  // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
+  // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
+  // won't actually be unhidden by the browser, though, because we set the visibility back
+  // when we are done, and since browser Javascript is synchronous, the renderer does not
+  // run asynchronously during event processing, and so it will be none the wiser.
+  var $page = $(this),
+      hidden = $page.is(":hidden");
+  if (hidden) { $page.css("display", "block"); }
+
+  $('.homeImageSlider').flexslider({
+    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+    animationSpeed: 400,
+    controlNav: false,
+    directionNav: false,
+    animation: "slide",
+    pauseOnHover: true,
+    touch: true,
+    smoothHeight: false,
+  });
+
+  $('.pageImageSlider').flexslider({
+    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+    animationSpeed: 400,
+    controlNav: false,
+    directionNav: false,
+    animation: "slide",
+    pauseOnHover: true,
+    slideshow: true,
+    touch: true,
+    smoothHeight: false,
+  });
+
+
+  $('.pageImageSliderAuto').flexslider({
+    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+    animationSpeed: 400,
+    controlNav: false,
+    directionNav: false,
+    animation: "slide",
+    pauseOnHover: true,
+    slideshow: true,
+    touch: true,
+    randomize: false,
+    smoothHeight: false,
+  });
+
+  if (hidden) { $page.css("display", "") };
+
+});
+
 
 $(document).bind('pageinit', function(){
-
-
     var menuStatus;
-
-    $('.homeImageSlider').flexslider({
-        controlsContainer: ".flex-container",
-        controlNav: false,
-        directionNav: false,
-        animation: "slide",
-        randomize: false,
-        touch: true
-    });
-
-
-    $('.pageImageSlider').flexslider({
-        controlsContainer: ".flex-container",
-        controlNav: false,
-        directionNav: false,
-        animation: "slide",
-        pauseOnHover: true,
-        slideshow: true,
-        itemWidth: 500,
-        touch: true,
-    });
-
-
-    $('.pageImageSliderAuto').flexslider({
-        controlsContainer: ".flex-container",
-        controlNav: false,
-        directionNav: false,
-        animation: "slide",
-        pauseOnHover: true,
-        slideshow: true,
-        itemWidth: 500,
-        touch: true,
-        randomize: false,
-    });
-
 
     $("#popup").click(function(){
         alert("Sorry no contact information available");
