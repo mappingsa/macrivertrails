@@ -323,6 +323,11 @@ a.ui-link-inherit:hover {
 }
 
 
+.ui-content .ui-listview-inset.trail-list {
+  margin-top: 10px;
+}
+
+
 /* thumbail lists */
 .events-list  ul.ui-listview li, .thumbnail-list ul.ui-listview li {
     margin:0;

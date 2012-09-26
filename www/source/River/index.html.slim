@@ -34,11 +34,9 @@ div.river data-role="page"
           - current_page.data.list.each do |place|
             = partial :slide, :locals => {:place => place}
 
-    div.content-primary
-     ul data-role="listview" data-inset="true"
-       li data-role="list-divider" role="heading" RIVER TRAIL
-       - current_page.data.list.each do |place|
-         = partial :place, :locals => {:place=> place}
+    ul.trail-list@listview data-inset=true
+      - current_page.data.list.each do |place|
+        = partial :place, :locals => {:place=> place}
 
   = partial '/tabbar'
 
