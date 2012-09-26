@@ -13,9 +13,10 @@ $(document).on('pageinit', ".ui-page", function() {
   // won't actually be unhidden by the browser, though, because we set the visibility back
   // when we are done, and since browser Javascript is synchronous, the renderer does not
   // run asynchronously during event processing, and so it will be none the wiser.
-  var $page = $(this),
-      hidden = $page.is(":hidden");
-  if (hidden) { $page.css("display", "block"); }
+  // May not be necessary - commented-out for testing.
+  //var $page = $(this),
+   //   hidden = $page.is(":hidden");
+ // if (hidden) { $page.css("display", "block"); }
 
   $('.homeImageSlider').flexslider({
     slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
@@ -54,7 +55,7 @@ $(document).on('pageinit', ".ui-page", function() {
     smoothHeight: false,
   });
 
-  if (hidden) { $page.css("display", "") };
+ // if (hidden) { $page.css("display", "") };
 
 });
 
