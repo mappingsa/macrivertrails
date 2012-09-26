@@ -6,7 +6,7 @@ set :slim, {
   :format => :html5,
   :pretty => true,
   :disable_escape => true,
-  #:shortcut => {'@' => 'data-role', '#' => 'id', '.' => 'class'}  # Doesn't seem to work
+  :shortcut => {'@' => 'data-role', '#' => 'id', '.' => 'class'}  # Doesn't seem to work
   }
 
 set :erb, {

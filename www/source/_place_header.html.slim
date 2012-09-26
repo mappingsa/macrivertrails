@@ -1,6 +1,6 @@
 /! header
-div class="rtheader #{current_page.data.header_class}" data-role="header"
-  a.backBtn href="./index.html" data-transition="fade" data-role="none"
+@header.rtheader class="#{current_page.data.header_class}"
+  a.backBtn@none href="./index.html" data-transition="fade"
   a.showMenu.menuBtn href="#"
 
   h1 #{current_page.data.title}

@@ -9,12 +9,12 @@ list:
   - { dir: Riverbedz,  image: riverbedzweb.jpg, heading: RIVER BEDZ     }
 ---
 /! home page
-div data-role="page"
+@page
   = partial :header
   = partial :slider
 
   /! main content
-  div data-role="content"
+  @content
     h3.home-title Welcome to Macquarie River Trails
 
     p The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias
@@ -33,8 +33,8 @@ div data-role="page"
 
     /! list begins
     div
-      div.thumbnail-list
-        ul data-inset="true" data-role="listview" data-filter-theme="b"
+      .thumbnail-list
+        ul@listview data-inset="true" data-filter-theme="b"
           - current_page.data.list.each do |trail|
             = partial :trail, :locals => {:trail=> trail}
     /! end list
