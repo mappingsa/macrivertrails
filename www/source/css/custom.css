@@ -27,7 +27,7 @@
 
 .menu img {
   float: left;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 
 .menu ul li {
@@ -35,7 +35,7 @@
   margin: 0px 0;
 }
 .menu ul li a:link, .menu ul li a:visited {
- text-align: right;
+ text-align: center;
  border-top: 1px #3E4555 solid;
   border-bottom: 1px #191D27 solid;
   color: #DBE0E8;
@@ -43,9 +43,9 @@
   font-family: 'Cabin', sans-serif;
   text-decoration: none;
   display: block;
-  padding-top: 6px;
-  padding-right:  6px;
-  padding-bottom:  6px;
+  padding-top: 10px;
+  padding-right:  10px;
+  padding-bottom:  10px;
   padding-left: 7px;
   text-shadow: 0px 1px 1px #212631;
 }

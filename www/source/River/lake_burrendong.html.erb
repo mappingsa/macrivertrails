@@ -1,11 +1,10 @@
 ---
+section: river
+item: lake_burrendong
 title: Lake Burrendong State Park
-header_class: riverheader
 tel: 0268467435
 url: www.stateparks.nsw.gov.au/lake_burrendong
 mail:
-map_section: river
-map_item: lake_burrendong
 slides:
   - BurrendongStateParkweb1.jpg
   - BurrendongStateParkweb2.jpg
@@ -17,24 +16,12 @@ slides:
 
 <div data-role="page" class="place-page"><!-- home page -->
 
-   <%= partial '../place_header' %>
-
-<!-- fade menu -->
-<div class="menu">
-<ul>
-  <li><a href="tel:0268467435"><img src="../images/75-phone.png" height="16px" width="18px"> PHONE</a></li>
-  <li><a href="http://www.stateparks.nsw.gov.au/lake_burrendong" rel="external"><img src="../images/icon_blog.png" height="20px" width="20px"> WEB</a></li>
-  <li><a href="#" onclick="showAlert(); return false;"><img src="../images/icon_mail.png" height="20px" width="20px"> MAIL</a></li>
-  <li><a href="../map/index.html?section=River&item=lake_burrendong" rel="external" data-transition="slide"><img alt="" src="../map/images/River-pin.png" height="25px" width="18px"> DIRECTIONS</a></li>
-  <li><a href="../favorites.html?section=River&item=lake_burrendong&title=Lake%20Burrendong%20State%20Park" rel="external"><img src="../images/icon_favorities_add.png" height="20px" width="20px"> FAVORITE</a></li>
-</ul>
-</div>
-  <!-- /fade menu -->
-
+  <%= partial :place_header %>
+  <%= partial :place_menu %>
   <%= partial :place_slider %>
 
   <!-- main content -->
-  <div data-role="content" class="place-content" style="clear: both;">
+  <div data-role="content" class="place-content">
 
                 <river>
                     Lake Burrendong State Park offers year-round attractions for fishing enthusiasts, nature lovers, bushwalkers, campers and picnickers.
@@ -55,4 +42,4 @@ slides:
                 </div>
     <!-- /main content -->
 
-  <%= partial '/tabbar' %>
+  <%= partial :tabbar %>
