@@ -4,19 +4,9 @@ html
     title = current_page.data.title
     = partial :meta
     /! css
-    = stylesheet_link_tag data.rivertrails.stylesheets
+    = stylesheet_link_tag data.rivertrails.stylesheets.main
     /! Scripts
-    script src="/js/jquery-1.7.1.min.js">
-    script src="/js/jquery.mobile-1.1.0.min.js"
-    /! Cordova temporarly commented-out
-    /! script src="/js/cordova-1.8.0.js"
-    script src="/js/jquery.flexslider.min.js"
-    script type="text/javascript" charset="utf-8"
-      | // Temporarily commented-out document.addEventListener("deviceready", onDeviceReady, false);
-    /!  base js file.. load last
-    script src="/js/base.js"
-
-  /! Temporarily commented-out body onload="onBodyLoad()"
+    = javascript_include_tag data.rivertrails.scripts.main
   body
     = yield
 

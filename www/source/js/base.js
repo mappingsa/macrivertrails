@@ -1,3 +1,6 @@
+// Temporarily commented-out
+
+// document.addEventListener("deviceready", onDeviceReady, false);
 
 $(document).bind("mobileinit", function(){
     $.mobile.touchOverflowEnabled = true;

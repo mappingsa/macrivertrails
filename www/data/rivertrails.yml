@@ -1,15 +1,18 @@
 stylesheets:
+  main:
     - style4
     - flexslider
     - custom
+  map:
 
 scripts:
+  main:
     - jquery-1.7.1.min
     - jquery.mobile-1.1.0.min
     # Cordova temporarly commented-out
     # - cordova-1.8.0
     - jquery.flexslider.min
-    # Temporarily commented-out document.addEventListener("deviceready", onDeviceReady, false);
-    # base js file.. load last
     - base
+  map:
+
 
