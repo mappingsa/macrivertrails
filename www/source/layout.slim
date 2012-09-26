@@ -3,6 +3,8 @@ html
   head
     title = current_page.data.title
     = partial :meta
+    /! css
+    = stylesheet_link_tag data.rivertrails.stylesheets
     /! Scripts
     script src="/js/jquery-1.7.1.min.js">
     script src="/js/jquery.mobile-1.1.0.min.js"
@@ -13,11 +15,6 @@ html
       | // Temporarily commented-out document.addEventListener("deviceready", onDeviceReady, false);
     /!  base js file.. load last
     script src="/js/base.js"
-
-    /! css
-    link rel="stylesheet" href="/css/style4.css"
-    link rel="stylesheet" href="/css/flexslider.css"
-    link rel="stylesheet" href="/css/custom.css"
 
   /! Temporarily commented-out body onload="onBodyLoad()"
   body
