@@ -723,7 +723,7 @@ margin: 0 0 0px 0;
 }
 
 
-#heritageheader {
+.heritageheader {
     background-color:#AE132A;
     position:relative;
     width:100%;
@@ -731,7 +731,7 @@ margin: 0 0 0px 0;
     border: 1px solid #2A2A2A;
     font-weight: normal;
 }
-#natureheader {
+.natureheader {
     background-color:#539536;
     position:relative;
     width:100%;
@@ -748,7 +748,7 @@ margin: 0 0 0px 0;
     border: 1px solid #2A2A2A;
     font-weight: normal;
 }
-#produceheader {
+.produceheader {
     background-color:#FBB255;
     position:relative;
     width:100%;
@@ -756,7 +756,7 @@ margin: 0 0 0px 0;
     border: 1px solid #2A2A2A;
     font-weight: normal;
 }
-#cycleheader {
+.cycleheader {
     background-color:#C14F9D;
     position:relative;
     width:100%;
@@ -764,7 +764,7 @@ margin: 0 0 0px 0;
     border: 1px solid #2A2A2A;
     font-weight: normal;
 }
-#riverbedzheader {
+.riverbedzheader {
     background-color:#989898;
     position:relative;
     width:100%;
@@ -773,7 +773,7 @@ margin: 0 0 0px 0;
     font-weight: normal;
 }
 
-#fishingheader {
+.fishingheader {
     background-color:#663399;
     position:relative;
     width:100%;
