@@ -1,0 +1,35 @@
+---
+section: nature
+title: Nature Trail
+list:
+  - { file: burrendong_garden,    image: Arboretumweb4.jpg,               caption: Burrendong Botanic Garden and Arboretum }
+  - { file: taronga_zoo,          image: zooweb4.jpg,                     caption: Taronga Western Plains Zoo, Dubbo }
+  - { file: platypus,             image: Platspottingweb3.jpg,            caption: Platypus spotting, Wellington }
+  - { file: mount_arther,         image: MtArthurweb2.jpg,                caption: Mount Arthur Reserve and Lookout, Wellington }
+  - { file: wongarbon,            image: WongarbonResweb1.jpg,            caption: Wongarbon Tank Reserve }
+  - { file: dubbo_botanic,        image: BiodGardenweb2.jpg,              caption: Dubbo Regional Botanic Garden }
+  - { file: rotary_wetland,       image: Rotarywetlandweb5.jpg,           caption: Rotary Wetland, Narromine }
+  - { file: argonauts,            image: goanwaterholeweb3.jpg,           caption: Argonauts Park-Goan Waterhole, Trangie }
+  - { file: tiger_bay,            image: Tigerbayweb6.jpg,                caption: Tiger Bay Wetland, Warren }
+  - { file: wetland_viewing,      image: april2011willieweb.jpg,          caption: Wetland viewing platform, Macquarie Marshes }
+  - { file: willie_retreat,       image: Campingareaweb.jpg,              caption: Willie Retreat, Macquarie Marshes }
+  - { file: macquarie_marsh_south,image: Macmarshresweb2.jpg,             caption: Macquarie Marsh Nature Reserves }
+  - { file: tourist_park,         image: emusmarshes.jpg,                 caption: Scenic helicopter rides over the Macquarie Marshes }
+
+---
+.nature@page
+  = partial :trail_header
+
+  @content
+    .flex-container style="width: 90%; min-height: 250px; text-align: center; margin: auto; padding-top: 10px;"
+      .flexslider.pageImageSlider
+        ul.slides
+          - current_page.data.list.each do |place|
+            = partial '../trail_slide', :locals => {:place => place}
+
+    ul.trail-list@listview data-inset=true
+      - current_page.data.list.each do |place|
+        = partial '../place', :locals => {:place=> place}
+
+  = partial :tabbar
+
