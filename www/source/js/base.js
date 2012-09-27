@@ -2,11 +2,7 @@
 
 // document.addEventListener("deviceready", onDeviceReady, false);
 
-$(document).bind("mobileinit", function(){
-    $.mobile.touchOverflowEnabled = true;
-    $.mobile.pushStateEnabled = true;
-    $.mobile.orientationChangeEnabled = false;
-});
+
 
 
 $(document).on('pageinit', ".ui-page", function() {

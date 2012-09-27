@@ -8,14 +8,14 @@ list:
   - { dir: Cycle,      image: cycleweb.jpg,     heading: CYCLE TRAIL    }
   - { dir: Riverbedz,  image: riverbedzweb.jpg, heading: RIVER BEDZ     }
 ---
-/! home page
 @page
   = partial :header
   = partial :home_slider
-
-  /! main content
   @content
+
+    = blank_line
     h3.home-title Welcome to Macquarie River Trails
+    = blank_line
 
     p The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias
       best kept secrets, until now.
@@ -31,15 +31,14 @@ list:
     p From the wonders of Lake Burrendong to the frontier country of the Macquarie Marshes if you
       only spend a week, you will probably have to come back.  But thats Ok, you are welcome anytime.
 
-    /! list begins
+    = blank_line
     div
       .thumbnail-list
         ul@listview data-inset="true" data-filter-theme="b"
           - current_page.data.list.each do |trail|
             = partial :trail, :locals => {:trail=> trail}
-    /! end list
 
     = partial :social
   = partial :tabbar
-/! page end
+
 

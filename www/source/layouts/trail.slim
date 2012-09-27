@@ -1,0 +1,21 @@
+/ Layout for Trail (list) pages
+doctype 5
+html
+  = partial :head
+  body
+    = blank_line
+    @page class="#{current_page.data.section}"
+      = partial :trail_header
+      @content
+        = blank_line
+        .flex-container style="width: 90%; min-height: 250px; text-align: center; margin: auto; padding-top: 10px;"
+          .flexslider.pageImageSlider
+            ul.slides
+              - current_page.data.list.each do |place|
+                = partial :trail_slide, :locals => {:place => place}
+        = blank_line
+        ul.trail-list@listview data-inset=true
+          - current_page.data.list.each do |place|
+            = partial :place, :locals => {:place=> place}
+            = next_line
+      = partial :tabbar

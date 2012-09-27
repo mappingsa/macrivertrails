@@ -1,4 +1,7 @@
+= blank_line
 li
-  a.ui-link-inherit href="/#{current_page.data.section.capitalize}/#{place.file}.html" data-transition="slide"
+  a.ui-link-inherit href="#{place.file}.html" data-transition="slide"
+    = next_line
     img src="../images/#{place.image}"
+    = next_line
     p.flex-caption #{place.caption}

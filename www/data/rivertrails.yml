@@ -8,6 +8,7 @@ stylesheets:
 scripts:
   main:
     - jquery-1.7.1.min
+    - jquery.mobile.init
     - jquery.mobile-1.1.0.min
     # Cordova temporarly commented-out
     # - cordova-1.8.0
