@@ -1,0 +1,14 @@
+/ Layout for place pages
+doctype 5
+html
+  = partial :head
+  body
+    div.place-page@page
+      = partial :place_header
+      = partial :place_menu
+      = partial :place_slider
+      /! main content
+      .place-content@content
+        = yield
+      /! /main content
+    = partial :tabbar

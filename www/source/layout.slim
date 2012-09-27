@@ -1,12 +1,7 @@
+/ Layout for most parts of the site
 doctype 5
 html
-  head
-    title = current_page.data.title
-    = partial :meta
-    /! css
-    = stylesheet_link_tag data.rivertrails.stylesheets.main
-    /! Scripts
-    = javascript_include_tag data.rivertrails.scripts.main
+  = partial :head
   body
     = yield
 
