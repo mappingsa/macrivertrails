@@ -1,4 +1,5 @@
 ---
+layout: layout_trail
 section: river
 title: River Trail
 list:
@@ -24,19 +25,5 @@ list:
   - { file: willie_retreat,       image: Campingareaweb.jpg,              caption: Willie Retreat, Macquarie Marshes }
   - { file: riverside_tp,         image: riversidenynganweb1.jpg,         caption: Nyngan Riverside Tourist Park }
 ---
-.river@page
-  = partial :trail_header
 
-  @content
-    .flex-container style="width: 90%; min-height: 250px; text-align: center; margin: auto; padding-top: 10px;"
-      .flexslider.pageImageSlider
-        ul.slides
-          - current_page.data.list.each do |place|
-            = partial '../trail_slide', :locals => {:place => place}
-
-    ul.trail-list@listview data-inset=true
-      - current_page.data.list.each do |place|
-        = partial '../place', :locals => {:place=> place}
-
-  = partial :tabbar
 
