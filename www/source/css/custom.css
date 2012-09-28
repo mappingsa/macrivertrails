@@ -1,4 +1,22 @@
+.ui-mobile {
+  /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
+     rendering time! So, think twice about using optimizeLegibility */
+  text-rendering: optimizeSpeed;
 
+  /* subpixel-antialiased is the default, but you might like to use antialiased for a thinner look
+     in Safari. There is no speed penalty for this, nor a speed advantage for "none", which looks
+     absolutely terrible... */
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  /* Shut off long touch on links for info. If this is set to "default", then a long touch
+     on a link will display the URL in a popup. This is pretty darn annoying. */
+  -webkit-touch-callout: none;
+
+  /* Shut off content selection, because it's really annoying when dragging
+     You might like to do this only for scroller content, though, or enable it for certain
+     text you want the user to be able to cut-and-paste */
+  -webkit-user-select: none;
+}
 
 .flexslider {
   border: 2px solid #fff;
