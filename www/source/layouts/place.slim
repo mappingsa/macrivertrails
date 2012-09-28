@@ -6,7 +6,8 @@ html
     .place-page@page
       = partial :place_header
       = partial :place_menu
-      = partial :place_slider
-      .place-content@content
-        = yield
+      div data-iscroll="true"
+        = partial :place_slider
+        .place-content@content
+          = yield
       = partial :tabbar

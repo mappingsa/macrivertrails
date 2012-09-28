@@ -6,7 +6,7 @@ html
     = blank_line
     @page class="#{current_page.data.section}"
       = partial :trail_header
-      @content
+      @content data-iscroll="true"
         = blank_line
         .flex-container style="width: 90%; min-height: 250px; text-align: center; margin: auto; padding-top: 10px;"
           .flexslider.pageImageSlider
