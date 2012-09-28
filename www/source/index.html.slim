@@ -10,35 +10,36 @@ list:
 ---
 @page
   = partial :header
-  = partial :home_slider
-  @content
+  div data-iscroll="true"
+    = partial :home_slider
+    @content
 
-    = blank_line
-    h3.home-title Welcome to Macquarie River Trails
-    = blank_line
+      = blank_line
+      h3.home-title Welcome to Macquarie River Trails
+      = blank_line
 
-    p The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias
-      best kept secrets, until now.
+      p The Macquarie valley in the heart of New South Wales is one of the States and indeed Australias
+        best kept secrets, until now.
 
-    p The Macquarie River Trails are designed to let you explore the many attractions and treasures
-      of this rich farming region, one that is blessed with a wonderful, vibrant river, friendly
-      people and a laid back lifestyle.
+      p The Macquarie River Trails are designed to let you explore the many attractions and treasures
+        of this rich farming region, one that is blessed with a wonderful, vibrant river, friendly
+        people and a laid back lifestyle.
 
-    p As our slogan says, this is your chance to Relax, Recover, Unwind and Discover.
-      Five trails for you to pick and choose from to create a lifetime of memories as you meander
-      through our region let the river be your tour guide.
+      p As our slogan says, this is your chance to Relax, Recover, Unwind and Discover.
+        Five trails for you to pick and choose from to create a lifetime of memories as you meander
+        through our region let the river be your tour guide.
 
-    p From the wonders of Lake Burrendong to the frontier country of the Macquarie Marshes if you
-      only spend a week, you will probably have to come back.  But thats Ok, you are welcome anytime.
+      p From the wonders of Lake Burrendong to the frontier country of the Macquarie Marshes if you
+        only spend a week, you will probably have to come back.  But thats Ok, you are welcome anytime.
 
-    = blank_line
-    div
-      .thumbnail-list
-        ul@listview data-inset="true" data-filter-theme="b"
-          - current_page.data.list.each do |trail|
-            = partial :trail, :locals => {:trail=> trail}
+      = blank_line
+      div
+        .thumbnail-list
+          ul@listview data-inset="true" data-filter-theme="b"
+            - current_page.data.list.each do |trail|
+              = partial :trail, :locals => {:trail=> trail}
 
-    = partial :social
+      = partial :social
   = partial :tabbar
 
 

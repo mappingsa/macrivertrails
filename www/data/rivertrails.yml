@@ -2,6 +2,7 @@ stylesheets:
   main:
     - style4
     - flexslider
+    - jquery.mobile.iscrollview
     - custom
   map:
 
@@ -10,6 +11,8 @@ scripts:
     - jquery-1.7.1.min
     - jquery.mobile.init
     - jquery.mobile-1.1.0.min
+    - iscroll
+    - jquery.mobile.iscrollview
     # Cordova temporarly commented-out
     # - cordova-1.8.0
     - jquery.flexslider.min
