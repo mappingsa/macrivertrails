@@ -1,0 +1,1022 @@
+.ui-mobile {
+  /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
+     rendering time! So, think twice about using optimizeLegibility */
+  text-rendering: optimizeSpeed;
+
+  /* subpixel-antialiased is the default, but you might like to use antialiased for a thinner look
+     in Safari. There is no speed penalty for this, nor a speed advantage for "none", which looks
+     absolutely terrible... */
+  -webkit-font-smoothing: subpixel-antialiased;
+
+  /* Shut off long touch on links for info. If this is set to "default", then a long touch
+     on a link will display the URL in a popup. This is pretty darn annoying. */
+  -webkit-touch-callout: none;
+
+  /* Shut off content selection, because it's really annoying when dragging
+     You might like to do this only for scroller content, though, or enable it for certain
+     text you want the user to be able to cut-and-paste */
+  -webkit-user-select: none;
+}
+
+.flexslider {
+  border: 2px solid #fff;
+  margin-bottom: 0;
+}
+
+/* =============================================================================
+   (ex) Slide out menu (no longer slide-out)
+   ========================================================================== */
+
+.menu {
+  background:#262C3A;
+  -webkit-text-size-adjust:none !important;
+  opacity: 0;
+  z-index: -1;
+
+  display: block !important;
+  position: absolute;
+  right: 0;
+}
+
+.menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.menu img {
+  float: left;
+  margin-right: 10px;
+}
+
+.menu ul li {
+  list-style-type: none;
+  margin: 0px 0;
+}
+.menu ul li a:link, .menu ul li a:visited {
+ text-align: center;
+ border-top: 1px #3E4555 solid;
+  border-bottom: 1px #191D27 solid;
+  color: #DBE0E8;
+  font-size: 12px;
+  font-family: 'Cabin', sans-serif;
+  text-decoration: none;
+  display: block;
+  padding-top: 10px;
+  padding-right:  10px;
+  padding-bottom:  10px;
+  padding-left: 7px;
+  text-shadow: 0px 1px 1px #212631;
+}
+
+.menu ul li a:hover, .menu ul li a:active {
+  background-color: #32394A;
+}
+
+.ui-btn-up-a {
+  border:none !important;
+  background: transparent !important;
+  background-image: none !important;
+}
+a.menuBtn{
+  background: transparent url(../images/icon_list_bullets.png) top left no-repeat !important;
+  width:31px;
+  height:31px;
+  background-size: 30px 30px;
+  text-indent:-999em !important;
+  display:block !important;
+  -webkit-box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
+  box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
+}
+a.menuBtn .ui-btn-inner{
+  border:none;
+}
+a.menuBtn:hover{
+  border:none !important;
+}
+
+.place-page {
+}
+
+.place-content {
+
+}
+
+/* =============================================================================
+   Interior Banner Styles
+   ========================================================================== */
+
+.bannerContainer {
+    width:100%;
+    background:;
+}
+
+
+.banner {
+    max-width: 100%;
+    display: block;
+    max-height:295px;
+    margin:0 auto;
+}
+
+
+/* =============================================================================
+   Page Title under Banner Image
+   ========================================================================== */
+
+h2.pageTitle {
+    text-transform:uppercase;
+    background:url("") #151515; background-size: 5px 5px;
+    border-bottom:1px solid #aaa;
+    color:#0099FF;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-family: 'Kaushan Script', cursive;
+    text-shadow: 0 1px 0 #fff;
+    font-weight:normal;
+    opacity: 0.6;
+}
+
+h2.pageTitle span {
+    display:block;
+    padding:8px 0 5px 15px
+}
+
+/* =============================================================================
+   Business Text
+   ========================================================================== */
+
+heritage {
+font-size: 15px;
+color: #FFFFFF;
+background: #AE132A;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+nature {
+font-size: 15px;
+color: #FFFFFF;
+background: #539536;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+river {
+font-size: 15px;
+color: #FFFFFF;
+background: #015CAB;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+produce {
+font-size: 15px;
+color: #FFFFFF;
+background: #FBB255;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+riverbedz {
+font-size: 15px;
+color: #FFFFFF;
+background: #989898;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+cycle {
+font-size: 15px;
+color: #FFFFFF;
+background: #C14F9D;
+display: block;
+padding: .5em;
+text-align:;
+font-weight: normal;
+margin: 0px 0 20px;
+-moz-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-webkit-box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+box-shadow: inset 0 2px 2px #908d79,0px 2px 2px #f2efe0;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+border-radius: .4em;
+}
+
+/* =============================================================================
+   Header Bar (behind logo) & Logo
+   ========================================================================== */
+
+.page-header {
+    border:0px;
+    border-bottom:1px solid #bfc0c0;
+    color:#eee;
+    height:40px;
+    text-shadow: 0 -1px 1px #000;
+    background:url("") #151515; background-size: 5px 5px;
+}
+
+
+.logo {
+    width:231px;
+    height:40px;
+    background:url("") top center no-repeat;
+    margin:0 auto;
+    background-size: 185px 40px;
+}
+
+
+h1.ui-title {
+    margin:0px;
+    padding:10px 0 0 0
+}
+
+.rtheader a.homeBtn {background:url('../images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+.rtheader a.backBtn {background:url('../images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+
+/* =============================================================================
+   Link Bars with Large Arrows
+   ========================================================================== */
+
+li .ui-btn-text {background:url("") #151515; background-size: 20px 20px;}
+
+a.ui-link-inherit {
+    background:url("../images/arrow.png") right no-repeat;
+    background-size: 10px 14px;
+
+    font-family: 'Cabin', sans-serif; font-weight: 200; font-size:14px;
+    color:#eee !important;
+    text-shadow: 0 -1px 1px #000;
+
+}
+
+a.ui-link-inherit:hover {
+    background:url("../images/arrow.png") right no-repeat #333;
+    color:#0099FF !important;
+}
+
+.events-list span.ui-icon, .thumbnail-list span.ui-icon {display:none}
+
+
+/* =============================================================================
+   Overwrite jQuery Mobile Styles
+   ========================================================================== */
+
+.ui-header .ui-title, .ui-footer .ui-title {
+    margin: 0.8em 90px;
+}
+
+.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+
+}
+
+.ui-content {
+    padding-top:0;
+    padding-bottom: 0;
+}
+
+.page-header .ui-icon {
+    text-indent:-9999px !important
+}
+
+.gallery-page h1.ui-title {
+    margin: 0px;
+    padding: 0px;
+    position:relative;
+    top:13px
+}
+
+.ui-btn-icon-notext .ui-btn-inner { z-index:9999 }
+
+
+/* =============================================================================
+   List Styles
+   ========================================================================== */
+#mapLinks {padding-right:2px;/*to overwrite standard 75px*/}
+#mapLinks p {margin:0 0 0 0;}
+#mapLinks a {margin:1px 3px 1px 2px;width:12%;float:left; display:block;text-align:center;background:none;}
+#mapLinks a.last {margin-right:0;}
+#mapLinks a span {display: block;padding-top: 0px;margin: 5px;}
+#mapLinks a {color: #A5A6A7;font-size: 8px;font-weight: bold;text-shadow: none;
+}
+
+
+.ui-content .ui-listview-inset.trail-list {
+  margin-top: 10px;
+}
+
+
+/* thumbail lists */
+.events-list  ul.ui-listview li, .thumbnail-list ul.ui-listview li {
+    margin:0;
+    padding:0;
+    border-bottom:0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.thumbnail-list a.ui-link-inherit,
+.events-list ul.ui-listview a.ui-link-inherit {
+    color: #fff;
+}
+
+.thumbnail-list a.ui-link-inherit:hover, .events-list ul.ui-listview a.ui-link-inherit:hover {
+    color: #2489CE;
+}
+
+.thumbnail-list ul.ui-listview li a.ui-link-inherit {
+    padding-left: 100px;
+}
+
+.thumbnail-list ul.ui-listview .ui-btn-inner {
+    margin:0;
+    padding:0;
+    border-bottom:0px
+}
+
+.thumbnail-list li.ui-corner-bottom {
+    padding-bottom:1px !important
+}
+
+.ui-li-thumb {
+    left: 4px;
+    max-height: 80px;
+    max-width: 71px;
+    position: absolute;
+    top: 4px;
+    border:0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.events-list .ui-li-aside {
+    float: right;
+    margin: 0.3em 0;
+    text-align: right;
+    width: 22%;
+}
+
+.ui-li-aside {
+    margin: 0 2em;
+}
+
+.events-list .ui-li {
+    padding:0;
+    margin:0
+}
+
+li.ui-li-divider {
+    padding: 0.5em 15px !important
+}
+
+
+/* list divider, create your own gradient: http://www.colorzilla.com/gradient-editor/ */
+li.ui-li-divider {
+    color: #111;
+    text-shadow: 0 1px 0 #999;
+    background: #ffffff;
+    background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+    background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+    background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+    background: linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+}
+
+
+/* =============================================================================
+   Footer Navigation
+   ========================================================================== */
+
+.ui-btn-up-b {
+    border: 1px solid #333;
+    background:url("") #151515; background-size: 5px 5px;
+    font-weight: bold;
+    color:  #0099FF;
+    text-shadow: 0 -1px 1px #000;
+}
+
+.ui-btn-up-b a.ui-link-inherit {
+    color:  #fff;
+}
+
+.ui-btn-hover-b {
+    border: 1px solid #000;
+    background: #333;
+    font-weight: bold;
+    color:  #fff;
+    text-shadow: 0  -1px 1px  #014D68;
+
+}
+
+.ui-btn-hover-b a.ui-link-inherit {
+    color:  #fff;
+}
+
+.ui-btn-down-b {
+    border: 1px solid #333;
+    background: #111;
+    font-weight: bold;
+    color:  #fff;
+    text-shadow: 0 -1px 1px #225377;
+}
+
+.ui-btn-down-b a.ui-link-inherit {
+    color:  #fff;
+}
+
+.ui-btn-up-b,
+.ui-btn-hover-b,
+.ui-btn-down-b {
+
+    font-family: 'Cabin', sans-serif;
+
+    text-decoration: none;
+}
+
+.ui-footer .ui-btn-text { background:none }
+
+
+/* =============================================================================
+   Footer Nav Icons --[ Recommend to delete CSS for icons you don't use ]--
+   ========================================================================== */
+
+.custom-icons .ui-btn .ui-btn-inner {
+    padding-top: 35px !important;
+}
+
+.custom-icons .ui-btn .ui-icon {
+    width: 30px!important;
+    height: 30px!important;
+    margin-left: -15px !important;
+    box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+    -webkit-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+.nearby .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.info .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.favorites .ui-icon { background: url('../images/icon_favorities_add.png') 50% 50% no-repeat; background-size: 20px 20px; }
+.map .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.browse .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 22px 16px; }
+
+
+
+
+/* =============================================================================
+   Portfolio (obsolete?)
+   ========================================================================== */
+
+.gallery {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.gallery:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+.gallery li {
+    float: left;
+    width: 33.33333333%;
+}
+
+.gallery li a {
+    display: block;
+    margin: 5px;
+    border: 1px solid #3c3c3c;
+}
+
+.gallery li img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#Gallery1 .ui-content, #Gallery2 .ui-content {
+    overflow: hidden;
+}
+
+.gallery img {
+    -webkit-box-shadow: 0px 0px 4px #111;
+    -moz-box-shadow: 0px 0px 4px #111;
+    box-shadow: 0px 0px 4px #111;
+}
+
+
+/* =============================================================================
+   Homepage Social Icons
+   ========================================================================== */
+
+div.social {
+    text-align:center;
+    background-color:rgba(238,238,238,0.4);
+    padding:4px;
+    border:1px solid #ccc;
+    -webkit-transition-duration:0.8s;
+    -moz-transition-duration:0.8s;
+    -o-transition-duration:0.8s;
+    transition-duration:0.8s;
+}
+
+div.social:hover {
+    background-color:rgba(238,238,238,1);
+    border:1px solid #c1bfbf;
+}
+
+
+/* =============================================================================
+   Homepage Image Icons
+   ========================================================================== */
+
+
+.left {
+width:110px;
+height:70px;
+left: 25%;
+margin-left: 0px;
+top: 0px;
+}
+.middle {
+width:110px;
+height:70px;
+right: 25%;
+margin-right: 0px;
+top: 0px;
+}
+.right {
+width:110px;
+height:70px;
+right: 100%;
+margin-right: 0px;
+bottom: 10px;
+}
+
+
+/* =============================================================================
+   Map Icons
+   ========================================================================== */
+#mapbutton.ui-btn-up-c {
+    border: 1px solid #CCCCCC;
+    background: #EEEEEE;
+    font-weight: bold;
+    color: #fff;
+    text-shadow:  0 1px 1px #111;
+}
+
+#mapbutton.ui-btn-up-c a.ui-link-inherit {
+    color: #fff;
+}
+
+#mapbutton.ui-btn-hover-c {
+    border: 1px solid #7F7F7F;
+    background: #7F7F7F;
+    font-weight: bold;
+    color: #0099FF;
+    text-shadow:  0 1px 1px #000;
+}
+
+#mapbutton.ui-btn-hover-c a.ui-link-inherit {
+    color: #fff;
+}
+
+div.map {
+    text-align:center;
+        -webkit-transition-duration:0.8s;
+    -moz-transition-duration:0.8s;
+    -o-transition-duration:0.8s;
+    transition-duration:0.8s;
+}
+
+
+
+
+
+/* =============================================================================
+   Twitter Feed
+   ========================================================================== */
+
+ul.tweetList{
+    margin:0;
+    padding:0;
+    list-style-type:none
+}
+
+#jstwitter {
+    width:100%;
+    background:url("../images/twitterBack.png") repeat;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding:0px;
+    -webkit-box-shadow:  1px 1px 1px #0f0f0f;
+    -moz-box-shadow: 1px 1px 1px #0f0f0f;
+    box-shadow: 1px 1px 1px #0f0f0f;
+}
+
+.tweet {
+    padding: 15px 20px;
+    color:#FFF;
+    border-bottom:1px solid #000000;
+    border-top:1px solid #353434;
+    text-shadow: 0 1px 0 #000;
+    margin: 0 10px;
+    font-size:13px
+}
+
+.followButton {
+    margin:0 0 20px 0
+}
+
+.time {
+    font-size: 11px;
+    font-style:italic
+}
+
+.tweet a {
+    color: #2489CE;
+    font-weight: bold;
+}
+
+
+/* =============================================================================
+   Contact Form
+   ========================================================================== */
+
+#errors {
+    border:1px solid #cd0a0a;
+    background:url("../images/contact-error.png") 50% 50% repeat;
+    color:#fff;
+    padding: 5px;
+    text-shadow:0 1px 0 #111
+}
+
+.hide{
+    display:none
+}
+
+
+/* Caption style */
+.flex-caption {
+    text-align:center;
+    color: #000;
+ font-family: 'Cabin', sans-serif; font-weight: 100; font-size:16px;
+}
+
+/** BUSINESS AND MAIN HEADER **/
+
+.busimage {max-width:800px;width:100%;display:block;margin:0 auto;}
+
+.businessheading {
+text-align: center;
+font-family: 'Kaushan Script', cursive; font-size:18px;
+color:#151515 !important;
+list-style-type: none;
+margin: 0 0 0px 0;
+}
+
+
+.ui-header.mainheader {
+    border:0px;
+    border-bottom:1px solid #bfc0c0;
+    color:#eee;
+    height:40px;
+    text-shadow: 0 -1px 1px #000;
+    background:url('') #151515; background-size: 5px 5px;
+}
+.mainlogo {
+    width:231px;
+    height:40px;
+    background:url('../images/header.png') top center no-repeat;
+    margin:0 auto;
+    background-size: 185px 40px;
+}
+
+
+.heritageheader {
+    background-color:#AE132A;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+.natureheader {
+    background-color:#539536;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+
+.ui-header.riverheader {
+    background-color:#015CAB;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+.produceheader {
+    background-color:#FBB255;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+.cycleheader {
+    background-color:#C14F9D;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+.riverbedzheader {
+    background-color:#989898;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+
+.fishingheader {
+    background-color:#663399;
+    position:relative;
+    width:100%;
+    height:40px;
+    border: 1px solid #2A2A2A;
+    font-weight: normal;
+}
+
+#bottomList {
+    color:#F3F0E1;
+    font-style:normal;
+    font-size:16px;
+margin-top: 20px;
+margin-right: -5px;
+margin-bottom: 15px;
+margin-left: -45px;
+}
+
+#bottomList li {
+    width:100%;
+    border-bottom: 1px solid #AE132A;
+    list-style:none;
+    padding-bottom:5px;
+    margin-bottom:5px;
+    background:  url('../images/arrow-channel.png') no-repeat 100% 50%;
+}
+#bottomList li.b5 {
+    border:none;
+}
+#bottomList li a {
+    color:#EEE;
+    font-weight:normal;
+    font-size:16px;
+    text-decoration:none;
+    white-space:nowrap;
+}
+#bottomList a:hover {
+    color:#4682B4;
+}
+
+#bottomList a.selected {
+    color:#4682B4;
+}
+
+
+/** MAP PAGINATION **/
+
+
+
+
+.pagination {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    line-height: 25px;
+    font-size:12px;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+}
+
+.display {
+    margin-left: 2%;
+    text-align: center;
+    font-size:12px;
+}
+
+.pagination .btn {
+    cursor:pointer;
+    width:25px;
+    height:25px;
+}
+.pagination .back-btn {
+    background:url('../images/arrow_left_12x12.png') no-repeat 50% 50%;
+    border-right: 1px solid #ccc;
+}
+.pagination .fwd-btn {
+    background:url('../images/arrow_right_12x12.png') no-repeat 50% 50%;
+    border-left: 1px solid #ccc;
+}
+.gradient {
+    background:#fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eaeaea));
+    background: -moz-linear-gradient(top, #fff, #eaeaea);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#eaeaea);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#eaeaea)";
+}
+.rounded {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -khtml-border-radius: 8px;
+}
+.lt { float:left; }
+.rt { float:right; }
+body.landscape .mapg { height:650px; }
+body.portrait .mapg { height:650px; }
+
+.more { text-align: center; }
+ @-moz-keyframes pulsate { from {
+ -moz-transform: scale(0.25);
+ opacity: 1.0;
+}
+ 95% {
+ -moz-transform: scale(1.3);
+ opacity: 0;
+}
+to {
+    -moz-transform: scale(0.3);
+    opacity: 0;
+}
+}
+ @-webkit-keyframes pulsate { from {
+ -webkit-transform: scale(0.25);
+ opacity: 1.0;
+}
+ 95% {
+ -webkit-transform: scale(1.3);
+ opacity: 0;
+}
+to {
+    -webkit-transform: scale(0.3);
+    opacity: 0;
+}
+}*/
+
+/* get the container that's just outside the marker image,
+        which just happens to have our Marker title in it */
+    #map_canvas div.gmnoprint[title="I might be here"] {
+    -moz-animation: pulsate 1.5s ease-in-out infinite;
+    -webkit-animation: pulsate 1.5s ease-in-out infinite;
+    border:1pt solid #fff;
+    /* make a circle */
+        -moz-border-radius:51px;
+    -webkit-border-radius:51px;
+    border-radius:51px;
+    /* multiply the shadows, inside and outside the circle */
+        -moz-box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    -webkit-box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    box-shadow:inset 0 0 5px #06f, inset 0 0 5px #06f, inset 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f, 0 0 5px #06f;
+    /* set the ring's new dimension and re-center it */
+        height:51px!important;
+    margin:-18px 0 0 -18px;
+    width:51px!important;
+}
+/* hide the superfluous marker image since it would expand and shrink with its containing element */
+/*  #map_canvas div[style*="987654"][title] img {*/
+    #map_canvas div.gmnoprint[title="I might be here"] img { display:none; }
+    /* compensate for iPhone and Android devices with high DPI, add iPad media query */
+    @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (device-width: 768px) {
+ #map_canvas div.gmnoprint[title="I might be here"] {
+ margin:-10px 0 0 -10px;
+}
+}
+#styles label, #add-tab label {
+    display: inline-block;
+    width: 130px;
+}
+.park {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(112,112,112)), color-stop(0.51, rgb(94,94,94)), color-stop(0.52, rgb(57,57,57)));
+    background: -moz-linear-gradient(center top, rgb(112,112,112) 0%, rgb(94,94,94) 51%, rgb(57,57,57) 52%);/*position:absolute; left:-10px;*/
+}
+.parktext {
+    text-shadow: 0 -1px 0 #000;
+    color: #fff;
+    font-family: Helvetica Neue, Helvetica, arial;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 8px 45px 8px 15px;
+    font-weight: bold;
+    background: url('../map/images/arrow.png') 95% 0% no-repeat;
+}
+.parktab {
+    text-shadow: 0 -1px 0 #000;
+    color: #fff;
+    font-family: Helvetica Neue, Helvetica, arial;
+    font-size: 18px;
+    background: rgb(112,112,112) !important;
+}
+label.error {
+    color: #F00;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-top: 0.5em;
+    width: 100%;
+    float: none;
+}
+body.landscape label.error {
+    display: inline-block;
+    margin-left: 22%;
+}
+body.portrait label.error {
+    margin-left: 0;
+    display: block;
+}
+label.error { display: none; }
+em {
+    color: red;
+    font-weight: bold;
+    padding-right: .25em;
+}
+.type-interior .content-secondary {
+    border-right: 0;
+    border-left: 0;
+    margin: 10px -15px 0;
+    background: #fff;
+    border-top: 1px solid #ccc;
+}
+.type-home .ui-content { margin-top: 5px; }
+.type-interior .ui-content { padding-bottom: 0; }
+.content-secondary .ui-collapsible { padding: 0 15px 10px; }
+.content-secondary .ui-collapsible-content {
+    padding: 0;
+    background: none;
+    border-bottom: none;
+}
+
+
+.rtheader a.homeBtn {background:url('../images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+.rtheader a.backBtn {background:url('../images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+.rtheader a.infoBtn {background:url('../images/icon_information.png') no-repeat;width:35px;height:35px;display:block;top:6px;top:.2em;}
+.rtheader a.mapBtn  {background:url('../images/103-map.png') no-repeat;width:35px;height:35px;display:block;right:10px;top:.6em;}
+.rtheader a.searchBtn  {background:url('../images/06-magnify.png') no-repeat;width:35px;height:35px;display:block;right:10px;top:.6em;}
+.rtheader a.locationonBtn  {background:url('../map/images/location-on.png') no-repeat;width:30px;height:30px;display:block;right:10px;top:.4em;}
+.rtheader a.locationoffBtn  {background:url('../map/images/location-off.png') no-repeat;width:30px;height:30px;display:block;right:10px;top:.4em;}
+
+
+
