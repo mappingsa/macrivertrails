@@ -72,21 +72,32 @@ helpers do
   end
 
   # returns relative path from current page to given path
-  def relative_path_to(path)
-    Pathname.new(path).relative_path_from Pathname.new(current_page.destination_path)
+  def path_to(path)
+    Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
   end
 
-  # returns relative path from current page to /images
-  def images
-    relative_path_to('images/')
+  # returns relative paths to various directories
+  #
+  # This is to support partials that might be used by templates at any level of the directory
+  # structure, and that need to reference another directory by relative path. Relative path
+  # is needed because, in PhoneGap, we are referencing a local filesystem, and root-relative
+  # paths are not useful, because they reference the filesystem root, and not the www root.
+
+  def path_root
+    path_to '/'
   end
 
-  def info
-    relative_path_to('Info/')
+  def path_images
+    path_to '/images'
   end
 
+  def path_info
+    path_to '/Info'
+  end
 
-
+  def path_map
+    path_to '/map'
+  end
 
 end
 
