@@ -70,6 +70,24 @@ helpers do
   def next_line
     "\n"
   end
+
+  # returns relative path from current page to given path
+  def relative_path_to(path)
+    Pathname.new(path).relative_path_from Pathname.new(current_page.destination_path)
+  end
+
+  # returns relative path from current page to /images
+  def images
+    relative_path_to('images/')
+  end
+
+  def info
+    relative_path_to('Info/')
+  end
+
+
+
+
 end
 
 set :css_dir, 'css'
