@@ -99,6 +99,19 @@ helpers do
     path_to '/map'
   end
 
+  # Helper to add active class if current_page basename (not including extension)
+  #  matches supplied string.
+  # Returns a hash meant to be used as a Slim splat attribute
+  #
+  # Use in left-hand side of Slim statement
+  # Example: a*active('about')
+  #
+  # In the above example, the class "ui-btn-active' will be added to the <a> tag if the current
+  # page is about.html.
+  def active(basename)
+  basename == Pathname.new(current_page.destination_path).basename.to_s.sub(/\..*/, '') ? {'class' => 'ui-btn-active'} : {}
+  end
+
 end
 
 set :css_dir, 'css'
