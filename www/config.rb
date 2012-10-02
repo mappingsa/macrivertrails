@@ -6,7 +6,10 @@ set :slim, {
   :format => :html5,
   :pretty => true,
   :disable_escape => true,
-  :shortcut => {'@' => 'data-role', '#' => 'id', '.' => 'class'}  # Doesn't seem to work
+  :shortcut => {
+    '@' => 'data-role',
+    '#' => 'id',
+    '.' => 'class'}
   }
 
 set :erb, {
@@ -42,6 +45,7 @@ set :erb, {
 # with_layout :admin do
 #   page "/admin/*"
 # end
+
 
 # Proxy (fake) files
 # page "/this-page-has-no-template.html", :proxy => "/template-file.html" do
