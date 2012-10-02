@@ -7,13 +7,13 @@
       a href="tel:#{place.tel}"
         img src="../images/75-phone.png" height="16px" width="18px" PHONE
     li
-      a href="http://#{place.url}" rel="external"
+      a href="http://#{place.url}" data-rel="external"
         img src="../images/icon_blog.png" height="20px" width="20px" WEB
     li
       a href="#" onclick="showAlert(); return false;"
         img src="../images/icon_mail.png" height="20px" width="20px" MAIL
     li
-      a href="../map/index.html?section=#{section}&item=#{place.item}" rel="external" data-transition="slide"
+      a href="../map/index.html?section=#{section}&item=#{place.item}" data-ajax="false"
         img alt="" src="../map/images/#{section}-pin.png" height="25px" width="18px" GET DIRECTIONS
     li
       a href="../favorites.html?section=#{section}&item=#{place.map_item}&title=#{URI.escape place.title}"
