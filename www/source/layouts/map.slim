@@ -1,0 +1,10 @@
+doctype 5
+html
+  = partial :head
+  body
+    = blank_line
+    @page
+      = partial :map_header
+      = partial :map_tabbar
+      = yield
+      = partial :tabbar
