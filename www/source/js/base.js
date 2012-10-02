@@ -1,62 +1,75 @@
 // Temporarily commented-out
-
 // document.addEventListener("deviceready", onDeviceReady, false);
 
 
+(function installSliders($) {
+  "use strict";
+
+  var refreshScroller = function(slider) {
+    $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
+  };
+
+  $(document).on('pageinit', ".ui-page", function() {
+
+    // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
+    // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
+    // won't actually be unhidden by the browser, though, because we set the visibility back
+    // when we are done, and since browser Javascript is synchronous, the renderer does not
+    // run asynchronously during event processing, and so it will be none the wiser.
+    // May not be necessary - commented-out for testing.
+    //var $page = $(this),
+     //   hidden = $page.is(":hidden");
+   // if (hidden) { $page.css("display", "block"); }
+
+    $('.homeImageSlider').flexslider({
+      slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+      animationSpeed: 400,
+      controlNav: false,
+      directionNav: false,
+      animation: "slide",
+      pauseOnHover: true,
+      touch: true,
+      smoothHeight: false,
+      start: refreshScroller,
+      before: refreshScroller,
+      after: refreshScroller,
+    });
+
+    $('.pageImageSlider').flexslider({
+      slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+      animationSpeed: 400,
+      controlNav: false,
+      directionNav: false,
+      animation: "slide",
+      pauseOnHover: true,
+      slideshow: true,
+      touch: true,
+      smoothHeight: false,
+      start: refreshScroller,
+      before: refreshScroller,
+      after: refreshScroller,
+    });
 
 
-$(document).on('pageinit', ".ui-page", function() {
+    $('.pageImageSliderAuto').flexslider({
+      slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
+      animationSpeed: 400,
+      controlNav: false,
+      directionNav: false,
+      animation: "slide",
+      pauseOnHover: true,
+      slideshow: true,
+      touch: true,
+      randomize: false,
+      smoothHeight: false,
+      start: refreshScroller,
+      before: refreshScroller,
+      after: refreshScroller,
+    });
 
-  // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
-  // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
-  // won't actually be unhidden by the browser, though, because we set the visibility back
-  // when we are done, and since browser Javascript is synchronous, the renderer does not
-  // run asynchronously during event processing, and so it will be none the wiser.
-  // May not be necessary - commented-out for testing.
-  //var $page = $(this),
-   //   hidden = $page.is(":hidden");
- // if (hidden) { $page.css("display", "block"); }
-
-  $('.homeImageSlider').flexslider({
-    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
-    animationSpeed: 400,
-    controlNav: false,
-    directionNav: false,
-    animation: "slide",
-    pauseOnHover: true,
-    touch: true,
-    smoothHeight: false,
   });
 
-  $('.pageImageSlider').flexslider({
-    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
-    animationSpeed: 400,
-    controlNav: false,
-    directionNav: false,
-    animation: "slide",
-    pauseOnHover: true,
-    slideshow: true,
-    touch: true,
-    smoothHeight: false,
-  });
-
-
-  $('.pageImageSliderAuto').flexslider({
-    slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
-    animationSpeed: 400,
-    controlNav: false,
-    directionNav: false,
-    animation: "slide",
-    pauseOnHover: true,
-    slideshow: true,
-    touch: true,
-    randomize: false,
-    smoothHeight: false,
-  });
-
- // if (hidden) { $page.css("display", "") };
-
-});
+  }(jQuery));
 
 
 $(document).bind('pageinit', function(){
