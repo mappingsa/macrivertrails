@@ -727,10 +727,10 @@ margin: 0 0 0px 0;
 .ui-header.mainheader {
     border:0px;
     border-bottom:1px solid #bfc0c0;
-    color:#eee;
+    color:#1e5799;
     height:40px;
     text-shadow: 0 -1px 1px #000;
-    background:url('') #151515; background-size: 5px 5px;
+    background:url('') #1e5799 background-size: 5px 5px;
 }
 .mainlogo {
     width:231px;
