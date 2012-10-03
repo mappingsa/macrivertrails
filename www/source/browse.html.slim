@@ -1,0 +1,18 @@
+---
+trails:
+  - river
+  - heritage
+  - nature
+  - produce
+  - cycle
+  - riverbedz
+---
+.browse-page@page
+  = partial :browse_header
+  div.padd data-iscroll="true"
+    ul@listview data-filter-placeholder="Search..." data-filter="true" data-filter-theme="b"
+      - current_page.data.trails.each do |trail|
+        = partial :browse_trail, :locals => {:section => trail}
+  = partial :tabbar
+
+
