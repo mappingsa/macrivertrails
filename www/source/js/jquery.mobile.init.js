@@ -9,5 +9,5 @@ $(document).bind("mobileinit", function(){
     // in the jQuery Mobile code. Research how to actually disable orientation change, most
     // likely with an event handler.
     $.mobile.orientationChangeEnabled = false;
-    $.mobile.defaultTransition = "slide";
+    $.mobile.defaultPageTransition = "slide";
 });
