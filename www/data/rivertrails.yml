@@ -4,7 +4,9 @@ stylesheets:
     - flexslider
     - jquery.mobile.iscrollview
     - custom
-  map:
+  maps:
+    - style4
+    - custom
 
 scripts:
   main:
@@ -17,6 +19,17 @@ scripts:
     # - cordova-1.8.0
     - jquery.flexslider.min
     - base
-  map:
+  maps:
+    - http://maps.google.com/maps/api/js?sensor=true
+    - jquery-1.7.1.min.js
+    - jquery.mobile-1.1.0.min.js
+    # - cordova-1.8.0.js
+    - jquery.ui.map.js
+    - jquery.ui.map.services.js
+    - jquery.ui.map.extensions.js
+    - geolocation.min.js
+    - jquery.tinysort.min.js
+    - maps.js
+    - fish.js
 
 

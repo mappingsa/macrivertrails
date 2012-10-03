@@ -1,3 +1,33 @@
 ---
-layout: map
+layout: maps
 ---
+<div data-role="content">
+  <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:.3em;">
+
+    <div id="map_canvas" style="height:300px; width: 100%;"></div>
+
+    <ul data-role="listview" data-inset="true" id="markerList"></ul>
+
+    <div id="markerListNote" style=" width: 100%; text-align: center; display: none;">
+      Distance displayed in list is based on a straight path from your location.
+    </div>
+
+    <div id="directionsFields" style="display:none;">
+      <label for="from">From</label>
+      <input id="from" class="ui-bar-c" type="text" value=""  style="display: none;"/>
+      <input id="fromPretty" class="ui-bar-c" type="text" value="" />
+      <label for="to">To</label>
+      <input id="to" class="ui-bar-c" type="text" value="" style="display: none;"/>
+      <input id="toPretty" class="ui-bar-c" type="text" value="" />
+      <a id="submitDirections" href="#" data-role="button" data-icon="search">Get directions</a>
+    </div>
+
+  </div>
+
+  <div id="results" class="ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
+    <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">Results</div>
+    <div id="directions"></div>
+    <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined"></div>
+  </div>
+
+</div>

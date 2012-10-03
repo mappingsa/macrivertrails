@@ -1,9 +1,9 @@
 doctype 5
 html
-  = partial :head
+  = partial :map_head
   body
     = blank_line
-    @page
+    @page.type_interior#gmap
       = partial :map_header
       = partial :map_tabbar
       = yield
