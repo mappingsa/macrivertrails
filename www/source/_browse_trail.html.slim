@@ -1,7 +1,7 @@
+/! Use data from a trail's index.html front matter to generate a list section for the trail
 - dir = section.capitalize
 - index_page = sitemap.find_resource_by_destination_path "/#{dir}/index.html"
 - index_data = index_page.data
-/ p = section
 li@list-divider #{index_data.title.upcase}
 - index_data.list.each do |place|
   = partial :browse_place, :locals => {:url => "#{dir}/#{place.file}.html", :caption => place.caption}
