@@ -1,14 +1,14 @@
 $(function() {
     var fullLoad = true;
-    var loadingSingle = false;  
+    var loadingSingle = false;
     var cycle = new google.maps.MarkerImage('images/Cycle-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
     var heritage = new google.maps.MarkerImage('images/Heritage-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
     var nature = new google.maps.MarkerImage('images/Nature-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
     var produce = new google.maps.MarkerImage('images/Produce-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
     var river = new google.maps.MarkerImage('images/River-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
     var riverbedz = new google.maps.MarkerImage('images/Riverbedz-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
-    var shadow = new google.maps.MarkerImage('images/shadow.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10, 10));  
- 
+    var shadow = new google.maps.MarkerImage('images/shadow.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10, 10));
+
     var markers = [
                    {'group': 'cycle', 'icon': cycle, 'link': '../Cycle/geurie.html',  'position': '-32.400028, 148.818317', 'title': 'Geurie-Bald Hill Mountain Bike Trails', 'text': 'Geurie-Bald Hill Mountain Bike Trails' ,'bounds': false,'animation': google.maps.Animation.DROP },
                    {'group': 'cycle', 'icon': cycle, 'link': '../Cycle/beni.html', 'position': '-32.246925, 148.72464', 'title': 'Beni State Conservation Area cycling, Dubbo', 'text': 'Beni State Conservation Area cycling, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
@@ -98,17 +98,20 @@ $(function() {
                    {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/tourist_park.html',  'position': '-32.223497, 148.229931', 'title': 'Tourist Park & Motel, Narromine', 'text': 'Tourist Park & Motel, Narromine' ,'bounds': false,'animation': google.maps.Animation.DROP },
                    {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/peppercorn.html',  'position': '-32.225553, 148.238061', 'title': 'Peppercorn Motor Inn, Narromine', 'text': 'Peppercorn Motor Inn, Narromine' ,'bounds': false,'animation': google.maps.Animation.DROP },
 
-           
-               ];  
-    
-    
-  $('#map_canvas').gmap().bind('init', function(event, map) {
-                               
+
+               ];
+
+    $(document).on("pageshow resize", "#gmap", function() {
+      $("#map_canvas").gmap("refresh");
+    });
+
+    $('#map_canvas').gmap().bind('init', function(event, map) {
+
                                // attempt to get specifc marker data from item  page
                                var selGroup = getUrlVars().section;
                                var selMarker = getUrlVars().item;
                                loadingSingle = false;
-                               
+
                                if ((selMarker != undefined && selMarker.length) && (selGroup != undefined && selGroup.length)){
                                selGroup = selGroup.toLowerCase();
                                selMarker = selMarker.toLowerCase();
@@ -118,7 +121,7 @@ $(function() {
                                selGroup = '';
                                selMarker = '';
                                }
-                               
+
                                $.each( markers, function(i, marker) {
                                       if ((selMarker == '' || marker.link.indexOf(selMarker) >= 0) && (selGroup == '' || selGroup == marker.group)){
                                       $('#map_canvas').gmap('addMarker', {
@@ -137,45 +140,45 @@ $(function() {
                                                                      });
                                       }
                                       });
-                               
+
                                if (loadingSingle){
                                resetMapForSingle();
                                }
                                addMyLocation(false);
-                               
-                               
+
+
                                google.maps.event.addListener(map, 'zoom_changed', function() {
                                                              showMarkerList();
                                                              });
-                               
-                               
+
+
                                google.maps.event.addListener(map, 'center_changed', function() {
                                                              showMarkerList();
                                                              });
-                               
-                               
+
+
                                });
-  
-  
+
+
   $('.markerNav').on('click', function(e){
                      $('#map_canvas').gmap('clear', 'markers');
                      e.preventDefault();
-                     
+
                      var selMarker = $(this).attr('item')
-                     
-                     
-                     
+
+
+
                      if (selMarker == 'all'){
                      fullLoad = true;
                      markerListULReset();
                      } else {
                      fullLoad = false;
                      }
-                     
+
                      $.each( markers, function(i, marker) {
-                            
+
                             if (marker.group == selMarker || selMarker == 'all'){
-                            
+
                             $('#map_canvas').gmap('addMarker', {
                                                   'position': marker.position,
                                                   'bounds': true,
@@ -185,7 +188,7 @@ $(function() {
                                                   'mLink': marker.link
                                                   }).click(function() {
                                                            $('#map_canvas').gmap('openInfoWindow', { 'content': marker.title }, this);
-                                                           
+
                                                            if (loadingSingle){
                                                            $('#to').attr('value',  marker.position);
                                                            $('#toPretty').attr('value', marker.title);
@@ -193,32 +196,32 @@ $(function() {
                                                            });
                             }
                             });
-                     
+
                      showMarkerList()
                      // add my current location the map.
                      addMyLocation(false);
                      });
-  
-  
+
+
   var resetMapForSingle = function(){
   var thisMarker = $('#map_canvas').gmap('get', 'markers');
   google.maps.event.trigger(thisMarker[0], 'click');
-  
+
   $('#topMarkerNav').hide();
   $('.locationonBtn').hide();
   $('#map_canvas').gmap('option', 'zoom', 14);
-  
+
   $('#directionsFields').show();
-  
+
   };
-  
+
   var showMarkerList = function(){
-  
-  
+
+
   if (fullLoad){
   return false;
   }
-  
+
   var itemInView = false;
   markerListULReset();
   var myMarkers = $('#map_canvas').gmap('get', 'markers');
@@ -228,9 +231,9 @@ $(function() {
          buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position);
          itemInView = true;
          }
-         
+
          });
-  
+
   if (itemInView){
   // sort list by nearest and apply jQuery Mobile UI
   $('ul#markerList>li').tsort({attr:'sortid'});
@@ -248,35 +251,35 @@ $(function() {
                    }
                    });
   }
-  
+
   var addMyLocation = function(centerOnMe){
   $('#map_canvas').gmap('getCurrentPosition', function(position, status) {
                         if ( status === 'OK' ) {
                         userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                         $('#from').val(position.coords.latitude+ ','+position.coords.longitude);
-                        
+
                         var image = new google.maps.MarkerImage('./images/bluedot_retina.png', null, null, new google.maps.Point( 8, 8 ), new google.maps.Size( 17, 17 ) );
-                        
+
                         $('#map_canvas').gmap("addMarker", { 'icon': image,'id': 'client', 'position': userLoc, 'bounds': false, 'optimized': false, 'title': 'My Location', 'visible': true, 'flat': true });
-                        
+
                         if (centerOnMe || getUrlVars().location == 'me'){
                         $('#map_canvas').gmap('option', 'center', userLoc);
                         $('#map_canvas').gmap('option', 'zoom', 4);
                         }
-                        
+
                         if (loadingSingle){
                         makePrettyAddress(userLoc, 1);
                         }
                         } else {
                         alert('Unable to get current position');
                         }
-                        }); 
-  
+                        });
+
   }
-  
-  
+
+
   $('#submitDirections').click(function () {
-                               
+
                                $('#map_canvas').gmap('displayDirections',{ 'origin': $('#from').val(), 'destination': $('#to').val(), 'travelMode': google.maps.DirectionsTravelMode.DRIVING }, { 'panel': document.getElementById('directions') }, function (success, response) {
                                                      if (success) {
                                                      $('#results').show();
@@ -286,9 +289,9 @@ $(function() {
                                                      });
                                return false;
                                });
-  
-  
-  
+
+
+
   var getUrlVars = function()
   {
   var vars = [], hash;
@@ -301,35 +304,35 @@ $(function() {
   }
   return vars;
   }
-  
-  
-  
+
+
+
   var buildMarkerULList = function(item, link, position){
-  
+
   var endRes = getMarkerDistance(position.Xa, position.Ya, userLoc.Xa, userLoc.Ya);
   var base = '<li sortid="|sort|"><a href="|link|" rel="external">|itemtitle| <span class="ui-li-count">|distance|km</span></a></li>';
-  
+
   base = base.replace('|itemtitle|', item);
-  
+
   if (link != ''){
   base = base.replace('|link|', link);
   } else {
-  base = base.replace('|link|', '#');            
+  base = base.replace('|link|', '#');
   }
   endRes = parseFloat(endRes).toFixed(2);
-  
+
   base = base.replace('|sort|', parseFloat(endRes));
   base = base.replace('|distance|', endRes);
-  
-  
-  $('#markerList').append(base);         
+
+
+  $('#markerList').append(base);
   }
-  
+
   var markerListULReset = function(){
   $('#markerList').empty();
   $('#markerListNote').hide();
   }
-  
-  
-  
+
+
+
   });
