@@ -9,7 +9,7 @@ trails:
 ---
 .browse-page@page
   = partial :browse_header
-  div.padd data-iscroll="true"
+  div data-iscroll="true"
     ul@listview data-filter-placeholder="Search..." data-filter="true" data-filter-theme="b"
       - current_page.data.trails.each do |trail|
         = partial :browse_trail, :locals => {:section => trail}
