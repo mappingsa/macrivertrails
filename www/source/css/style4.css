@@ -10,6 +10,7 @@
 *
 */
 
+
 @import url(http://fonts.googleapis.com/css?family=Kaushan+Script); /* font-family: 'Kaushan Script', cursive; */
 @import url(http://fonts.googleapis.com/css?family=Lobster); /* font-family: 'Lobster', cursive; */
 @import url(http://fonts.googleapis.com/css?family=Cabin:400,700); /* font-family: 'Cabin', sans-serif; font-weight: 400; */
@@ -18,7 +19,6 @@
 @import url(http://fonts.googleapis.com/css?family=Cardo:400,700); /* font-family: 'Cardo', serif; */
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700italic,700); /* font-family: 'Droid Serif', serif; */
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700); /* font-family: 'Droid Sans', sans-serif; */
-
 
 /* =============================================================================
    Global styles
@@ -1230,7 +1230,7 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 .ui-select { display: block; position: relative; }
 .ui-select select { position: absolute; left: -9999px; top: -9999px; }
 .ui-select .ui-btn { overflow: hidden; opacity: 1; margin: 0; }
-/* Fixes #2588 ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â When Windows Phone 7.5 (Mango) tries to calculate a numeric opacity for a selectÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âincluding ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œinheritÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Âwithout explicitly specifying an opacity on the parent to give it context, a bug appears where clicking elsewhere on the page after opening the select will open the select again. */
+/* Fixes #2588 ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â When Windows Phone 7.5 (Mango) tries to calculate a numeric opacity for a selectÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âincluding ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“inheritÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚ÂÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Âwithout explicitly specifying an opacity on the parent to give it context, a bug appears where clicking elsewhere on the page after opening the select will open the select again. */
 .ui-select .ui-btn select { cursor: pointer; -webkit-appearance: button; left: 0; top:0; width: 100%;  min-height: 1.5em; min-height: 100%; height: 3em; max-height: 100%; opacity: 0; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; filter: alpha(opacity=0); z-index: 2; }
 .ui-select .ui-disabled { opacity: .3; }
 @-moz-document url-prefix() {.ui-select .ui-btn select { opacity: 0.0001; }}
@@ -1546,6 +1546,16 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
    /* font-family: 'Droid Sans', sans-serif; */
 }
 
+.main_div_blue {
+
+background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+}
 
 
 /* =============================================================================
