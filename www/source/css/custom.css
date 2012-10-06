@@ -146,8 +146,43 @@ a.menuBtn:hover{
 
 
 /* =============================================================================
-   Page Title under Banner Image
+   Line Separator
    ========================================================================== */
+.river-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #015CAB;
+}
+.heritage-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #AE132A;
+}
+.nature-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #539536;
+}
+.produce-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #FBB255;
+}
+.cycle-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #C14F9D;
+}
+.riverbedz-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #989898;
+}
+.fishing-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #663399;
+}
 
 /* =============================================================================
    Page Images
