@@ -1,0 +1,11 @@
+/ Layout for fishing pages in Info section
+doctype 5
+html
+  = partial :head
+  body
+    @page.fishing
+      = blank_line
+      = partial :fishing_header
+      @content data-iscroll="true"
+        = yield
+      = partial :tabbar
