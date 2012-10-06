@@ -1,39 +1,10 @@
-﻿<!DOCTYPE html>
-<html>
-  
-  <head>
-    
-    <title>Gone but not forgotten</title>
-    
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
-    <link href="" rel="apple-touch-icon">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="black" name="apple-mobile-web-app-status-bar-style">
-    
-    <link href="../css/style4.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="../css/flexslider.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="../css/jquery.mobile.iscrollview.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="../css/custom.css" media="screen" rel="stylesheet" type="text/css" />
-    
-    <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
-    <script src="../js/jquery.mobile.init.js" type="text/javascript"></script>
-    <script src="../js/jquery.mobile-1.1.0.min.js" type="text/javascript"></script>
-    <script src="../js/iscroll.js" type="text/javascript"></script>
-    <script src="../js/jquery.mobile.iscrollview.js" type="text/javascript"></script>
-    <script src="../js/jquery.flexslider.min.js" type="text/javascript"></script>
-    <script src="../js/base.js" type="text/javascript"></script>
-    
-    </head>
-    <body>
-        <div data-role="page" class="fishing">
-            <div class="rtheader fishingheader" data-role="header">
-      <a class="backBtn ui-btn-left" data-rel="back" data-role="none" href="../index.html"></a>
-      <div class="mainlogo"></div>
-      <a class="homeBtn ui-btn-right" data-role="none" data-transition="none" href="../index.html"></a>
-    </div>
-    	      <div data-iscroll="true">
-        
+---
+  title: Catch and Release
+---
+<%= partial :fishing_header %>
+
+            <div data-iscroll="true">
+
         <div class="flex-container" style="width: 250px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 10px;">
           <div class="pageImageSliderAuto flexslider">
             <ul class="slides">
@@ -43,11 +14,11 @@
             </ul>
           </div>
         </div>
-          
+
             <div data-role="content">
             <strong>CATCH AND RELEASE FISHING FOR THE FUTURE</strong>
             <div class="fishing-line-separator"></div>
-               
+
                     <p>There is a rapidly growing trend amongst recreational anglers to practice
 &lsquo;catch and release&rsquo; fishing in order to safeguard fish resources, and the
 pastime of fishing. If you decide to ‘fish for the future’ there are some tips
@@ -81,10 +52,10 @@ and your hooks are much more likely to get tangled in knotted nets. </p>
 <fishing>
  TIP: DITCH YOUR OLD KNOTTED LANDING NET FOR
 A NEW &lsquo;ENVIRONET&rsquo; TYPE &#45; REDUCES TANGLES AND
-PROTECTS YOUR FISH FROM DAMAGE.    
+PROTECTS YOUR FISH FROM DAMAGE.
 </fishing>
 
-               
+
                      <strong>FISH HANDLING:</strong>
             <div class="fishing-line-separator"></div>
 
@@ -128,32 +99,11 @@ ensure its survival&#33;&#33;</p>
 <fishing>
  TIP: A fish will only survive, without damage, for
 as long as you can hold your breath&#33; Don&#39;t keep
-fish out of the water for more than 30 seconds&#33;    
+fish out of the water for more than 30 seconds&#33;
 </fishing>
 
                     </div>
-                  
+
       </div>
-			<div data-id="tabbar" data-position="fixed" data-role="footer">
-      <div class="custom-icons" data-grid="c" data-role="navbar">
-        <ul>
-          <li>
-            <a class="browse" data-icon="custom" data-theme="b" href="../browse.html">BROWSE</a>
-          </li>
-          <li>
-            <a class="nearby" data-icon="custom" data-theme="b" href="../nearby.html">NEARBY</a>
-          </li>
-          <li>
-            <a class="favorites" data-icon="custom" data-theme="b" href="../favorites.html">FAVORITES</a>
-          </li>
-          <li>
-            <a class="info" data-icon="custom" data-theme="b" href="about.html">INFO</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-    
-    
-               </div>          
- </body>
-</html>
+
+<%= partial :tabbar %>
