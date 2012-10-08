@@ -246,7 +246,7 @@ a.ui-link-inherit {
 }
 /* loading icon */
 .ui-icon-loading {
-  background: url(http://code.jquery.com/mobile/1.1.0/images/ajax-loader.gif);
+	background: url(images/ajax-loader.gif);
   background-size: 46px 46px;
 }
 
