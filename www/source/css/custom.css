@@ -18,6 +18,16 @@
   -webkit-user-select: none;
 }
 
+@import url(http://fonts.googleapis.com/css?family=Kaushan+Script); /* font-family: 'Kaushan Script', cursive; */
+@import url(http://fonts.googleapis.com/css?family=Lobster); /* font-family: 'Lobster', cursive; */
+@import url(http://fonts.googleapis.com/css?family=Cabin:400,700); /* font-family: 'Cabin', sans-serif; font-weight: 400; */
+@import url(http://fonts.googleapis.com/css?family=Goudy+Bookletter+1911); /* font-family: 'Goudy Bookletter 1911', serif; */
+@import url(http://fonts.googleapis.com/css?family=Crimson+Text:400,700italic,600); /* font-family: 'Crimson Text', serif; */
+@import url(http://fonts.googleapis.com/css?family=Cardo:400,700); /* font-family: 'Cardo', serif; */
+@import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700italic,700); /* font-family: 'Droid Serif', serif; */
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700); /* font-family: 'Droid Sans', sans-serif; */
+
+
 .main_div_blue {
 
 background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
