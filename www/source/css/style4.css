@@ -134,7 +134,7 @@ a.ui-link-inherit {
 .ui-icon-alt {
   background:             #fff;
   background:             rgba(255,255,255,.3);
-	background-image: url(images/icons-18-black.png);
+  background-image: url(images/icons-18-black.png);
   background-repeat: no-repeat;
 }
 
@@ -149,14 +149,14 @@ a.ui-link-inherit {
   .ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
   .ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after,
   .ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
-		background-image: url(images/icons-36-white.png);
+    background-image: url(images/icons-36-white.png);
     -moz-background-size: 776px 18px;
     -o-background-size: 776px 18px;
     -webkit-background-size: 776px 18px;
     background-size: 776px 18px;
   }
   .ui-icon-alt {
-		background-image: url(images/icons-36-black.png);
+    background-image: url(images/icons-36-black.png);
   }
 }
 /* plus minus */
@@ -1346,51 +1346,6 @@ span.ui-slider-label { position: absolute; text-align: center; width: 100%; over
 span.ui-slider-label-a { z-index: 1; left: 0; text-indent: -1.5em; }
 span.ui-slider-label-b { z-index: 0; right: 0; text-indent: 1.5em;}
 .ui-slider-inline { width: 120px; display: inline-block; }
-
-
-/* fixed page header & footer configuration */
-.ui-header-fixed,
-.ui-footer-fixed {
-  left: 0;
-  right: 0;
-  width: 100%;
-  position: fixed;
-  z-index: 1000;
-}
-.ui-page-pre-in {
-  opacity: 0;
-}
-.ui-header-fixed {
-  top: 0;
-}
-.ui-footer-fixed {
-  bottom: 0;
-}
-.ui-header-fullscreen,
-.ui-footer-fullscreen {
-  opacity: .9;
-}
-.ui-page-header-fixed {
-  padding-top: 2.5em;
-}
-.ui-page-footer-fixed {
-  padding-bottom: 3em;
-}
-.ui-page-header-fullscreen .ui-content,
-.ui-page-footer-fullscreen .ui-content {
-  padding: 0;
-}
-.ui-fixed-hidden {
-  position: absolute;
-}
-.ui-page-header-fullscreen .ui-fixed-hidden,
-.ui-page-footer-fullscreen .ui-fixed-hidden {
-  left: -99999em;
-}
-.ui-header-fixed .ui-btn,
-.ui-footer-fixed .ui-btn {
-  z-index: 10;
-}
 
 form.ui-listview-filter {
   -moz-border-radius:         .5em /*{global-radii-buttons}*/;
