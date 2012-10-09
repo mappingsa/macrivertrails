@@ -27,53 +27,18 @@
 @import url(http://fonts.googleapis.com/css?family=Droid+Serif:400,700italic,700); /* font-family: 'Droid Serif', serif; */
 @import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700); /* font-family: 'Droid Sans', sans-serif; */
 
-/* Theme overrides. Temporary. Replace with a theme file! */
+/* Theme overrides. */
 /* =============================================================================
    UI Bars (add to a div surrounding content, like a callout box)
    ========================================================================== */
-
-
-.ui-bar-c {
-  border: 1px solid  #B3B3B3;
-  background:  #e9eaeb;
-  color:  #111;
-  font-weight: bold;
-  text-shadow:  0  1px 1px #fff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(  #f0f0f0  /*{background-start}*/), to(  #e9eaeb  /*{background-end}*/)); /* Saf4+, Chrome */
-  background-image: -webkit-linear-gradient(  #f0f0f0  /*{background-start}*/,  #e9eaeb  /*{background-end}*/); /* Chrome 10+, Saf5.1+ */
-  background-image:    -moz-linear-gradient(  #f0f0f0  /*{background-start}*/,  #e9eaeb  /*{background-end}*/); /* FF3.6 */
-  background-image:     -ms-linear-gradient(  #f0f0f0  /*{background-start}*/,  #e9eaeb  /*{background-end}*/); /* IE10 */
-  background-image:      -o-linear-gradient(  #f0f0f0  /*{background-start}*/,  #e9eaeb  /*{background-end}*/); /* Opera 11.10+ */
-  background-image:         linear-gradient(  #f0f0f0  /*{background-start}*/,  #e9eaeb  /*{background-end}*/);
-}
 
 .ui-bar-c .ui-link-inherit {
   color:    #3E3E3E;
 }
 .ui-bar-c .ui-link {
   color:  #7cc4e7;
-  font-weight: bold;
 }
 
-.ui-bar-c .ui-link:hover {
-  color:  #2489CE;
-}
-
-.ui-bar-c .ui-link:active {
-  color:  #2489CE;
-}
-
-.ui-bar-c .ui-link:visited {
-    color:  #2489CE;
-}
-
-.ui-bar-c,
-.ui-bar-c input,
-.ui-bar-c select,
-.ui-bar-c textarea,
-.ui-bar-c button {
-   font-family: Helvetica, Arial, sans-serif;
-}
 
 /* =============================================================================
    Dialog (Modal Windows)
@@ -97,25 +62,15 @@
 
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
-  border: 1px solid #B3B3B3;
    background:url('../images/whitey.png') 0 0; background-size: 203px 317px;
-  color: #111;
 }
 
 .ui-body-c,
 .ui-body-c select,
 .ui-body-c textarea,
 .ui-body-c button {
-
-  /* font-family: Helvetica, Arial, sans-serif; */
    font-family: 'Cabin', sans-serif;
-  /* font-family: 'Goudy Bookletter 1911', serif; */
-   /* font-family: 'Crimson Text', serif; */
-    /* font-family: 'Cardo', serif; */
-   /* font-family: 'Droid Sans', sans-serif; */
 }
-
-
 
 /* =============================================================================
    Body Links
@@ -147,62 +102,6 @@
    Button Styles
    ========================================================================== */
 
-.ui-btn-up-c {
-  border: 1px solid #111;
-  background: #000;
-  font-weight: bold;
-  color: #fff;
-  text-shadow:  0 1px 1px #111;
-}
-
-.ui-btn-up-c a.ui-link-inherit {
-  color: #fff;
-}
-
-.ui-btn-hover-c {
-  border: 1px solid #000;
-  background: #333;
-  font-weight: bold;
-  color: #0099FF;
-  text-shadow:  0 1px 1px #000;
-}
-
-.ui-btn-hover-c a.ui-link-inherit {
-  color: #fff;
-}
-
-.ui-btn-down-c {
-  border: 1px solid  #000;
-  background: #111;
-  font-weight: bold;
-  color:  #0099FF;
-  text-shadow:  0 1px 1px #000;
-}
-
-.ui-btn-down-c a.ui-link-inherit {
-  color:  #fff;
-}
-
-.ui-btn-up-c,
-.ui-btn-hover-c,
-.ui-btn-down-c {
-  font-family: Helvetica, Arial, sans-serif;
-  text-decoration: none;
-}
-
-
-
-/* Active class used as the "on" state across all themes, example: newsletter button on form */
-
-.ui-btn-active {
-  border: 1px solid #111;
-  background: #111;
-  font-weight: bold;
-  color:#0099ff;
-  cursor: pointer;
-  text-shadow:  0 1px 1px #000;
-  text-decoration: none;
-}
 
 .ui-btn-active a.ui-link-inherit {
   color:   #fff;
