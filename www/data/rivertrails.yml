@@ -1,14 +1,14 @@
 stylesheets:
-    - jquery.mobile.theme-rivertrails-1.1.0
-    - jquery.mobile.structure-1.1.0
+    - jquery.mobile.theme-rivertrails-1.1.1
+    - jquery.mobile.structure-1.1.1
     - flexslider
     - jquery.mobile.iscrollview
     - custom
 scripts:
     - http://maps.google.com/maps/api/js?sensor=true
-    - jquery-1.7.1
+    - jquery-1.7.2
     - jquery.mobile.init
-    - jquery.mobile-1.1.0
+    - jquery.mobile-1.1.1
     - iscroll
     - jquery.mobile.iscrollview
     # Cordova temporarly commented-out
