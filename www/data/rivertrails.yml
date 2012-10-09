@@ -1,6 +1,6 @@
 stylesheets:
-    - jquery.mobile.theme-rivertrails-1.1.1
-    - jquery.mobile.structure-1.1.1
+    - jquery.mobile.theme-rivertrails-1.2.0
+    - jquery.mobile.structure-1.2.0
     - jquery.mobile.simultaneous-transitions-replace
     - flexslider
     - jquery.mobile.iscrollview
@@ -11,7 +11,7 @@ scripts:
     - jquery.mobile.transition-handler-simple
     - jquery.mobile.simultaneous-transitions-replace-simple
     - jquery.mobile.init
-    - jquery.mobile-1.1.1
+    - jquery.mobile-1.2.0
     - iscroll
     - jquery.mobile.iscrollview
     # Cordova temporarly commented-out
