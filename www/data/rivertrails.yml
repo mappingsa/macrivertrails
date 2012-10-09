@@ -1,12 +1,15 @@
 stylesheets:
     - jquery.mobile.theme-rivertrails-1.1.1
     - jquery.mobile.structure-1.1.1
+    - jquery.mobile.simultaneous-transitions-replace
     - flexslider
     - jquery.mobile.iscrollview
     - custom
 scripts:
     - http://maps.google.com/maps/api/js?sensor=true
     - jquery-1.7.2
+    - jquery.mobile.transition-handler-simple
+    - jquery.mobile.simultaneous-transitions-replace-simple
     - jquery.mobile.init
     - jquery.mobile-1.1.1
     - iscroll
