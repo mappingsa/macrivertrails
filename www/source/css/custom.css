@@ -220,10 +220,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 
 
 .browse-page .ui-listview-filter {
-  margin-left: 0.3em;
-  margin-right: 0.5em;
-  margin-top: 0.5ex;
-  margin-bottom: 0.3ex;
+  margin-top: 0;
 }
 
 .flexslider {
