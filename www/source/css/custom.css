@@ -759,7 +759,7 @@ div.social {
     text-align:center;
     background-color: transparent;
     padding:4px;
-    border: none;
+    border: 0;
     -webkit-transition-duration:0.8s;
     -moz-transition-duration:0.8s;
     -o-transition-duration:0.8s;
