@@ -32,6 +32,13 @@
    UI Bars (add to a div surrounding content, like a callout box)
    ========================================================================== */
 
+
+.ui-bar-a,
+.ui-bar-b,
+.ui-bar-c {
+  background-image: none;
+}
+
 .ui-bar-c .ui-link-inherit {
   color:    #3E3E3E;
 }
@@ -962,7 +969,7 @@ ul.tweetList{
     border: 1px solid #2A2A2A;
     font-weight: normal;
 }
-.riverbedzheader {
+.ui-bar-a.riverbedzheader {
     background-color:#989898;
     position:relative;
     width:100%;
@@ -971,7 +978,7 @@ ul.tweetList{
     font-weight: normal;
 }
 
-.fishingheader {
+.ui-bar-a.fishingheader {
     background-color:#663399;
     position:relative;
     width:100%;
