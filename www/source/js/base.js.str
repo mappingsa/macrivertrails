@@ -1,7 +1,3 @@
-// Temporarily commented-out
-// document.addEventListener("deviceready", onDeviceReady, false);
-
-
 (function installSliders($) {
   "use strict";
 

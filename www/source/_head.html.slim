@@ -4,8 +4,8 @@ head
   = blank_line
   title = current_page.data.title
   = partial :meta
-  = stylesheet_link_tag data.rivertrails.debug.stylesheets
+  = stylesheet_link_tag data.rivertrails[build_target].stylesheets
   = blank_line
-  = javascript_include_tag data.rivertrails.debug.scripts
+  = javascript_include_tag data.rivertrails[build_target].scripts
   = blank_line
 = blank_line

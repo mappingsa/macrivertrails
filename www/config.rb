@@ -75,6 +75,19 @@ helpers do
     "\n"
   end
 
+  def build_target
+    if ENV['MIDDLEMAN_BUILD_TARGET']
+      ENV['MIDDLEMAN_BUILD_TARGET'].downcase.to_sym
+    else
+      :debug
+    end
+  end
+
+  def jqm_version
+    JQM_VERSION
+  end
+
+
   # returns relative path from current page to given path
   def path_to(path)
     Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
@@ -124,7 +137,7 @@ set :js_dir, 'js'
 
 set :images_dir, 'images'
 
-set :build_dir, 'build/debug'
+set :build_dir, "build/#{build_target}"
 
 
 # Build-specific configuration
@@ -133,7 +146,24 @@ configure :build do
   # activate :minify_css
 
   # Minify Javascript on build
-  # activate :minify_javascript
+  if build_target != :debug
+    activate :minify_css
+    activate :minify_javascript
+    ignore '/js/jquery.mobile-1.1.1.js'
+    ignore '/js/jquery.mobile-1.2.0.js'
+    ignore '/js/jquery-1.7.2.js'
+    ignore '/js/jquery-1.8.2.js'
+    ignore '/css/jquery.mobile.structure-1.1.1.css'
+    ignore '/css/jquery.mobile.structure-1.2.0.css'
+  else
+    ignore '/js/jquery.mobile-1.1.1.min.js'
+    ignore '/js/jquery.mobile-1.2.0.min.js'
+    ignore '/js/jquery-1.7.2.min.js'
+    ignore '/js/jquery-1.8.2.min.js'
+    ignore '/css/jquery.mobile.structure-1.1.1.min.css'
+    ignore '/css/jquery.mobile.structure-1.2.0.min.css'
+  end
+
 
   # Enable cache buster
   # activate :cache_buster
