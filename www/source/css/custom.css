@@ -757,9 +757,9 @@ li.ui-li-divider {
 
 div.social {
     text-align:center;
-    background-color:rgba(238,238,238,0.4);
+    background-color: transparent;
     padding:4px;
-    border:1px solid #ccc;
+    border: none;
     -webkit-transition-duration:0.8s;
     -moz-transition-duration:0.8s;
     -o-transition-duration:0.8s;
