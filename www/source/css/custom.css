@@ -630,7 +630,7 @@ li.ui-li-divider {
    ========================================================================== */
 
 .ui-btn-up-b {
-    border:;
+    border: 0;
     background:url("") #151515; background-size: 5px 5px;
     font-weight: bold;
     color:  #0099FF;
@@ -642,7 +642,7 @@ li.ui-li-divider {
 }
 
 .ui-btn-hover-b {
-    border:;
+    border: 0;
     background: #333;
     font-weight: bold;
     color:  #fff;
@@ -655,7 +655,7 @@ li.ui-li-divider {
 }
 
 .ui-btn-down-b {
-    border:;
+    border: 0;
     background: #111;
     font-weight: bold;
     color:  #fff;
