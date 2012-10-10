@@ -124,6 +124,8 @@ set :js_dir, 'js'
 
 set :images_dir, 'images'
 
+set :build_dir, 'build/debug'
+
 
 # Build-specific configuration
 configure :build do
