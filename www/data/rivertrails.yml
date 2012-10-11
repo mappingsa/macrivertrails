@@ -21,8 +21,9 @@ debug:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - geolocation
-        - jquery.tinysort.min
-        - maps.js
+        - jquery.tinysort
+        - maps
+        - store
         # - fish.js
 web:
     stylesheets:
@@ -47,8 +48,9 @@ web:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - geolocation
-        - jquery.tinysort.min
-        - maps.js
+        - jquery.tinysort
+        - maps
+        - store
         # - fish.js
 phonegap:
     stylesheets:
@@ -74,8 +76,9 @@ phonegap:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - geolocation
-        - jquery.tinysort.min
-        - maps.js
+        - jquery.tinysort
+        - maps
+        - store
         # - fish.js
         - phonegap-init
 
