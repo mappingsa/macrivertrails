@@ -2,19 +2,19 @@
 @footer data-position="fixed" data-id="tabbar" data-transition="fade" data-tap-toggle="false"
   @navbar.custom-icons data-grid="d"
     ul
-      li
-        a.browse-icon href="#{path_root}/browse.html" data-icon="custom" data-theme="b" data-transition="fade"
+      li.browse-tab
+        a href="#{path_root}/browse.html" data-icon="custom" data-theme="b" data-transition="fade"
           | BROWSE
-      li
-        a.nearby-icon href="#{path_map}/index.html?location=me" data-icon="custom" data-theme="b" data-transition="fade"
+      li.nearby-tab
+        a href="#{path_map}/index.html?location=me" data-icon="custom" data-theme="b" data-transition="fade"
           | NEARBY
-      li
-        a.fishing-icon href="#{path_info}/fishing.html" data-icon="custom" data-theme="b" data-transition="fade"
+      li.fishing-tab
+        a href="#{path_info}/fishing.html" data-icon="custom" data-theme="b" data-transition="fade"
           | FISHING
-      li
-        a.todo-icon href="#{path_root}/favorites.html" data-icon="custom" data-theme="b" data-transition="fade"
+      li.todo-tab
+        a href="#{path_root}/favorites.html" data-icon="custom" data-theme="b" data-transition="fade"
           | TODO
-      li
-        a.info-icon href="#{path_info}/about.html" data-icon="custom" data-theme="b" data-transition="fade"
+      li.info-tab
+        a href="#{path_info}/about.html" data-icon="custom" data-theme="b" data-transition="fade"
           | INFO
 = blank_line

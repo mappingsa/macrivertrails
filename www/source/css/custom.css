@@ -494,8 +494,6 @@ h1.ui-title {
     padding:10px 0 0 0
 }
 
-.rtheader a.homeBtn {background:url('../images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
-.rtheader a.backBtn {background:url('../images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
 
 /* =============================================================================
    Link Bars with Large Arrows
@@ -729,12 +727,12 @@ li.ui-li-divider {
     -webkit-border-radius: 0 !important;
     border-radius: 0 !important;
 }
-.nearby-icon .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 18px 18px; }
-.info-icon .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 18px 18px; }
-.map-icon .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 18px 18px; }
-.browse-icon .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 22px 16px; }
-.todo-icon .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; background-size: 22px 16px; }
-.fishing-icon .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; background-size: 28px 13px; }
+.nearby-tab .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.info-tab .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.map-tab .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 18px 18px; }
+.browse-tab .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 22px 16px; }
+.todo-tab .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; background-size: 22px 16px; }
+.fishing-tab .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; background-size: 28px 13px; }
 
 
 
@@ -964,49 +962,39 @@ ul.tweetList{
     background-size: 185px 40px;
 }
 
-.heritageheader {
-    background-color:#AE132A;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
+.rtheader {
+  background-image: none;
+  height: 40px;
+  font-weight: normal;
+  border: 1px solid #2A2A2A;
 }
+
+.heritageheader {
+    background-color: #AE132A;
+}
+
 .natureheader {
     background-color:#539536;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
 
 .ui-header.riverheader {
     background-color:#015CAB;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
+
 .produceheader {
     background-color:#FBB255;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
+
 .cycleheader {
     background-color:#C14F9D;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
+
 .ui-bar-a.riverbedzheader {
     background-color:#989898;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
 
 .ui-bar-a.fishingheader {
     background-color:#663399;
-    height:40px;
-    border: 1px solid #2A2A2A;
-    font-weight: normal;
 }
 
 #bottomList {
@@ -1217,7 +1205,6 @@ em {
     background: none;
     border-bottom: none;
 }
-
 
 .rtheader a.homeBtn {background:url('../images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
 .rtheader a.backBtn {background:url('../images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
