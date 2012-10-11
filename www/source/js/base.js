@@ -1,4 +1,4 @@
-(function installSliders($) {
+(function ($) {
   "use strict";
 
   var refreshScroller = function(slider) {
@@ -6,6 +6,36 @@
   };
 
   $(document).on('pageinit', ".ui-page", function() {
+    var menuStatus;
+
+    $("#popup").click(function(){
+      alert("Sorry no contact information available");
+  });
+
+  $(".popupalert").click(function(){
+      alert("Sorry no contact information available");
+  });
+
+      // Show menu
+  $("a.showMenu").bind("vclick", function() {
+      var $menu = $.mobile.activePage.find(".menu");
+      if (menuStatus != true) {
+          $menu.css("z-index", 1).animate({
+            opacity: ".85",
+          }, 400, function() {
+              menuStatus = true;
+          });
+          return false;
+      } else {
+          $menu.animate({
+            opacity: "0",
+          }, 400, function() {
+              $menu.css("z-index", -1);
+              menuStatus = false;
+          });
+          return false;
+      }
+  });
 
     // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
     // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
@@ -62,79 +92,39 @@
       before: refreshScroller,
       after: refreshScroller,
     });
+  });
 
+
+  // Favorites page
+  $(document).on('pagebeforeshow', ".favorites", function() {
+    interfaceBuild.buildFavoriteList();
   });
 
   }(jQuery));
 
 
-$(document).bind('pageinit', function(){
-    var menuStatus;
 
-    $("#popup").click(function(){
-        alert("Sorry no contact information available");
-    });
-
-    $(".popupalert").click(function(){
-        alert("Sorry no contact information available");
-    });
-
-
-        // Show menu
-    $("a.showMenu").bind("vclick", function() {
-        var $menu = $.mobile.activePage.find(".menu");
-        if (menuStatus != true) {
-            $menu.css("z-index", 1).animate({
-              opacity: ".85",
-            }, 400, function() {
-                menuStatus = true;
-            });
-            return false;
-        } else {
-            $menu.animate({
-              opacity: "0",
-            }, 400, function() {
-                $menu.css("z-index", -1);
-                menuStatus = false;
-            });
-            return false;
-        }
-    });
-
-    var pathname = window.location.pathname;
-    var isFav = pathname.indexOf('favorites.html');
-    if (isFav > 0){
-        var urlVars = getUrlVars();
-        if (urlVars.title){ // do we need to save a favorite?
-
-            favitem = {
-                    section: decodeURIComponent(urlVars.section),
-                    title: decodeURIComponent(urlVars.title),
-                    item: decodeURIComponent(urlVars.item)
-            };
-            localStore.doSaveFavorite(favitem);
-        }
-
-        if (urlVars.remove){ // are we removing a favorite?
-            localStore.doRemoveFavorite(urlVars.remove);
-        }
-
-        interfaceBuild.buildFavoriteList();
-
-
-    }
-
-
-
-});
-
+/*
+       var urlVars = getUrlVars(pathname);
+      if (urlVars.title){ // do we need to save a favorite?
+          favitem = {
+                  section: decodeURIComponent(urlVars.section),
+                  title: decodeURIComponent(urlVars.title),
+                  item: decodeURIComponent(urlVars.item)
+          };
+          localStore.doSaveFavorite(favitem);
+      }
+      if (urlVars.remove){ // are we removing a favorite?
+          localStore.doRemoveFavorite(urlVars.remove);
+      }
+ */
 
 
 var interfaceBuild = function(){
     function BuildFavoriteList(){
 
 
-        var base = '<li><a href="../www/|itemdirectory|/|linkpage|" rel="external">|itemtitle|</a><a href="./favorites.html?remove=|item|"  rel="external">Remove</a></li>';
+        var base = '<li><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a href="./favorites.html?remove=|item|">Remove</a></li>';
 
         var savedItems = store.get('faves');
 
@@ -167,8 +157,6 @@ var interfaceBuild = function(){
 
 
 }();
-
-
 
 
 var localStore = function(){
@@ -250,10 +238,11 @@ var removeArrItem = function(arr){
     }
     return arr;
 }
-var getUrlVars = function()
+
+var getUrlVars = function(pathname)
 {
     var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    var hashes = pathname.slice(window.location.href.indexOf('?') + 1).split('&');
     for(var i = 0; i < hashes.length; i++)
     {
         hash = hashes[i].split('=');
