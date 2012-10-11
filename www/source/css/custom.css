@@ -966,7 +966,7 @@ ul.tweetList{
   background-image: none;
   height: 40px;
   font-weight: normal;
-  border: 1px solid #2A2A2A;
+  border: 0px solid #2A2A2A;
 }
 
 .heritageheader {
