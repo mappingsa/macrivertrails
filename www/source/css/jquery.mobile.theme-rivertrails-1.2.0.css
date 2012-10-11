@@ -273,12 +273,12 @@
 	font-weight: bold;
 	color: #ffffff /*{b-bhover-color}*/;
 	text-shadow: 0 /*{b-bhover-shadow-x}*/ -1px /*{b-bhover-shadow-y}*/ 1px /*{b-bhover-shadow-radius}*/ #014d68 /*{b-bhover-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #3303NaN /*{b-bhover-background-start}*/), to( #3303NaN /*{b-bhover-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #3303NaN /*{b-bhover-background-start}*/, #3303NaN /*{b-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #3303NaN /*{b-bhover-background-start}*/, #3303NaN /*{b-bhover-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #3303NaN /*{b-bhover-background-start}*/, #3303NaN /*{b-bhover-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #3303NaN /*{b-bhover-background-start}*/, #3303NaN /*{b-bhover-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #3303NaN /*{b-bhover-background-start}*/, #3303NaN /*{b-bhover-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #333333 /*{b-bhover-background-start}*/), to( #333333 /*{b-bhover-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #333333 /*{b-bhover-background-start}*/, #333333 /*{b-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #333333 /*{b-bhover-background-start}*/, #333333 /*{b-bhover-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #333333 /*{b-bhover-background-start}*/, #333333 /*{b-bhover-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #333333 /*{b-bhover-background-start}*/, #333333 /*{b-bhover-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #333333 /*{b-bhover-background-start}*/, #333333 /*{b-bhover-background-end}*/);
 }
 .ui-btn-hover-b:visited,
 .ui-btn-hover-b:hover,
@@ -291,12 +291,12 @@
 	font-weight: bold;
 	color: #ffffff /*{b-bdown-color}*/;
 	text-shadow: 0 /*{b-bdown-shadow-x}*/ -1px /*{b-bdown-shadow-y}*/ 1px /*{b-bdown-shadow-radius}*/ #225377 /*{b-bdown-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #1101NaN /*{b-bdown-background-start}*/), to( #1101NaN /*{b-bdown-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #1101NaN /*{b-bdown-background-start}*/, #1101NaN /*{b-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #1101NaN /*{b-bdown-background-start}*/, #1101NaN /*{b-bdown-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #1101NaN /*{b-bdown-background-start}*/, #1101NaN /*{b-bdown-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #1101NaN /*{b-bdown-background-start}*/, #1101NaN /*{b-bdown-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #1101NaN /*{b-bdown-background-start}*/, #1101NaN /*{b-bdown-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #111111 /*{b-bdown-background-start}*/), to( #111111 /*{b-bdown-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #111111 /*{b-bdown-background-start}*/, #111111 /*{b-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #111111 /*{b-bdown-background-start}*/, #111111 /*{b-bdown-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #111111 /*{b-bdown-background-start}*/, #111111 /*{b-bdown-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #111111 /*{b-bdown-background-start}*/, #111111 /*{b-bdown-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #111111 /*{b-bdown-background-start}*/, #111111 /*{b-bdown-background-end}*/);
 }
 .ui-btn-down-b:visited,
 .ui-btn-down-b:hover,
@@ -408,12 +408,12 @@
 	font-weight: bold;
 	color: #fff /*{c-bup-color}*/;
 	text-shadow: 0 /*{c-bup-shadow-x}*/ 1px /*{c-bup-shadow-y}*/ 1px /*{c-bup-shadow-radius}*/ #111 /*{c-bup-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #0000NaN /*{c-bup-background-start}*/), to( #0000NaN /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #0000NaN /*{c-bup-background-start}*/, #0000NaN /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #0000NaN /*{c-bup-background-start}*/, #0000NaN /*{c-bup-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #0000NaN /*{c-bup-background-start}*/, #0000NaN /*{c-bup-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #0000NaN /*{c-bup-background-start}*/, #0000NaN /*{c-bup-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #0000NaN /*{c-bup-background-start}*/, #0000NaN /*{c-bup-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #000000 /*{c-bup-background-start}*/), to( #000000 /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #000000 /*{c-bup-background-start}*/, #000000 /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #000000 /*{c-bup-background-start}*/, #000000 /*{c-bup-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #000000 /*{c-bup-background-start}*/, #000000 /*{c-bup-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #000000 /*{c-bup-background-start}*/, #000000 /*{c-bup-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #000000 /*{c-bup-background-start}*/, #000000 /*{c-bup-background-end}*/);
 }
 .ui-btn-up-c:visited,
 .ui-btn-up-c a.ui-link-inherit {
@@ -425,12 +425,12 @@
 	font-weight: bold;
 	color: #0099ff /*{c-bhover-color}*/;
 	text-shadow: 0 /*{c-bhover-shadow-x}*/ 1px /*{c-bhover-shadow-y}*/ 1px /*{c-bhover-shadow-radius}*/ #000 /*{c-bhover-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #3303NaN /*{c-bhover-background-start}*/), to( #3303NaN /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #3303NaN /*{c-bhover-background-start}*/, #3303NaN /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #3303NaN /*{c-bhover-background-start}*/, #3303NaN /*{c-bhover-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #3303NaN /*{c-bhover-background-start}*/, #3303NaN /*{c-bhover-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #3303NaN /*{c-bhover-background-start}*/, #3303NaN /*{c-bhover-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #3303NaN /*{c-bhover-background-start}*/, #3303NaN /*{c-bhover-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #333333 /*{c-bhover-background-start}*/), to( #333333 /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #333333 /*{c-bhover-background-start}*/, #333333 /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #333333 /*{c-bhover-background-start}*/, #333333 /*{c-bhover-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #333333 /*{c-bhover-background-start}*/, #333333 /*{c-bhover-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #333333 /*{c-bhover-background-start}*/, #333333 /*{c-bhover-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #333333 /*{c-bhover-background-start}*/, #333333 /*{c-bhover-background-end}*/);
 }
 .ui-btn-hover-c:visited,
 .ui-btn-hover-c:hover,
@@ -443,12 +443,12 @@
 	font-weight: bold;
 	color: #fff /*{c-bdown-color}*/;
 	text-shadow: 0 /*{c-bdown-shadow-x}*/ 1px /*{c-bdown-shadow-y}*/ 1 /*{c-bdown-shadow-radius}*/ #000 /*{c-bdown-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #1101NaN /*{c-bdown-background-start}*/), to( #1101NaN /*{c-bdown-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #1101NaN /*{c-bdown-background-start}*/, #1101NaN /*{c-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #1101NaN /*{c-bdown-background-start}*/, #1101NaN /*{c-bdown-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #1101NaN /*{c-bdown-background-start}*/, #1101NaN /*{c-bdown-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #1101NaN /*{c-bdown-background-start}*/, #1101NaN /*{c-bdown-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #1101NaN /*{c-bdown-background-start}*/, #1101NaN /*{c-bdown-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #111111 /*{c-bdown-background-start}*/), to( #111111 /*{c-bdown-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #111111 /*{c-bdown-background-start}*/, #111111 /*{c-bdown-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #111111 /*{c-bdown-background-start}*/, #111111 /*{c-bdown-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #111111 /*{c-bdown-background-start}*/, #111111 /*{c-bdown-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #111111 /*{c-bdown-background-start}*/, #111111 /*{c-bdown-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #111111 /*{c-bdown-background-start}*/, #111111 /*{c-bdown-background-end}*/);
 }
 .ui-btn-down-c:visited,
 .ui-btn-down-c:hover,
@@ -485,12 +485,12 @@ a.ui-link-inherit {
 	cursor: pointer;
 	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #000 /*{global-active-shadow-color}*/;
 	text-decoration: none;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #1101NaN /*{global-active-background-start}*/), to( #1101NaN /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #1101NaN /*{global-active-background-start}*/, #1101NaN /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #1101NaN /*{global-active-background-start}*/, #1101NaN /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #1101NaN /*{global-active-background-start}*/, #1101NaN /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #1101NaN /*{global-active-background-start}*/, #1101NaN /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #1101NaN /*{global-active-background-start}*/, #1101NaN /*{global-active-background-end}*/);
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #111111 /*{global-active-background-start}*/), to( #111111 /*{global-active-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #111111 /*{global-active-background-start}*/, #111111 /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #111111 /*{global-active-background-start}*/, #111111 /*{global-active-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #111111 /*{global-active-background-start}*/, #111111 /*{global-active-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #111111 /*{global-active-background-start}*/, #111111 /*{global-active-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #111111 /*{global-active-background-start}*/, #111111 /*{global-active-background-end}*/);
 	 font-family: Helvetica, Arial, sans-serif /*{global-font-family}*/;
 }
 .ui-btn-active:visited,
