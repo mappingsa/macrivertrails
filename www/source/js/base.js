@@ -37,6 +37,7 @@
       }
   });
 
+
     // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
     // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
     // won't actually be unhidden by the browser, though, because we set the visibility back
@@ -121,10 +122,9 @@
 
 
 var interfaceBuild = function(){
-    function BuildFavoriteList(){
-
-
-        var base = '<li><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a href="./favorites.html?remove=|item|">Remove</a></li>';
+  function BuildFavoriteList(){
+    var base =
+      '<li><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a href="#" data-ajax="false" onclick="localStore.doRemoveFavorite(|item|);return false;">Remove</a></li>';
 
         var savedItems = store.get('faves');
 
