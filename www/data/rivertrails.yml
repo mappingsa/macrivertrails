@@ -77,6 +77,6 @@ phonegap:
         - jquery.tinysort.min
         - maps.js
         # - fish.js
-        - phonegap.init
+        - phonegap-init
 
 
