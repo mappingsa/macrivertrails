@@ -36,6 +36,7 @@ $(document).on("mobileinit", function createSimpleHandler() {
       deferred.resolve( name, reverse, $to, $from, true );
       };
 
+    $to.css("z-index", -10);
     $to.addClass( $.mobile.activePageClass );
     // Note: In many applications the following line may be unnecessary, and may be removed
     $.mobile.focusPage( $to );  // Send focus to page as it is now display: block
@@ -56,6 +57,7 @@ $(document).on("mobileinit", function createSimpleHandler() {
            .height( screenHeight )
            .addClass( name + " out" + reverseClass );
       }
+    $to.css("z-index", "");
     return deferred.promise();
     }
   $.mobile.transitionHandlers.simple = simpleHandler;
