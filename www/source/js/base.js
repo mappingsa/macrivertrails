@@ -98,15 +98,23 @@
 
   // Favorites page
   $(document).on("pagebeforeshow", ".favorites", function() {
+    var $page = $(this);
     interfaceBuild.buildFavoriteList();
+    $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
   $(document).on("vclick", ".btn-remove-fav", function(event) {
     var $a = $(this),
         $li = $a.closest("li"),
-        index = $li.data("index");
+        $page = $li.closest(".ui-page"),
+        section = $li.data("section"),
+        item = $li.data("item");
     event.preventDefault();
-    localStore.doRemoveFavorite(index);
+    $li.remove();
+    if ( !localStore.doRemoveFavorite(section, item) ) {
+      $('#noFavesMsg').show();
+    }
+    $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
   }(jQuery));
@@ -132,30 +140,22 @@
 var interfaceBuild = function(){
   function BuildFavoriteList(){
     var base =
-      '<li data-index=|item|><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
-
+      '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
         var savedItems = store.get('faves');
-
+        $("#favoritesList").empty();
         if (savedItems != undefined){
-
-            $.each(savedItems, function(i){
-                var thisBase = base;
-
-                thisBase = thisBase.replace('|itemdirectory|', this.section);
-                thisBase = thisBase.replace('|linkpage|', this.item + '.html');
-                thisBase = thisBase.replace('|itemtitle|', this.title);
-                thisBase = thisBase.replace('|item|', i);
-
-
-               $('#favoritesList').append(thisBase);
-
-            });
+            $.each(savedItems, function(i) {
+              var thisBase = base;
+              thisBase = thisBase.replace('|section|', this.section);
+              thisBase = thisBase.replace('|item|', this.item);
+              thisBase = thisBase.replace('|href|', this.section + "/" + this.item + ".html");
+              thisBase = thisBase.replace('|title|', this.title);
+              $('#favoritesList').append(thisBase);
+              });
             $('#noFavesMsg').hide();
             $('#favoritesList').listview('refresh');
         }
-
     }
-
 
     return {
         buildFavoriteList: function(){
@@ -169,6 +169,7 @@ var interfaceBuild = function(){
 
 var localStore = function(){
 
+    // Unused?
     function getAllStorage(){
         return store.getAll()
     };
@@ -189,6 +190,7 @@ var localStore = function(){
            $.each(savedItems, function(){
                if (this.item == newItem.item && this.section == newItem.section){
                 found = true;
+                return;
                }
            });
 
@@ -203,21 +205,29 @@ var localStore = function(){
 
     };
 
-
-    function removeFavorite(item){
+    // Returns false if empty, true if not empty
+    function removeFavorite(section, item){
 
         var savedItems = store.get('faves');
 
         if (savedItems == undefined){
-            return;
+            return false;
         }
 
-        savedItems.splice(item, 1);
+
+        $.each(savedItems, function(index){
+          if (this.section == section && this.item == item){
+           savedItems.splice(index, 1);
+           return;
+          }
+      });
+
 
         if (savedItems.length){
             store.set('faves', savedItems);
         } else {
             store.remove('faves');
+            return false;
         }
 
         return true;
@@ -229,13 +239,14 @@ var localStore = function(){
         doSaveFavorite: function(item){
             return saveFavorite(item);
         },
-        doRemoveFavorite: function(item){
-            return removeFavorite(item);
+        doRemoveFavorite: function(section, item){
+            return removeFavorite(section, item);
         }
     }
 
 }();
 
+// Unused?
 var removeArrItem = function(arr){
     var what, a= arguments, L= a.length, ax;
     while(L> 1 && arr.length){
@@ -247,6 +258,7 @@ var removeArrItem = function(arr){
     return arr;
 }
 
+// Still used by map
 var getUrlVars = function(pathname)
 {
     var vars = [], hash;
