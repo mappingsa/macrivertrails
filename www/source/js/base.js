@@ -97,8 +97,16 @@
 
 
   // Favorites page
-  $(document).on('pagebeforeshow', ".favorites", function() {
+  $(document).on("pagebeforeshow", ".favorites", function() {
     interfaceBuild.buildFavoriteList();
+  });
+
+  $(document).on("vclick", ".btn-remove-fav", function(event) {
+    var $a = $(this),
+        $li = $a.closest("li"),
+        index = $li.data("index");
+    event.preventDefault();
+    localStore.doRemoveFavorite(index);
   });
 
   }(jQuery));
@@ -124,7 +132,7 @@
 var interfaceBuild = function(){
   function BuildFavoriteList(){
     var base =
-      '<li><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a href="#" data-ajax="false" onclick="localStore.doRemoveFavorite(|item|);return false;">Remove</a></li>';
+      '<li data-index=|item|><a href="|itemdirectory|/|linkpage|">|itemtitle|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
 
         var savedItems = store.get('faves');
 
