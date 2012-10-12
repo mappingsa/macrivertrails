@@ -16,6 +16,7 @@
       a href="../map/index.html?section=#{section}&item=#{place.item}"
         img alt="" src="../map/images/#{section}-pin.png" height="25px" width="18px" GET DIRECTIONS
     li
-      a href="#" data-ajax="false" onclick="localStore.doSaveFavorite({section: '#{section}', item: '#{place.item}', title: '#{place.title}'}); return false;"
-        img src="../images/icon_favorities_add.png" height="20px" width="20px" MAKE FAVORITE
+      a.toggle-fav href="#" data-ajax="false"
+        img src="../images/icon_favorities_add.png" height="20px" width="20px"
+          span MAKE FAVORITE
 = blank_line

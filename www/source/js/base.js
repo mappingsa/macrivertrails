@@ -5,35 +5,54 @@
     $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
   };
 
+
   $(document).on('pageinit', ".ui-page", function() {
-    var menuStatus;
+    var $page = $(this),
+        menuStatus;
 
-    $("#popup").click(function(){
+    $page.find("#popup").click(function(){
       alert("Sorry no contact information available");
-  });
+      });
 
-  $(".popupalert").click(function(){
+    $page.find(".popupalert").click(function(){
       alert("Sorry no contact information available");
-  });
+      });
 
-      // Show menu
-  $("a.showMenu").bind("vclick", function(event) {
+    // Show menu
+    $page.find(".showMenu").bind("vclick", function(event) {
       var $menu = $.mobile.activePage.find(".menu");
       event.preventDefault();
       if (menuStatus != true) {
-          $menu.css("z-index", 1).animate({
+          $menu.css("z-index", 1).animate( {
             opacity: ".85",
           }, 400, function() {
               menuStatus = true;
-          });
-      } else {
+              });
+        } else {
           $menu.animate({
             opacity: "0",
           }, 400, function() {
               $menu.css("z-index", -1);
               menuStatus = false;
           });
+        }
+    });
+
+  $page.find(".toggle-fav").bind("vclick", function(event) {
+    var $a = $(this),
+        section = $page.data("section"),
+        item = $page.data("item"),
+        title = $page.data("title");
+    event.preventDefault();
+    if ( $a.hasClass("is-fav") ) {
+      localStore.doRemoveFavorite(section, item);
+      $a.removeClass("is-fav").find("span").text("ADD FAVORITE");
+    } else {
+      localStore.doSaveFavorite({section: section, item: item, title: title});
+      $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
+
+
   });
 
 
@@ -94,6 +113,22 @@
     });
   });
 
+
+  // Place pages
+  $(document).on("pagebeforeshow", ".place-page", function() {
+    var $page = $(this),
+        $menu = $page.find(".menu"),
+        $favA = $menu.find(".toggle-fav"),
+        section = $page.data("section"),
+        item = $page.data("item");
+
+    // Update menu to reflect favorite status of item
+    if ( localStore.doIsFavorite(section, item) ) {
+      $favA.addClass("is-fav").find("span").text("REMOVE FAV");
+      } else {
+      $favA.removeClass("is-fav").find("span").text("ADD FAVORITE");
+      }
+  });
 
   // Favorites page
   $(document).on("pagebeforeshow", ".favorites", function() {
@@ -173,6 +208,20 @@ var localStore = function(){
         return store.getAll()
     };
 
+    function isFavorite(section, item) {
+      var found = false,
+          savedItems = store.get('faves');
+      if (savedItems === undefined){
+        return false;
+        }
+      $.each(savedItems, function(){
+        if (this.item === item && this.section === section) {
+          found = true;
+          return;
+          }
+        });
+      return found;
+    }
 
     function saveFavorite(newItem){
        var found = false;
@@ -202,7 +251,7 @@ var localStore = function(){
            return;
        }
 
-    };
+    }
 
     // Returns false if empty, true if not empty
     function removeFavorite(section, item){
@@ -240,6 +289,9 @@ var localStore = function(){
         },
         doRemoveFavorite: function(section, item){
             return removeFavorite(section, item);
+        },
+        doIsFavorite: function(section, item) {
+          return isFavorite(section, item);
         }
     }
 
