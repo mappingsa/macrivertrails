@@ -17,15 +17,15 @@
   });
 
       // Show menu
-  $("a.showMenu").bind("vclick", function() {
+  $("a.showMenu").bind("vclick", function(event) {
       var $menu = $.mobile.activePage.find(".menu");
+      event.preventDefault();
       if (menuStatus != true) {
           $menu.css("z-index", 1).animate({
             opacity: ".85",
           }, 400, function() {
               menuStatus = true;
           });
-          return false;
       } else {
           $menu.animate({
             opacity: "0",
@@ -33,7 +33,6 @@
               $menu.css("z-index", -1);
               menuStatus = false;
           });
-          return false;
       }
   });
 
