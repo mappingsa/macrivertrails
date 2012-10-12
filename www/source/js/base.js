@@ -2,14 +2,21 @@
 (function ($) {
   "use strict";
 
+  var closeMenu = function($menu) {
+    $menu.animate({
+      opacity: "0",
+    }, 400, function() {
+        $menu.css("z-index", -1);
+    });
+  };
+
   var refreshScroller = function(slider) {
     $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
   };
 
 
   $(document).on('pageinit', ".ui-page", function() {
-    var $page = $(this),
-        menuStatus;
+    var $page = $(this);
 
     $page.find("#popup").click(function(){
       alert("Sorry no contact information available");
@@ -21,26 +28,21 @@
 
     // Show menu
     $page.find(".showMenu").bind("vclick", function(event) {
-      var $menu = $.mobile.activePage.find(".menu");
+      var $menu = $page.find(".menu"),
+          menuIsShown = $menu.css("z-index") === "1";
       event.preventDefault();
-      if (menuStatus != true) {
+      if (!menuIsShown) {
           $menu.css("z-index", 1).animate( {
             opacity: ".85",
-          }, 400, function() {
-              menuStatus = true;
-              });
+          }, 400 );
         } else {
-          $menu.animate({
-            opacity: "0",
-          }, 400, function() {
-              $menu.css("z-index", -1);
-              menuStatus = false;
-          });
+          closeMenu($menu);
         }
     });
 
   $page.find(".toggle-fav").bind("vclick", function(event) {
     var $a = $(this),
+        $menu = $page.find(".menu"),
         section = $page.data("section"),
         item = $page.data("item"),
         title = $page.data("title");
@@ -52,8 +54,7 @@
       localStore.doSaveFavorite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
-
-
+   closeMenu($menu);
   });
 
 
