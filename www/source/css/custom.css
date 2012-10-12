@@ -52,10 +52,6 @@
   -webkit-transform: translateZ(0); /* This should be for iOS only */
   }
 
-
-@import url(http://fonts.googleapis.com/css?family=Kaushan+Script); /* font-family: 'Kaushan Script', cursive; */
-@import url(http://fonts.googleapis.com/css?family=Cabin:400,700); /* font-family: 'Cabin', sans-serif; font-weight: 400; */
-
 /* Theme overrides. */
 /* =============================================================================
    UI Bars (add to a div surrounding content, like a callout box)
@@ -160,15 +156,6 @@ that they will override CSS in the standard JQM structure CSS */
 
 
 /* End of JQM structure overrides */
-
-h3.home-title {
-  margin-top:40px;
-  text-align:center;
-  font-weight:normal;
-  margin:10px 0 10px 0;
-
-   font-family: 'Kaushan Script', cursive; font-size:26px;
-}
 
 .padd {
   padding: 20px 0

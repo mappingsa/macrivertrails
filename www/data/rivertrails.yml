@@ -1,5 +1,6 @@
 debug:
     stylesheets:
+        - webfonts
         - jquery.mobile.theme-rivertrails-1.2.0
         - jquery.mobile.structure-1.2.0
         - jquery.mobile.simultaneous-transitions-replace
@@ -27,6 +28,7 @@ debug:
         # - fish.js
 web:
     stylesheets:
+        - webfonts-google
         - jquery.mobile.theme-rivertrails-1.2.0
         - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css  # Microsoft
         - jquery.mobile.simultaneous-transitions-replace
@@ -54,6 +56,7 @@ web:
         # - fish.js
 phonegap:
     stylesheets:
+        - webfonts
         - jquery.mobile.theme-rivertrails-1.2.0
         - jquery.mobile.structure-1.2.0.min
         - jquery.mobile.simultaneous-transitions-replace
