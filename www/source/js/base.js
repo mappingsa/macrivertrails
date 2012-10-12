@@ -1,3 +1,4 @@
+
 (function ($) {
   "use strict";
 
@@ -154,23 +155,6 @@
   }(jQuery));
 
 
-
-/*
-       var urlVars = getUrlVars(pathname);
-      if (urlVars.title){ // do we need to save a favorite?
-          favitem = {
-                  section: decodeURIComponent(urlVars.section),
-                  title: decodeURIComponent(urlVars.title),
-                  item: decodeURIComponent(urlVars.item)
-          };
-          localStore.doSaveFavorite(favitem);
-      }
-      if (urlVars.remove){ // are we removing a favorite?
-          localStore.doRemoveFavorite(urlVars.remove);
-      }
- */
-
-
 var interfaceBuild = function(){
   function BuildFavoriteList(){
     var base =
@@ -182,7 +166,7 @@ var interfaceBuild = function(){
               var thisBase = base;
               thisBase = thisBase.replace('|section|', this.section);
               thisBase = thisBase.replace('|item|', this.item);
-              thisBase = thisBase.replace('|href|', this.section + "/" + this.item + ".html");
+              thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
               thisBase = thisBase.replace('|title|', this.title);
               $('#favoritesList').append(thisBase);
               });
@@ -228,7 +212,7 @@ var localStore = function(){
 
        var savedItems = store.get('faves');
 
-       if (savedItems == undefined){
+       if (savedItems === undefined){
            savedItems = new Array();
            savedItems[0] = newItem;
            store.set('faves', savedItems);
@@ -236,7 +220,7 @@ var localStore = function(){
        } else {
 
            $.each(savedItems, function(){
-               if (this.item == newItem.item && this.section == newItem.section){
+               if (this.item === newItem.item && this.section === newItem.section){
                 found = true;
                 return;
                }
@@ -258,13 +242,13 @@ var localStore = function(){
 
         var savedItems = store.get('faves');
 
-        if (savedItems == undefined){
+        if (savedItems === undefined){
             return false;
         }
 
 
         $.each(savedItems, function(index){
-          if (this.section == section && this.item == item){
+          if (this.section === section && this.item === item){
            savedItems.splice(index, 1);
            return;
           }
