@@ -25,7 +25,6 @@ debug:
         - jquery.tinysort
         - maps
         - store
-        # - fish.js
 web:
     stylesheets:
         - webfonts-google
@@ -53,7 +52,6 @@ web:
         - jquery.tinysort
         - maps
         - store
-        # - fish.js
 phonegap:
     stylesheets:
         - webfonts
@@ -82,7 +80,6 @@ phonegap:
         - jquery.tinysort
         - maps
         - store
-        # - fish.js
         - phonegap-init
 
 
