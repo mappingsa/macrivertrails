@@ -294,7 +294,7 @@ var removeArrItem = function(arr){
     return arr;
 }
 
-// Still used by map
+// Unused? This was used for Favorites. Seems to be a separate copy for map
 var getUrlVars = function(pathname)
 {
     var vars = [], hash;
