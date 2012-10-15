@@ -157,129 +157,113 @@
 
 
 var interfaceBuild = function(){
+
   function BuildFavoriteList(){
     var base =
       '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
-        var savedItems = store.get('faves');
-        $("#favoritesList").empty();
-        if (savedItems != undefined){
-            $.each(savedItems, function(i) {
-              var thisBase = base;
-              thisBase = thisBase.replace('|section|', this.section);
-              thisBase = thisBase.replace('|item|', this.item);
-              thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
-              thisBase = thisBase.replace('|title|', this.title);
-              $('#favoritesList').append(thisBase);
-              });
-            $('#noFavesMsg').hide();
-            $('#favoritesList').listview('refresh');
-        }
+    var savedItems = store.get('faves');
+    $("#favoritesList").empty();
+    if (savedItems != undefined){
+      $.each(savedItems, function(i) {
+        var thisBase = base;
+        thisBase = thisBase.replace('|section|', this.section);
+        thisBase = thisBase.replace('|item|', this.item);
+        thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
+        thisBase = thisBase.replace('|title|', this.title);
+        $('#favoritesList').append(thisBase);
+        });
+      $('#noFavesMsg').hide();
+      $('#favoritesList').listview('refresh');
     }
+  }
 
-    return {
-        buildFavoriteList: function(){
-            return BuildFavoriteList();
-        }
+  return {
+    buildFavoriteList: function(){
+      return BuildFavoriteList();
+      }
     }
-
 
 }();
 
 
 var localStore = function(){
+  // Unused?
+  function getAllStorage(){
+    return store.getAll()
+  };
 
-    // Unused?
-    function getAllStorage(){
-        return store.getAll()
-    };
-
-    function isFavorite(section, item) {
-      var found = false,
-          savedItems = store.get('faves');
-      if (savedItems === undefined){
-        return false;
+  function isFavorite(section, item) {
+    var found = false,
+        savedItems = store.get('faves');
+    if (savedItems === undefined){
+      return false;
+      }
+    $.each(savedItems, function(){
+      if (this.item === item && this.section === section) {
+        found = true;
+        return;
         }
+      });
+    return found;
+    }
+
+  function saveFavorite(newItem){
+    var found = false,
+        savedItems = store.get('faves');
+
+  if (savedItems === undefined) {
+    savedItems = new Array();
+    savedItems[0] = newItem;
+    store.set('faves', savedItems);
+    return;
+    } else {
       $.each(savedItems, function(){
-        if (this.item === item && this.section === section) {
+        if (this.item === newItem.item && this.section === newItem.section){
           found = true;
           return;
           }
-        });
-      return found;
-    }
-
-    function saveFavorite(newItem){
-       var found = false;
-
-       var savedItems = store.get('faves');
-
-       if (savedItems === undefined){
-           savedItems = new Array();
-           savedItems[0] = newItem;
-           store.set('faves', savedItems);
-           return;
-       } else {
-
-           $.each(savedItems, function(){
-               if (this.item === newItem.item && this.section === newItem.section){
-                found = true;
-                return;
-               }
-           });
-
-           if (!found) {
-
-               savedItems.push(newItem);
-               store.set('faves', savedItems);
-           }
-
-           return;
-       }
-
+      });
+      if (!found) {
+        savedItems.push(newItem);
+        store.set('faves', savedItems);
+        }
+      return;
+      }
     }
 
     // Returns false if empty, true if not empty
     function removeFavorite(section, item){
-
-        var savedItems = store.get('faves');
-
-        if (savedItems === undefined){
-            return false;
-        }
-
-
-        $.each(savedItems, function(index){
-          if (this.section === section && this.item === item){
-           savedItems.splice(index, 1);
-           return;
+      var savedItems = store.get('faves');
+      if (savedItems === undefined){
+        return false;
+      }
+      $.each(savedItems, function(index){
+        if (this.section === section && this.item === item){
+          savedItems.splice(index, 1);
+          return;
           }
-      });
+        });
 
-
-        if (savedItems.length){
-            store.set('faves', savedItems);
+      if (savedItems.length){
+        store.set('faves', savedItems);
         } else {
-            store.remove('faves');
-            return false;
+          store.remove('faves');
+          return false;
         }
-
-        return true;
-    }
-
-
+      return true;
+      }
 
     return {
-        doSaveFavorite: function(item){
-            return saveFavorite(item);
+      doSaveFavorite: function(item){
+        return saveFavorite(item);
         },
-        doRemoveFavorite: function(section, item){
-            return removeFavorite(section, item);
+      doRemoveFavorite: function(section, item){
+        return removeFavorite(section, item);
         },
-        doIsFavorite: function(section, item) {
-          return isFavorite(section, item);
+      doIsFavorite: function(section, item) {
+        return isFavorite(section, item);
         }
     }
-
 }();
 
 // Unused?

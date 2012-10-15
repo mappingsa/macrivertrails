@@ -3,8 +3,9 @@ html
   = partial :head
   body
     = blank_line
-    @page.type_interior#gmap
+    @page.type_interior.map-page
       = partial :map_header
       = partial :map_tabbar
-      = yield
+      @content data-iscroll="true"
+        = yield
       = partial :tabbar

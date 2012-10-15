@@ -1,6 +1,4 @@
 $(function() {
-  var fullLoad = true;
-  var loadingSingle = false;
   var cycle = new google.maps.MarkerImage('images/Cycle-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
   var heritage = new google.maps.MarkerImage('images/Heritage-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
   var nature = new google.maps.MarkerImage('images/Nature-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
@@ -58,8 +56,8 @@ $(function() {
      {'group': 'nature', 'icon': nature, 'link': '../Nature/willieretreat.html', 'position': '-30.898687, 147.465805', 'title': 'Willie Retreat Macquarie Marshes', 'text': 'Willie Retreat Macquarie Marshes' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'nature', 'icon': nature, 'link': '../Nature/platypus.html',  'position': '-32.553092, 148.941039', 'title': 'Platypus spotting, Wellington', 'text': 'Platypus spotting, Wellington' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'nature', 'icon': nature, 'link': '../Nature/mountarther.html',  'position': '-32.553067, 148.916225', 'title': 'Mount Arthur Reserve and Lookout, Wellington', 'text': 'Mount Arthur Reserve and Lookout, Wellington' ,'bounds': false,'animation': google.maps.Animation.DROP },
-     {'group': 'nature', 'icon': nature, 'link': '../Nature/macquariemarsh_south.html',  'position': '-30.924103, 147.459008', 'title': 'South Macquarie Marsh Nature Reserve', 'text': 'South Macquarie Marsh Nature Reserve' ,'bounds': false,'animation': google.maps.Animation.DROP },
-     {'group': 'nature', 'icon': nature, 'link': '../Nature/macquariemarsh_north.html',  'position': '-30.814878, 147.500178', 'title': 'North Macquarie Marsh Nature Reserve', 'text': 'North Macquarie Marsh Nature Reserve' ,'bounds': false,'animation': google.maps.Animation.DROP },
+     {'group': 'nature', 'icon': nature, 'link': '../Nature/macquariemarshsouth.html',  'position': '-30.924103, 147.459008', 'title': 'South Macquarie Marsh Nature Reserve', 'text': 'South Macquarie Marsh Nature Reserve' ,'bounds': false,'animation': google.maps.Animation.DROP },
+     {'group': 'nature', 'icon': nature, 'link': '../Nature/macquariemarshnorth.html',  'position': '-30.814878, 147.500178', 'title': 'North Macquarie Marsh Nature Reserve', 'text': 'North Macquarie Marsh Nature Reserve' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'nature', 'icon': nature, 'link': '../Nature/touristpark.html',  'position': '-32.223497, 148.229931', 'title': 'Scenic helicopter rides over the Macquarie Marshes', 'text': 'Macquarie Marsh Nature Reserves' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/mookereawa.html', 'position': '-32.770344, 149.148642', 'title': 'Mookerawa Waters State Park Lake Burrendong', 'text': 'Mookerawa Waters State Park Lake Burrendong' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/johnoxley.html', 'position': '-32.542912, 148.933151', 'title': 'John Oxley Park, Wellington', 'text': 'John Oxley Park, Wellington' ,'bounds': false,'animation': google.maps.Animation.DROP },
@@ -78,14 +76,14 @@ $(function() {
      {'group': 'river', 'icon': river, 'link': '../River/willieretreat.html',  'position': '-30.898687, 147.465805', 'title': 'Willie Retreat Macquarie Marshes', 'text': 'Willie Retreat Macquarie Marshes' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/riversidetp.html',  'position': '-31.558367, 147.180984', 'title': 'Nyngan Riverside Tourist Park', 'text': 'Nyngan Riverside Tourist Park' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/sport.html', 'position': '-32.707633, 149.1149946', 'title': 'Lake Burrendong Sport and Recreation', 'text': 'Lake Burrendong Sport and Recreation' ,'bounds': false,'animation': google.maps.Animation.DROP },
-     {'group': 'river', 'icon': river, 'link': '../River/wellington_cp.html', 'position': '-32.542417, 148.942706', 'title': 'Wellington Riverside Caravan Park', 'text': 'Wellington Riverside Caravan Park' ,'bounds': false,'animation': google.maps.Animation.DROP },
+     {'group': 'river', 'icon': river, 'link': '../River/wellingtoncp.html', 'position': '-32.542417, 148.942706', 'title': 'Wellington Riverside Caravan Park', 'text': 'Wellington Riverside Caravan Park' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/terramungamine.html',  'position': '-32.168713, 148.585022', 'title': 'Terramungamine Reserve, Dubbo', 'text': 'Terramungamine Reserve, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/sandybeach.html',  'position': '-32.256325, 148.590622', 'title': 'Sandy Beach, Dubbo', 'text': 'Sandy Beach, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/rotarypark.html',  'position': '-32.226742, 148.246664', 'title': 'Rotary Riverside Park, Narromine', 'text': 'Rotary Riverside Park, Narromine' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/macquairecp.html',  'position': '-31.695214, 147.8398086', 'title': 'Macquarie Caravan Park, Warren', 'text': 'Macquarie Caravan Park, Warren' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/macquairecanoe.html',  'position': '-32.542912, 148.933151', 'title': 'Macquarie river canoe and kayak trail', 'text': 'Macquarie river canoe and kayak trail' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'river', 'icon': river, 'link': '../River/big4.html',  'position': '-32.257458, 148.587414', 'title': 'BIG 4 Parklands, Dubbo', 'text': 'BIG 4 Parklands, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
-     {'group': 'river', 'icon': river, 'link': '../River/lake_burrendong.html',  'position': '-32.688095, 149.108505', 'title': 'Lake Burrendong State Park', 'text': 'Lake Burrendong State Park' ,'bounds': false,'animation': google.maps.Animation.DROP },
+     {'group': 'river', 'icon': river, 'link': '../River/lakeburrendong.html',  'position': '-32.688095, 149.108505', 'title': 'Lake Burrendong State Park', 'text': 'Lake Burrendong State Park' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/abeltasman.html',  'position': '-32.254986, 148.587600', 'title': 'Abel Tasman Motor Inn, Dubbo', 'text': 'Abel Tasman Motor Inn, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/bridgemotel.html',  'position': '-32.544325, 148.941369', 'title': 'Bridge Motel, Wellington', 'text': 'Bridge Motel, Wellington' ,'bounds': false,'animation': google.maps.Animation.DROP },
      {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/willieretreat.html',  'position': '-30.898687, 147.465805', 'title': 'Willie Retreat Macquarie Marshes', 'text': 'Willie Retreat Macquarie Marshes' ,'bounds': false,'animation': google.maps.Animation.DROP },
@@ -99,208 +97,265 @@ $(function() {
      {'group': 'riverbedz', 'icon': riverbedz, 'link': '../Riverbedz/peppercorn.html',  'position': '-32.225553, 148.238061', 'title': 'Peppercorn Motor Inn, Narromine', 'text': 'Peppercorn Motor Inn, Narromine' ,'bounds': false,'animation': google.maps.Animation.DROP },
    ];
 
-  $(document).on("pageshow resize", "#gmap", function() {
-    $("#map_canvas").gmap("refresh");
-  });
+  $(document).on( "pageinit", ".map-page", function() {
+    var fullLoad = true,
+        loadingSingle = false,
+        $page = $( this ),
+        $canvas = $page.find( ".map_canvas" ),
+        gmap = null,
+        iscrollview = $page.find( ".iscroll-wrapper" ).data( "iscrollview" ),
+        $to = $page.find( ".to" ),
+        $toPretty = $page.find( ".toPretty" ),
+        $from = $page.find( ".from" ),
+        $fromPretty = $page.find( ".fromPretty" ),
+        $directionsFields = $page.find( ".directionsFields" ),
+        $locationOnBtn = $page.find( ".locationonBtn" ),
+        $markerList = $page.find( ".markerList"),
+        $markerListItems = $markerList.find("li"),
+        markerListview = $markerList.data( "listview" ),
+        $markerListNote = $page.find( ".markerListNote" ),
+        $submitDirections = $page.find( ".submitDirections" ),
+        $results = $page.find( ".results" ),
+        $directions = $(".directions"),
+        userLoc = null;
 
-  $('#map_canvas').gmap().bind('init', function(event, map) {
-    // attempt to get specifc marker data from item  page
-    var selGroup = getUrlVars().section;
-    var selMarker = getUrlVars().item;
-    loadingSingle = false;
+    $canvas.gmap( { callback: function() {
+      gmap = this;
 
-    if ((selMarker != undefined && selMarker.length) && (selGroup != undefined && selGroup.length)){
+      google.maps.event.addListener(gmap, "zoom_changed", function() {
+        showMarkerList();
+        });
+
+      google.maps.event.addListener(gmap, "center_changed", function() {
+        showMarkerList();
+        });
+
+      }
+    });
+
+    $page.on("pageshow resize", function( event ) {
+      gmap.refresh();
+      iscrollview.refresh();
+      });
+
+    $page.on("pagebeforeshow", function( event ) {
+      // attempt to get specifc marker data from item  page
+      var selGroup = getUrlVars().section,
+          selMarker = getUrlVars().item;
+      loadingSingle = false;
+
+    if ( (selMarker !== undefined && selMarker.length) && (selGroup !== undefined && selGroup.length) ){
       selGroup = selGroup.toLowerCase();
       selMarker = selMarker.toLowerCase();
       loadingSingle = true;
       fullLoad = false;
-      } else {
-      selGroup = '';
-      selMarker = '';
+      }
+    else {
+      selGroup = "";
+      selMarker = "";
       }
 
     $.each( markers, function(i, marker) {
-      if ((selMarker == '' || marker.link.indexOf(selMarker) >= 0) && (selGroup == '' || selGroup == marker.group)){
-         $('#map_canvas').gmap('addMarker', {
-                               'position': marker.position,
-                               'bounds': true,
-                               'icon': marker.icon,
-                               'group':marker.group,
-                               'mTitle': marker.title,
-                               'mLink': marker.link
-                               }).click(function() {
-                                 $('#map_canvas').gmap('openInfoWindow', { 'content': marker.title }, this);
-                                   if (loadingSingle){
-                                     $('#to').attr('value',  marker.position);
-                                     $('#toPretty').attr('value', marker.title);
-                                   }
-                                });
+      if ( (selMarker === "" || marker.link.indexOf(selMarker) >= 0) && (selGroup === "" || selGroup === marker.group) ) {
+         gmap.addMarker( {
+             position: marker.position,
+             bounds: true,
+             icon: marker.icon,
+             group: marker.group,
+             mTitle: marker.title,
+             mLink: marker.link
+             } )
+           .click(function() {
+             gmap.openInfoWindow( { content: marker.title }, this);
+             if (loadingSingle){
+               $to.attr("value",  marker.position);
+               $toPretty.attr("value", marker.title);
+               }
+           });
         }
     });
 
     if (loadingSingle){
       resetMapForSingle();
       }
+
     addMyLocation(false);
 
+    gmap.refresh();
+    iscrollview.refresh();
+    });
 
-    google.maps.event.addListener(map, 'zoom_changed', function() {
-                                  showMarkerList();
-      });
-
-    google.maps.event.addListener(map, 'center_changed', function() {
-                                  showMarkerList();
-      });
-
-  });
-
-
-  $('.markerNav').on('click', function(e){
-    $('#map_canvas').gmap('clear', 'markers');
+    $page.on("click", ".markerNav", function( e ){
+    var $marker = $(this),
+        selMarker = $marker.attr( "item" );
+    gmap.clear( "markers" );
     e.preventDefault();
 
-    var selMarker = $(this).attr('item')
-
-    if (selMarker == 'all'){
+    if ( selMarker == "all" ){
       fullLoad = true;
       markerListULReset();
-      } else {
+      }
+    else {
         fullLoad = false;
       }
 
     $.each( markers, function(i, marker) {
-      if (marker.group == selMarker || selMarker == 'all'){
-        $('#map_canvas').gmap('addMarker', {
-                              'position': marker.position,
-                              'bounds': true,
-                              'icon': marker.icon,
-                              'group':marker.group,
-                              'mTitle': marker.title,
-                              'mLink': marker.link
-                              }).click(function() {
-                                $('#map_canvas').gmap('openInfoWindow', { 'content': marker.title }, this);
-
-        if (loadingSingle){
-          $('#to').attr('value',  marker.position);
-          $('#toPretty').attr('value', marker.title);
-          }
-        });
-      }
+      if ( marker.group == selMarker || selMarker == "all" ){
+        gmap.addMarker( {
+          position: marker.position,
+          bounds: true,
+          icon: marker.icon,
+          group: marker.group,
+          mTitle: marker.title,
+          mLink: marker.link
+          }).click(function() {
+            gmap.openInfoWindow( { content: marker.title }, this);
+            if (loadingSingle){
+              $to.attr("value",  marker.position);
+              $toPretty.attr("value", marker.title);
+              }
+            });
+        }
     });
-
     showMarkerList()
-    // add my current location the map.
     addMyLocation(false);
-  });
 
+  });
 
   var resetMapForSingle = function(){
-  var thisMarker = $('#map_canvas').gmap('get', 'markers');
-  google.maps.event.trigger(thisMarker[0], 'click');
-
-  $('#topMarkerNav').hide();
-  $('.locationonBtn').hide();
-  $('#map_canvas').gmap('option', 'zoom', 14);
-  $('#directionsFields').show();
-  };
+    var thisMarker = gmap.get( "markers" );
+    $( "#topMarkerNav" ).hide();
+    $locationOnBtn.hide();
+    gmap.option( "zoom", 14 );
+    $directionsFields.show();
+    };
 
   var showMarkerList = function(){
+    var itemInView = false,
+        myMarkers = null;
+    if (fullLoad){
+      return false;
+      }
+    markerListULReset();
+    myMarkers = gmap.get( "markers" );
+    $.each( myMarkers, function(i, tmarker) {
+      var isInViewport = gmap.inViewport( tmarker );
+      if (isInViewport) {
+        buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position);
+        itemInView = true;
+        }
+      });
+    if (itemInView){
+      // sort list by nearest and apply jQuery Mobile UI
+      $markerListItems.tsort({attr: "sortid" });
+      markerListview.refresh();
+      $markerListNote.show();
+      }
+    };
 
-  if (fullLoad){
-    return false;
+    var makePrettyAddress = function(loc, type) {
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode( {location: loc}, function(addresses ) {
+        if (type === 1 ){
+          $fromPretty.attr( "value", addresses[0].formatted_address);
+          }
+        else {
+          $toPretty.attr( "value", addresses[0].formatted_address );
+          }
+        });
+      };
+
+    var addMyLocation = function(centerOnMe){
+      gmap.getCurrentPosition( function(position, status) {
+        if ( status === "OK" ) {
+          userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          $from.val(position.coords.latitude + "," + position.coords.longitude);
+          var image = new google.maps.MarkerImage(
+            "./images/bluedot_retina.png", null, null,
+            new google.maps.Point( 8, 8 ),
+            new google.maps.Size( 17, 17 )
+            );
+          gmap.addMarker( {
+            icon: image,
+            id: "client",
+            position: userLoc,
+            bounds: false,
+            optimized: false,
+            title: "My Location",
+            visible: true,
+            flat: true } );
+          if ( centerOnMe || getUrlVars().location == "me" ) {
+            gmap.option( "center", userLoc );
+            gmap.option( "zoom", 4 );
+            }
+          if (loadingSingle){
+            makePrettyAddress(userLoc, 1);
+            }
+          }
+        else {
+          alert("Unable to get current position");
+          }
+      });
+    };
+
+    $submitDirections.on("click",  function () {
+      gmap.displayDirections ( {
+        origin: $from.val(),
+        destination: $to.val(),
+        travelMode: google.maps.DirectionsTravelMode.DRIVING
+        },
+        { panel: $directions[0] },
+        function (success, response) {
+          if (success) {
+            $results.show();
+            iscrollview.refresh();
+            }
+          else {
+            $results.hide();
+            iscrollview.refresh();
+            }
+        });
+      return false;
+    });
+
+    var buildMarkerULList = function( item, link, position ) {
+      var endRes = getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ),
+          base = '<li sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|km</span></a></li>';
+      base = base.replace( "|itemtitle|", item );
+      if ( link != "" ){
+        base = base.replace( "|link|", link);
+        }
+      else {
+        base = base.replace( "|link|", "#" );
+        }
+      endRes = parseFloat(endRes).toFixed(2);
+      base = base.replace("|sort|", parseFloat(endRes));
+      base = base.replace("|distance|", endRes);
+      $markerList.append(base);
+      };
+
+    var markerListULReset = function(){
+      $markerList.empty();
+      $markerListNote.hide();
     }
 
-  var itemInView = false;
-  markerListULReset();
-  var myMarkers = $('#map_canvas').gmap('get', 'markers');
-  $.each( myMarkers, function(i, tmarker) {
-    var isInViewport = $('#map_canvas').gmap('inViewport', tmarker);
-    if(isInViewport){
-      buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position);
-      itemInView = true;
-      }
-    });
-
-  if (itemInView){
-    // sort list by nearest and apply jQuery Mobile UI
-    $('ul#markerList>li').tsort({attr:'sortid'});
-    $('#markerList').listview('refresh');
-    $('#markerListNote').show();
-    }
-  };
-
-  var makePrettyAddress = function(loc, type){
-    var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'location': loc}, function(addresses) {
-    if (type == 1){
-      $('#fromPretty').attr('value', addresses[0].formatted_address);
-      } else {
-        $('#toPretty').attr('value', addresses[0].formatted_address);
-      }
-    });
-  }
-
-  var addMyLocation = function(centerOnMe){
-  $('#map_canvas').gmap('getCurrentPosition', function(position, status) {
-    if ( status === 'OK' ) {
-      userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-      $('#from').val(position.coords.latitude+ ','+position.coords.longitude);
-      var image = new google.maps.MarkerImage('./images/bluedot_retina.png', null, null, new google.maps.Point( 8, 8 ), new google.maps.Size( 17, 17 ) );
-      $('#map_canvas').gmap("addMarker", { 'icon': image,'id': 'client', 'position': userLoc, 'bounds': false, 'optimized': false, 'title': 'My Location', 'visible': true, 'flat': true });
-      if (centerOnMe || getUrlVars().location == 'me'){
-        $('#map_canvas').gmap('option', 'center', userLoc);
-        $('#map_canvas').gmap('option', 'zoom', 4);
+    var getUrlVars = function()
+      {
+      var vars = [],
+          hash,
+          i,
+          url = $page.data("url"),
+          hashes = url.slice(url.indexOf("?") + 1).split("&");
+      for(i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split("=");
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
         }
-      if (loadingSingle){
-        makePrettyAddress(userLoc, 1);
-        }
-      } else {
-        alert('Unable to get current position');
-        }
-    });
-  }
+      return vars;
+      };
 
-  $('#submitDirections').click(function () {
-    $('#map_canvas').gmap('displayDirections',{ 'origin': $('#from').val(), 'destination': $('#to').val(), 'travelMode': google.maps.DirectionsTravelMode.DRIVING }, { 'panel': document.getElementById('directions') }, function (success, response) {
-    if (success) {
-      $('#results').show();
-      } else {
-      $('#results').hide();
-      }
-    });
-    return false;
   });
 
-  var getUrlVars = function()
-    {
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++) {
-      hash = hashes[i].split('=');
-      vars.push(hash[0]);
-      vars[hash[0]] = hash[1];
-      }
-  return vars;
-  }
-
-  var buildMarkerULList = function(item, link, position){
-    var endRes = getMarkerDistance(position.Xa, position.Ya, userLoc.Xa, userLoc.Ya);
-    var base = '<li sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|km</span></a></li>';
-    base = base.replace('|itemtitle|', item);
-    if (link != ''){
-      base = base.replace('|link|', link);
-      } else {
-      base = base.replace('|link|', '#');
-      }
-    endRes = parseFloat(endRes).toFixed(2);
-    base = base.replace('|sort|', parseFloat(endRes));
-    base = base.replace('|distance|', endRes);
-    $('#markerList').append(base);
-    }
-
-  var markerListULReset = function(){
-  $('#markerList').empty();
-  $('#markerListNote').hide();
-  }
+  /* End $(document).on("pageinit", ".map-page") */
 
 });
