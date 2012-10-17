@@ -145,6 +145,7 @@ $(function() {
           selMarker = getUrlVars().item;
       loadingSingle = false;
 
+
     if ( (selMarker !== undefined && selMarker.length) && (selGroup !== undefined && selGroup.length) ){
       selGroup = selGroup.toLowerCase();
       selMarker = selMarker.toLowerCase();
@@ -154,6 +155,15 @@ $(function() {
     else {
       selGroup = "";
       selMarker = "";
+      }
+
+    if (getUrlVars().location === "me") {
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+      $activeGroupButton.addClass("ui-btn-active");
+      }
+    else if (selGroup) {
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
+      $activeGroupButton.addClass("ui-btn-active");
       }
 
     $.each( markers, function(i, marker) {
