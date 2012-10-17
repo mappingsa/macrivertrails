@@ -204,6 +204,10 @@ $(function() {
 
     $.each( markers, function(i, marker) {
       if ( (selMarker === "" || marker.link.indexOf(selMarker) >= 0) && (selGroup === "" || selGroup === marker.group) ) {
+         if (marker.link.indexOf(selMarker) >= 0 && selGroup === marker.group) {
+           $to.attr("value",  marker.position);
+           $toPretty.attr("value", marker.title);
+         }
          gmap.addMarker( {
              position: marker.position,
              bounds: true,
