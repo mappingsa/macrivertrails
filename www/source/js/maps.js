@@ -117,7 +117,8 @@ $(function() {
         $submitDirections = $page.find( ".submitDirections" ),
         $results = $page.find( ".results" ),
         $directions = $(".directions"),
-        userLoc = null;
+        userLoc = null,
+        $activeGroupButton = null;
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -185,46 +186,50 @@ $(function() {
     iscrollview.refresh();
     });
 
-    $page.on("click", ".markerNav", function( e ){
-    var $marker = $(this),
-        selMarker = $marker.attr( "item" );
-    gmap.clear( "markers" );
-    e.preventDefault();
-
-    if ( selMarker == "all" ){
-      fullLoad = true;
-      markerListULReset();
-      }
-    else {
-        fullLoad = false;
-      }
-
-    $.each( markers, function(i, marker) {
-      if ( marker.group == selMarker || selMarker == "all" ){
-        gmap.addMarker( {
-          position: marker.position,
-          bounds: true,
-          icon: marker.icon,
-          group: marker.group,
-          mTitle: marker.title,
-          mLink: marker.link
-          }).click(function() {
-            gmap.openInfoWindow( { content: marker.title }, this);
-            if (loadingSingle){
-              $to.attr("value",  marker.position);
-              $toPretty.attr("value", marker.title);
-              }
-            });
+    // Top Navbar buttons. Shows markers for each trail
+    $page.on("vclick", ".markerNav", function( e ){
+      var $button = $(this),
+          selMarker = $button.data( "group" );
+      e.preventDefault();
+      if ($.activeGroupButton) {
+        $activeGroupButton.removeClass("ui-btn-active");
         }
-    });
-    showMarkerList()
-    addMyLocation(false);
+      $button.addClass("ui-btn-active");
+      $activeGroupButton = $button;
+      gmap.clear( "markers" );
+      if ( selMarker === "all" ){
+        fullLoad = true;
+        markerListULReset();
+        }
+      else {
+          fullLoad = false;
+        }
 
-  });
+      $.each( markers, function(i, marker) {
+        if ( marker.group === selMarker || selMarker === "all" ){
+          gmap.addMarker( {
+            position: marker.position,
+            bounds: true,
+            icon: marker.icon,
+            group: marker.group,
+            mTitle: marker.title,
+            mLink: marker.link
+            }).click(function() {
+              gmap.openInfoWindow( { content: marker.title }, this);
+              if (loadingSingle){
+                $to.attr("value",  marker.position);
+                $toPretty.attr("value", marker.title);
+                }
+              });
+          }
+        });
+      showMarkerList();
+      addMyLocation(false);
+    });
 
   var resetMapForSingle = function(){
     var thisMarker = gmap.get( "markers" );
-    $( "#topMarkerNav" ).hide();
+    //$( "#topMarkerNav" ).hide();   // This doesn't exist
     $locationOnBtn.hide();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
@@ -284,7 +289,7 @@ $(function() {
             title: "My Location",
             visible: true,
             flat: true } );
-          if ( centerOnMe || getUrlVars().location == "me" ) {
+          if ( centerOnMe || getUrlVars().location === "me" ) {
             gmap.option( "center", userLoc );
             gmap.option( "zoom", 4 );
             }
