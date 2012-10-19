@@ -21,6 +21,7 @@ debug:
         - jquery.ui.map
         - jquery.ui.map.services
         - jquery.ui.map.extensions
+        - google.maps.v3.utility.infobox.js
         - geolocation
         - jquery.tinysort
         - maps
@@ -49,6 +50,7 @@ web:
         - jquery.ui.map
         - jquery.ui.map.services
         - jquery.ui.map.extensions
+        - google.maps.v3.utility.infobox.js
         - geolocation
         - jquery.tinysort
         - maps
@@ -78,6 +80,7 @@ phonegap:
         - jquery.ui.map
         - jquery.ui.map.services
         - jquery.ui.map.extensions
+        - google.maps.v3.utility.infobox.js
         - geolocation
         - jquery.tinysort
         - maps

@@ -56,8 +56,6 @@
 /* =============================================================================
    UI Bars (add to a div surrounding content, like a callout box)
    ========================================================================== */
-
-
 .ui-bar-a,
 .ui-bar-b,
 .ui-bar-c {
@@ -994,4 +992,27 @@ margin-left: -45px;
 }
 .rtheader a.homeBtn {background:url('../images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
 .rtheader a.backBtn {background:url('../images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+
+/* Popup Infobox in maps
+   Note: transparent background by default. The viewable box is the div below, and is offset from .infoBox */
+.infoBox {
+  opacity: 0.75;
+  min-width: 120px;
+}
+
+
+.infoBox div {
+  border-radius: 10px;
+  border: 1px solid black;
+  background-color: yellow;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  -webkit-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 0 0 2px 2px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 0 0 2px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 0 0 2px 2px rgba(0,0,0,0.3);
+}
+
 

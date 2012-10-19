@@ -278,10 +278,25 @@ $(function() {
     });
 
   var openInfoWindow = function(marker, markerElement) {
-    gmap.openInfoWindow(
-      { content: '<a href="' + marker.link + '">'  + marker.title + '</a>' },
-      markerElement
-      );
+
+  var boxText = document.createElement("div");
+  boxText.innerHTML = '<a href="' + marker.link + '">'  + marker.title + '</a>';
+
+  var myOptions = {
+    content: boxText,
+    closeBoxMargin: "14px 5px 2px 2px",
+    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+     };
+
+   var ib = new InfoBox(myOptions);
+   ib.open(gmap.get('map'), markerElement);
+
+
+
+    //gmap.openInfoWindow(
+    //  { content: '<a href="' + marker.link + '">'  + marker.title + '</a>' },
+    //  markerElement
+    //  );
   };
 
   var resetMapForSingle = function(){
