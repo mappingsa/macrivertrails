@@ -927,8 +927,7 @@ ul.tweetList{
 
 
 
-.ui-header.mainheader,
-.mainlogo {
+.ui-header.mainheader {
     border:0px;
     color:#0099FF !important;
     height:40px;
@@ -943,7 +942,6 @@ ul.tweetList{
     background:url('../images/header.png') top center no-repeat;
     margin:0 auto;
     background-size: 185px 40px;
-    background-color: #1e5799;
 }
 
 .rtheader {
