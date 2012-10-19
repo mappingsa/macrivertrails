@@ -202,6 +202,10 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   height: 120px;
 }
 
+.home-menu a {
+  text-decoration: none;
+}
+
 .home-menu .icon {
   position:absolute;
   width: 40px;
@@ -209,6 +213,17 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   right:50px;
   top:50px;
   -webkit-filter: drop-shadow(-2px 3px 3px rgba(0, 0, 0, 0.8) );
+}
+
+.home-menu .tile-title {
+  color: white;
+  position: absolute;
+  right: 42px;
+  top: 83px;
+  font-size: 10px;
+  font-family: Helvetica;
+  font-weight: bold;
+  text-shadow: -.1em .2em .2em rgba(0, 0, 0, 0.8);
 }
 
 
