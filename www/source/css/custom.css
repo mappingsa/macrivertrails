@@ -1001,7 +1001,7 @@ margin-left: -45px;
 }
 
 
-.infoBox div {
+.infoBox .inner {
   border-radius: 10px;
   border: 1px solid black;
   background-color: yellow;
