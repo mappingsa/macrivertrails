@@ -951,6 +951,10 @@ ul.tweetList{
   border: 0px solid #2A2A2A;
 }
 
+.todoheader {
+  background-color: #1e5799;
+}
+
 .heritageheader {
     background-color: #AE132A;
 }
@@ -959,7 +963,7 @@ ul.tweetList{
     background-color:#539536;
 }
 
-.ui-header.riverheader {
+.riverheader {
     background-color:#015CAB;
 }
 
@@ -971,11 +975,11 @@ ul.tweetList{
     background-color:#C14F9D;
 }
 
-.ui-bar-a.riverbedzheader {
+.riverbedzheader {
     background-color:#989898;
 }
 
-.ui-bar-a.fishingheader {
+.fishingheader {
     background-color:#663399;
 }
 
