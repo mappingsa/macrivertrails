@@ -217,7 +217,7 @@ $(function() {
              mLink: marker.link
              } )
            .click(function() {
-             gmap.openInfoWindow( { content: marker.title }, this);
+             openInfoWindow(marker, this);
              if (loadingSingle){
                $to.attr("value",  marker.position);
                $toPretty.attr("value", marker.title);
@@ -265,7 +265,7 @@ $(function() {
             mTitle: marker.title,
             mLink: marker.link
             }).click(function() {
-              gmap.openInfoWindow( { content: marker.title }, this);
+              openInfoWindow(marker, this);
               if (loadingSingle){
                 $to.attr("value",  marker.position);
                 $toPretty.attr("value", marker.title);
@@ -276,6 +276,13 @@ $(function() {
       showMarkerList();
       addMyLocation(false);
     });
+
+  var openInfoWindow = function(marker, markerElement) {
+    gmap.openInfoWindow(
+      { content: '<a href="' + marker.link + '">'  + marker.title + '</a>' },
+      markerElement
+      );
+  };
 
   var resetMapForSingle = function(){
     var thisMarker = gmap.get( "markers" );
