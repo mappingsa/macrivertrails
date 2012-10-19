@@ -223,7 +223,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   font-size: 10px;
   font-family: Helvetica;
   font-weight: bold;
-  text-shadow: -.1em .2em .2em rgba(0, 0, 0, 0.8);
+  text-shadow: -.1em .2em .2em rgba(0, 0, 0, 0.6);
 }
 
 
