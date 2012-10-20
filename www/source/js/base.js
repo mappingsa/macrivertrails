@@ -18,14 +18,6 @@
   $(document).on('pageinit', ".ui-page", function() {
     var $page = $(this);
 
-    $page.find("#popup").click(function(){
-      alert("Sorry no contact information available");
-      });
-
-    $page.find(".popupalert").click(function(){
-      alert("Sorry no contact information available");
-      });
-
     // Show menu
     $page.find(".showMenu").bind("vclick", function(event) {
       var $menu = $page.find(".menu"),
