@@ -345,7 +345,7 @@ a.menuBtn:hover{
   background-size: 100% auto;
 }
 
-a.toggle-fav.is-fav .fav-icon {
+.menu .toggle-fav.is-fav .fav-icon {
   background-image: url('../images/icon_favorities.png');
 }
 
