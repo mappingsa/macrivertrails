@@ -1000,8 +1000,12 @@ ul.tweetList{
   border: 0px solid #2A2A2A;
 }
 
+.browseheader {
+ background-color: #015CAB;
+}
+
 .todoheader {
-  background-color: #1e5799;
+   background-color: #015CAB;
 }
 
 .heritageheader {
