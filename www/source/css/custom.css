@@ -730,16 +730,17 @@ li.ui-li-divider {
     -webkit-border-radius: 0 !important;
     border-radius: 0 !important;
 }
-
-.nearby-tab .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat;  }
+.nearby-tab .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 20px 20px; }
 .info-tab .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 20px 20px; } /* 28x28 WTF? (from Xtras) */
-.map-tab .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; }
-.browse-tab .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; }
-.todo-tab .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; }
-.fishing-tab .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; }
+.map-tab .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 26px 21px; }
+.browse-tab .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 24px 16px; }
+.todo-tab .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; background-size: 18px 19px; }
+.fishing-tab .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; background-size: 28px 13px; }
 
-
-
+/* Retina icons */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.nearby-tab .ui-icon { background-image: url(../images/74-location@2x.png); }
+}
 /* =============================================================================
    Portfolio (obsolete?)
    ========================================================================== */
