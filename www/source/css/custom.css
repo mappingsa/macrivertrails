@@ -281,6 +281,10 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   right: 0;
 }
 
+.menu .ui-link:visited {
+
+}
+
 .menu ul {
   margin: 0;
   padding: 0;
@@ -295,9 +299,9 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   list-style-type: none;
   margin: 0px 0;
 }
-.menu ul li a:link, .menu ul li a:visited {
- text-align: center;
- border-top: 1px #3E4555 solid;
+.menu .ui-link, .menu .ui-link:visited {
+  text-align: center;
+  border-top: 1px #3E4555 solid;
   border-bottom: 1px #191D27 solid;
   color: #DBE0E8;
   font-size: 12px;
