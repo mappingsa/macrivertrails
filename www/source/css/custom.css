@@ -229,12 +229,13 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 .home-menu .tile-title {
   color: white;
   position: absolute;
-  font-size: 10px;
-  font-family: Helvetica;
+  font-size: 15px;
+  font-family: Caviar Dreams;
   font-weight: bold;
-  text-shadow: -.1em .2em .2em rgba(0, 0, 0, 0.6);
-  right: 42px;
-  top: 105px;
+  text-shadow: -1px 2px 1px rgba(0, 0, 0, 0.5);
+  text-align: right;
+  right: 50px;
+  top: 100px;
 }
 
 .home-produce .tile-title {

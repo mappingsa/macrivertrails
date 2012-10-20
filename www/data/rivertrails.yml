@@ -1,6 +1,7 @@
 debug:
     stylesheets:
-        - webfonts
+        - webfonts-cabin
+        - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.0
         - jquery.mobile.structure-1.2.0
         - jquery.mobile.simultaneous-transitions-replace
@@ -28,7 +29,8 @@ debug:
         - store
 web:
     stylesheets:
-        - webfonts-google
+        - webfonts-cabin-google
+        - webfonts.caviar
         - jquery.mobile.theme-rivertrails-1.2.0
         - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css  # Microsoft CDN
         - jquery.mobile.simultaneous-transitions-replace
@@ -57,7 +59,8 @@ web:
         - store
 phonegap:
     stylesheets:
-        - webfonts
+        - webfonts-cabin
+        - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.0
         - jquery.mobile.structure-1.2.0.min
         - jquery.mobile.simultaneous-transitions-replace
