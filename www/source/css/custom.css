@@ -337,6 +337,18 @@ a.menuBtn:hover{
   border:none !important;
 }
 
+.fav-icon {
+  width: 20px;
+  height: 20px;
+  float: left;
+  background-image: url('../images/icon_favorities_add.png');
+  background-size: 100% auto;
+}
+
+a.toggle-fav.is-fav .fav-icon {
+  background-image: url('../images/icon_favorities.png');
+}
+
 .place-page {
 }
 

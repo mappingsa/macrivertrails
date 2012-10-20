@@ -42,6 +42,7 @@
 
   $page.find(".toggle-fav").bind("vclick", function(event) {
     var $a = $(this),
+        $img = $a.find("img"),
         $menu = $page.find(".menu"),
         section = $page.data("section"),
         item = $page.data("item"),
@@ -50,6 +51,7 @@
     if ( $a.hasClass("is-fav") ) {
       localStore.doRemoveFavorite(section, item);
       $a.removeClass("is-fav").find("span").text("ADD FAVORITE");
+
     } else {
       localStore.doSaveFavorite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
