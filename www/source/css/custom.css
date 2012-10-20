@@ -238,7 +238,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   font-size: 15px;
   font-family: Caviar Dreams;
   font-weight: bold;
-  text-shadow: -1px 2px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.6);
   text-align: right;
   right: 10px;
   bottom: 5px;
