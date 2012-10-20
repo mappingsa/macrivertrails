@@ -265,10 +265,8 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 .menu {
   background:#262C3A;
   -webkit-text-size-adjust:none !important;
-  opacity: 0;
-  z-index: -1;
-
-  display: block !important;
+  display: none;
+  z-index: 10;
   position: absolute;
   right: 0;
 }

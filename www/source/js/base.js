@@ -2,37 +2,49 @@
 (function ($) {
   "use strict";
 
-  var closeMenu = function($menu, fadeTime) {
-    $menu.animate({
-      opacity: "0",
-    }, fadeTime ? fadeTime : 400, function() {
-        $menu.css("z-index", -1);
-    });
-  };
-
   var refreshScroller = function(slider) {
     $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
-  };
+    };
 
 
   $(document).on('pageinit', ".ui-page", function() {
-    var $page = $(this),
-        $menu = $page.find(".menu");
+    var
+      $page = $(this),
+      $menu = $page.find(".menu"),
+      $showMenuBtn = $page.find(".showMenu"),
+
+      closeMenu = function(fadeTime) {
+        $menu.animate(
+          { opacity: "0" },
+          fadeTime === undefined ? 400 : fadeTime,
+          "linear",
+          function() { $menu.hide(); }
+          );
+         },
+
+      openMenu = function(fadeTime) {
+        $menu.css("opacity", "0");
+        $menu.animate(
+          { opacity: "0.85" },
+          fadeTime === undefined ? 400 : fadeTime,
+          "linear"
+          );
+        $menu.show();
+        };
 
     $page.on("pagebeforeshow", function() {
-      $menu.css( {"opacity": "0", "z-index": "-1"} );
+      $menu.hide();
     });
 
     // Show menu
-    $page.find(".showMenu").bind("vclick", function(event) {
-      var menuIsShown = $menu.css("z-index") === "1";
+    $showMenuBtn.bind("vclick", function(event) {
+      var menuIsHidden = $menu.is(":hidden");
       event.preventDefault();
-      if (!menuIsShown) {
-          $menu.css("z-index", 1).animate( {
-            opacity: ".85",
-          }, 400 );
-        } else {
-          closeMenu($menu);
+      if (menuIsHidden) {
+        openMenu();
+        }
+      else {
+        closeMenu();
         }
     });
 
@@ -52,7 +64,7 @@
       localStore.doSaveFavorite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
-      closeMenu($menu, 1000);
+      closeMenu(1000);
   });
 
 
