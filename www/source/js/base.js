@@ -16,12 +16,16 @@
 
 
   $(document).on('pageinit', ".ui-page", function() {
-    var $page = $(this);
+    var $page = $(this),
+        $menu = $page.find(".menu");
+
+    $page.on("pagebeforeshow", function() {
+      $menu.css( {"opacity": "0", "z-index": "-1"} );
+    });
 
     // Show menu
     $page.find(".showMenu").bind("vclick", function(event) {
-      var $menu = $page.find(".menu"),
-          menuIsShown = $menu.css("z-index") === "1";
+      var menuIsShown = $menu.css("z-index") === "1";
       event.preventDefault();
       if (!menuIsShown) {
           $menu.css("z-index", 1).animate( {
