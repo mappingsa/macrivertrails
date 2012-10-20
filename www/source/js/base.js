@@ -2,10 +2,10 @@
 (function ($) {
   "use strict";
 
-  var closeMenu = function($menu) {
+  var closeMenu = function($menu, fadeTime) {
     $menu.animate({
       opacity: "0",
-    }, 400, function() {
+    }, fadeTime ? fadeTime : 400, function() {
         $menu.css("z-index", -1);
     });
   };
@@ -56,7 +56,7 @@
       localStore.doSaveFavorite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
-   closeMenu($menu);
+      closeMenu($menu, 1000);
   });
 
 
