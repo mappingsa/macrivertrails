@@ -94,6 +94,7 @@
 .ui-dialog.ui-overlay-c {
    background: url('../images/whitey.png') 0 0;
    background-size: 203px 317px;
+   text-shadow: none;
 }
 
 .ui-body-c,
