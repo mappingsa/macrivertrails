@@ -20,7 +20,9 @@
   -ms-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
 
+.is-apple-webkit-desktop {
   /* Disable Safari scrollbars, because jQuery Mobile annoyingly insists on setting the
      min-height of the page to 320px. It does this (unsuccessfully, in 1.0.1, but successfully
      in 1.1) in order to keep the Mobile Safari location bar from appearing during page
@@ -33,8 +35,8 @@
 
 /* Fixes for page transition flicker */
 
-.ui-page,
-.ui-page > div {
+.is-apple-webkit .ui-page,
+.is-apple-webkit .ui-page > div {
   -webkit-transform: translateZ(0); /* This should be for iOS only */
 }
 
@@ -42,15 +44,15 @@
  -webkit-backface-visibility: hidden;
 }
 
-/*
+
 .ui-mobile-viewport-transitioning,
 .ui-mobile-viewport-transitioning .ui-page {
   overflow: visible;
 }
 
-.iscroll-content * {
-  -webkit-transform: translateZ(0); /* This should be for iOS only */
-  }
+.is-apple-webkit .iscroll-content * {
+  -webkit-transform: translateZ(0);
+}
 
 /* Theme overrides. */
 /* =============================================================================
@@ -83,13 +85,9 @@
   margin-top: 0 !important
 }
 
-
-
 /* =============================================================================
    Set your main background image & text styles
    ========================================================================== */
-
-
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
    background: url('../images/whitey.png') 0 0;
@@ -107,7 +105,6 @@
 /* =============================================================================
    Body Links
    ========================================================================== */
-
 .ui-body-c .ui-link-inherit {
   color:  #0099ff
 }
@@ -133,8 +130,6 @@
 /* =============================================================================
    Button Styles
    ========================================================================== */
-
-
 .ui-btn-active a.ui-link-inherit {
   color:   #fff;
 }
@@ -220,7 +215,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   text-decoration: none;
 }
 
-
 .home-menu .icon {
   position:absolute;
   width: 40px;
@@ -249,7 +243,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 
 }
 
-
 .browse-page .ui-listview-filter {
   margin-top: 0;
 }
@@ -258,7 +251,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   border: 2px solid #fff;
   margin-bottom: 0;
 }
-
 
 .ui-grid-b {}
 .center div{
@@ -279,10 +271,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   display: block !important;
   position: absolute;
   right: 0;
-}
-
-.menu .ui-link:visited {
-
 }
 
 .menu ul {
@@ -353,13 +341,6 @@ a.menuBtn:hover{
   background-image: url('../images/icon_favorities.png');
 }
 
-.place-page {
-}
-
-.place-content {
-
-}
-
 /* =============================================================================
    Interior Banner Styles
    ========================================================================== */
@@ -369,14 +350,12 @@ a.menuBtn:hover{
     background:;
 }
 
-
 .banner {
     max-width: 100%;
     display: block;
     max-height:295px;
     margin:0 auto;
 }
-
 
 /* =============================================================================
    Line Separator
@@ -516,7 +495,6 @@ border-radius: .4em;
 /* =============================================================================
    Header Bar (behind logo) & Logo
    ========================================================================== */
-
 .page-header {
     border:0px;
     border-bottom:1px solid #bfc0c0;
@@ -526,7 +504,6 @@ border-radius: .4em;
     background:url("") #151515; background-size: 5px 5px;
 }
 
-
 .logo {
     width:231px;
     height:40px;
@@ -535,17 +512,14 @@ border-radius: .4em;
     background-size: 185px 40px;
 }
 
-
 h1.ui-title {
     margin:0px;
     padding:10px 0 0 0
 }
 
-
 /* =============================================================================
    Link Bars with Large Arrows
    ========================================================================== */
-
 li .ui-btn-text {
   background-image: none;
   background-color: #151515;
@@ -569,17 +543,11 @@ a.ui-link-inherit:hover {
 
 .events-list span.ui-icon, .thumbnail-list span.ui-icon {display:none}
 
-
 /* =============================================================================
    Overwrite jQuery Mobile Styles
    ========================================================================== */
-
 .ui-header .ui-title, .ui-footer .ui-title {
     margin: 0.8em 90px;
-}
-
-.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-
 }
 
 .ui-content {
@@ -600,7 +568,6 @@ a.ui-link-inherit:hover {
 
 .ui-btn-icon-notext .ui-btn-inner { z-index:9999 }
 
-
 /* =============================================================================
    List Styles
    ========================================================================== */
@@ -612,12 +579,10 @@ a.ui-link-inherit:hover {
 #mapLinks a {color: #A5A6A7;font-size: 8px;font-weight: bold;text-shadow: none;
 }
 
-
 .ui-content .ui-listview-inset.trail-list {
   margin-top: 1ex;
   margin-bottom: 1ex;
 }
-
 
 /* thumbail lists */
 .events-list  ul.ui-listview li, .thumbnail-list ul.ui-listview li {
@@ -684,7 +649,6 @@ li.ui-li-divider {
     padding: 0.5em 15px !important
 }
 
-
 /* list divider, create your own gradient: http://www.colorzilla.com/gradient-editor/ */
 li.ui-li-divider {
     color: #111;
@@ -700,13 +664,8 @@ li.ui-li-divider {
 }
 
 /* =============================================================================
-   Home page Background
-   ========================================================================== */
-
-/* =============================================================================
    Footer Navigation
    ========================================================================== */
-
 .ui-btn-up-b {
     border: 0;
     background:url("") #151515; background-size: 5px 5px;
@@ -759,7 +718,6 @@ li.ui-li-divider {
 /* =============================================================================
    Footer Nav Icons --[ Recommend to delete CSS for icons you don't use ]--
    ========================================================================== */
-
 .custom-icons .ui-btn .ui-btn-inner {
     padding-top: 35px !important;
 }
@@ -781,12 +739,9 @@ li.ui-li-divider {
 .todo-tab .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; background-size: 22px 16px; }
 .fishing-tab .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; background-size: 28px 13px; }
 
-
-
 /* =============================================================================
    Portfolio (obsolete?)
    ========================================================================== */
-
 .gallery {
     list-style: none;
     padding: 0;
@@ -828,11 +783,9 @@ li.ui-li-divider {
     box-shadow: 0px 0px 4px #111;
 }
 
-
 /* =============================================================================
    Homepage Social Icons
    ========================================================================== */
-
 div.social {
     text-align:center;
     background-color: transparent;
@@ -849,12 +802,9 @@ div.social:hover {
     border:1px solid #c1bfbf;
 }
 
-
 /* =============================================================================
    Homepage Image Icons
    ========================================================================== */
-
-
 .left {
 width:110px;
 height:70px;
@@ -913,14 +863,9 @@ div.map {
     transition-duration:0.8s;
 }
 
-
-
-
-
 /* =============================================================================
    Twitter Feed
    ========================================================================== */
-
 ul.tweetList{
     margin:0;
     padding:0;
@@ -962,11 +907,9 @@ ul.tweetList{
     font-weight: bold;
 }
 
-
 /* =============================================================================
    Contact Form
    ========================================================================== */
-
 #errors {
     border:1px solid #cd0a0a;
     background:url("../images/contact-error.png") 50% 50% repeat;
@@ -979,7 +922,6 @@ ul.tweetList{
     display:none
 }
 
-
 /* Caption style */
 .flex-caption {
     text-align:center;
@@ -990,8 +932,6 @@ ul.tweetList{
 /** BUSINESS AND MAIN HEADER **/
 
 .busimage {max-width:800px;width:100%;display:block;margin:0 auto;}
-
-
 
 .ui-header.mainheader {
     border:0px;
@@ -1071,7 +1011,6 @@ margin-left: -45px;
   opacity: 0.75;
   min-width: 120px;
 }
-
 
 .infoBox .inner {
   border-radius: 10px;
