@@ -30,7 +30,7 @@ debug:
 web:
     stylesheets:
         - webfonts-cabin-google
-        - webfonts.caviar
+        - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.0
         - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css  # Microsoft CDN
         - jquery.mobile.simultaneous-transitions-replace
