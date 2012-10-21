@@ -1,15 +1,30 @@
 // Initialize jQuery Mobile options.
 // This code MUST be included AFTER jquery is loaded, and BEFORE jQuery Mobile is loaded!
 $(document).bind("mobileinit", function(){
-    // This is an imperfect test for a genuine Apple Webkit. Chrome spoofs this, so we exclude
-    //   Chrome. But what else is out there that spoofs Apple Webkit?
-    var version = navigator.appVersion.toLowerCase(),
-        isAppleWebkit =  (/.*applewebkit.(?!.*chrome)/).test(version),
-        isAppleWebkitMobile = isAppleWebkit && (/.*mobile/).test(version), // true if Apple Webkit not on desktop
-        isAppleWebkitDesktop = isAppleWebkit && !isAppleWebkitMobile,
+
+    // Do just a bit of browser detection and set CSS classes, to allow us to address some
+    // specific issues with popular mobile platforms.
+
+  var vendor = (window.navigator.vendor || "").toLowerCase(),
+        version = window.navigator.appVersion.toLowerCase(),
+        platform = (window.navigator.platform || "").toLowerCase(),
+
+        isWebkit = (/webkit/).test(version),
+        isApple = (/^apple computer/).test(vendor),
+        isIOS = (/iphone|ipod|ipad/).test(platform),
+        isAndroid = (/android/).test(platform),
+        isAppleWebkit =  isWebkit && isApple,
+        isAppleWebkitMobile = isAppleWebkit && isIOS,
+        isAppleWebkitDesktop = isAppleWebkit && !isIOS,
+        // Webapp saved to iOS home screen (Springboard) icon
+        isAppleWebkitFullscreen = isAppleWebkitMobile && (window.navigator.Standalone !== undefined),
+        isSafari = (/safari/).test(version),
+        isAppleWebkitMobileWebview = isAppleWebkitMobile && !isSafari,
+        isIpad = isAppleWebkitMobile && (/ipad/).test(version),
         hintAcceleration = isAppleWebkit,     // true if should hint hardware acceleration
-        $html = $("html");
-    //$.mobile.touchOverflowEnabled = true;  // Deprecated in 1.1
+        $html = $("html");  // Where we will put the classes
+
+
     // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
     // URL bar. For PhoneGap, it's better to disable pushstate
     $.mobile.pushStateEnabled = true;
@@ -20,6 +35,11 @@ $(document).bind("mobileinit", function(){
     $.mobile.defaultPageTransition = "slide";
 
     // Add some classes to HTML so that we can write CSS that is responsive to browser model
+    // This is not exhaustive. It only covers cases where we have a specific need.
+
+    if (isWebkit) {
+      $html.addClass("is-webkit");
+      }
     if (isAppleWebkit) {
       $html.addClass("is-apple-webkit");
       // Make this a separate class, in case other platforms might need this as well
@@ -29,7 +49,18 @@ $(document).bind("mobileinit", function(){
     if (isAppleWebkitMobile) {
       $html.addClass("is-apple-webkit-mobile");
     }
-    if (isAppleWebkitDesktop) {
-      $html.addClass("is-apple-webkit-desktop")
+    if (isAppleWebkitFullscreen) {
+      $html.addClass("is-apple-webkit-mobile-fullscreen");
     }
+    if (isAppleWebkitMobileWebview) {
+      $html.addClass("is-apple-webkit-mobile-webview");
+    }
+    if (isAppleWebkitDesktop) {
+      $html.addClass("is-apple-webkit-desktop");
+    }
+    if (isIpad) {
+      $html.addClass("is-ipad");
+    }
+
+
 });
