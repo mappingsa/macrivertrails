@@ -152,6 +152,7 @@ $(function() {
         $markerListNote = $page.find( ".markerListNote" ),
         $submitDirections = $page.find( ".submitDirections" ),
         $results = $page.find( ".results" ),
+        $topMarkerNav = $page.find(".topMarkerNav"),
         $directions = $(".directions"),
         userLoc = null,
         $activeGroupButton = null;
@@ -290,7 +291,8 @@ $(function() {
 
   var resetMapForSingle = function(){
     var thisMarker = gmap.get( "markers" );
-    //$( ".topMarkerNav" ).hide();
+    $topMarkerNav.height(0).hide().trigger("updatelayout");
+    iscrollview.resizeWrapper();
     //$locationOnBtn.hide();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
