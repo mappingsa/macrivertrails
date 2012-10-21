@@ -157,9 +157,7 @@
         item = $li.data("item");
     event.preventDefault();
     $li.remove();
-    if ( !localStore.doRemoveFavorite(section, item) ) {
-      $('#noFavesMsg').show();
-    }
+    localStore.doRemoveFavorite(section, item);
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -170,9 +168,9 @@ var interfaceBuild = function(){
 
   function BuildFavoriteList(){
     var base =
-      '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
-    var savedItems = store.get('faves');
-    $("#favoritesList").empty();
+      '<li class="fav-item" data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
+    var savedItems = store.get("faves");
+    $(".favItem").remove();
     if (savedItems != undefined){
       $.each(savedItems, function(i) {
         var thisBase = base;
@@ -180,10 +178,9 @@ var interfaceBuild = function(){
         thisBase = thisBase.replace('|item|', this.item);
         thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
         thisBase = thisBase.replace('|title|', this.title);
-        $('#favoritesList').append(thisBase);
+        $("#itin-divider").before($(thisBase));
         });
-      $('#noFavesMsg').hide();
-      $('#favoritesList').listview('refresh');
+      $("#todo-list").listview("refresh");
     }
   }
 
@@ -195,12 +192,7 @@ var interfaceBuild = function(){
 
 }();
 
-
 var localStore = function(){
-  // Unused?
-  function getAllStorage(){
-    return store.getAll()
-  };
 
   function isFavorite(section, item) {
     var found = false,
@@ -276,28 +268,4 @@ var localStore = function(){
     }
 }();
 
-// Unused?
-var removeArrItem = function(arr){
-    var what, a= arguments, L= a.length, ax;
-    while(L> 1 && arr.length){
-        what= a[--L];
-        while((ax= arr.indexOf(what))!= -1){
-            arr.splice(ax, 1);
-        }
-    }
-    return arr;
-}
 
-// Unused? This was used for Favorites. Seems to be a separate copy for map
-var getUrlVars = function(pathname)
-{
-    var vars = [], hash;
-    var hashes = pathname.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
-}

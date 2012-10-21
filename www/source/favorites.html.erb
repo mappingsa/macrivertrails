@@ -5,11 +5,10 @@
      <a href="./index.html" data-role="none" rel="external" class="homeBtn ui-btn-right" data-transition="none"></a>
   </div>
   <div data-role="content" data-iscroll="true">
-    <ul data-role="listview" data-split-icon="delete" data-inset="true" id="favoritesList">
+    <ul data-role="listview" data-split-icon="delete" data-inset="true" id="todo-list">
+      <li data-role="list-divider" id="fav-divider">Favorites</li>
+      <li data-role="list-divider" id="itin-divider">Itinerary</li>
     </ul>
-    <div style="text-align: center;" id="noFavesMsg">
-      <h2>You have no favorites selected.</h2>
-    </div>
   </div>
   <%= partial :tabbar %>
 </div>
