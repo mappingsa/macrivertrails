@@ -721,26 +721,35 @@ li.ui-li-divider {
 }
 
 .custom-icons .ui-btn .ui-icon {
-    width: 30px!important;
-    height: 30px!important;
-    margin-left: -15px !important;
-    box-shadow: none!important;
-    -moz-box-shadow: none!important;
-    -webkit-box-shadow: none!important;
-    -webkit-border-radius: 0 !important;
-    border-radius: 0 !important;
+    width: 30px;
+    height: 30px;
+    margin-left: -15px;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: transparent;
 }
-.nearby-tab .ui-icon { background: url('../images/74-location.png') 50% 50% no-repeat; background-size: 20px 20px; }
-.info-tab .ui-icon { background: url('../images/42-info.png') 50% 50% no-repeat; background-size: 20px 20px; } /* 28x28 WTF? (from Xtras) */
-.map-tab .ui-icon { background: url('../images/103-map.png') 50% 50% no-repeat; background-size: 26px 21px; }
-.browse-tab .ui-icon { background: url('../images/12-eye.png') 50% 50% no-repeat; background-size: 24px 16px; }
-.todo-tab .ui-icon { background: url('../images/117-todo.png') 50% 50% no-repeat; background-size: 18px 19px; }
-.fishing-tab .ui-icon { background: url('../images/233-fish.png') 50% 50% no-repeat; background-size: 28px 13px; }
+
+.nearby-tab .ui-icon { background-image: url(../images/74-location.png); background-size: 20px 20px; }
+.info-tab .ui-icon { background-image: url(../images/42-info.png); background-size: 20px 20px; } /* 28x28 WTF? (from Xtras) */
+.map-tab .ui-icon { background-image: url(../images/103-map.png); background-size: 26px 21px; }
+.browse-tab .ui-icon { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
+.todo-tab .ui-icon { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
+.fishing-tab .ui-icon { background-image: url(../images/233-fish.png); background-size: 28px 13px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-.nearby-tab .ui-icon { background-image: url(../images/74-location@2x.png); }
+  .nearby-tab .ui-icon { background-image: url(../images/74-location@2x.png); }
+  .map-tab .ui-icon { background: url(../images/103-map@2x.png) }
+  .browse-tab .ui-icon { background: url(../images/12-eye@2x.png) }
+  .todo-tab .ui-icon { background: url(../images/117-todo@2x.png) }
+  .fishing-tab .ui-icon { background: url(../images/233-fish@2x.png) }
 }
+
 /* =============================================================================
    Portfolio (obsolete?)
    ========================================================================== */
