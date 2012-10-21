@@ -1066,4 +1066,8 @@ margin-left: -45px;
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 0 0 2px 2px rgba(0,0,0,0.3);
 }
 
+.infoBox img {
+  z-index: 2;
+  }
+
 
