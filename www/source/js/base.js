@@ -143,7 +143,7 @@
   });
 
   // Favorites page
-  $(document).on("pagebeforeshow", ".favorites", function() {
+  $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
     interfaceBuild.buildFavoriteList();
     $page.find(".iscroll-wrapper").iscrollview("refresh");
@@ -170,7 +170,8 @@ var interfaceBuild = function(){
     var base =
       '<li class="fav-item" data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
     var savedItems = store.get("faves");
-    $(".favItem").remove();
+    $(".fav-item").remove();
+    $("#todo-list").listview("refresh");
     if (savedItems != undefined){
       $.each(savedItems, function(i) {
         var thisBase = base;
@@ -178,7 +179,7 @@ var interfaceBuild = function(){
         thisBase = thisBase.replace('|item|', this.item);
         thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
         thisBase = thisBase.replace('|title|', this.title);
-        $("#itin-divider").before($(thisBase));
+        $("#itin-divider").before(thisBase);
         });
       $("#todo-list").listview("refresh");
     }
