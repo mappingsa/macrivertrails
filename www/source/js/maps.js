@@ -145,7 +145,7 @@ $(function() {
         $from = $page.find( ".from" ),
         $fromPretty = $page.find( ".fromPretty" ),
         $directionsFields = $page.find( ".directionsFields" ),
-        $locationOnBtn = $page.find( ".locationonBtn" ),
+        //$locationOnBtn = $page.find( ".locationonBtn" ),
         $markerList = $page.find( ".markerList"),
         $markerListItems = $markerList.find("li"),
         markerListview = $markerList.data( "listview" ),
@@ -291,7 +291,7 @@ $(function() {
   var resetMapForSingle = function(){
     var thisMarker = gmap.get( "markers" );
     //$( ".topMarkerNav" ).hide();
-    $locationOnBtn.hide();
+    //$locationOnBtn.hide();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
     };
