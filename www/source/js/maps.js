@@ -294,6 +294,7 @@ $(function() {
     //$locationOnBtn.hide();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
+    $(".mapsheader h1").text("Directions");
     };
 
   var showMarkerList = function(){
