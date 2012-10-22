@@ -155,7 +155,8 @@ $(function() {
         $topMarkerNav = $page.find(".topMarkerNav"),
         $directions = $(".directions"),
         userLoc = null,
-        $activeGroupButton = null;
+        $activeGroupButton = null,
+        infoBox = null;
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -284,9 +285,12 @@ $(function() {
           content: $box[0],
           closeBoxMargin: "14px 5px 2px 2px",
           closeBoxURL: "../images/298-circlex.png",
-          },
-        ib = new InfoBox(options);
-    ib.open(gmap.get('map'), markerElement);
+          };
+    if (infoBox) {
+      infoBox.close();
+      }
+    infoBox = new InfoBox(options);
+    infoBox.open(gmap.get('map'), markerElement);
   };
 
   var resetMapForSingle = function(){
