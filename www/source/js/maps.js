@@ -155,7 +155,8 @@ $(function() {
         $directions = $(".directions"),
         userLoc = null,
         $activeGroupButton = null,
-        infoBox = null;
+        infoBox = null,
+        $noLocationPopup = $("#no-location-popup");
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -379,7 +380,8 @@ $(function() {
             }
           }
         else {
-          alert("Unable to get current position");
+          $noLocationPopup.popup("open");
+          setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
           }
       });
     };
