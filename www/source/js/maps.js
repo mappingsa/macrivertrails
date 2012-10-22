@@ -243,6 +243,7 @@ $(function() {
       var $button = $(this),
           selMarker = $button.data( "group" );
       e.preventDefault();
+      closeInfoWindow();
       if ($.activeGroupButton) {
         $activeGroupButton.removeClass("ui-btn-active");
         }
@@ -279,6 +280,13 @@ $(function() {
       addMyLocation(false);
     });
 
+  var closeInfoWindow = function() {
+    if (infoBox) {
+      infoBox.close();
+      infoBox = null;
+    }
+  };
+
   var openInfoWindow = function(marker, markerElement) {
     var $box = $('<div class="inner"><a href="' + marker.link + '">'  + marker.title + '</a></div>'),
         options = {
@@ -286,9 +294,7 @@ $(function() {
           closeBoxMargin: "14px 5px 2px 2px",
           closeBoxURL: "../images/298-circlex.png",
           };
-    if (infoBox) {
-      infoBox.close();
-      }
+    closeInfoWindow();
     infoBox = new InfoBox(options);
     infoBox.open(gmap.get('map'), markerElement);
   };
