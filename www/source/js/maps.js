@@ -333,7 +333,7 @@ $(function() {
       });
     if (itemInView){
       // sort list by nearest and apply jQuery Mobile UI
-      $markerListItems.tsort({attr: "sortid" });
+      $markerListItems.tsort({attr: "data-sortid" });
       markerListview.refresh();
       $markerListNote.show();
       }
@@ -406,7 +406,7 @@ $(function() {
 
     var buildMarkerULList = function( item, link, position ) {
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
-          base = '<li sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|</span></a></li>';
+          base = '<li data-sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|</span></a></li>';
       base = base.replace( "|itemtitle|", item );
       if ( link != "" ){
         base = base.replace( "|link|", link);
