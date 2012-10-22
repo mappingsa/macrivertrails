@@ -147,7 +147,6 @@ $(function() {
         $directionsFields = $page.find( ".directionsFields" ),
         //$locationOnBtn = $page.find( ".locationonBtn" ),
         $markerList = $page.find( ".markerList"),
-        $markerListItems = $markerList.find("li"),
         markerListview = $markerList.data( "listview" ),
         $markerListNote = $page.find( ".markerListNote" ),
         $submitDirections = $page.find( ".submitDirections" ),
@@ -333,7 +332,8 @@ $(function() {
       });
     if (itemInView){
       // sort list by nearest and apply jQuery Mobile UI
-      $markerListItems.tsort({attr: "data-sortid" });
+      var $markerListItems = $markerList.find("li");
+      $markerListItems.tsort("span.ml-sort");
       markerListview.refresh();
       $markerListNote.show();
       }
@@ -406,8 +406,7 @@ $(function() {
 
     var buildMarkerULList = function( item, link, position ) {
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
-          base = '<li data-sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|</span></a></li>';
-      base = base.replace( "|itemtitle|", item );
+          base = '<li><a href="|link|">|itemtitle||distance|</a></li>';
       if ( link != "" ){
         base = base.replace( "|link|", link);
         }
@@ -415,12 +414,11 @@ $(function() {
         base = base.replace( "|link|", "#" );
         }
       if (endRes) {
-        endRes = parseFloat(endRes).toFixed(2);
-        base = base.replace("|sort|", parseFloat(endRes));
-        base = base.replace("|distance|", endRes + "km");
+        base = base.replace( "|itemtitle|", item);
+        base = base.replace("|distance|", '<span class="ui-li-count ml-sort">' + endRes + "km</span>" );
         }
       else {
-        base = base.replace("|sort|", 0);
+        base = base.replace( "|itemtitle|", '<span class="ml-sort">' + item + "</span>" );
         base = base.replace("|distance|", "");
         }
       $markerList.append(base);
