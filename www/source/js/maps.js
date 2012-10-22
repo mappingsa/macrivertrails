@@ -172,61 +172,67 @@ $(function() {
       }
     });
 
+    //---------------------------------------------  v
     $page.on("pageshow resize", function( event ) {
       gmap.refresh();
       iscrollview.refresh();
       });
+    //-----------------------------------------------^
 
+    //----------------------------------------------------------------v
     $page.on("pagebeforeshow", function( event ) {
       // attempt to get specifc marker data from item  page
       var selGroup = getUrlVars().section,
           selMarker = getUrlVars().item;
       loadingSingle = false;
 
-
-    if ( (selMarker !== undefined && selMarker.length) && (selGroup !== undefined && selGroup.length) ){
-      selGroup = selGroup.toLowerCase();
-      selMarker = selMarker.toLowerCase();
-      loadingSingle = true;
-      fullLoad = false;
-      }
-    else {
-      selGroup = "";
-      selMarker = "";
-      }
-
-    if (getUrlVars().location === "me") {
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
-      $activeGroupButton.addClass("ui-btn-active");
-      }
-    else if (selGroup) {
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
-      $activeGroupButton.addClass("ui-btn-active");
-      }
-
-    $.each( markers, function(i, marker) {
-      if ( (selMarker === "" || marker.link.indexOf(selMarker) >= 0) && (selGroup === "" || selGroup === marker.group) ) {
-         if (marker.link.indexOf(selMarker) >= 0 && selGroup === marker.group) {
-           $to.attr("value",  marker.position);
-           $toPretty.attr("value", marker.title);
-         }
-         gmap.addMarker( {
-             position: marker.position,
-             bounds: true,
-             icon: marker.icon,
-             group: marker.group,
-             mTitle: marker.title,
-             mLink: marker.link
-             } )
-           .click(function() {
-             openInfoWindow(marker, this);
-             if (loadingSingle){
-               $to.attr("value",  marker.position);
-               $toPretty.attr("value", marker.title);
-               }
-           });
+      if ( (selMarker !== undefined && selMarker.length) && (selGroup !== undefined && selGroup.length) ){
+        selGroup = selGroup.toLowerCase();
+        selMarker = selMarker.toLowerCase();
+        loadingSingle = true;
+        fullLoad = false;
         }
-    });
+      else {
+        selGroup = "";
+        selMarker = "";
+        }
+
+      if (getUrlVars().location === "me") {
+        $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+        $activeGroupButton.addClass("ui-btn-active");
+        }
+      else if (selGroup) {
+        $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
+        $activeGroupButton.addClass("ui-btn-active");
+        }
+
+      //-------------------------------------------------------v
+      $.each( markers, function(i, marker) {
+        if ( (selMarker === "" || marker.link.indexOf(selMarker) >= 0) && (selGroup === "" || selGroup === marker.group) ) {
+           if (marker.link.indexOf(selMarker) >= 0 && selGroup === marker.group) {
+             $to.attr("value",  marker.position);
+             $toPretty.attr("value", marker.title);
+           }
+           //------------------------------------------v
+           gmap.addMarker( {
+               position: marker.position,
+               bounds: true,
+               icon: marker.icon,
+               group: marker.group,
+               mTitle: marker.title,
+               mLink: marker.link
+               } )
+             .click(function() {
+               openInfoWindow(marker, this);
+               if (loadingSingle){
+                 $to.attr("value",  marker.position);
+                 $toPretty.attr("value", marker.title);
+                 }
+             });
+           //-------- addMarker ------------------------^
+          }
+      });
+      //--------------- each  --------------------------------^
 
     if (loadingSingle){
       resetMapForSingle();
@@ -237,8 +243,9 @@ $(function() {
     gmap.refresh();
     iscrollview.refresh();
     });
+    //--------------------- pagebeforeshow ---------------------------^
 
-    // Top Navbar buttons. Shows markers for each trail
+    // ---------- Top Navbar buttons. Shows markers for each trail ---v
     $page.on("vclick", ".markerNav", function( e ){
       var $button = $(this),
           selMarker = $button.data( "group" );
@@ -276,8 +283,8 @@ $(function() {
               });
           }
         });
-      showMarkerList();
       addMyLocation(false);
+      showMarkerList();
     });
 
   var closeInfoWindow = function() {
@@ -398,8 +405,8 @@ $(function() {
     });
 
     var buildMarkerULList = function( item, link, position ) {
-      var endRes = getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ),
-          base = '<li sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|km</span></a></li>';
+      var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
+          base = '<li sortid="|sort|"><a href="|link|">|itemtitle| <span class="ui-li-count">|distance|</span></a></li>';
       base = base.replace( "|itemtitle|", item );
       if ( link != "" ){
         base = base.replace( "|link|", link);
@@ -407,9 +414,15 @@ $(function() {
       else {
         base = base.replace( "|link|", "#" );
         }
-      endRes = parseFloat(endRes).toFixed(2);
-      base = base.replace("|sort|", parseFloat(endRes));
-      base = base.replace("|distance|", endRes);
+      if (endRes) {
+        endRes = parseFloat(endRes).toFixed(2);
+        base = base.replace("|sort|", parseFloat(endRes));
+        base = base.replace("|distance|", endRes + "km");
+        }
+      else {
+        base = base.replace("|sort|", 0);
+        base = base.replace("|distance|", "");
+        }
       $markerList.append(base);
       };
 
