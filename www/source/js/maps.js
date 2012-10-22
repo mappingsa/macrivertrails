@@ -283,7 +283,7 @@ $(function() {
         options = {
           content: $box[0],
           closeBoxMargin: "14px 5px 2px 2px",
-          closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+          closeBoxURL: "../images/298-circlex.png",
           },
         ib = new InfoBox(options);
     ib.open(gmap.get('map'), markerElement);
