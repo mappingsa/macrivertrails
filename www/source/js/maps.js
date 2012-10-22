@@ -407,6 +407,7 @@ $(function() {
     var buildMarkerULList = function( item, link, position ) {
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
           base = '<li><a href="|link|">|itemtitle||distance|</a></li>';
+      endRes = Math.round( endRes*10 ) / 10;
       if ( link != "" ){
         base = base.replace( "|link|", link);
         }
@@ -415,7 +416,7 @@ $(function() {
         }
       if (endRes) {
         base = base.replace( "|itemtitle|", item);
-        base = base.replace("|distance|", '<span class="ui-li-count ml-sort">' + endRes + "km</span>" );
+        base = base.replace("|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
         }
       else {
         base = base.replace( "|itemtitle|", '<span class="ml-sort">' + item + "</span>" );
