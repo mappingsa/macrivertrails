@@ -1,4 +1,4 @@
-.ui-mobile {
+﻿.ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
   text-rendering: optimizeSpeed;
@@ -424,9 +424,9 @@ border-bottom:1px solid #663399;
   border: 1px solid #999;
   border-radius: 3px;
   margin: 12px auto;
-    width:100%;
-  max-width: 400px;
-}
+    width:290px;
+  height:160px;
+  }
 
 /* =============================================================================
    Business Text
