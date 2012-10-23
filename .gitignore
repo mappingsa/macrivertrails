@@ -14,7 +14,7 @@
 .tmp
 
 # Eclipse settings file - these are individual user preferences, so should not be checked-in
-.settings
+.settings/
 
 # Sublime Text 2 workspace and settings files - similar to Eclipse .settings
 # i.e. these are user preferences
