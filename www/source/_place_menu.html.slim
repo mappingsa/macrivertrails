@@ -3,9 +3,8 @@
 - mailPopup = current_page.data.mail ? {} : {'data-rel' => 'popup'}
 - mail = current_page.data.mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
 = blank_line
+
 .menu
-  div@popup id="popupMail"
-    p Sorry, no contact information available
   ul
     li
       a href="tel:#{place.tel}"
@@ -22,5 +21,15 @@
     li
       a.toggle-fav href="#" data-ajax="false"
         <div class="fav-icon"></div>
-          span MAKE FAVOURITE
+          span
+
+div@popup id="popupMail"
+  p Sorry, no e-mail contact available
+
+div@popup id="popupWeb"
+  p Sorry, no website available
+
+div@popup id="popupPhone"
+  p Sorry, no phone contact available
+
 = blank_line
