@@ -1,0 +1,15 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+      "name": "Maquarie River Trails",
+      "folder_exclude_patterns": [".settings", "www/.bundle"],
+      "file_exclude_patterns": [".project"]
+		}
+	],
+  "settings":
+  {
+    "tab-size": 2
+  }
+}
