@@ -58,7 +58,7 @@
     event.preventDefault();
     if ( $a.hasClass("is-fav") ) {
       localStore.doRemoveFavorite(section, item);
-      $a.removeClass("is-fav").find("span").text("ADD FAVORITE");
+      $a.removeClass("is-fav").find("span").text("ADD FAVOURITE");
 
     } else {
       localStore.doSaveFavorite({section: section, item: item, title: title});
