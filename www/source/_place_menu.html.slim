@@ -1,31 +1,27 @@
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-</head>
 - place = current_page.data
 - section = place.section.capitalize
-- mailPopup = current_page.data.mail ? {} : {'data-rel' =&gt; 'popup'}
-- mail = current_page.data.mail ? &quot;mailto:#{current_page.data.mail}&quot; : '#popupMail'
+- mailPopup = current_page.data.mail ? {} : {'data-rel' => 'popup'}
+- mail = current_page.data.mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
 = blank_line
 .menu
-  div@popup id=&quot;popupMail&quot;
+  div@popup id="popupMail"
     p Sorry, no contact information available
   ul
     li
-      a href=&quot;tel:#{place.tel}&quot;
-        img src=&quot;../images/75-phone.png&quot; height=&quot;16px&quot; width=&quot;18px&quot; PHONE
+      a href="tel:#{place.tel}"
+        img src="../images/75-phone.png" height="16px" width="18px" PHONE
     li
-      a href=&quot;#{place.url}&quot; data-rel=&quot;external&quot;
-        img src=&quot;../images/icon_blog.png&quot; height=&quot;20px&quot; width=&quot;20px&quot; WEB
+      a href="#{place.url}" data-rel="external"
+        img src="../images/icon_blog.png" height="20px" width="20px" WEB
     li
-      a*mailPopup href=&quot;#{mail}&quot;
-        img src=&quot;../images/icon_mail.png&quot; height=&quot;20px&quot; width=&quot;20px&quot; MAIL
+      a*mailPopup href="#{mail}"
+        img src="../images/icon_mail.png" height="20px" width="20px" MAIL
     li
-      a href=&quot;../map/index.html?section=#{section}&amp;item=#{place.item}&quot;
-        img alt=&quot;&quot; src=&quot;../map/images/#{section}-pin.png&quot; height=&quot;25px&quot; width=&quot;18px&quot; GET DIRECTIONS
+      a href="../map/index.html?section=#{section}&item=#{place.item}"
+        img alt="" src="../map/images/#{section}-pin.png" height="25px" width="18px" GET DIRECTIONS
     li
-      a.toggle-fav href=&quot;#&quot; data-ajax=&quot;false&quot;
-        &lt;div class=&quot;fav-icon&quot;&gt;&lt;/div&gt;
-        &lt;!--   img src=&quot;../images/icon_favorities_add.png&quot; height=&quot;20px&quot; width=&quot;20px&quot; --&gt;
-          span MAKE FAVOURITE
+      a.toggle-fav href="#" data-ajax="false"
+        <div class="fav-icon"></div>
+        <!--   img src="../images/icon_favorities_add.png" height="20px" width="20px" -->
+          span MAKE FAVORITE
 = blank_line
-
