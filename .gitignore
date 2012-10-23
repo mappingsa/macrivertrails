@@ -22,7 +22,7 @@
 .sublime-workspace
 
 # bundler config
-.bundler
+www/.bundle
 
 # Sass cache
 .sass-cache/
