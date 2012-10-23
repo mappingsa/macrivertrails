@@ -8,27 +8,29 @@
 .DS_Store
 .AppleDouble
 
+# Windows nuisance files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
 # We generally want to ignore these
 .bak
 .temp
-.tmp
 
 # Eclipse settings file - these are individual user preferences, so should not be checked-in
 .settings/
+.metadata
 
 # Sublime Text 2 workspace and settings files - similar to Eclipse .settings
 # i.e. these are user preferences
 # .sublime-project files *should* be checked-in, however
-.sublime-workspace
+*.sublime-workspace
 
 # bundler config
 www/.bundle
 
 # Sass cache
-.sass-cache/
+*.sass-cache
 www/build/
-
-
-
-
 
