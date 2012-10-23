@@ -1,11 +1,9 @@
-doctype 5
-html
-  = partial :head
-  body
-    = blank_line
-    @page.type_interior.map-page
-      = partial :map_header
-      = partial :map_tabbar
-      @content data-iscroll="true"
-        = yield
-      = partial :tabbar
+= partial :head
+body
+  = blank_line
+  @page.type_interior.map-page
+    = partial :map_header
+    = partial :map_tabbar
+    @content data-iscroll="true"
+      = yield
+    = partial :tabbar

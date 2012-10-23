@@ -1,13 +1,11 @@
 / Layout for place pages
-doctype 5
-html
-  = partial :head
-  body
-    .place-page@page data-section="#{current_page.data.section}" data-item="#{current_page.data.item}" data-title="#{current_page.data.title}"
-      = partial :place_header
-      = partial :place_menu
-      div data-iscroll="true"
-        = partial :place_slider
-        .place-content@content
-          = yield
-      = partial :tabbar
+= partial :head
+body
+  .place-page@page data-section="#{current_page.data.section}" data-item="#{current_page.data.item}" data-title="#{current_page.data.title}"
+    = partial :place_header
+    = partial :place_menu
+    div data-iscroll="true"
+      = partial :place_slider
+      .place-content@content
+        = yield
+    = partial :tabbar
