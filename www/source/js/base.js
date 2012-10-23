@@ -58,7 +58,7 @@
     event.preventDefault();
     if ( $a.hasClass("is-fav") ) {
       localStore.doRemoveFavorite(section, item);
-      $a.removeClass("is-fav").find("span").text("ADD FAVOURITE");
+      $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
 
     } else {
       localStore.doSaveFavorite({section: section, item: item, title: title});
@@ -138,7 +138,7 @@
     if ( localStore.doIsFavorite(section, item) ) {
       $favA.addClass("is-fav").find("span").text("REMOVE FAV");
       } else {
-      $favA.removeClass("is-fav").find("span").text("ADD FAVORITE");
+      $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
       }
   });
 
