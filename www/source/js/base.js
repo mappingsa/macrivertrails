@@ -45,8 +45,14 @@
         }
       else {
         closeMenu();
-        }
+          }
     });
+
+    $page.find(".go-web, .go-phone, go-mail").bind("vclick", function(event) {
+      var $a = $(this),
+          $menu = $page.find(".menu");     
+      closeMenu();   
+      });
 
   $page.find(".toggle-fav").bind("vclick", function(event) {
     var $a = $(this),
