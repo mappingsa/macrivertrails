@@ -1,14 +1,19 @@
 - place = current_page.data
 - section = place.section.capitalize
+
 - has_mail = !!current_page.data.mail
 - has_web = !!current_page.data.url
 - has_tel = !!current_page.data.tel
+
 - mailPopup = has_mail ? {} : {'data-rel' => 'popup'}
 - mail_url = has_mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
+
 - webPopup = has_web ? {'data-rel' => 'external'} : {'data-rel' => 'popup'}
 - web_url = has_web ? "#{current_page.data.url}" : '#popupWeb'
+
 - telPopup = has_tel ? {} : {'data-rel' => 'popup'}
 - tel_url = has_tel ? "tel:#{current_page.data.tel}" : '#popupTel'
+
 = blank_line
 
 .menu
@@ -30,13 +35,16 @@
         <div class="fav-icon"></div>
           span
 
-div@popup id="popupMail"
-  p Sorry, no e-mail contact available
+- if !has_mail
+  div@popup id="popupMail"
+    p Sorry, no e-mail contact available
 
-div@popup id="popupWeb"
-  p Sorry, no website available
+-if !has_web
+  div@popup id="popupWeb"
+    p Sorry, no website available
 
-div@popup id="popupTel"
-  p Sorry, no phone contact available
+- if !has_tel
+  div@popup id="popupTel"
+    p Sorry, no phone contact available
 
 = blank_line
