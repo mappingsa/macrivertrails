@@ -1,19 +1,26 @@
 - place = current_page.data
 - section = place.section.capitalize
-- mailPopup = current_page.data.mail ? {} : {'data-rel' => 'popup'}
-- mail = current_page.data.mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
+- has_mail = !!current_page.data.mail
+- has_web = !!current_page.data.url
+- has_tel = !!current_page.data.tel
+- mailPopup = has_mail ? {} : {'data-rel' => 'popup'}
+- mail_url = has_mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
+- webPopup = has_web ? {'data-rel' => 'external'} : {'data-rel' => 'popup'}
+- web_url = has_web ? "#{current_page.data.url}" : '#popupWeb'
+- telPopup = has_tel ? {} : {'data-rel' => 'popup'}
+- tel_url = has_tel ? "tel:#{current_page.data.tel}" : '#popupTel'
 = blank_line
 
 .menu
   ul
     li
-      a href="tel:#{place.tel}"
+      a*telPopup href="#{tel_url}"
         img src="../images/75-phone.png" height="16px" width="18px" PHONE
     li
-      a href="#{place.url}" data-rel="external"
+      a*webPopup href="#{web_url}"
         img src="../images/icon_blog.png" height="20px" width="20px" WEB
     li
-      a*mailPopup href="#{mail}"
+      a*mailPopup href="#{mail_url}"
         img src="../images/icon_mail.png" height="20px" width="20px" MAIL
     li
       a href="../map/index.html?section=#{section}&item=#{place.item}"
@@ -29,7 +36,7 @@ div@popup id="popupMail"
 div@popup id="popupWeb"
   p Sorry, no website available
 
-div@popup id="popupPhone"
+div@popup id="popupTel"
   p Sorry, no phone contact available
 
 = blank_line
