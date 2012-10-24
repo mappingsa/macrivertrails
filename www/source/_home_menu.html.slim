@@ -1,0 +1,3 @@
+.home-menu            
+  - current_page.data.list.each do |trail|
+    = partial :home_menu_tile, :locals => { :trail => trail }
