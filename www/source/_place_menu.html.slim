@@ -8,7 +8,7 @@
 - mailPopup = has_mail ? {} : {'data-rel' => 'popup'}
 - mail_url = has_mail ? "mailto:#{current_page.data.mail}" : '#popupMail'
 
-- webPopup = has_web ? {'data-rel' => 'external'} : {'data-rel' => 'popup'}
+- webPopup = has_web ? {'data-rel' => 'external', 'target'=>'_blank'} : {'data-rel' => 'popup'}
 - web_url = has_web ? "#{current_page.data.url}" : '#popupWeb'
 
 - telPopup = has_tel ? {} : {'data-rel' => 'popup'}
