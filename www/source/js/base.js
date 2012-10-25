@@ -182,6 +182,7 @@
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
     interfaceBuild.buildFavouriteList();
+    interfaceBuild.buildItineraryList();
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -202,15 +203,23 @@
 
 var interfaceBuild = function(){
 
-  function BuildFavouriteList(){
+  function BuildFavouriteList() {
+    return ( BuildList("faves", "#todo-list", "Your Favourites list is empty" ) );
+  }
+
+  function BuildItineraryList() {
+    return ( BuildList("itin", "#itin-list-1", "This Itinerary is empty" ) );
+  }
+
+  function BuildList(list, listSelector, emptyMsg){
     // It should not be necessary to add these classes to the empty message. TODO: investigate why these are needed - it should enhance just like
     // the actual favourites
     var emptyToDoMsg =
-          '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites list is empty</li>',
+          '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">' + emptyMsg + '</li>',
         base =
           '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
-        savedItems = store.get("faves"),
-        $todoList = $("#todo-list");
+        savedItems = store.get(list),
+        $todoList = $(listSelector);
     $todoList.empty();
     if (!savedItems){
       $todoList.append(emptyToDoMsg);
@@ -230,7 +239,10 @@ var interfaceBuild = function(){
 
   return {
     buildFavouriteList: function(){
-      return BuildFavouriteList();
+      return ( BuildFavouriteList() );
+      },
+    buildItineraryList: function() {
+      return ( BuildItineraryList() );
       }
     }
 
