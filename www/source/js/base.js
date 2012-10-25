@@ -65,12 +65,31 @@
     if ( $a.hasClass("is-fav") ) {
       localStore.removeFavourite(section, item);
       $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
-
-    } else {
-      localStore.saveFavourite({section: section, item: item, title: title});
-      $a.addClass("is-fav").find("span").text("REMOVE FAV");
-      }
+      } 
+      else {
+        localStore.saveFavourite({section: section, item: item, title: title});
+        $a.addClass("is-fav").find("span").text("REMOVE FAV");
+        }
       closeMenu(1000);
+  });
+
+    $page.find(".itin-btn").bind("vclick", function(event) {
+    var $a = $(this),
+        $img = $a.find("img"),
+        $menu = $page.find(".menu"),
+        section = $page.data("section"),
+        item = $page.data("item"),
+        title = $page.data("title");
+    event.preventDefault();
+    if ( $a.hasClass("is-itin") ) {
+      localStore.removeFromItinerary(section, item);
+      $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
+        } 
+    else {
+      localStore.saveInItinerary({section: section, item: item, title: title});
+      $a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      }
+    closeMenu(1000);
   });
 
 
@@ -137,15 +156,26 @@
     var $page = $(this),
         $menu = $page.find(".menu"),
         $favA = $menu.find(".toggle-fav"),
+        $itinA = $menu.find(".itin-btn"),
         section = $page.data("section"),
         item = $page.data("item");
 
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
       $favA.addClass("is-fav").find("span").text("REMOVE FAV");
-      } else {
+      } 
+    else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
       }
+
+    // Update menu to reflect itinerary status of item
+    if ( localStore.isInItinerary(section, item) ) {
+      $itinA.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      } 
+    else {
+      $itinA.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
+      }
+
   });
 
   // Favourites page
@@ -311,7 +341,7 @@ var localStore = function(){
         return ( RemoveFromItinerary(section, item) );
         },
       isInItinerary: function(section, item) {
-       return ( isInItinerary(section, item) );        
+       return ( IsInItinerary(section, item) );        
         }
       });
 }();
