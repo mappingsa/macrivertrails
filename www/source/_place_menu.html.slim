@@ -29,11 +29,15 @@
         img src="../images/icon_mail.png" height="20px" width="20px" MAIL
     li
       a href="../map/index.html?section=#{section}&item=#{place.item}"
-        img alt="" src="../map/images/#{section}-pin.png" height="25px" width="18px" GET DIRECTIONS
+        img src="../map/images/#{section}-pin.png" height="25px" width="18px" GET DIRECTIONS
+    li
+      a.add-itin-btn href="#" data-ajax="false"
+        img src="../images/04-squiggle.png" height="16px" width="33px" ADD TO ITINERARY         
     li
       a.toggle-fav href="#" data-ajax="false"
-        <div class="fav-icon"></div>
-          span
+        .fav-icon
+        span        
+
 
 - if !has_mail
   div@popup id="popupMail"
