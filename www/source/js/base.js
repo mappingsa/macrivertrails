@@ -63,11 +63,11 @@
         title = $page.data("title");
     event.preventDefault();
     if ( $a.hasClass("is-fav") ) {
-      localStore.doRemoveFavorite(section, item);
+      localStore.removeFavorite(section, item);
       $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
 
     } else {
-      localStore.doSaveFavorite({section: section, item: item, title: title});
+      localStore.saveFavorite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
       closeMenu(1000);
@@ -141,7 +141,7 @@
         item = $page.data("item");
 
     // Update menu to reflect favorite status of item
-    if ( localStore.doIsFavorite(section, item) ) {
+    if ( localStore.isFavorite(section, item) ) {
       $favA.addClass("is-fav").find("span").text("REMOVE FAV");
       } else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
@@ -163,7 +163,7 @@
         item = $li.data("item");
     event.preventDefault();
     $li.remove();
-    localStore.doRemoveFavorite(section, item);
+    localStore.removeFavorite(section, item);
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -208,11 +208,11 @@ var interfaceBuild = function(){
 
 var localStore = function(){
 
-  function isFavorite(section, item){
-    return ( isInList("faves", section, item) );
+  function IsFavorite(section, item){
+    return ( IsInList("faves", section, item) );
   }
 
-  function isInList(list, section, item) {
+  function IsInList(list, section, item) {
     var found = false,
         savedItems = store.get(list);
     if (savedItems === undefined){
@@ -227,11 +227,11 @@ var localStore = function(){
     return found;
     }
 
-  function saveFavorite(newItem) {
-    return ( saveInList("faves", newItem) );
+  function SaveFavorite(newItem) {
+    return ( SaveInList("faves", newItem) );
   }
 
-  function saveInList(list, newItem){
+  function SaveInList(list, newItem){
     var found = false,
         savedItems = store.get(list);
 
@@ -255,12 +255,12 @@ var localStore = function(){
       }
     }
 
-    function removeFavorite(section, item) {
-      return ( removeFromList("faves", section, item) );
+    function RemoveFavorite(section, item) {
+      return ( RemoveFromList("faves", section, item) );
     }
 
     // Returns false if empty, true if not empty
-    function removeFromList(list, section, item) {
+    function RemoveFromList(list, section, item) {
       var savedItems = store.get(list);
       if (savedItems === undefined){
         return false;
@@ -282,14 +282,14 @@ var localStore = function(){
       }
 
     return {
-      doSaveFavorite: function(item){
-        return saveFavorite(item);
+      saveFavorite: function(item){
+        return SaveFavorite(item);
         },
-      doRemoveFavorite: function(section, item){
-        return removeFavorite(section, item);
+      removeFavorite: function(section, item){
+        return RemoveFavorite(section, item);
         },
-      doIsFavorite: function(section, item) {
-        return isFavorite(section, item);
+      isFavorite: function(section, item) {
+        return IsFavorite(section, item);
         }
     }
 }();
