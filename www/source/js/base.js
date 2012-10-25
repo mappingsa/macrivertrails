@@ -63,11 +63,11 @@
         title = $page.data("title");
     event.preventDefault();
     if ( $a.hasClass("is-fav") ) {
-      localStore.removeFavorite(section, item);
+      localStore.removeFavourite(section, item);
       $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
 
     } else {
-      localStore.saveFavorite({section: section, item: item, title: title});
+      localStore.saveFavourite({section: section, item: item, title: title});
       $a.addClass("is-fav").find("span").text("REMOVE FAV");
       }
       closeMenu(1000);
@@ -140,18 +140,18 @@
         section = $page.data("section"),
         item = $page.data("item");
 
-    // Update menu to reflect favorite status of item
-    if ( localStore.isFavorite(section, item) ) {
+    // Update menu to reflect favourite status of item
+    if ( localStore.isFavourite(section, item) ) {
       $favA.addClass("is-fav").find("span").text("REMOVE FAV");
       } else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
       }
   });
 
-  // Favorites page
+  // Favourites page
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
-    interfaceBuild.buildFavoriteList();
+    interfaceBuild.buildFavouriteList();
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -163,7 +163,7 @@
         item = $li.data("item");
     event.preventDefault();
     $li.remove();
-    localStore.removeFavorite(section, item);
+    localStore.removeFavourite(section, item);
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -172,7 +172,7 @@
 
 var interfaceBuild = function(){
 
-  function BuildFavoriteList(){
+  function BuildFavouriteList(){
     // It should not be necessary to add these classes to the empty message. TODO: investigate why these are needed - it should enhance just like
     // the actual favourites
     var emptyToDoMsg =
@@ -199,8 +199,8 @@ var interfaceBuild = function(){
   }
 
   return {
-    buildFavoriteList: function(){
-      return BuildFavoriteList();
+    buildFavouriteList: function(){
+      return BuildFavouriteList();
       }
     }
 
@@ -208,7 +208,7 @@ var interfaceBuild = function(){
 
 var localStore = function(){
 
-  function IsFavorite(section, item){
+  function IsFavourite(section, item){
     return ( IsInList("faves", section, item) );
   }
 
@@ -227,7 +227,7 @@ var localStore = function(){
     return found;
     }
 
-  function SaveFavorite(newItem) {
+  function SaveFavourite(newItem) {
     return ( SaveInList("faves", newItem) );
   }
 
@@ -255,7 +255,7 @@ var localStore = function(){
       }
     }
 
-    function RemoveFavorite(section, item) {
+    function RemoveFavourite(section, item) {
       return ( RemoveFromList("faves", section, item) );
     }
 
@@ -282,14 +282,14 @@ var localStore = function(){
       }
 
     return {
-      saveFavorite: function(item){
-        return SaveFavorite(item);
+      saveFavourite: function(item){
+        return SaveFavourite(item);
         },
-      removeFavorite: function(section, item){
-        return RemoveFavorite(section, item);
+      removeFavourite: function(section, item){
+        return RemoveFavourite(section, item);
         },
-      isFavorite: function(section, item) {
-        return IsFavorite(section, item);
+      isFavourite: function(section, item) {
+        return IsFavourite(section, item);
         }
     }
 }();
