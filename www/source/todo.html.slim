@@ -1,0 +1,12 @@
+@page.todo-page
+  @header.rtheader.todoheader data-position="fixed" data-transition="none" data-tap-toggle="false"
+    a@none.backBtn.ui-btn-left data-rel="back" href="index.html"
+    h1 Todo
+    a@none.homeBtn.ui-btn-right data-transition="none"
+  @content data-iscroll="true"
+    ul@listview#todo-list data-split-icon="delete" data-inset="true"
+      li@list-divider#fav-divider MY FAVOURITES
+      li@list-divider#itin-divider MY ININERARY
+  = partial :tabbar
+
+
