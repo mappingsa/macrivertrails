@@ -208,6 +208,11 @@ var interfaceBuild = function(){
 
 var localStore = function(){
 
+  // TODO: Add parameter for which itinerary
+  function IsInItinerary(section, item){
+    return ( IsInList("itin", section, item) );
+  }
+
   function IsFavourite(section, item){
     return ( IsInList("faves", section, item) );
   }
@@ -226,6 +231,10 @@ var localStore = function(){
       });
     return found;
     }
+
+  function SaveInItinerary(newItem) {
+    return ( SaveInList("itin", newItem) );
+  }
 
   function SaveFavourite(newItem) {
     return ( SaveInList("faves", newItem) );
@@ -255,6 +264,10 @@ var localStore = function(){
       }
     }
 
+    function RemoveFromItinerary(section, item) {
+      return ( RemoveFromList("itin", section, item) );
+    }
+
     function RemoveFavourite(section, item) {
       return ( RemoveFromList("faves", section, item) );
     }
@@ -281,17 +294,24 @@ var localStore = function(){
       return true;
       }
 
-    return {
+    return  ( {
       saveFavourite: function(item){
-        return SaveFavourite(item);
+        return ( SaveFavourite(item) );
         },
       removeFavourite: function(section, item){
-        return RemoveFavourite(section, item);
+        return ( RemoveFavourite(section, item) );
         },
       isFavourite: function(section, item) {
-        return IsFavourite(section, item);
+        return ( IsFavourite(section, item) );
+        },
+      saveInItinerary: function(item){
+        return ( SaveInItinerary(item) );
+        },
+      removeFromItinerary: function(section, item){
+        return ( RemoveFromItinerary(section, item) );
+        },
+      isInItinerary: function(section, item) {
+       return ( isInItinerary(section, item) );        
         }
-    }
+      });
 }();
-
-
