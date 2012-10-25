@@ -173,11 +173,18 @@
 var interfaceBuild = function(){
 
   function BuildFavoriteList(){
+    // It should not be necessary to add these classes to the empty message. TODO: investigate why these are needed - it should enhance just like
+    // the actual favourites
+    var $emptyToDoMsg =
+      $('<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites list is empty</li>');
     var base =
-      '<li class="fav-item" data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
+      '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
     var savedItems = store.get("faves");
     $("#todo-list").empty();
-    if (savedItems != undefined){
+    if (!savedItems){
+      $("#todo-list").append($emptyToDoMsg);
+      }
+    else {
       $.each(savedItems, function(i) {
         var thisBase = base;
         thisBase = thisBase.replace('|section|', this.section);
