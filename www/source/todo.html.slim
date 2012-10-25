@@ -11,7 +11,12 @@
         ul@listview#todo-list data-split-icon="delete"
       @collapsible data-collapsed="true"
         h3 MY ITINERARY
-        ul@listview#itin-list data-split-icon="delete"
+        ul@listview#itin-list-1 data-split-icon="delete"
+          li There are no places in this itinerary yet
+      @collapsible data-collapsed="true"
+        h3 MY OTHER ITINERARY
+        ul@listview#itin-list-2 data-split-icon="delete"
+          li There are no places in this itinerary yet
 
   = partial :tabbar
 
