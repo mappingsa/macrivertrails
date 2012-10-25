@@ -208,9 +208,13 @@ var interfaceBuild = function(){
 
 var localStore = function(){
 
-  function isFavorite(section, item) {
+  function isFavorite(section, item){
+    return ( isInList("faves", section, item) );
+  }
+
+  function isInList(list, section, item) {
     var found = false,
-        savedItems = store.get('faves');
+        savedItems = store.get(list);
     if (savedItems === undefined){
       return false;
       }
@@ -223,14 +227,18 @@ var localStore = function(){
     return found;
     }
 
-  function saveFavorite(newItem){
+  function saveFavorite(newItem) {
+    return ( saveInList("faves", newItem) );
+  }
+
+  function saveInList(list, newItem){
     var found = false,
-        savedItems = store.get('faves');
+        savedItems = store.get(list);
 
   if (savedItems === undefined) {
     savedItems = new Array();
     savedItems[0] = newItem;
-    store.set('faves', savedItems);
+    store.set(list, savedItems);
     return;
     } else {
       $.each(savedItems, function(){
@@ -241,15 +249,19 @@ var localStore = function(){
       });
       if (!found) {
         savedItems.push(newItem);
-        store.set('faves', savedItems);
+        store.set(list, savedItems);
         }
       return;
       }
     }
 
+    function removeFavorite(section, item) {
+      return ( removeFromList("faves", section, item) );
+    }
+
     // Returns false if empty, true if not empty
-    function removeFavorite(section, item){
-      var savedItems = store.get('faves');
+    function removeFromList(list, section, item) {
+      var savedItems = store.get(list);
       if (savedItems === undefined){
         return false;
       }
@@ -261,9 +273,9 @@ var localStore = function(){
         });
 
       if (savedItems.length){
-        store.set('faves', savedItems);
+        store.set(list, savedItems);
         } else {
-          store.remove('faves');
+          store.remove(list);
           return false;
         }
       return true;
