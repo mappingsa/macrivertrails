@@ -175,14 +175,15 @@ var interfaceBuild = function(){
   function BuildFavoriteList(){
     // It should not be necessary to add these classes to the empty message. TODO: investigate why these are needed - it should enhance just like
     // the actual favourites
-    var $emptyToDoMsg =
-      $('<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites list is empty</li>');
-    var base =
-      '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
-    var savedItems = store.get("faves");
-    $("#todo-list").empty();
+    var emptyToDoMsg =
+          '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites list is empty</li>',
+        base =
+          '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
+        savedItems = store.get("faves"),
+        $todoList = $("#todo-list");
+    $todoList.empty();
     if (!savedItems){
-      $("#todo-list").append($emptyToDoMsg);
+      $todoList.append(emptyToDoMsg);
       }
     else {
       $.each(savedItems, function(i) {
@@ -191,9 +192,9 @@ var interfaceBuild = function(){
         thisBase = thisBase.replace('|item|', this.item);
         thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
         thisBase = thisBase.replace('|title|', this.title);
-        $("#todo-list").append(thisBase);
+        $todoList.append(thisBase);
         });
-      $("#todo-list").listview("refresh");
+      $todoList.listview("refresh");
     }
   }
 
