@@ -4,9 +4,15 @@
     h1 Todo
     a@none.homeBtn.ui-btn-right data-transition="none"
   @content data-iscroll="true"
-    ul@listview#todo-list data-split-icon="delete" data-inset="true"
-      li@list-divider#fav-divider MY FAVOURITES
-      li@list-divider#itin-divider MY ITINERARY
+
+    @collapsible-set
+      @collapsible data-collapsed="false"
+        h3 MY FAVOURITES
+        ul@listview#todo-list data-split-icon="delete"
+      @collapsible data-collapsed="true"
+        h3 MY ITINERARY
+        ul@listview#itin-list data-split-icon="delete"
+
   = partial :tabbar
 
 
