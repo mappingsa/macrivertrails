@@ -34,3 +34,6 @@ www/.bundle
 *.sass-cache
 www/build/
 
+# RVM per-project/diretory settings
+*.rvmrc
+
