@@ -50,8 +50,8 @@
 
     $page.find(".go-web, .go-phone, go-mail").bind("vclick", function(event) {
       var $a = $(this),
-          $menu = $page.find(".menu");     
-      closeMenu();   
+          $menu = $page.find(".menu");
+      closeMenu();
       });
 
   $page.find(".toggle-fav").bind("vclick", function(event) {
@@ -65,7 +65,7 @@
     if ( $a.hasClass("is-fav") ) {
       localStore.removeFavourite(section, item);
       $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
-      } 
+      }
       else {
         localStore.saveFavourite({section: section, item: item, title: title});
         $a.addClass("is-fav").find("span").text("REMOVE FAV");
@@ -84,7 +84,7 @@
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary(section, item);
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
-        } 
+        }
     else {
       localStore.saveInItinerary({section: section, item: item, title: title});
       $a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
@@ -163,7 +163,7 @@
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
       $favA.addClass("is-fav").find("span").text("REMOVE FAV");
-      } 
+      }
     else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
       }
@@ -171,14 +171,14 @@
     // Update menu to reflect itinerary status of item
     if ( localStore.isInItinerary(section, item) ) {
       $itinA.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
-      } 
+      }
     else {
       $itinA.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
       }
 
   });
 
-  // Favourites page
+  // ToDo page
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
     interfaceBuild.buildFavouriteList();
@@ -186,16 +186,17 @@
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
-  $(document).on("vclick", ".btn-remove-fav", function(event) {
+  $(document).on("vclick", ".btn-remove-todo", function(event) {
     var $a = $(this),
         $li = $a.closest("li"),
-        $page = $li.closest(".ui-page"),
         section = $li.data("section"),
-        item = $li.data("item");
+        item = $li.data("item"),
+        $wrapper = $li.closest(".ui-listview"),
+        list = $wrapper.data("list-id");
     event.preventDefault();
     $li.remove();
-    localStore.removeFavourite(section, item);
-    $page.find(".iscroll-wrapper").iscrollview("refresh");
+    localStore.removeFromList(list, section, item);
+    $wrapper.iscrollview("refresh");
   });
 
   }(jQuery));
@@ -217,7 +218,7 @@ var interfaceBuild = function(){
     var emptyToDoMsg =
           '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">' + emptyMsg + '</li>',
         base =
-          '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-fav" href="#" data-ajax="false">Remove</a></li>';
+          '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-todo" href="#" data-ajax="false">Remove</a></li>';
         savedItems = store.get(list),
         $todoList = $(listSelector);
     $todoList.empty();
@@ -353,7 +354,10 @@ var localStore = function(){
         return ( RemoveFromItinerary(section, item) );
         },
       isInItinerary: function(section, item) {
-       return ( IsInItinerary(section, item) );        
+       return ( IsInItinerary(section, item) );
+        },
+      removeFromList: function(list, section, item) {
+        return ( RemoveFromList(list, section, item) );
         }
       });
 }();
