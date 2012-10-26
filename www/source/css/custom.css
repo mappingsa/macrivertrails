@@ -95,12 +95,6 @@
    text-shadow: none;
 }
 
-.ui-body-c,
-.ui-body-c select,
-.ui-body-c textarea,
-.ui-body-c button {
-   font-family: 'Cabin', sans-serif;
-}
 
 /* =============================================================================
    Body Links
@@ -309,7 +303,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   border-bottom: 1px #191D27 solid;
   color: #DBE0E8;
   font-size: 12px;
-  font-family: 'Cabin', sans-serif;
   text-decoration: none;
   display: block;
   padding-top: 10px;
@@ -567,7 +560,7 @@ a.ui-link-inherit {
     background:url("../images/arrow.png") right no-repeat;
     background-size: 10px 14px;
 
-    font-family: 'Cabin', sans-serif; font-weight: normal; font-size:14px;
+    font-weight: normal; font-size:14px;
     color:#eee !important;
     text-shadow: 0 -1px 1px #000;
 
@@ -743,8 +736,6 @@ li.ui-li-divider {
 .ui-btn-up-b,
 .ui-btn-hover-b,
 .ui-btn-down-b {
-
-    font-family: 'Cabin', sans-serif;
 
     text-decoration: none;
 }
@@ -960,7 +951,7 @@ ul.tweetList{
 .flex-caption {
     text-align:center;
     color: #000;
- font-family: 'Cabin', sans-serif; font-weight: normal; font-size:16px;
+    font-weight: normal; font-size:16px;
 }
 
 /** BUSINESS AND MAIN HEADER **/
