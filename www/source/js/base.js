@@ -218,7 +218,12 @@ var interfaceBuild = function(){
     var emptyToDoMsg =
           '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">' + emptyMsg + '</li>',
         base =
-          '<li data-section="|section|" data-item="|item|"> <a href="|href|">|title|</a><a class="btn-remove-todo" href="#" data-ajax="false">Remove</a></li>';
+          '<li data-section="|section|" data-item="|item|"> \
+           <a href="|href|">|title|\
+             <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
+           </a> \
+           <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
+           </li>';
         savedItems = store.get(list),
         $todoList = $(listSelector);
     $todoList.empty();
@@ -227,11 +232,14 @@ var interfaceBuild = function(){
       }
     else {
       $.each(savedItems, function(i) {
-        var thisBase = base;
+        var thisBase = base,
+            sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
         thisBase = thisBase.replace('|section|', this.section);
         thisBase = thisBase.replace('|item|', this.item);
-        thisBase = thisBase.replace('|href|', this.section.charAt(0).toUpperCase() + this.section.slice(1) + "/" + this.item + ".html");
+        thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
         thisBase = thisBase.replace('|title|', this.title);
+        thisBase = thisBase.replace('|alt|', sectionUC);
+        thisBase = thisBase.replace('|pin|', sectionUC);
         $todoList.append(thisBase);
         });
       $todoList.listview("refresh");

@@ -1078,6 +1078,19 @@ margin-left: -45px;
   font-weight: bold;
   }
 
+  /* Trail pins are in @2x resolution (30x42). We can't use media query because they aren't used
+   as background imgages, so just resize to device-based units.
+
+     The pins are sized 2X for the map page, but here they are being resized slightly larger, so
+     they are being scaled-down to an odd ratio on 1X devices, and scaled up on 2X devices, so
+     not optimal. They should be replaced with properly-sized icons. (As well, all of the pin
+     sizes are not consistent.)
+
+   This is for the trail pins used in Browse list and ToDo, not on map page */
+  .trail-pin {
+    height: 28px;
+  }
+
 .nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
 .info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
 .map-tab .ui-icon     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
@@ -1095,6 +1108,6 @@ margin-left: -45px;
   .fishing-tab .ui-icon { background-image: url(../images/233-fish@2x.png); }
 
   .itin-icon            { background-image: url('../images/04-squiggle@2x.png'); }
-}  
+}
 
 
