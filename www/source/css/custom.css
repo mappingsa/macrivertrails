@@ -71,6 +71,24 @@
   color:  #7cc4e7;
 }
 
+/* ThemeRoller can only set button border radius globally.
+   Our theme sets button border radius
+   But this affects other elements which
+   should have a completely rounded appearance on the ends.
+   Undo the global radius change for these elements */
+
+/* Sliders and slide switches */
+.ui-slider .ui-btn-corner-all,
+.ui-slider .ui-slider-handle.ui-btn-corner-all,
+.ui-slider.ui-btn-corner-all,
+/* textless buttons (e.g. disclosure buttons) */
+.ui-btn-icon-notext.ui-btn-corner-all
+ {
+  -moz-border-radius:    1em;
+  -webkit-border-radius: 1em;
+  border-radius:         1em;
+}
+
 
 /* =============================================================================
    Dialog (Modal Windows)
