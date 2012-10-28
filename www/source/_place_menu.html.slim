@@ -33,11 +33,11 @@
     li
       a.itin-btn href="#" data-ajax="false"
         .itin-icon
-        span         
+        span
     li
       a.toggle-fav href="#" data-ajax="false"
         .fav-icon
-        span        
+        span
 
 
 - if !has_mail
@@ -51,5 +51,7 @@
 - if !has_tel
   div@popup id="popupTel"
     p Sorry, no phone contact available
+
+= partial :itin_popup
 
 = blank_line
