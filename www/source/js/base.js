@@ -73,31 +73,48 @@
       closeMenu(1000);
   });
 
-    $page.find(".itin-btn").bind("vclick", function(event) {
+    $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
         $img = $a.find("img"),
         $menu = $page.find(".menu"),
+        $popup = $page.find(".itin-popup"),
         section = $page.data("section"),
         item = $page.data("item"),
-        title = $page.data("title"),
-        $popup = $page.find(".itin-popup");
+        title = $page.data("title");
     event.preventDefault();
 
-    /*
+
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary(section, item);
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
+      closeMenu(1000);
         }
     else {
-      localStore.saveInItinerary({section: section, item: item, title: title});
-      $a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      //localStore.saveInItinerary({section: section, item: item, title: title});
+      //$a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      $popup.popup("open");
       }
-    */
-    $popup.popup("open");
 
-
-    //closeMenu(1000);
   });
+
+    $page.find(".itin-list").on("vclick", ".itin-add-btn", function(event) {
+      var $a = $(this),
+          $addItinBtn = $page.find(".itin-btn"),
+          section = $page.data("section"),
+          item = $page.data("item"),
+          title = $page.data("title");
+      event.preventDefault();
+
+      //if ( $a.hasClass("is-itin") ) {
+      //  localStore.removeFromItinerary(section, item);
+      //  $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
+      //    }
+      //else {
+        localStore.saveInItinerary({section: section, item: item, title: title});
+        $addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      //  }
+
+    });
 
 
     // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
