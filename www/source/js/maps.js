@@ -408,7 +408,7 @@ $(function() {
 
     var buildMarkerULList = function( item, link, position ) {
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
-          base = '<li><a href="|link|">|itemtitle||distance|</a></li>';
+          base = '<li class="big-arrow"><a href="|link|">|itemtitle||distance|</a></li>';
       endRes = Math.round( endRes*10 ) / 10;
       if ( link != "" ){
         base = base.replace( "|link|", link);

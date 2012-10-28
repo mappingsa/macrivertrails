@@ -79,8 +79,11 @@
         $menu = $page.find(".menu"),
         section = $page.data("section"),
         item = $page.data("item"),
-        title = $page.data("title");
+        title = $page.data("title"),
+        $popup = $page.find(".itin-popup");
     event.preventDefault();
+
+    /*
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary(section, item);
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
@@ -89,7 +92,11 @@
       localStore.saveInItinerary({section: section, item: item, title: title});
       $a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       }
-    closeMenu(1000);
+    */
+    $popup.popup("open");
+
+
+    //closeMenu(1000);
   });
 
 
@@ -159,6 +166,7 @@
         $itinA = $menu.find(".itin-btn"),
         section = $page.data("section"),
         item = $page.data("item");
+
 
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
