@@ -67,7 +67,7 @@
       $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
       }
       else {
-        localStore.saveFavourite({section: section, item: item, title: title});
+        localStore.saveFavourite( { listID: 0, section: section, item: item, title: title } );
         $a.addClass("is-fav").find("span").text("REMOVE FAV");
         }
       closeMenu(1000);
@@ -85,13 +85,11 @@
 
 
     if ( $a.hasClass("is-itin") ) {
-      localStore.removeFromItinerary(section, item);
+      localStore.removeFromItinerary( section, item );
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
       closeMenu(1000);
         }
     else {
-      //localStore.saveInItinerary({section: section, item: item, title: title});
-      //$a.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       $popup.popup("open");
       }
 
@@ -104,16 +102,8 @@
           item = $page.data("item"),
           title = $page.data("title");
       event.preventDefault();
-
-      //if ( $a.hasClass("is-itin") ) {
-      //  localStore.removeFromItinerary(section, item);
-      //  $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
-      //    }
-      //else {
-        localStore.saveInItinerary({section: section, item: item, title: title});
-        $addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
-      //  }
-
+      localStore.saveInItinerary( {listID: 1, section: section, item: item, title: title} );
+      $addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
     });
 
 
@@ -194,7 +184,7 @@
       }
 
     // Update menu to reflect itinerary status of item
-    if ( localStore.isInItinerary(section, item) ) {
+    if ( localStore.isInItinerary( 1, section, item) ) {
       $itinA.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       }
     else {
@@ -220,7 +210,7 @@
         list = $wrapper.data("list-id");
     event.preventDefault();
     $li.remove();
-    localStore.removeFromList(list, section, item);
+    localStore.removeFromList( list, section, item );
     $wrapper.iscrollview("refresh");
   });
 
@@ -230,15 +220,16 @@
 var interfaceBuild = function(){
 
   function BuildFavouriteList() {
-    return ( BuildList("faves", "#todo-list", "Your Favourites list is empty" ) );
+    return ( BuildList(0, "#todo-list", "Your Favourites list is empty" ) );
   }
 
   function BuildItineraryList() {
-    return ( BuildList("itin", "#itin-list-1", "This Itinerary is empty" ) );
+    return ( BuildList(1, "#itin-list-1", "This Itinerary is empty" ) );
   }
 
-  function BuildList(list, listSelector, emptyMsg){
-    // It should not be necessary to add these classes to the empty message. TODO: investigate why these are needed - it should enhance just like
+  function BuildList(listID, listSelector, emptyMsg) {
+    // It should not be necessary to add these classes to the empty message.
+    // TODO: investigate why these are needed - it should enhance just like
     // the actual favourites
     var emptyToDoMsg =
           '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">' + emptyMsg + '</li>',
@@ -248,8 +239,8 @@ var interfaceBuild = function(){
              <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
            </a> \
            <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
-           </li>';
-        savedItems = store.get(list),
+           </li>',
+        savedItems = store.get("todo"),
         $todoList = $(listSelector);
     $todoList.empty();
     if (!savedItems){
@@ -259,13 +250,15 @@ var interfaceBuild = function(){
       $.each(savedItems, function(i) {
         var thisBase = base,
             sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
-        thisBase = thisBase.replace('|section|', this.section);
-        thisBase = thisBase.replace('|item|', this.item);
-        thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
-        thisBase = thisBase.replace('|title|', this.title);
-        thisBase = thisBase.replace('|alt|', sectionUC);
-        thisBase = thisBase.replace('|pin|', sectionUC);
-        $todoList.append(thisBase);
+        if (listID === this.listID) {
+          thisBase = thisBase.replace('|section|', this.section);
+          thisBase = thisBase.replace('|item|', this.item);
+          thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
+          thisBase = thisBase.replace('|title|', this.title);
+          thisBase = thisBase.replace('|alt|', sectionUC);
+          thisBase = thisBase.replace('|pin|', sectionUC);
+          $todoList.append(thisBase);
+          }
         });
       $todoList.listview("refresh");
     }
@@ -282,115 +275,100 @@ var interfaceBuild = function(){
 
 }();
 
-var localStore = function(){
+var localStore = function() {
 
-  // TODO: Add parameter for which itinerary
-  function IsInItinerary(section, item){
-    return ( IsInList("itin", section, item) );
-  }
+  return  ( {
+    saveFavourite: function ( obj ) {
+      obj.listID = 0;
+      return ( localStore.saveInList( obj ) )
+      },
 
-  function IsFavourite(section, item){
-    return ( IsInList("faves", section, item) );
-  }
+    removeFavourite: function( section, item ){
+      return ( localStore.removeFromList( 0, section, item ) );
+      },
 
-  function IsInList(list, section, item) {
-    var found = false,
-        savedItems = store.get(list);
-    if (savedItems === undefined){
-      return false;
-      }
-    $.each(savedItems, function(){
-      if (this.item === item && this.section === section) {
-        found = true;
-        return;
+    isFavourite: function( section, item ) {
+      return ( localStore.isInList( 0, section, item) );
+      },
+
+    saveInItinerary: function( obj ) {
+      return ( localStore.saveInList( obj) );
+      },
+
+    removeFromItinerary: function( section, item ){
+      return ( localStore.removeFromList( 1, section, item) );
+      },
+
+    isInItinerary: function( section, item ) {
+      return ( localStore.isInList(1, section, item) );
+      },
+
+    isInList: function (listID, section, item) {
+      var found = false,
+          savedItems = store.get("todo");
+      if (savedItems === undefined) {
+        return false;
         }
-      });
-    return found;
-    }
-
-  function SaveInItinerary(newItem) {
-    return ( SaveInList("itin", newItem) );
-  }
-
-  function SaveFavourite(newItem) {
-    return ( SaveInList("faves", newItem) );
-  }
-
-  function SaveInList(list, newItem){
-    var found = false,
-        savedItems = store.get(list);
-
-  if (savedItems === undefined) {
-    savedItems = new Array();
-    savedItems[0] = newItem;
-    store.set(list, savedItems);
-    return;
-    } else {
-      $.each(savedItems, function(){
-        if (this.item === newItem.item && this.section === newItem.section){
+      $.each( savedItems, function() {
+        if (this.listID === listID && this.item === item && this.section === section) {
           found = true;
           return;
           }
-      });
-      if (!found) {
-        savedItems.push(newItem);
-        store.set(list, savedItems);
+        });
+      return found;
+      },
+
+    saveInList: function( obj ) {
+      var found = false,
+          savedItems = store.get("todo");
+
+      if ( savedItems === undefined ) {
+        savedItems = new Array();
+        savedItems[0] = obj;
+        store.set( "todo", savedItems );
+        return;
         }
-      return;
-      }
-    }
-
-    function RemoveFromItinerary(section, item) {
-      return ( RemoveFromList("itin", section, item) );
-    }
-
-    function RemoveFavourite(section, item) {
-      return ( RemoveFromList("faves", section, item) );
-    }
+      else {
+        $.each(savedItems, function() {
+          if (this.listID === obj.listID && this.item === obj.item && this.section === obj.section) {
+            found = true;
+            return;
+            }
+          });
+        if (!found) {
+          savedItems.push( obj );
+          store.set( "todo", savedItems );
+          }
+        return;
+        }
+      },
 
     // Returns false if empty, true if not empty
-    function RemoveFromList(list, section, item) {
-      var savedItems = store.get(list);
-      if (savedItems === undefined){
+    removeFromList: function( listID, section, item ) {
+      var savedItems = store.get("todo");
+
+      if ( savedItems === undefined ) {
         return false;
-      }
-      $.each(savedItems, function(index){
-        if (this.section === section && this.item === item){
+        }
+
+      $.each( savedItems, function(index){
+        if ( this.listID === listID && this.section === section && this.item === item ){
           savedItems.splice(index, 1);
           return;
           }
         });
 
       if (savedItems.length){
-        store.set(list, savedItems);
-        } else {
-          store.remove(list);
-          return false;
+        store.set("todo", savedItems);
         }
+      else {
+        store.remove("todo");
+        return false;
+        }
+
       return true;
       }
 
-    return  ( {
-      saveFavourite: function(item){
-        return ( SaveFavourite(item) );
-        },
-      removeFavourite: function(section, item){
-        return ( RemoveFavourite(section, item) );
-        },
-      isFavourite: function(section, item) {
-        return ( IsFavourite(section, item) );
-        },
-      saveInItinerary: function(item){
-        return ( SaveInItinerary(item) );
-        },
-      removeFromItinerary: function(section, item){
-        return ( RemoveFromItinerary(section, item) );
-        },
-      isInItinerary: function(section, item) {
-       return ( IsInItinerary(section, item) );
-        },
-      removeFromList: function(list, section, item) {
-        return ( RemoveFromList(list, section, item) );
-        }
-      });
-}();
+    } );
+
+  } ();
