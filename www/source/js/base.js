@@ -196,8 +196,8 @@
   // ToDo page
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
-    interfaceBuild.buildFavouriteList();
-    interfaceBuild.buildItineraryList();
+    localStore.buildFavouriteList();
+    localStore.buildItineraryList();
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -216,66 +216,23 @@
 
   }(jQuery));
 
-
-var interfaceBuild = function(){
-
-  function BuildFavouriteList() {
-    return ( BuildList(0, "#todo-list", "Your Favourites list is empty" ) );
-  }
-
-  function BuildItineraryList() {
-    return ( BuildList(1, "#itin-list-1", "This Itinerary is empty" ) );
-  }
-
-  function BuildList(listID, listSelector, emptyMsg) {
-    // It should not be necessary to add these classes to the empty message.
-    // TODO: investigate why these are needed - it should enhance just like
-    // the actual favourites
-    var emptyToDoMsg =
-          '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">' + emptyMsg + '</li>',
-        base =
-          '<li data-section="|section|" data-item="|item|"> \
-           <a href="|href|">|title|\
-             <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
-           </a> \
-           <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
-           </li>',
-        savedItems = store.get("todo"),
-        $todoList = $(listSelector);
-    $todoList.empty();
-    if (!savedItems){
-      $todoList.append(emptyToDoMsg);
-      }
-    else {
-      $.each(savedItems, function(i) {
-        var thisBase = base,
-            sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
-        if (listID === this.listID) {
-          thisBase = thisBase.replace('|section|', this.section);
-          thisBase = thisBase.replace('|item|', this.item);
-          thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
-          thisBase = thisBase.replace('|title|', this.title);
-          thisBase = thisBase.replace('|alt|', sectionUC);
-          thisBase = thisBase.replace('|pin|', sectionUC);
-          $todoList.append(thisBase);
-          }
-        });
-      $todoList.listview("refresh");
-    }
-  }
-
-  return {
-    buildFavouriteList: function(){
-      return ( BuildFavouriteList() );
-      },
-    buildItineraryList: function() {
-      return ( BuildItineraryList() );
-      }
-    }
-
-}();
-
 var localStore = function() {
+  var todoKey = "todo",
+      listsKey = "lists",
+      // It should not be necessary to add these classes to the empty message.
+      // TODO: investigate why these are needed - it should enhance just like
+      // the actual favourites
+      emptyFavMsg =
+        '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites List is empty</li>',
+      emptyItinMsg =
+        '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">This Itinerary is empty</li>',
+      base =
+        '<li data-section="|section|" data-item="|item|"> \
+         <a href="|href|">|title|\
+         <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
+         </a> \
+         <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
+         </li>';
 
   return  ( {
     saveFavourite: function ( obj ) {
@@ -305,7 +262,7 @@ var localStore = function() {
 
     isInList: function (listID, section, item) {
       var found = false,
-          savedItems = store.get("todo");
+          savedItems = store.get(todoKey);
       if (savedItems === undefined) {
         return false;
         }
@@ -320,12 +277,12 @@ var localStore = function() {
 
     saveInList: function( obj ) {
       var found = false,
-          savedItems = store.get("todo");
+          savedItems = store.get(todoKey);
 
       if ( savedItems === undefined ) {
         savedItems = new Array();
         savedItems[0] = obj;
-        store.set( "todo", savedItems );
+        store.set( todoKey, savedItems );
         return;
         }
       else {
@@ -337,7 +294,7 @@ var localStore = function() {
           });
         if (!found) {
           savedItems.push( obj );
-          store.set( "todo", savedItems );
+          store.set( todoKey, savedItems );
           }
         return;
         }
@@ -345,7 +302,7 @@ var localStore = function() {
 
     // Returns false if empty, true if not empty
     removeFromList: function( listID, section, item ) {
-      var savedItems = store.get("todo");
+      var savedItems = store.get(todoKey);
 
       if ( savedItems === undefined ) {
         return false;
@@ -359,16 +316,49 @@ var localStore = function() {
         });
 
       if (savedItems.length){
-        store.set("todo", savedItems);
+        store.set(todoKey, savedItems);
         }
       else {
-        store.remove("todo");
+        store.remove(todoKey);
         return false;
         }
 
       return true;
+      },
+
+    buildFavouriteList: function() {
+    return ( localStore.buildList(0, "#todo-list") );
+    },
+
+    buildItineraryList: function() {
+    return ( localStore.buildList(1, "#itin-list-1" ) );
+    },
+
+    buildList: function( listID, listSelector ) {
+      var savedItems = store.get(todoKey),
+          $todoList = $(listSelector);
+      $todoList.empty();
+      if (!savedItems){
+        $todoList.append( listID ? emptyItinMsg : emptyFavMsg );
+        }
+      else {
+        $.each(savedItems, function(i) {
+          var thisBase = base,
+              sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
+          if (listID === this.listID) {
+            thisBase = thisBase.replace('|section|', this.section);
+            thisBase = thisBase.replace('|item|', this.item);
+            thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
+            thisBase = thisBase.replace('|title|', this.title);
+            thisBase = thisBase.replace('|alt|', sectionUC);
+            thisBase = thisBase.replace('|pin|', sectionUC);
+            $todoList.append(thisBase);
+            }
+          });
+        $todoList.listview("refresh");
+        }
       }
 
-    } );
+    });
 
   } ();
