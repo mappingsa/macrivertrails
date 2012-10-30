@@ -100,9 +100,11 @@
           $addItinBtn = $page.find(".itin-btn"),
           section = $page.data("section"),
           item = $page.data("item"),
-          title = $page.data("title");
+          title = $page.data("title"),
+          $li = $a.closest("li"),
+          id = $li.data("itin-id");
       event.preventDefault();
-      localStore.saveInItinerary( {listID: 1, section: section, item: item, title: title} );
+      localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
       $addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
     });
 
@@ -251,7 +253,7 @@ var localStore = function() {
           <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
         </div>',
 
-      itinPopupTemplate = '<li class="li-itin" data-icon="plus"><a class="itin-add-btn" href="#" data-ajax="false" data-itin-id="|id|">|title|</a></li>';
+      itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
 
       defaultLists = [
         { listID: 0, title: "My Favourites" },
