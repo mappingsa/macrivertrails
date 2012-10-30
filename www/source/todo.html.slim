@@ -4,15 +4,7 @@
     h1 Todo
     a@none.homeBtn.ui-btn-right data-transition="none"
   @content data-iscroll="true"
-
-
-    @collapsible data-collapsed="true"
-      h3 MY FAVOURITES
-      ul@listview data-split-icon="delete" data-list-id="0"
-    @collapsible data-collapsed="true"
-      h3 MY ITINERARY
-      ul@listview data-split-icon="delete" data-list-id="1"
-
+    div
   = partial :tabbar
 
 

@@ -197,7 +197,6 @@
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
     localStore.buildLists();
-    $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
   $(document).on("vclick", ".btn-remove-todo", function(event) {
@@ -223,15 +222,24 @@ var localStore = function() {
       // the actual favourites
       emptyFavMsg =
         '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">Your Favourites List is empty</li>',
+
       emptyItinMsg =
         '<li class="ui-li ui-li-static ui-btn-up-c ui-li-last">This Itinerary is empty</li>',
-      base =
-        '<li data-section="|section|" data-item="|item|"> \
+
+      itemTemplate =
+        '<li data-section="|section|" data-item="|item|">\
          <a href="|href|">|title|\
-         <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
-         </a> \
-         <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
+         <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
+         </a>\
+         <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',
+
+      listTemplate = ' \
+        <div data-role="collapsible" data-collapsed="true">\
+          <h3>|title|</h3> \
+          <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
+        </div>',
+
       defaultLists = [
         { listID: 0, title: "My Favourites" },
         { listID: 1, title: "My Itinerary" }
@@ -341,37 +349,47 @@ var localStore = function() {
       },
 
     buildLists: function() {
-      var lists = localStore.getLists();   // Get the list of lists
+      var lists = localStore.getLists(),  // Get the list of lists
+          listHTML = "";
       $.each( lists, function(i)  {
-        localStore.buildList(i);
-      });
+        listHTML += localStore.buildList(i);
+        });
+      $(".todo-page .iscroll-content").empty();
+      $(".todo-page .iscroll-content").append(listHTML);
+      $(".todo-page .iscroll-content").trigger("create");
+      $(".todo-page .iscroll-wrapper").iscrollview("refresh");
     },
 
-    buildList: function(listID) {
+    buildList: function( listID ) {
       var savedItems = store.get(todoKey),
-          $todoList = $( ".todo-page :jqmData(list-id=" + listID + ")" );
-      $todoList.empty();
-      if (!savedItems){
-        $todoList.append( listID ? emptyItinMsg : emptyFavMsg );
+          lists = localStore.getLists(),
+          listHTML = listTemplate,
+          itemsHTML = "";
+
+      listHTML = listHTML.replace( "|title|", lists[listID].title );
+      listHTML = listHTML.replace("|id|", listID);
+
+      if (!savedItems) {
+        listHTML = listHTML.replace("|list|", listID ? emptyItinMsg : emptyFavMsg );
         }
       else {
         $.each(savedItems, function(i) {
-          var thisBase = base,
+          var thisItem = itemTemplate,
               sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
           if (listID === this.listID) {
-            thisBase = thisBase.replace('|section|', this.section);
-            thisBase = thisBase.replace('|item|', this.item);
-            thisBase = thisBase.replace('|href|', sectionUC + "/" + this.item + ".html");
-            thisBase = thisBase.replace('|title|', this.title);
-            thisBase = thisBase.replace('|alt|', sectionUC);
-            thisBase = thisBase.replace('|pin|', sectionUC);
-            $todoList.append(thisBase);
+            thisItem = thisItem.replace('|section|', this.section);
+            thisItem = thisItem.replace('|item|', this.item);
+            thisItem = thisItem.replace('|href|', sectionUC + "/" + this.item + ".html");
+            thisItem = thisItem.replace('|title|', this.title);
+            thisItem = thisItem.replace('|alt|', sectionUC);
+            thisItem = thisItem.replace('|pin|', sectionUC);
+            itemsHTML += thisItem;
             }
           });
-        $todoList.listview("refresh");
+        listHTML = listHTML.replace("|list|", itemsHTML );
         }
+        return listHTML;
       }
-
     });
 
   } ();
