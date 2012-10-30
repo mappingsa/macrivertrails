@@ -255,7 +255,8 @@ var localStore = function() {
 
       defaultLists = [
         { listID: 0, title: "My Favourites" },
-        { listID: 1, title: "My Itinerary" }
+        { listID: 1, title: "My Itinerary" },
+        { listID: 2, title: "My Other Itinerary" }
         ];
 
   return  ( {
