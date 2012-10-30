@@ -6,17 +6,12 @@
   @content data-iscroll="true"
 
 
-    @collapsible#todo-collapsible data-collapsed="false"
+    @collapsible data-collapsed="true"
       h3 MY FAVOURITES
-      ul@listview#todo-list data-split-icon="delete" data-list-id="0"
+      ul@listview data-split-icon="delete" data-list-id="0"
     @collapsible data-collapsed="true"
       h3 MY ITINERARY
-      ul@listview#itin-list-1 data-split-icon="delete" data-list-id="1"
-        li This Itinerary is empty
-    @collapsible data-collapsed="true"
-      h3 MY OTHER ITINERARY
-      ul@listview#itin-list-2 data-split-icon="delete"
-        li This Intinerary is empty
+      ul@listview data-split-icon="delete" data-list-id="1"
 
   = partial :tabbar
 

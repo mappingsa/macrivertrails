@@ -196,8 +196,7 @@
   // ToDo page
   $(document).on("pagebeforeshow", ".todo-page", function() {
     var $page = $(this);
-    localStore.buildFavouriteList();
-    localStore.buildItineraryList();
+    localStore.buildLists();
     $page.find(".iscroll-wrapper").iscrollview("refresh");
   });
 
@@ -232,9 +231,14 @@ var localStore = function() {
          <img src="../map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin"> \
          </a> \
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a> \
-         </li>';
+         </li>',
+      defaultLists = [
+        { listID: 0, title: "My Favourites" },
+        { listID: 1, title: "My Itinerary" }
+        ];
 
   return  ( {
+
     saveFavourite: function ( obj ) {
       obj.listID = 0;
       return ( localStore.saveInList( obj ) )
@@ -326,17 +330,26 @@ var localStore = function() {
       return true;
       },
 
-    buildFavouriteList: function() {
-    return ( localStore.buildList(0, "#todo-list") );
+    getLists: function () {
+      var found = false,
+          lists = store.get(listsKey);
+
+      if (lists === undefined) {
+        return (defaultLists);
+        }
+      return lists;
+      },
+
+    buildLists: function() {
+      var lists = localStore.getLists();   // Get the list of lists
+      $.each( lists, function(i)  {
+        localStore.buildList(i);
+      });
     },
 
-    buildItineraryList: function() {
-    return ( localStore.buildList(1, "#itin-list-1" ) );
-    },
-
-    buildList: function( listID, listSelector ) {
+    buildList: function(listID) {
       var savedItems = store.get(todoKey),
-          $todoList = $(listSelector);
+          $todoList = $( ".todo-page :jqmData(list-id=" + listID + ")" );
       $todoList.empty();
       if (!savedItems){
         $todoList.append( listID ? emptyItinMsg : emptyFavMsg );
