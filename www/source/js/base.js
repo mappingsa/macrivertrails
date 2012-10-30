@@ -1,6 +1,8 @@
 
 (function ($) {
-  "use strict";
+  // Comment-out the following line in order to be able to evaluate expressions
+  // in Safari debug console when at a breakpoint!
+  //"use strict";
 
   var refreshScroller = function(slider) {
     $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
@@ -54,70 +56,94 @@
       closeMenu();
       });
 
-  $page.find(".toggle-fav").bind("vclick", function(event) {
-    var $a = $(this),
-        $img = $a.find("img"),
-        $menu = $page.find(".menu"),
-        section = $page.data("section"),
-        item = $page.data("item"),
-        title = $page.data("title");
-    event.preventDefault();
-    if ( $a.hasClass("is-fav") ) {
-      localStore.removeFavourite(section, item);
-      $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
-      }
-      else {
-        localStore.saveFavourite( { listID: 0, section: section, item: item, title: title } );
-        $a.addClass("is-fav").find("span").text("REMOVE FAV");
+    $page.find(".toggle-fav").bind("vclick", function(event) {
+      var $a = $(this),
+          $img = $a.find("img"),
+          $menu = $page.find(".menu"),
+          section = $page.data("section"),
+          item = $page.data("item"),
+          title = $page.data("title");
+      event.preventDefault();
+      if ( $a.hasClass("is-fav") ) {
+        localStore.removeFavourite(section, item);
+        $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
         }
-      closeMenu(1000);
-  });
+        else {
+          localStore.saveFavourite( { listID: 0, section: section, item: item, title: title } );
+          $a.addClass("is-fav").find("span").text("REMOVE FAV");
+          }
+        closeMenu(1000);
+    });
 
+    // Add to Itinerary button on place menu
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
-        $img = $a.find("img"),
-        $menu = $page.find(".menu"),
-        $popup = $page.find(".itin-popup"),
+        //$popup = $page.find(".itin-popup"),
         section = $page.data("section"),
         item = $page.data("item"),
         title = $page.data("title");
     event.preventDefault();
-
-
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
       closeMenu(1000);
         }
     else {
-      $popup.popup("open");
+      $.mobile.changePage( "../itin_dialog.html" );
       }
-
   });
 
+    // Add to Itinerary button (list item) on Add Itinerary popup
     $page.find(".itin-list").on("vclick", ".itin-add-btn", function(event) {
+      var $a = $(this),
+          section = $page.jqmData("section"),
+          item = $page.jqmData("item"),
+          title = $page.jqmData("title"),
+          $li = $a.closest("li"),
+          id = $li.jqmData("itin-id");
+          //$prevPage = $page.jqmData("prev-page"),
+          //$addItinBtn = $prevPage.find(".itin-btn");
+      event.preventDefault();
+      localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
+      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      setTimeout(function() {
+        $page.dialog("close");
+        }, 0);
+    });
+
+    // Add to Itinerary button on Add Itinerary popup
+    $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
           $addItinBtn = $page.find(".itin-btn"),
           section = $page.data("section"),
           item = $page.data("item"),
           title = $page.data("title"),
-          $li = $a.closest("li"),
-          id = $li.data("itin-id");
+          $textInput = $a.find("input"),
+          $target = $(event.target);
+
       event.preventDefault();
-      localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
-      $addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      if ($target.is(".ui-input-text")) {
+        return;
+      }
+      else {
+        //localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
+        //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+        $.noop();
+        }
     });
 
-
-    // Pages are normally hidden at pageinit. This makes it impossible to get element dimensions.
-    // Temporarily unhide the page, so that the FlexSlider can initialize properly. The page
-    // won't actually be unhidden by the browser, though, because we set the visibility back
-    // when we are done, and since browser Javascript is synchronous, the renderer does not
-    // run asynchronously during event processing, and so it will be none the wiser.
-    // May not be necessary - commented-out for testing.
-    //var $page = $(this),
-     //   hidden = $page.is(":hidden");
-   // if (hidden) { $page.css("display", "block"); }
+    // Add to Itinerary form on Add Itinerary popup
+    $page.find(".new-itin-submit").on("submit", function(event) {
+      var $a = $(this),
+          $addItinBtn = $page.find(".itin-btn"),
+          section = $page.data("section"),
+          item = $page.data("item"),
+          title = $page.data("title"),
+          $textInput = $a.find("input");
+      event.preventDefault();
+      //localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
+      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+    });
 
     $('.homeImageSlider').flexslider({
       slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
@@ -195,19 +221,29 @@
       $itinA.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
       }
 
+  });
+
     // Update Add Itinerary popup with itinerary list
-    $page.on( "popupbeforeposition", ".itin-popup", function() {
-      var list = localStore.buildPopupList(),
-          $itinItems = $itinList.find(".li-itin");
-      $itinItems.remove();
-      $newItinItem.before(list);
+    $(document).on( "pagebeforeshow", ".itin-popup", function(event, data) {
+      var $page = $(this),
+          $itinList = $page.find(".itin-list"),
+          $newItinItem = $itinList.find(".li-new-itin"),
+          list = localStore.buildPopupList(),
+          $itinItems = $itinList.find(".li-itin"),
+          $newItinItem = $itinList.find(".li-new-itin"),
+          $prevPage = data.prevPage;
+      // Copy data from previous page
+      //$page.jqmData("prev-page", $prevPage);
+      $page.jqmData("section", $prevPage.jqmData("section"));
+      $page.jqmData("title", $prevPage.jqmData("title"));
+      $page.jqmData("item", $prevPage.jqmData("item"));
+      $itinList.empty();
+      $itinList.append(list);
       $itinList.listview("refresh");
     });
 
-  });
-
   // ToDo page
-  $(document).on("pagebeforeshow", ".todo-page", function() {
+  $(document).on("pagebeforeshow", ".todo-page", function(event, data) {
     var $page = $(this);
     localStore.buildLists();
   });
@@ -248,7 +284,7 @@ var localStore = function() {
          </li>',
 
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="true">\
+        <div data-role="collapsible" data-collapsed="false">\
           <h3>|title|</h3>\
           <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
         </div>',
@@ -256,9 +292,9 @@ var localStore = function() {
       itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
 
       defaultLists = [
-        { listID: 0, title: "My Favourites" },
-        { listID: 1, title: "My Itinerary" },
-        { listID: 2, title: "My Other Itinerary" }
+        { listID: 0, title: "MY FAVOURITES" },
+        { listID: 1, title: "MY ITINERARY" },
+        { listID: 2, title: "MY OTHER ITINERARY" }
         ];
 
   return  ( {
