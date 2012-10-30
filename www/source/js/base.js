@@ -172,8 +172,10 @@
         $favA = $menu.find(".toggle-fav"),
         $itinA = $menu.find(".itin-btn"),
         section = $page.data("section"),
-        item = $page.data("item");
-
+        item = $page.data("item"),
+        $addItinList = $page.find(".itin-list"),
+        $itinList = $page.find(".itin-list"),
+        $newItinItem = $itinList.find(".li-new-itin");
 
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
@@ -190,6 +192,15 @@
     else {
       $itinA.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
       }
+
+    // Update Add Itinerary popup with itinerary list
+    $page.on( "popupbeforeposition", ".itin-popup", function() {
+      var list = localStore.buildPopupList(),
+          $itinItems = $itinList.find(".li-itin");
+      $itinItems.remove();
+      $newItinItem.before(list);
+      $itinList.listview("refresh");
+    });
 
   });
 
@@ -236,9 +247,11 @@ var localStore = function() {
 
       listTemplate = ' \
         <div data-role="collapsible" data-collapsed="true">\
-          <h3>|title|</h3> \
+          <h3>|title|</h3>\
           <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
         </div>',
+
+      itinPopupTemplate = '<li class="li-itin" data-icon="plus"><a class="itin-add-btn" href="#" data-ajax="false" data-itin-id="|id|">|title|</a></li>';
 
       defaultLists = [
         { listID: 0, title: "My Favourites" },
@@ -360,6 +373,24 @@ var localStore = function() {
       $(".todo-page .iscroll-wrapper").iscrollview("refresh");
     },
 
+    // Build a list of Itineraries for the Add to Itinerary popup
+    buildPopupList: function ( listID ) {
+      var lists = localStore.getLists(),
+          popupList = "";
+
+      $.each( lists, function(i) {
+        if (i) {  // Skip Favourites list
+          var li = itinPopupTemplate;
+          li = li.replace( "|id|", i );
+          li = li.replace( "|title|", lists[i].title );
+          popupList += li;
+          }
+        });
+
+      return popupList;
+    },
+
+    // Build a list for the to-do page
     buildList: function( listID ) {
       var savedItems = store.get(todoKey),
           lists = localStore.getLists(),
