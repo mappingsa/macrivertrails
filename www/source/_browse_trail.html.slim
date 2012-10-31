@@ -4,4 +4,4 @@
 - index_data = index_page.data
 li@list-divider #{index_data.title.upcase}
 - index_data.list.each do |place|
-  = partial :browse_place, :locals => {:url => "#{dir}/#{place.file}.html", :caption => place.caption}
+  = partial :browse_place, :locals => {:url => "#{dir}/#{place.file}.html", :caption => place.caption, :dir => dir }
