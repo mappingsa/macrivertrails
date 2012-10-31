@@ -214,7 +214,9 @@
       }
 
     // Update menu to reflect itinerary status of item
-    if ( localStore.isInItinerary( 1, section, item) ) {
+    var b;
+    b  = localStore.isInItinerary( section, item);
+    if ( b ) {
       $itinA.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       }
     else {
@@ -309,7 +311,7 @@ var localStore = function() {
       },
 
     isFavourite: function( section, item ) {
-      return ( localStore.isInList( 0, section, item) );
+      return ( localStore.isInList( 0, section, item) === 0 );
       },
 
     saveInItinerary: function( obj ) {
@@ -320,23 +322,35 @@ var localStore = function() {
       return ( localStore.removeFromList( 1, section, item) );
       },
 
+    // Determine if item is in an Itinerary list
+    // Returns true/false
     isInItinerary: function( section, item ) {
-      return ( localStore.isInList(1, section, item) );
+      var a = localStore.isInList(-1, section, item);
+      return (a !== null);
       },
 
+    // Determine if item is in the specified list.
+    // ListID 0 = Favourites
+    // ListID 1-n = Itinerary
+    // ListID -1 = Any
+    // Returns listID, or null if not found
     isInList: function (listID, section, item) {
-      var found = false,
-          savedItems = store.get(todoKey);
+      var savedItems = store.get(todoKey),
+          foundID = null;
       if (savedItems === undefined) {
-        return false;
+        return (foundID);
         }
-      $.each( savedItems, function() {
-        if (this.listID === listID && this.item === item && this.section === section) {
-          found = true;
-          return;
+      $.each( savedItems, function(i) {
+        if (
+            ( ((listID === -1) && this.listID > 0) || (this.listID === listID) )
+            && this.item === item
+            && this.section === section
+           ) {
+          foundID = this.listID;
+          return ( false );
           }
         });
-      return found;
+      return (foundID);
       },
 
     saveInList: function( obj ) {
