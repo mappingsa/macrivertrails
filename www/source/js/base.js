@@ -250,16 +250,20 @@
     localStore.buildLists();
   });
 
+  // "delete" buttons to the right of items on ToDo page
   $(document).on("vclick", ".btn-remove-todo", function(event) {
     var $a = $(this),
         $li = $a.closest("li"),
         section = $li.data("section"),
         item = $li.data("item"),
         $wrapper = $li.closest(".ui-listview"),
-        list = $wrapper.data("list-id");
+        listID = $wrapper.data("list-id");
     event.preventDefault();
     $li.remove();
-    localStore.removeFromList( list, section, item );
+    localStore.removeFromList( listID, section, item );
+    if (!$wrapper.children().length) {
+      $wrapper.append( listID ? localStore.emptyItinMsg : localStore.emptyFavMsg );
+      }
     $wrapper.iscrollview("refresh");
   });
 
@@ -300,6 +304,9 @@ var localStore = function() {
         ];
 
   return  ( {
+
+    emptyFavMsg: emptyFavMsg,
+    emptyItinMsg: emptyItinMsg,
 
     saveFavourite: function ( obj ) {
       obj.listID = 0;
@@ -353,6 +360,30 @@ var localStore = function() {
       return (foundID);
       },
 
+    // Determine if the given list is empty
+    // ListID 0 = Favourites
+    // ListID 1-n = Itinerary
+    // ListID -1 = Any Itinerary (not Favourites)
+    // Returns true/false
+    listIsEmpty: function (listID) {
+      var savedItems = store.get(todoKey),
+          empty = true;
+      if (savedItems === undefined) {
+        return (empty);
+        }
+      $.each( savedItems, function(i) {
+        if (
+            ( ((listID === -1) && this.listID > 0) || (this.listID === listID) )
+            && this.item === item
+            && this.section === section
+           ) {
+          empty = false;
+          return ( false );
+          }
+        });
+      return (empty);
+      },
+
     saveInList: function( obj ) {
       var found = false,
           savedItems = store.get(todoKey);
@@ -383,6 +414,8 @@ var localStore = function() {
     // ListID 1-n = Itinerary
     // ListID -1 = Any Itinerary (not Favourites)
     // Returns false if list is then empty, true if not empty
+    // The return value is of dubious value, since it now returns false
+    // only if all lists (Favourites and all Itinerary lists) are empty
     removeFromList: function( listID, section, item ) {
       var savedItems = store.get(todoKey);
 
