@@ -1110,6 +1110,10 @@ margin-left: -45px;
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
 .todo-tab .ui-icon    { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
 .fishing-tab .ui-icon { background-image: url(../images/233-fish.png); background-size: 28px 13px; }
+.ui-icon-zoomin       { background-image: url(../images/267-zoomin.png); background-size: 22px 22px }
+.ui-icon-zoomout      { background-image: url(../images/268-zoomout.png); background-size: 22px 22px;}
+span.ui-icon.ui-icon-shadow.ui-icon.zoomin { width:22px; height:22px; }
+span.ui-icon.ui-icon..ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1120,7 +1124,9 @@ margin-left: -45px;
   .todo-tab .ui-icon    { background-image: url(../images/117-todo@2x.png); }
   .fishing-tab .ui-icon { background-image: url(../images/233-fish@2x.png); }
 
-  .itin-icon            { background-image: url('../images/04-squiggle@2x.png'); }
+  .itin-icon            { background-image: url(../images/04-squiggle@2x.png); }
+  .ui-icon-zoomin       { background-image: url(../images/267-zoomin@2x.png); }
+  .ui-icon-zoomout      { background-image: url(../images/268-zoomout@2x.png); }
 }
 
 .new-itin-submit {
