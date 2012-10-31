@@ -449,11 +449,23 @@ var localStore = function() {
 
     // Add a new list
     // Returns the ID of the new list
+    // If a list with the given title already exists, return the
+    // ID of that list, rather than create a duplicate
     addList: function(title) {
       var lists = localStore.getLists(),
-          listID = lists.length;
-      lists.push(  { listID: listID, title: title } );
-      store.set(listsKey, lists);
+          listID = lists.length,
+          found = false;
+      $.each(lists, function(i) {
+        if (this.title === title) {
+          listID = i;
+          found = true;
+          return false;
+          }
+        });
+      if (!found) {
+        lists.push(  { listID: listID, title: title } );
+        store.set(listsKey, lists);
+        }
       return listID;
     },
 
