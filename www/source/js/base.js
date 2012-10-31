@@ -101,11 +101,8 @@
           title = $page.jqmData("title"),
           $li = $a.closest("li"),
           id = $li.jqmData("itin-id");
-          //$prevPage = $page.jqmData("prev-page"),
-          //$addItinBtn = $prevPage.find(".itin-btn");
       event.preventDefault();
       localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
-      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       setTimeout(function() {
         $page.dialog("close");
         }, 0);
@@ -114,7 +111,6 @@
     // Add to Itinerary button on Add Itinerary popup
     $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
-          //$addItinBtn = $page.find(".itin-btn"),
           section = $page.data("section"),
           item = $page.data("item"),
           title = $page.data("title"),
@@ -122,11 +118,9 @@
           $textInput = $form.find("input"),
           val = $textInput.val(),
           listID;
-
       event.preventDefault();
       listID = localStore.addList(val);
       localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
-      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
       setTimeout(function() {
         $page.dialog("close");
         }, 0);
