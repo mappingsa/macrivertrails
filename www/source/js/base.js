@@ -452,14 +452,12 @@ var localStore = function() {
 
     buildLists: function() {
       var lists = localStore.getLists(),  // Get the list of lists
-          listHTML = "";
+          listHTML = "",
+          $scrollerContent = $(".todo-page .iscroll-content");
       $.each( lists, function(i)  {
         listHTML += localStore.buildList(i);
         });
-      $(".todo-page .iscroll-content").empty();
-      $(".todo-page .iscroll-content").append(listHTML);
-      $(".todo-page .iscroll-content").trigger("create");
-      $(".todo-page .iscroll-wrapper").iscrollview("refresh");
+      $scrollerContent.empty().append(listHTML).trigger("create");
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
