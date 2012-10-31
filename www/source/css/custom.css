@@ -123,7 +123,7 @@
 
 .ui-body-c .ui-link {
   color:  #007acc;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .ui-body-c .ui-link:hover {
@@ -721,7 +721,7 @@ li.ui-li-divider {
 .ui-btn-up-b {
     border: 0;
     background:url("") #151515; background-size: 5px 5px;
-    font-weight: bold;
+    font-weight: normal;
     color:  #0099FF;
     text-shadow: 0 -1px 1px #000;
 }
@@ -733,7 +733,7 @@ li.ui-li-divider {
 .ui-btn-hover-b {
     border: 0;
     background: #333;
-    font-weight: bold;
+    font-weight: normal;
     color:  #fff;
     text-shadow: 0  -1px 1px  #014D68;
 
@@ -746,7 +746,7 @@ li.ui-li-divider {
 .ui-btn-down-b {
     border: 0;
     background: #111;
-    font-weight: bold;
+    font-weight: normal;
     color:  #fff;
     text-shadow: 0 -1px 1px #225377;
 }
