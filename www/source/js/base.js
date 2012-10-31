@@ -372,11 +372,7 @@ var localStore = function() {
         return (empty);
         }
       $.each( savedItems, function(i) {
-        if (
-            ( ((listID === -1) && this.listID > 0) || (this.listID === listID) )
-            && this.item === item
-            && this.section === section
-           ) {
+        if ( ((listID === -1) && this.listID > 0) || (this.listID === listID) ) {
           empty = false;
           return ( false );
           }
@@ -486,6 +482,7 @@ var localStore = function() {
     // Build a list for the to-do page
     buildList: function( listID ) {
       var savedItems = store.get(todoKey),
+          isEmpty = !savedItems || localStore.listIsEmpty(listID),
           lists = localStore.getLists(),
           listHTML = listTemplate,
           itemsHTML = "";
@@ -493,7 +490,7 @@ var localStore = function() {
       listHTML = listHTML.replace( "|title|", lists[listID].title );
       listHTML = listHTML.replace("|id|", listID);
 
-      if (!savedItems) {
+      if (isEmpty) {
         listHTML = listHTML.replace("|list|", listID ? emptyItinMsg : emptyFavMsg );
         }
       else {
