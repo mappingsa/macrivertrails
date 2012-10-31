@@ -319,7 +319,7 @@ var localStore = function() {
       },
 
     removeFromItinerary: function( section, item ){
-      return ( localStore.removeFromList( 1, section, item) );
+      return ( localStore.removeFromList( -1, section, item) );
       },
 
     // Determine if item is in an Itinerary list
@@ -332,7 +332,7 @@ var localStore = function() {
     // Determine if item is in the specified list.
     // ListID 0 = Favourites
     // ListID 1-n = Itinerary
-    // ListID -1 = Any
+    // ListID -1 = Any Itinerary (not Favourites)
     // Returns listID, or null if not found
     isInList: function (listID, section, item) {
       var savedItems = store.get(todoKey),
@@ -378,7 +378,11 @@ var localStore = function() {
         }
       },
 
-    // Returns false if empty, true if not empty
+    // Remove item from the specified list
+    // ListID 0 = Favourites
+    // ListID 1-n = Itinerary
+    // ListID -1 = Any Itinerary (not Favourites)
+    // Returns false if list is then empty, true if not empty
     removeFromList: function( listID, section, item ) {
       var savedItems = store.get(todoKey);
 
@@ -387,9 +391,12 @@ var localStore = function() {
         }
 
       $.each( savedItems, function(index){
-        if ( this.listID === listID && this.section === section && this.item === item ){
+        if ( ( ((listID === -1) && this.listID > 0) || (this.listID === listID) )
+             && this.item === item
+             && this.section === section
+           ) {
           savedItems.splice(index, 1);
-          return;
+          return (false);
           }
         });
 
