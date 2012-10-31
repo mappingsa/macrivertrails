@@ -283,8 +283,7 @@ var localStore = function() {
 
       defaultLists = [
         { listID: 0, title: "MY FAVOURITES" },
-        { listID: 1, title: "MY ITINERARY" },
-        { listID: 2, title: "MY OTHER ITINERARY" }
+        { listID: 1, title: "MY ITINERARY" }
         ];
 
   return  ( {
