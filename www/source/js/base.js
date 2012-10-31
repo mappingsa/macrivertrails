@@ -108,7 +108,7 @@
         }, 0);
     });
 
-    // Add to Itinerary button on Add Itinerary popup
+    // Add to New Itinerary button on Add Itinerary popup
     $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
           section = $page.data("section"),
@@ -119,7 +119,7 @@
           val = $textInput.val(),
           listID;
       event.preventDefault();
-      listID = localStore.addList(val);
+      listID = localStore.addList(val.toUpperCase());
       localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
       setTimeout(function() {
         $page.dialog("close");
