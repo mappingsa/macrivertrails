@@ -127,19 +127,9 @@
       listID = localStore.addList(val);
       localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
       //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
-    });
-
-    // Add to Itinerary form on Add Itinerary popup
-    $page.find(".new-itin-submit").on("submit", function(event) {
-      var $a = $(this),
-          $addItinBtn = $page.find(".itin-btn"),
-          section = $page.data("section"),
-          item = $page.data("item"),
-          title = $page.data("title"),
-          $textInput = $a.find("input");
-      event.preventDefault();
-      //localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
-      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
+      setTimeout(function() {
+        $page.dialog("close");
+        }, 0);
     });
 
     $('.homeImageSlider').flexslider({
