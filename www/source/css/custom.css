@@ -54,6 +54,10 @@
   -webkit-transform: translateZ(0);
 }
 
+.iscroll-scroller {
+  width: 100%;
+}
+
 /* Theme overrides. */
 /* =============================================================================
    UI Bars (add to a div surrounding content, like a callout box)
