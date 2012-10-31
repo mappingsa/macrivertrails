@@ -233,12 +233,15 @@
           list = localStore.buildPopupList(),
           $itinItems = $itinList.find(".li-itin"),
           $newItinItem = $itinList.find(".li-new-itin"),
-          $prevPage = data.prevPage;
+          $prevPage = data.prevPage,
+          $headerTitle = $page.find(".itin-header-title"),
+          title = $prevPage.jqmData("title");
       // Copy data from previous page
       //$page.jqmData("prev-page", $prevPage);
       $page.jqmData("section", $prevPage.jqmData("section"));
-      $page.jqmData("title", $prevPage.jqmData("title"));
+      $page.jqmData("title", title );
       $page.jqmData("item", $prevPage.jqmData("item"));
+      $headerTitle.text( title );
       $itinList.empty();
       $itinList.append(list);
       $itinList.listview("refresh");
