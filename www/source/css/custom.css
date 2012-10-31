@@ -566,7 +566,7 @@ h1.ui-title {
 }
 
 /* =============================================================================
-   Link Bars with Large Arrows
+   Link Bars and Links Bars with Large Arrows
    ========================================================================== */
 .big-arrow .ui-btn-text {
   background-image: none;
@@ -574,10 +574,15 @@ h1.ui-title {
   background-size: 20px 20px;
   }
 
+.ui-listview .ui-link-inherit,
+.ui-listview .ui-li-static {
+  font-weight: normal;
+  font-size:14px;
+}
+
 .big-arrow .ui-link-inherit {
     background:url("../images/arrow.png") right no-repeat;
     background-size: 10px 14px;
-    font-weight: normal; font-size:14px;
     color:#eee !important;
     text-shadow: 0 -1px 1px #000;
 
