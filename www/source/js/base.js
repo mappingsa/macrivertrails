@@ -241,12 +241,22 @@
         section = $li.data("section"),
         item = $li.data("item"),
         $wrapper = $li.closest(".ui-listview"),
+        $collapsible = $li.closest(".ui-collapsible"),
         listID = $wrapper.data("list-id");
     event.preventDefault();
     $li.remove();
     localStore.removeFromList( listID, section, item );
     if (!$wrapper.children().length) {
-      $wrapper.append( listID ? localStore.emptyItinMsg : localStore.emptyFavMsg );
+      if (listID === 0) {  // Don't delete My Favourites - just add empty message
+        $wrapper.append( localStore.emptyFavMsg );
+        }
+      else if (listID == 1) {  // Don't delete My Itinerary - just add empty message
+        $wrapper.append( localStore.emptyItinMsg );
+      }
+      else {    // Do delete user-generated lists when the last item is removed
+           $collapsible.remove();
+           localStore.deleteList(listID);
+        }
       }
     $wrapper.iscrollview("refresh");
   });
@@ -309,7 +319,11 @@ var localStore = function() {
       },
 
     removeFromItinerary: function( section, item ){
-      return ( localStore.removeFromList( -1, section, item) );
+      var isEmpty = localStore.removeFromList( -1, section, item);
+      if (isEmpty) {
+
+        }
+      return (isEmpty);
       },
 
     // Determine if item is in an Itinerary list
@@ -441,6 +455,16 @@ var localStore = function() {
       lists.push(  { listID: listID, title: title } );
       store.set(listsKey, lists);
       return listID;
+    },
+
+    // Delete a list
+    // This does  NOT remove the list content (todo)
+    // It only removes the list itself (ID and title)
+    // Do not use to remove Favourites list - it should always stay
+    deleteList: function(listID) {
+      var lists = localStore.getLists();
+      lists.splice(listID, 1);
+      store.set(listsKey, lists);
     },
 
     buildLists: function() {
