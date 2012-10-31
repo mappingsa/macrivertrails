@@ -114,22 +114,19 @@
     // Add to Itinerary button on Add Itinerary popup
     $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
-          $addItinBtn = $page.find(".itin-btn"),
+          //$addItinBtn = $page.find(".itin-btn"),
           section = $page.data("section"),
           item = $page.data("item"),
           title = $page.data("title"),
-          $textInput = $a.find("input"),
-          $target = $(event.target);
+          $form = $a.closest("form"),
+          $textInput = $form.find("input"),
+          val = $textInput.val(),
+          listID;
 
       event.preventDefault();
-      if ($target.is(".ui-input-text")) {
-        return;
-      }
-      else {
-        //localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
-        //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
-        $.noop();
-        }
+      listID = localStore.addList(val);
+      localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
+      //$addItinBtn.addClass("is-itin").find("span").text("REMOVE FROM ITINERARY");
     });
 
     // Add to Itinerary form on Add Itinerary popup
@@ -325,7 +322,7 @@ var localStore = function() {
       },
 
     saveInItinerary: function( obj ) {
-      return ( localStore.saveInList( obj) );
+      return ( localStore.saveInList( obj ) );
       },
 
     removeFromItinerary: function( section, item ){
@@ -452,6 +449,16 @@ var localStore = function() {
         }
       return lists;
       },
+
+    // Add a new list
+    // Returns the ID of the new list
+    addList: function(title) {
+      var lists = localStore.getLists(),
+          listID = lists.length;
+      lists.push(  { listID: listID, title: title } );
+      store.set(listsKey, lists);
+      return listID;
+    },
 
     buildLists: function() {
       var lists = localStore.getLists(),  // Get the list of lists
