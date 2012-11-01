@@ -566,11 +566,14 @@ h1.ui-title {
 /* =============================================================================
    Link Bars and Links Bars with Large Arrows
    ========================================================================== */
-.big-arrow .ui-btn-text {
-  background-image: none;
-  background-color: #151515;
-  background-size: 20px 20px;
-  }
+
+.big-arrow .ui-li{
+  padding-right: 4px;  /* Clear the iScroll scrollbar */
+}
+
+.big-arrow.ui-listview-inset .ui-li {
+  padding-right: 1px;
+}
 
 .ui-listview .ui-link-inherit,
 .ui-listview .ui-li-static {
@@ -579,16 +582,17 @@ h1.ui-title {
 }
 
 .big-arrow .ui-link-inherit {
-    background:url("../images/arrow.png") right no-repeat;
+    background-image: url("../images/arrow.png") ;
+    background-position: right;
+    background-repeat: no-repeat;
     background-size: 10px 14px;
     color:#eee !important;
     text-shadow: 0 -1px 1px #000;
-
 }
 
 .big-arrow .ui-link-inherit:hover {
-    background:url("../images/arrow.png") right no-repeat #333;
     color:#0099FF !important;
+    background-size: 20px 24px;
 }
 
 .events-list span.ui-icon, .thumbnail-list span.ui-icon {display:none}

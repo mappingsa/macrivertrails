@@ -11,7 +11,7 @@ trails:
 .browse-page@page data-dom-cache="true"
   = partial :browse_header
   div@content data-iscroll="true"
-    ul@listview data-filter-placeholder="Search..." data-filter="true" data-filter-theme="b"
+    ul.big-arrow@listview data-filter-placeholder="Search..." data-filter="true" data-filter-theme="b"
       - current_page.data.trails.each do |trail|
         = partial :browse_trail, :locals => {:section => trail}
   = partial :tabbar
