@@ -721,12 +721,15 @@ h1.ui-title {
     margin:0
 }
 
-li.ui-li-divider {
-    padding: 0.5em 15px !important
+.ui-li-divider {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 /* list divider, create your own gradient: http://www.colorzilla.com/gradient-editor/ */
-li.ui-li-divider {
+.ui-li-divider {
     color: #111;
     text-shadow: 0 1px 0 #999;
     background: #ffffff;
@@ -737,6 +740,15 @@ li.ui-li-divider {
     background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
     background: linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+}
+
+/* Browse page list dividers */
+.browse-page .ui-li-divider {
+  padding-left: 30px;
+}
+
+.browse-page .ui-li-divider img {
+  margin-top: -5px;  /* Move icon up over padding */
 }
 
 /* =============================================================================
