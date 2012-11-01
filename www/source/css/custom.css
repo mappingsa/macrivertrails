@@ -460,8 +460,18 @@ border-bottom:1px solid #663399;
 
 .mac-images img{
   width:285px;
-  height:80px;
+  height:55px;
 }
+
+.sponsor-images {
+  text-align: center;
+  }
+.sponsor-images img {
+  border: 0 solid #999;
+  border-radius: 3px;
+  margin: 12px auto;
+      }
+
 
 /* =============================================================================
    Business Text
@@ -1096,7 +1106,7 @@ margin-left: -45px;
 .infoBox .inner {
   border-radius: 10px;
   border: 1px solid black;
-  background-color: yellow;
+  background-color: white;
   margin-top: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
