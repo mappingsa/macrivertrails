@@ -608,6 +608,13 @@ h1.ui-title {
     margin-bottom: 10px;
 }
 
+.place-page .ui-header .ui-title,
+.place-page .ui-footer .ui-title {
+  font-size:16px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 .ui-header .ui-title,
 .ui-footer .ui-title {
