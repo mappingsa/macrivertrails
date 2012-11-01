@@ -748,8 +748,14 @@ h1.ui-title {
 }
 
 .browse-page .ui-li-divider img {
-  margin-top: -5px;  /* Move icon up over padding */
+  margin-top: -5px;  /* Move trail pin icon up over padding */
 }
+
+/* Same deal with trail pins on ToDo lists */
+.todo-page .trail-pin {
+  margin-top: -3px;
+}
+
 
 /* =============================================================================
    Footer Navigation
