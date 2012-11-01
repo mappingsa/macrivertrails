@@ -1,4 +1,4 @@
-﻿.ui-mobile {
+.ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
   text-rendering: optimizeSpeed;
@@ -157,9 +157,9 @@ that they will override CSS in the standard JQM structure CSS */
 
 .ui-mini { margin: .5em 5px; }
 .ui-mini .ui-btn-inner { font-size: 11px; padding: .55em 11px .5em; }
-.ui-controlgroup-horizontal .ui-btn, .ui-controlgroup-horizontal .ui-select { display: inline-block; margin: 0 -6px 10px 0px; }
+.ui-controlgroup-horizontal .ui-btn, .ui-controlgroup-horizontal .ui-select { display: inline-block; margin: 0 -6px 10px 0; }
 .ui-controlgroup .ui-checkbox label, .ui-controlgroup .ui-radio label { font-size: 12px;  }
-.ui-li, .ui-li.ui-field-contain { display: block; margin:1.5px; position: relative; overflow: visible; text-align: left; border-width: 0; border-top-width: 0px; }
+.ui-li, .ui-li.ui-field-contain { display: block; margin:1.5px; position: relative; overflow: visible; text-align: left; border-width: 0; border-top-width: 0; }
 .ui-li-has-count .ui-btn-text { padding-right:0; }
 .ui-listview .ui-li-icon { max-height: 40px; max-width: 40px; left: 6px; top: .6em; }
 
@@ -286,7 +286,6 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   margin-bottom: 0;
 }
 
-.ui-grid-b {}
 .center div{
     text-align:center;
     vertical-align:middle;
@@ -299,6 +298,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 .menu {
   background:#262C3A;
   -webkit-text-size-adjust:none !important;
+  -ms-text-size-adjust:none !important;
   display: none;
   z-index: 10;
   position: absolute;
@@ -317,7 +317,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
 
 .menu ul li {
   list-style-type: none;
-  margin: 0px 0;
+  margin: 0 0;
 }
 .menu .ui-link, .menu .ui-link:visited {
   text-align: center;
@@ -331,7 +331,7 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   padding-right:  10px;
   padding-bottom:  10px;
   padding-left: 7px;
-  text-shadow: 0px 1px 1px #212631;
+  text-shadow: 0 1px 1px #212631;
 }
 
 .menu ul li a:hover, .menu ul li a:active {
@@ -350,8 +350,10 @@ a.menuBtn{
   background-size: 30px 30px;
   text-indent:-999em !important;
   display:block !important;
-  -webkit-box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
-  box-shadow: 0 0px 0 rgba(150,150,150,.3) !important;
+  -webkit-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
+  -moz-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
+  -ms-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
+  box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
 }
 a.menuBtn .ui-btn-inner{
   border:none;
@@ -390,7 +392,6 @@ a.menuBtn:hover{
 
 .bannerContainer {
     width:100%;
-    background:;
 }
 
 .banner {
@@ -472,9 +473,8 @@ color: #FFFFFF;
 background: #AE132A;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 nature {
@@ -483,9 +483,8 @@ color: #FFFFFF;
 background: #539536;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 river {
@@ -494,9 +493,8 @@ color: #FFFFFF;
 background: #015CAB;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 produce {
@@ -505,9 +503,8 @@ color: #FFFFFF;
 background: #FBB255;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 riverbedz {
@@ -516,9 +513,8 @@ color: #FFFFFF;
 background: #989898;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 cycle {
@@ -527,9 +523,8 @@ color: #FFFFFF;
 background: #C14F9D;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 fishing {
@@ -538,9 +533,8 @@ color: #FFFFFF;
 background: #663399;
 display: block;
 padding: .5em;
-text-align:;
 font-weight: normal;
-margin: 0px 0 20px;
+margin: 0 0 20px;
 border-radius: .4em;
 }
 
@@ -548,7 +542,7 @@ border-radius: .4em;
    Header Bar (behind logo) & Logo
    ========================================================================== */
 .page-header {
-    border:0px;
+    border:0;
     border-bottom:1px solid #bfc0c0;
     color:#eee;
     height:40px;
@@ -565,7 +559,7 @@ border-radius: .4em;
 }
 
 h1.ui-title {
-    margin:0px;
+    margin: 0;
     padding:10px 0 0 0
 }
 
@@ -631,8 +625,8 @@ h1.ui-title {
 }
 
 .gallery-page h1.ui-title {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     position:relative;
     top:13px
 }
@@ -646,7 +640,7 @@ h1.ui-title {
 #mapLinks p {margin:0 0 0 0;}
 #mapLinks a {margin:1px 3px 1px 2px;width:12%;float:left; display:block;text-align:center;background:none;}
 #mapLinks a.last {margin-right:0;}
-#mapLinks a span {display: block;padding-top: 0px;margin: 5px;}
+#mapLinks a span {display: block;padding-top: 0;margin: 5px;}
 #mapLinks a {color: #A5A6A7;font-size: 8px;font-weight: bold;text-shadow: none;
 }
 
@@ -659,10 +653,10 @@ h1.ui-title {
 .events-list  ul.ui-listview li, .thumbnail-list ul.ui-listview li {
     margin:0;
     padding:0;
-    border-bottom:0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+    border-bottom:0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .thumbnail-list a.ui-link-inherit,
@@ -681,7 +675,7 @@ h1.ui-title {
 .thumbnail-list ul.ui-listview .ui-btn-inner {
     margin:0;
     padding:0;
-    border-bottom:0px
+    border-bottom:0
 }
 
 .thumbnail-list li.ui-corner-bottom {
@@ -694,10 +688,10 @@ h1.ui-title {
     max-width: 71px;
     position: absolute;
     top: 4px;
-    border:0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+    border:0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 .events-list .ui-li-aside {
@@ -795,10 +789,11 @@ li.ui-li-divider {
     width: 30px;
     height: 30px;
     margin-left: -15px;
-    box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
+    box-shadow: none;
     -webkit-border-radius: 0;
+    -moz-border-radius: 0;
     border-radius: 0;
     background-repeat: no-repeat;
     background-position: center center;
@@ -844,28 +839,9 @@ li.ui-li-divider {
 }
 
 .gallery img {
-    -webkit-box-shadow: 0px 0px 4px #111;
-    -moz-box-shadow: 0px 0px 4px #111;
-    box-shadow: 0px 0px 4px #111;
-}
-
-/* =============================================================================
-   Homepage Social Icons
-   ========================================================================== */
-div.social {
-    text-align:center;
-    background-color: transparent;
-    padding:4px;
-    border: 0;
-    -webkit-transition-duration:0.8s;
-    -moz-transition-duration:0.8s;
-    -o-transition-duration:0.8s;
-    transition-duration:0.8s;
-}
-
-div.social:hover {
-    background-color:rgba(238,238,238,1);
-    border:1px solid #c1bfbf;
+    -webkit-box-shadow: 0 0 4px #111;
+    -moz-box-shadow: 0 0 4px #111;
+    box-shadow: 0 0 4px #111;
 }
 
 /* =============================================================================
@@ -875,22 +851,22 @@ div.social:hover {
 width:110px;
 height:70px;
 left: 25%;
-margin-left: 0px;
-top: 0px;
+margin-left: 0;
+top: 0;
 }
 .middle {
 width:110px;
 height:70px;
 right: 25%;
-margin-right: 0px;
-top: 0px;
+margin-right: 0;
+top: 0;
 }
 .right {
 width:110px;
 height:70px;
 right: 100%;
-margin-right: 0px;
-bottom: 10px;
+margin-right: 0;
+bottom: 10;
 }
 
 
@@ -923,8 +899,9 @@ bottom: 10px;
 
 div.map {
     text-align:center;
-        -webkit-transition-duration:0.8s;
+    -webkit-transition-duration:0.8s;
     -moz-transition-duration:0.8s;
+    -ms-transition-duration:0.8s;
     -o-transition-duration:0.8s;
     transition-duration:0.8s;
 }
@@ -941,9 +918,10 @@ ul.tweetList{
 #jstwitter {
     width:100%;
     background:url("../images/twitterBack.png") repeat;
+    -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
-    padding:0px;
+    padding:0;
     -webkit-box-shadow:  1px 1px 1px #0f0f0f;
     -moz-box-shadow: 1px 1px 1px #0f0f0f;
     box-shadow: 1px 1px 1px #0f0f0f;
@@ -1000,7 +978,7 @@ ul.tweetList{
 .busimage {max-width:800px;width:100%;display:block;margin:0 auto;}
 
 .ui-header.mainheader {
-    border:0px;
+    border:0;
     color:#0099FF !important;
     height:40px;
     text-shadow: 0 -1px 1px #000;
@@ -1020,7 +998,7 @@ ul.tweetList{
   background-image: none;
   height: 40px;
   font-weight: normal;
-  border: 0px solid #2A2A2A;
+  border: 0 solid #2A2A2A;
 }
 
 .browseheader {
@@ -1123,16 +1101,16 @@ margin-left: -45px;
     height: 28px;
   }
 
-.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
-.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
+.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20 20; }
+.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20 20; }
 .map-tab .ui-icon     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
 .todo-tab .ui-icon    { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
 .fishing-tab .ui-icon { background-image: url(../images/233-fish.png); background-size: 28px 13px; }
 .ui-icon-zoomin       { background-image: url(../images/267-zoomin.png); background-size: 22px 22px }
 .ui-icon-zoomout      { background-image: url(../images/268-zoomout.png); background-size: 22px 22px;}
-span.ui-icon.ui-icon-shadow.ui-icon.zoomin { width:22px; height:22px; }
-span.ui-icon.ui-icon..ui-icon.shadow.zoomout { width: 22px; height:22px; }
+span.ui-icon.ui-icon-shadow.zoomin { width:22px; height:22px; }
+span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
