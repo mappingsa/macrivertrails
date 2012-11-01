@@ -463,6 +463,16 @@ border-bottom:1px solid #663399;
   height:80px;
 }
 
+.sponsor-images {
+  text-align: center;
+  }
+.sponsor-images img {
+  border: 0 solid #999;
+  border-radius: 3px;
+  margin: 12px auto;
+      }
+
+
 /* =============================================================================
    Business Text
    ========================================================================== */
