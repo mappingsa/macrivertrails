@@ -233,48 +233,48 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   position:absolute;
   width: 40px;
   height: 32px;
+  top: 85px;
   -webkit-filter: drop-shadow(-2px 3px 3px rgba(0, 0, 0, 0.8) );
 }
 
 .home-produce .icon {
-  right: 120px;
-  top: 85px;
+  right: 155px;
 }
 .home-river .icon {
-  right: 90px;
-  top: 85px;
+  right: 115px;
 }
 .home-heritage .icon {
-  right: 115px;
-  top: 85px;
+  right: 150px;
 }
 .home-nature .icon {
-  right: 110px;
-  top: 85px;
+  right: 136px;
 }
 .home-cycle .icon {
-  right: 100px;
-  top: 85px;
+  right: 130px;
 }
 .home-riverbedz .icon {
-  right: 95px;
-  top: 85px;
+  right: 110px;
 }
 .home-fishing .icon {
-  right: 65px;
-  top: 85px;
+  right: 84px;
 }
 
 .home-menu .tile-title {
   color: white;
   position: absolute;
-  font-size: 15px;
-  font-family: Caviar Dreams;
+  font-size: 20px;
+  font-family: "Caviar Dreams", Arial, sans-serif;
   font-weight: bold;
-  text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.6);
   text-align: right;
+  text-shadow: none;
   right: 10px;
   bottom: 5px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .home-menu .tile-title {
+  text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.6); /* Font is too thin for shadow at 1X, apply only to 2X */
+  }
 }
 
 .browse-page .ui-listview-filter {
@@ -602,8 +602,23 @@ h1.ui-title {
 /* =============================================================================
    Overwrite jQuery Mobile Styles
    ========================================================================== */
-.ui-header .ui-title, .ui-footer .ui-title {
-    margin: 0.8em 90px;
+.ui-header .ui-title,
+.ui-footer .ui-title {
+    font-family: "Caviar Dreams", Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: none;
+    font-size: 20px;
+    margin-left: 36px;
+    margin-right: 36px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.ui-header .ui-title,
+.ui-footer .ui-title {
+  text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.6);  /* Font is too thin for shadow at 1X, apply only to 2X */
+  }
 }
 
 .ui-content {
