@@ -1108,8 +1108,8 @@ margin-left: -45px;
     height: 28px;
   }
 
-.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20 20; }
-.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20 20; }
+.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
+.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
 .map-tab .ui-icon     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
 .todo-tab .ui-icon    { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
