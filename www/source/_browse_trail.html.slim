@@ -2,7 +2,7 @@
 - dir = section.capitalize
 - index_page = sitemap.find_resource_by_destination_path "/#{dir}/index.html"
 - index_data = index_page.data
-= partial :browse_divider, :locals => {:dir => dir, :index_data => index_data }
+= partial :browse_divider, :locals => {:dir => dir, :index_data => index_data, :section => section}
 - index_data.list.each do |place|
   = partial :browse_place, :locals => {:url => "#{dir}/#{place.file}.html", :caption => place.caption, :dir => dir }
 

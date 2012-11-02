@@ -126,6 +126,13 @@
         }, 0);
     });
 
+    $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
+      var $li = $(this),
+      section = $li.jqmData("section");
+      event.preventDefault();
+      $.mobile.changePage("map/index.html?section=" + section );
+    });
+
     $('.homeImageSlider').flexslider({
       slideshowSpeed: 5000,           //Integer: Set the speed of the slideshow cycling, in milliseconds
       animationSpeed: 400,
