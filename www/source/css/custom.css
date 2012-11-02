@@ -623,10 +623,18 @@ h1.ui-title {
 }
 
 .place-page .ui-header .ui-title,
-.place-page .ui-footer .ui-title {
+.place-page .ui-footer .ui-title,
+ {
   font-size:16px;
   margin-top: 12px;
   margin-bottom: 12px;
+}
+
+.info-fishing-page .ui-header .ui-title,
+.info-fishing-page .ui-footer .ui-title {
+  font-size:18px;
+  margin-top: 11px;
+  margin-bottom: 11px;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
