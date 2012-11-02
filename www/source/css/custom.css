@@ -956,8 +956,8 @@ div.map {
 .map-page .ui-navbar .ui-btn-inner,
 .info-tabbar .ui-btn-inner
  {
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 
