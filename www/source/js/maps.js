@@ -191,6 +191,11 @@ $(function() {
         loadingSingle = true;
         fullLoad = false;
         }
+      else if (selGroup !== undefined && selGroup.length) {
+        selGroup = selGroup.toLowerCase();
+        selMarker = "";
+        fullLoad = false;
+        }
       else {
         selGroup = "";
         selMarker = "";
