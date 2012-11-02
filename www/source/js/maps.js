@@ -221,10 +221,12 @@ $(function() {
 
       //-------------------------------------------------------v
       $.each( markers, function(i, marker) {
-        if ( ( (!selItem.length || selItem === marker.item) && // Test marker/group
-             (!selGroup.length || selGroup === marker.group) ) // ||
-          // ( selTodo !== undefined && localStore.isInList(selTodo, marker.group, marker.item) )
-         ) {
+        if ( ( (selTodo === undefined) &&
+               (!selItem.length || selItem === marker.item) && // Test marker/group
+               (!selGroup.length || selGroup === marker.group)
+             )  ||
+             ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, marker.group, marker.item)  === selTodo) )
+           ) {
            if ( selItem === marker.item && selGroup === marker.group) {
              $to.attr("value",  marker.position);
              $toPretty.attr("value", marker.title);
