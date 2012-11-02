@@ -145,7 +145,6 @@ $(function() {
         $from = $page.find( ".from" ),
         $fromPretty = $page.find( ".fromPretty" ),
         $directionsFields = $page.find( ".directionsFields" ),
-        //$locationOnBtn = $page.find( ".locationonBtn" ),
         $markerList = $page.find( ".markerList"),
         markerListview = $markerList.data( "listview" ),
         $markerListNote = $page.find( ".markerListNote" ),
