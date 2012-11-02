@@ -953,10 +953,13 @@ div.map {
     transition-duration:0.8s;
 }
 
-.map-page .ui-navbar .ui-btn-inner {
+.map-page .ui-navbar .ui-btn-inner,
+.info-tabbar .ui-btn-inner
+ {
   padding-left: 2px;
   padding-right: 2px;
 }
+
 
 /* =============================================================================
    Twitter Feed
