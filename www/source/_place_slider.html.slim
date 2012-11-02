@@ -2,7 +2,9 @@
 .flex-container style="width: 250px; text-align: center; margin: auto; padding-top: 10px; padding-bottom: 10px;"
   .pageImageSliderAuto.flexslider
     ul.slides
-      - current_page.data.slides.each do |slide|
+      // TODO: Flexslider has a bug where it shows the last slide first
+      // If/when it is fixed, remove the "rotate" in the line below
+      - current_page.data.slides.rotate.each do |slide|
         li
           img src="../images/#{slide}"
 = blank_line
