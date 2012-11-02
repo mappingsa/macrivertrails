@@ -134,7 +134,7 @@ $(function() {
    ];
 
   $(document).on( "pageinit", ".map-page", function() {
-    var fullLoad = true,
+    var fullLoad = false,
         loadingSingle = false,
         $page = $( this ),
         $canvas = $page.find( ".map_canvas" ),
@@ -182,21 +182,26 @@ $(function() {
     $page.on("pagebeforeshow", function( event ) {
       // attempt to get specifc marker data from item  page
       var urlVars = getUrlVars(),
-          selGroup = ( urlVars["section"] || "" ).toLowerCase(),
-          selMarker = ( urlVars["item"] || "").toLowerCase(),
-          selLocation = ( urlVars["location"] || "" ).toLowerCase(),
-          selLocationMe = selLocation === "me";
+          selGroup = urlVars["section"] || "" ,
+          selMarker = urlVars["item"] || "",
+          selLocation = urlVars["location"] || "",
+          selLocationMe = selLocation === "me",
+          selTodo = urlVars["todo"] || "";
+
       loadingSingle = false;
+      fullLoad = false;
 
       if ( selMarker.length && selGroup.length ){
         loadingSingle = true;
-        fullLoad = false;
         }
       else if (selGroup.length) {
         selMarker = "";
-        fullLoad = false;
+        }
+      else if (selTodo.length) {
+        // Should check todo index in range
         }
       else {
+        fullLoad = true;
         selMarker = "";
         }
 
@@ -442,7 +447,7 @@ $(function() {
           hash,
           i,
           url = $page.data("url"),
-          hashes = url.slice(url.indexOf("?") + 1).split("&");
+          hashes = url.toLowerCase().slice(url.indexOf("?") + 1).split("&");
       for(i = 0; i < hashes.length; i++) {
         hash = hashes[i].split("=");
         vars.push(hash[0]);
