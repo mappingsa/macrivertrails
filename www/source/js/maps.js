@@ -181,27 +181,27 @@ $(function() {
     //----------------------------------------------------------------v
     $page.on("pagebeforeshow", function( event ) {
       // attempt to get specifc marker data from item  page
-      var selGroup = getUrlVars().section,
-          selMarker = getUrlVars().item;
+      var urlVars = getUrlVars(),
+          selGroup = ( urlVars["section"] || "" ).toLowerCase(),
+          selMarker = ( urlVars["item"] || "").toLowerCase(),
+          selLocation = ( urlVars["location"] || "" ).toLowerCase(),
+          selLocationMe = selLocation === "me";
       loadingSingle = false;
 
-      if ( (selMarker !== undefined && selMarker.length) && (selGroup !== undefined && selGroup.length) ){
-        selGroup = selGroup.toLowerCase();
-        selMarker = selMarker.toLowerCase();
+      if ( selMarker.length && selGroup.length ){
         loadingSingle = true;
         fullLoad = false;
         }
-      else if (selGroup !== undefined && selGroup.length) {
-        selGroup = selGroup.toLowerCase();
+      else if (selGroup.length) {
         selMarker = "";
         fullLoad = false;
         }
       else {
-        selGroup = "";
         selMarker = "";
         }
 
-      if (getUrlVars().location === "me") {
+      // Set the appropriate tabbar button active
+      if (selLocationMe) {
         $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
         $activeGroupButton.addClass("ui-btn-active");
         }
@@ -212,7 +212,7 @@ $(function() {
 
       //-------------------------------------------------------v
       $.each( markers, function(i, marker) {
-        if ( (selMarker === "" || marker.link.indexOf(selMarker) >= 0) && (selGroup === "" || selGroup === marker.group) ) {
+        if ( (!selMarker.length || marker.link.indexOf(selMarker) >= 0) && (!selGroup.length || selGroup === marker.group) ) {
            if (marker.link.indexOf(selMarker) >= 0 && selGroup === marker.group) {
              $to.attr("value",  marker.position);
              $toPretty.attr("value", marker.title);
