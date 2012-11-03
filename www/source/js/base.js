@@ -27,7 +27,7 @@
       openMenu = function(fadeTime) {
         $menu.css("opacity", "0");
         $menu.animate(
-          { opacity: "0.85" },
+          { opacity: "1.0" },
           fadeTime === undefined ? 400 : fadeTime,
           "linear"
           );
