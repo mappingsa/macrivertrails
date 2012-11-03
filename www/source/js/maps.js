@@ -179,7 +179,7 @@ $(function() {
     userLoc = null,
     $activeGroupButton = null,
     infoBox = null,
-    $noLocationPopup = $("#no-location-popup");
+    $noLocationPopup = $(".no-location-popup");
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -282,7 +282,10 @@ $(function() {
 
     addMyLocation(false);
 
+    showMarkerList();
+
     gmap.refresh();
+
     iscrollview.refresh();
     });
     //--------------------- pagebeforeshow ---------------------------^
@@ -400,7 +403,7 @@ $(function() {
           userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
           $from.val(position.coords.latitude + "," + position.coords.longitude);
           var image = new google.maps.MarkerImage(
-            "./images/bluedot_retina.png", null, null,
+            "./Images/bluedot_retina.png", null, null,
             new google.maps.Point( 8, 8 ),
             new google.maps.Size( 17, 17 )
             );
