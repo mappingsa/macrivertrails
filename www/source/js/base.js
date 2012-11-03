@@ -60,9 +60,9 @@
       var $a = $(this),
           $img = $a.find("img"),
           $menu = $page.find(".menu"),
-          section = $page.data("section"),
-          item = $page.data("item"),
-          title = $page.data("title");
+          section = $page.jqmData("section"),
+          item = $page.jqmData("item"),
+          title = $page.jqmData("title");
       event.preventDefault();
       if ( $a.hasClass("is-fav") ) {
         localStore.removeFavourite(section, item);
@@ -79,9 +79,9 @@
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
         //$popup = $page.find(".itin-popup"),
-        section = $page.data("section"),
-        item = $page.data("item"),
-        title = $page.data("title");
+        section = $page.jqmData("section"),
+        item = $page.jqmData("item"),
+        title = $page.jqmData("title");
     event.preventDefault();
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
@@ -111,9 +111,9 @@
     // Add to New Itinerary button on Add Itinerary popup
     $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
-          section = $page.data("section"),
-          item = $page.data("item"),
-          title = $page.data("title"),
+          section = $page.jqmData("section"),
+          item = $page.jqmData("item"),
+          title = $page.jqmData("title"),
           $form = $a.closest("form"),
           $textInput = $form.find("input"),
           val = $textInput.val(),
@@ -187,8 +187,8 @@
         $menu = $page.find(".menu"),
         $favA = $menu.find(".toggle-fav"),
         $itinA = $menu.find(".itin-btn"),
-        section = $page.data("section"),
-        item = $page.data("item"),
+        section = $page.jqmData("section"),
+        item = $page.jqmData("item"),
         $addItinList = $page.find(".itin-list"),
         $itinList = $page.find(".itin-list"),
         $newItinItem = $itinList.find(".li-new-itin");
@@ -245,8 +245,8 @@
   $(document).on("vclick", ".btn-remove-todo", function(event) {
     var $a = $(this),
         $li = $a.closest("li"),
-        section = $li.data("section"),
-        item = $li.data("item"),
+        section = $li.jqmData("section"),
+        item = $li.jqmData("item"),
         $wrapper = $li.closest(".ui-listview"),
         $collapsible = $li.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
