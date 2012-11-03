@@ -272,6 +272,7 @@
     $wrapper.iscrollview("refresh");
   });
 
+  /* Map buttons on Todo page collapsible headers */
   $(document).on("vclick", ".todo-map-btn", function(event) {
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
@@ -279,9 +280,10 @@
 
     $.mobile.changePage( "map/index.html",
       {
-        "data": "todo=" + listID,
-        "transition": "fade"
-      } );
+        "data" :       "todo=" + listID,
+        "transition" : "fade"
+      }
+    );
 
   });
 
@@ -517,7 +519,23 @@ var localStore = function() {
       $scrollerContent.empty().append($list);
       $scrollerContent.trigger("create");
       $collapsibleHeadings = $scrollerContent.find(".ui-collapsible");
-      $collapsibleHeadings.append('<span class="todo-map-btn" style="border-top-right-radius:6px;border-bottom-right-radius:6px;background:black;color:white;position:absolute;top:0;right:0;display:block;width:40px;height:40px;">MAP</span>');
+      /* TODO: Move styles to stylesheet */
+      $collapsibleHeadings.append(
+        '<div class="todo-map-btn"\
+             style="border-top-right-radius:6px; border-bottom-right-radius:6px;\
+             display:block; position:absolute; top:0;right:0;\
+             width: 40px;height:40px; background:black;">\
+          \
+            <div \
+            style="background: transparent; color:white;\
+             background-image: url(images/103-map.png);\
+             background-repeat: none;\
+             position:absolute;top:6px;right:6px;display:block;\
+             width:26px;height:21px;"\
+           >\
+           </div>\
+           \
+         </div>');
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
