@@ -361,7 +361,6 @@ $(function() {
     var thisMarker = gmap.get( "markers" );
     $topMarkerNav.height(0).hide().trigger("updatelayout");
     iscrollview.resizeWrapper();
-    //$locationOnBtn.hide();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
     $(".mapsheader h1").text("Directions");
