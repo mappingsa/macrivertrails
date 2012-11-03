@@ -1156,26 +1156,27 @@ margin-left: -45px;
     height: 28px;
   }
 
-.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
-.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
-.map-tab .ui-icon     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
-.todo-tab .ui-icon    { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
+.nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
 .fishing-tab .ui-icon { background-image: url(../images/233-fish.png); background-size: 28px 13px; }
-.ui-icon-zoomin       { background-image: url(../images/267-zoomin.png); background-size: 22px 22px }
-.ui-icon-zoomout      { background-image: url(../images/268-zoomout.png); background-size: 22px 22px;}
+.todo-tab .ui-icon    { background-image: url(../images/117-todo.png); background-size: 18px 19px; }
+.info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
+
+.ui-icon-custom-map     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
+.ui-icon-custom-zoomin  { background-image: url(../images/267-zoomin.png); background-size: 22px 22px }
+.ui-icon-custom-zoomout { background-image: url(../images/268-zoomout.png); background-size: 22px 22px;}
 span.ui-icon.ui-icon-shadow.zoomin { width:22px; height:22px; }
 span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .nearby-tab .ui-icon  { background-image: url(../images/74-location@2x.png); }
-  .info-tab .ui-icon    { background-image: url(../images/42-x-info@2x.png); }
-  .map-tab .ui-icon     { background-image: url(../images/103-map@2x.png); }
   .browse-tab .ui-icon  { background-image: url(../images/12-eye@2x.png); }
-  .todo-tab .ui-icon    { background-image: url(../images/117-todo@2x.png); }
+  .nearby-tab .ui-icon  { background-image: url(../images/74-location@2x.png); }
   .fishing-tab .ui-icon { background-image: url(../images/233-fish@2x.png); }
+  .todo-tab .ui-icon    { background-image: url(../images/117-todo@2x.png); }
+  .info-tab .ui-icon    { background-image: url(../images/42-x-info@2x.png); }
 
+  .ui-icon-custom-map   { background-image: url(../images/103-map@2x.png); }
   .itin-icon            { background-image: url(../images/04-squiggle@2x.png); }
   .ui-icon-zoomin       { background-image: url(../images/267-zoomin@2x.png); }
   .ui-icon-zoomout      { background-image: url(../images/268-zoomout@2x.png); }
@@ -1195,6 +1196,13 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
 .itin-header-title {
   text-align: center;
+}
+
+.todo-page .ui-collapsible-heading .ui-btn {
+  margin-right: 40px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
 }
 
 

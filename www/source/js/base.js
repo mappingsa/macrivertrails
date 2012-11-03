@@ -290,8 +290,11 @@ var localStore = function() {
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',
 
+
+          //<a href="#" data-theme="c" data-role="button" data-inline="true" data-icon="star">Map</a>\
+
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
+        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|" class="ui-ch-has-alt">\
           <h3>|title|</h3>\
           <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
@@ -489,11 +492,18 @@ var localStore = function() {
     buildLists: function() {
       var lists = localStore.getLists(),  // Get the list of lists
           listHTML = "",
+          $list,
+          $collapsibleHeadings,
           $scrollerContent = $(".todo-page .iscroll-content");
       $.each( lists, function(i)  {
         listHTML += localStore.buildList(i);
         });
-      $scrollerContent.empty().append(listHTML).trigger("create");
+
+      $list = $(listHTML);
+      $scrollerContent.empty().append($list).trigger("create");
+      //$collapsibleHeadings = $scrollerContent.find(".ui-collapsible-heading");
+      //$collapsibleHeadings.append('');
+      //$scrollerContent.trigger("create");
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
