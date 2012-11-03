@@ -195,7 +195,7 @@
 
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
-      $favA.addClass("is-fav").find("span").text("REMOVE FAV");
+      $favA.addClass("is-fav").find("span").text("REMOVE FAVOURITE");
       }
     else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
