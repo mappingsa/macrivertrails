@@ -304,7 +304,7 @@ var localStore = function() {
       itemTemplate =
         '<li data-section="|section|" data-item="|item|">\
          <a href="|href|">|title|\
-         <img src="map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
+         <img src="images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
          </a>\
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',

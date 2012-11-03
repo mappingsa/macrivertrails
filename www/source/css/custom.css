@@ -771,7 +771,7 @@ h1.ui-title {
 
 /* Same deal with trail pins on ToDo lists */
 .todo-page .trail-pin {
-  margin-top: -3px;
+  margin-top: 0;
 }
 
 
@@ -1153,7 +1153,7 @@ margin-left: -45px;
 
    This is for the trail pins used in Browse list and ToDo, not on map page */
   .trail-pin {
-    height: 28px;
+    height: 25px;
   }
 
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
