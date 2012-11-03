@@ -158,6 +158,13 @@ $(function() {
         {'group': 'rv', 'icon': rv, 'position': '-32.553644, 148.928628', 'bounds': false,'animation': google.maps.Animation.DROP }
     ],
 
+    defaultLat = -32.249085,    // Dubbo
+    defaultLng = 148.604826,
+    centerLat = defaultLat,
+    centerLng = defaultLng,
+    userLoc = new google.maps.LatLng( centerLat, centerLng ),
+    knownLocation = false,
+
     fullLoad = false,
     loadingSingle = false,
     $page = $( this ),
@@ -176,7 +183,6 @@ $(function() {
     $results = $page.find( ".results" ),
     $topMarkerNav = $page.find(".topMarkerNav"),
     $directions = $(".directions"),
-    userLoc = null,
     $activeGroupButton = null,
     infoBox = null,
     $noLocationPopup = $(".no-location-popup");
@@ -399,34 +405,44 @@ $(function() {
 
     var addMyLocation = function(centerOnMe){
       gmap.getCurrentPosition( function(position, status) {
-        if ( status === "OK" ) {
-          userLoc = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          $from.val(position.coords.latitude + "," + position.coords.longitude);
-          var image = new google.maps.MarkerImage(
-            "./Images/bluedot_retina.png", null, null,
-            new google.maps.Point( 8, 8 ),
-            new google.maps.Size( 17, 17 )
-            );
-          gmap.addMarker( {
-            icon: image,
-            id: "client",
-            position: userLoc,
-            bounds: false,
-            optimized: false,
-            title: "My Location",
-            visible: true,
-            flat: true } );
-          if ( centerOnMe || getUrlVars().location === "me" ) {
-            gmap.option( "center", userLoc );
-            gmap.option( "zoom", 4 );
-            }
-          if (loadingSingle){
-            makePrettyAddress(userLoc, 1);
-            }
-          }
+        if (status === "OK") {
+          centerLat = position.coords.latitude;
+          centerLng = position.coords.longitude;
+          knownLocation = true;
+        }
         else {
+          centerLat = defaultLat;
+          centerLng = defaultLng;
+          knownLocation = false;
           $noLocationPopup.popup("open");
           setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
+        }
+
+        userLoc = new google.maps.LatLng( centerLat, centerLng );
+
+        $from.val(centerLat + "," + centerLng );
+        var image = new google.maps.MarkerImage (
+            "./images/bluedot_retina.png", null, null,
+            new google.maps.Point( 8, 8 ),
+            new google.maps.Size( 17, 17 )
+        );
+
+        gmap.addMarker( {
+          icon: image,
+          id: "client",
+          position: userLoc,
+          bounds: false,
+          optimized: false,
+          title: "My Location",
+          visible: true,
+          flat: true } );
+
+        if ( centerOnMe || getUrlVars().location === "me" ) {
+          gmap.option( "center", userLoc );
+          gmap.option( "zoom", 4 );
+          }
+        if (loadingSingle){
+          makePrettyAddress(userLoc, 1);
           }
       });
     };
