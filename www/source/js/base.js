@@ -249,7 +249,7 @@
         item = $li.data("item"),
         $wrapper = $li.closest(".ui-listview"),
         $collapsible = $li.closest(".ui-collapsible"),
-        listID = $wrapper.data("list-id");
+        listID = $collapsible.jqmData("list-id");
     event.preventDefault();
     $li.remove();
     localStore.removeFromList( listID, section, item );
@@ -291,9 +291,9 @@ var localStore = function() {
          </li>',
 
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="false">\
+        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
           <h3>|title|</h3>\
-          <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
+          <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
 
       itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
