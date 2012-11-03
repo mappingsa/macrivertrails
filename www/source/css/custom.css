@@ -1202,7 +1202,12 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
   margin-right: 40px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-
 }
+
+.todo-page .ui-collapsible-heading {
+  background-color: black;
+  border-radius: 6px;
+}
+
 
 
