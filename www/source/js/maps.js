@@ -185,6 +185,13 @@ $(function() {
     $directions = $(".directions"),
     $activeGroupButton = null,
     infoBox = null,
+    urlVars,
+    selGroup,
+    selItem,
+    selLocation,
+    selLocationMe,
+    selTodo,
+
     $noLocationPopup = $(".no-location-popup");
 
     $canvas.gmap( { callback: function() {
@@ -211,12 +218,12 @@ $(function() {
     //----------------------------------------------------------------v
     $page.on("pagebeforeshow", function( event ) {
       // attempt to get specifc marker data from item  page
-      var urlVars = getUrlVars(),
-          selGroup = urlVars["section"] || "" ,
-          selItem = urlVars["item"] || "",
-          selLocation = urlVars["location"] || "",
-          selLocationMe = selLocation === "me",
-          selTodo = urlVars["todo"];    // This one only, undefined if not present
+      urlVars = getUrlVars();
+      selGroup = urlVars["section"] || "";
+      selItem = urlVars["item"] || "";
+      selLocation = urlVars["location"] || "";
+      selLocationMe = selLocation === "me";
+      selTodo = urlVars["todo"];    // This one only, undefined if not present
 
       if (selTodo) {
         selTodo = parseInt(selTodo);  // Default to 0 (Favourites) if not an integer
@@ -227,9 +234,11 @@ $(function() {
 
       if ( selItem.length && selGroup.length ){
         loadingSingle = true;
+        selTodo = undefined;
         }
       else if (selGroup.length) {
         selItem = "";
+        selTodo = undefined;
         }
       else if (selTodo !== undefined) {
 
@@ -436,7 +445,7 @@ $(function() {
           visible: true,
           flat: true } );
 
-        if ( centerOnMe || getUrlVars().location === "me" ) {
+        if ( centerOnMe || selLocationMe || selToDo ) {
           gmap.option( "center", userLoc );
           gmap.option( "zoom", 4 );
           }
