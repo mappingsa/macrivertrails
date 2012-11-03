@@ -290,11 +290,8 @@ var localStore = function() {
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',
 
-
-          //<a href="#" data-theme="c" data-role="button" data-inline="true" data-icon="star">Map</a>\
-
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|" class="ui-ch-has-alt">\
+        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
           <h3>|title|</h3>\
           <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
@@ -500,10 +497,10 @@ var localStore = function() {
         });
 
       $list = $(listHTML);
-      $scrollerContent.empty().append($list).trigger("create");
-      //$collapsibleHeadings = $scrollerContent.find(".ui-collapsible-heading");
-      //$collapsibleHeadings.append('');
-      //$scrollerContent.trigger("create");
+      $scrollerContent.empty().append($list);
+      $scrollerContent.trigger("create");
+      $collapsibleHeadings = $scrollerContent.find(".ui-collapsible-heading");
+      $collapsibleHeadings.append('<span style="border-top-right-radius:6px;border-bottom-right-radius:6px;background:black;color:white;position:absolute;top:0;right:0;display:block;width:40px;height:40px;">MAP</span>');
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
