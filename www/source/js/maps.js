@@ -445,13 +445,14 @@ $(function() {
           visible: true,
           flat: true } );
 
-        if ( centerOnMe || selLocationMe || selToDo ) {
-          gmap.option( "center", userLoc );
-          gmap.option( "zoom", 4 );
-          }
         if (loadingSingle){
           makePrettyAddress(userLoc, 1);
           }
+        else {
+          gmap.option( "center", userLoc ); }
+
+        gmap.option( "zoom", 6 );
+
       });
     };
 
