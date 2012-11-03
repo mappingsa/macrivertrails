@@ -1,5 +1,8 @@
 $(function() {
-  var cycle = new google.maps.MarkerImage('images/Cycle-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
+
+  $(document).on( "pageinit", ".map-page", function() {
+
+ var cycle = new google.maps.MarkerImage('images/Cycle-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
   var heritage = new google.maps.MarkerImage('images/Heritage-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
   var nature = new google.maps.MarkerImage('images/Nature-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
   var produce = new google.maps.MarkerImage('images/Produce-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10));
@@ -133,7 +136,6 @@ $(function() {
      {'group': 'fishing', 'icon': fishing, 'item': 'quinines', 'position': '-31.655992, 147.792636', 'title': 'Quinines Reserve, Warren', 'text': 'Quinines Reserve, Warren' ,'bounds': false,'animation': google.maps.Animation.DROP },
    ];
 
-  $(document).on( "pageinit", ".map-page", function() {
     var fullLoad = false,
         loadingSingle = false,
         $page = $( this ),

@@ -362,30 +362,6 @@ a.menuBtn:hover{
   border:none !important;
 }
 
-.fav-icon {
-  width: 20px;
-  height: 20px;
-  float: left;
-  background-image: url('../images/icon_favorities_add.png');
-  background-size: 100% auto;
-}
-
-.menu .toggle-fav.is-fav .fav-icon {
-  background-image: url('../images/icon_favorities.png');
-}
-
-.itin-icon {
-  width: 33px;
-  height: 16px;
-  float: left;
-  background-image: url('../images/04-squiggle.png');
-  background-size: 100% auto;
-}
-
-.menu .itin-btn.is-itin .fav-icon {
-  background-image: url('../images/04-squiggle.png');
-}
-
 /* =============================================================================
    Interior Banner Styles
    ========================================================================== */
@@ -1154,7 +1130,33 @@ margin-left: -45px;
    This is for the trail pins used in Browse list and ToDo, not on map page */
   .trail-pin {
     height: 25px;
+    width: 18px;
   }
+
+  .fav-icon {
+  width: 20px;
+  height: 20px;
+  float: left;
+  background-image: url('../images/icon_favorities_add.png');
+  background-size: 100% auto;
+}
+
+.menu .toggle-fav.is-fav .fav-icon {
+  background-image: url('../images/icon_favorities.png');
+}
+
+
+.itin-icon {
+  width: 33px;
+  height: 16px;
+  float: left;
+  background-image: url('../images/04-squiggle.png');
+  background-size: 100% auto;
+}
+
+.menu .itin-btn.is-itin .fav-icon {
+  background-image: url('../images/04-squiggle.png');
+}
 
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
 .nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
@@ -1163,10 +1165,19 @@ margin-left: -45px;
 .info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
 
 .ui-icon-custom-map     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
-.ui-icon-custom-zoomin  { background-image: url(../images/267-zoomin.png); background-size: 22px 22px }
-.ui-icon-custom-zoomout { background-image: url(../images/268-zoomout.png); background-size: 22px 22px;}
+.ui-icon-custom-zoomin  { background-image: url(../images/267-zoomin.png); background-size: 22px 22px; }
+.ui-icon-custom-zoomout { background-image: url(../images/268-zoomout.png); background-size: 22px 22px; }
 span.ui-icon.ui-icon-shadow.zoomin { width:22px; height:22px; }
 span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
+
+.ui-icon-custom-pin-all       {background-image: url(../images/All-pin.png);       background-size: 25px 18px; }
+.ui-icon-custom-pin-river     {background-image: url(../images/River-pin.png);     background-size: 25px 18px; }
+.ui-icon-custom-pin-heritage  {background-image: url(../images/Heritage-pin.png);  background-size: 25px 18px; }
+.ui-icon-custom-pin-nature    {background-image: url(../images/Nature-pin.png);    background-size: 25px 18px; }
+.ui-icon-custom-pin-produce   {background-image: url(../images/Produce-pin.png);   background-size: 25px 18px; }
+.ui-icon-custom-pin-cycle     {background-image: url(../images/Cycle-pin.png);     background-size: 25px 18px; }
+.ui-icon-custom-pin-riverbedz {background-image: url(../images/Riverbedz-pin.png); background-size: 25px 18px; }
+.ui-icon-custom-pin-fishing   {background-image: url(../images/Fishing-pin.png);   background-size: 25px 18px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1180,7 +1191,28 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
   .itin-icon            { background-image: url(../images/04-squiggle@2x.png); }
   .ui-icon-zoomin       { background-image: url(../images/267-zoomin@2x.png); }
   .ui-icon-zoomout      { background-image: url(../images/268-zoomout@2x.png); }
+
+.ui-icon-custom-pin-all       {background-image: url(../images/All-pin@2x.png); }
+.ui-icon-custom-pin-river     {background-image: url(../images/River-pin@2x.png); }
+.ui-icon-custom-pin-heritage  {background-image: url(../images/Heritage-pin@2x.png); }
+.ui-icon-custom-pin-nature    {background-image: url(../images/Nature-pin@2x.png); }
+.ui-icon-custom-pin-produce   {background-image: url(../images/Produce-pin@2x.png); }
+.ui-icon-custom-pin-cycle     {background-image: url(../images/Cycle-pin@2x.png); }
+.ui-icon-custom-pin-riverbedz {background-image: url(../images/Riverbedz-pin@2x.png); }
+.ui-icon-custom-pin-fishing   {background-image: url(../images/Fishing-pin@2x.png); }
 }
+
+.place-menu-icon {
+  float: left;
+  background-size: 100% auto;
+}
+
+/*
+.place-menu-icon-pin {
+  width: 18px
+  height: 25px;
+}
+*/
 
 .new-itin-submit {
 

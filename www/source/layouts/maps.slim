@@ -1,7 +1,7 @@
 = partial :head
 body
   = blank_line
-  @page.type_interior.map-page
+  @page.map-page
     = partial :map_header
     = partial :map_tabbar
     @content data-iscroll="true"
