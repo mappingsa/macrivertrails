@@ -130,7 +130,11 @@
       var $li = $(this),
       section = $li.jqmData("section");
       event.preventDefault();
-      $.mobile.changePage("map/index.html?section=" + section );
+      $.mobile.changePage("map/index.html",
+        {
+          "data": "section=" + section,
+          "transition": "fade"
+        } );
     });
 
     $('.homeImageSlider').flexslider({
@@ -272,8 +276,13 @@
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-    //$.mobile.changePage( "index.html" );
-    alert("map");
+
+    $.mobile.changePage( "map/index.html",
+      {
+        "data": "todo=" + listID,
+        "transition": "fade"
+      } );
+
   });
 
   }(jQuery));
