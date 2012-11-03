@@ -1113,9 +1113,7 @@ margin-left: -45px;
   z-index: 2;
   }
 
-#no-location-popup {
-  color: red;
-  background: yellow;
+.no-location-popup {
   font-weight: bold;
   }
 
