@@ -268,6 +268,14 @@
     $wrapper.iscrollview("refresh");
   });
 
+  $(document).on("vclick", ".todo-map-btn", function(event) {
+    var $span = $(this),
+        $collapsible = $span.closest(".ui-collapsible"),
+        listID = $collapsible.jqmData("list-id");
+    //$.mobile.changePage( "index.html" );
+    alert("map");
+  });
+
   }(jQuery));
 
 var localStore = function() {
@@ -499,8 +507,8 @@ var localStore = function() {
       $list = $(listHTML);
       $scrollerContent.empty().append($list);
       $scrollerContent.trigger("create");
-      $collapsibleHeadings = $scrollerContent.find(".ui-collapsible-heading");
-      $collapsibleHeadings.append('<span style="border-top-right-radius:6px;border-bottom-right-radius:6px;background:black;color:white;position:absolute;top:0;right:0;display:block;width:40px;height:40px;">MAP</span>');
+      $collapsibleHeadings = $scrollerContent.find(".ui-collapsible");
+      $collapsibleHeadings.append('<span class="todo-map-btn" style="border-top-right-radius:6px;border-bottom-right-radius:6px;background:black;color:white;position:absolute;top:0;right:0;display:block;width:40px;height:40px;">MAP</span>');
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
