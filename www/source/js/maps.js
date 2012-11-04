@@ -290,7 +290,7 @@ $(function() {
              $to.attr("value",  marker.position);
              $toPretty.attr("value", marker.title);
            }
-           //------------------------------------------v
+
            gmap.addMarker( {
                position: marker.position,
                bounds: true,
@@ -298,15 +298,8 @@ $(function() {
                group: marker.group,
                mTitle: marker.title,
                mLink: markerLink(marker),
-               } )
-             .click(function() {
-               openInfoWindow(marker, this);
-               if (loadingSingle){
-                 $to.attr("value",  marker.position);
-                 $toPretty.attr("value", marker.title);
-                 }
-             });
-           //-------- addMarker ------------------------^
+               } ).click(function() { openInfoWindow(marker, this); });
+
           }
       });
       //--------------- each  --------------------------------^
@@ -352,13 +345,7 @@ $(function() {
             group: marker.group,
             mTitle: marker.title,
             mLink: markerLink(marker),
-            }).click(function() {
-              openInfoWindow(marker, this);
-              if (loadingSingle){
-                $to.attr("value",  marker.position);
-                $toPretty.attr("value", marker.title);
-                }
-              });
+            }).click(function() {openInfoWindow(marker, this); });
           }
         });
       addMyLocation(false);
@@ -381,6 +368,12 @@ $(function() {
     closeInfoWindow();
     infoBox = new InfoBox(options);
     infoBox.open(gmap.get('map'), markerElement);
+    if ( (!loadingSingle) && knownLocation ) {
+      gmap.option( "center", userLoc );
+      $to.attr("value",  marker.position);
+      $toPretty.attr("value", marker.title);
+      $directionsFields.show();
+      }
   };
 
   var resetMapForSingle = function(){
@@ -432,19 +425,16 @@ $(function() {
           centerLng = position.coords.longitude;
           knownLocation = true;
           $markerListNote.text( markerListNoteLocationKnown );
-
+          $from.val(centerLat + "," + centerLng );   // Set from field for directions
+          makePrettyAddress(userLoc, 1);
           if (loadingSingle) {
-            $from.val(centerLat + "," + centerLng );   // Set from field for directions
-            makePrettyAddress(userLoc, 1);
             $directionsFields.show();
-          }
-
+            }
           var image = new google.maps.MarkerImage (
             "./images/bluedot_retina.png", null, null,
             new google.maps.Point( 8, 8 ),
             new google.maps.Size( 17, 17 )
             );
-
           gmap.addMarker( {
             icon: image,
             id: "client",
