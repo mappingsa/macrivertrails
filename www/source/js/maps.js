@@ -215,7 +215,7 @@ $(function() {
     });
 
     //---------------------------------------------  v
-    $page.on("resize", function( event ) {
+    $page.on("pageshow resize", function( event ) {
       gmap.refresh();
       iscrollview.refresh();
       });
