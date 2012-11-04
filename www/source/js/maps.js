@@ -192,7 +192,14 @@ $(function() {
     selLocationMe,
     selTodo,
 
-    $noLocationPopup = $(".no-location-popup");
+    $noLocationPopup = $(".no-location-popup"),
+
+    markerListItemTemplate =
+      '<li class="big-arrow" data-icon="false">' +
+        '<a href="|link|">|itemtitle||distance|' +
+          '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+        '</a>' +
+      '</li>';
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -468,13 +475,12 @@ $(function() {
     var buildMarkerULList = function( item, link, position, group ) {
 
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
-          base =
-            '<li class="big-arrow" data-icon="false">' +
-              '<a href="|link|">|itemtitle||distance|' +
-                '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
-              '</a>' +
-            '</li>',
-           groupUC = group.charAt().toUpperCase() + group.slice(1);
+          base = markerListItemTemplate,
+          groupUC = group.charAt().toUpperCase() + group.slice(1);
+
+      if (group === "rv" || group === "boatramp" || group === "info" ) {
+        return;
+        }
 
       base = base.replace( "|pin|", groupUC);
       base = base.replace( "|alt|", groupUC);
