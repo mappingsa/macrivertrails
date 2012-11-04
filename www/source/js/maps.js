@@ -368,9 +368,6 @@ $(function() {
 
   var showMarkerList = function(){
     var myMarkers = null;
-    if (fullLoad){
-      return false;
-      }
     markerListULReset();
     myMarkers = gmap.get( "markers" );
     $.each( myMarkers, function(i, tmarker) {
