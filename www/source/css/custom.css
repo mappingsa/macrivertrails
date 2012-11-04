@@ -58,6 +58,14 @@
   width: 100%;
 }
 
+/* Remove excessive padding from inset list pages */
+.map-page .iscroll-content,
+.todo-page .iscroll-content,
+.trail-page .iscroll-content {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
 /* Theme overrides. */
 /* =============================================================================
    UI Bars (add to a div surrounding content, like a callout box)
@@ -936,6 +944,15 @@ div.map {
   padding-right: 0;
 }
 
+.map-wrapper {
+  padding: 2px;
+  margin-top: 10px;
+}
+
+.map-canvas {
+  height: 240px !important;
+  width: 100% !important;
+}
 
 /* =============================================================================
    Twitter Feed

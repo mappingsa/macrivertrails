@@ -168,7 +168,7 @@ $(function() {
     fullLoad = false,
     loadingSingle = false,
     $page = $( this ),
-    $canvas = $page.find( ".map_canvas" ),
+    $canvas = $page.find( ".map-canvas" ),
     gmap = null,
     iscrollview = $page.find( ".iscroll-wrapper" ).data( "iscrollview" ),
     $to = $page.find( ".to" ),
@@ -204,7 +204,7 @@ $(function() {
 
       markerListNoteLocationKnown = "Distance displayed in list is based on a straight path from your location.",
       markerListNoteLocationUnknown =
-        "Distance is not shown because your current location is not known. " +
+        "Distances are not shown because your current location is not known. " +
         "This might be because a position could not be determined at this time from GPS or other sources, " +
         "because your computer or device lacks geolocation services, or because you have not " +
         "enabled geolocation services."

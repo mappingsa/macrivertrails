@@ -2,7 +2,7 @@
 = partial :head
 body
   = blank_line
-  @page class="#{current_page.data.section}" data-dom-cache="true"
+  @page.trail-page class="#{current_page.data.section}" data-dom-cache="true"
     = partial :trail_header
     @content data-iscroll="true"
       = blank_line
