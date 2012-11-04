@@ -203,7 +203,11 @@ $(function() {
       '</li>',
 
       markerListNoteLocationKnown = "Distance displayed in list is based on a straight path from your location.",
-      markerListNoteLocationUnknown = "Distance is not shown because your current location is unknown. Please enable/permit geolocation services (if available) to show distances."
+      markerListNoteLocationUnknown =
+        "Distance is not shown because your current location is not known. " +
+        "This might be because a position could not be determined at this time from GPS or other sources, " +
+        "because your computer or device lacks geolocation services, or because you have not " +
+        "enabled geolocation services."
 
     $canvas.gmap( { callback: function() {
       gmap = this;
