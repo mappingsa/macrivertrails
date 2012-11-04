@@ -176,7 +176,7 @@ $(function() {
     $from = $page.find( ".from" ),
     $fromPretty = $page.find( ".fromPretty" ),
     $directionsFields = $page.find( ".directionsFields" ),
-    $markerList = $page.find( ".markerList"),
+    $markerList = $page.find( ".marker-list"),
     markerListview = $markerList.data( "listview" ),
     $markerListNote = $page.find( ".markerListNote" ),
     $submitDirections = $page.find( ".submitDirections" ),
