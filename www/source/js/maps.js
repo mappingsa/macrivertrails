@@ -371,7 +371,7 @@ $(function() {
     markerListULReset();
     myMarkers = gmap.get( "markers" );
     $.each( myMarkers, function(i, tmarker) {
-        buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position);
+        buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position, tmarker.group);
       });
 
       // sort list by nearest and apply jQuery Mobile UI
@@ -465,10 +465,22 @@ $(function() {
       return false;
     });
 
-    var buildMarkerULList = function( item, link, position ) {
+    var buildMarkerULList = function( item, link, position, group ) {
+
       var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
-          base = '<li class="big-arrow" data-icon="false"><a href="|link|">|itemtitle||distance|</a></li>';
+          base =
+            '<li class="big-arrow" data-icon="false">' +
+              '<a href="|link|">|itemtitle||distance|' +
+                '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+              '</a>' +
+            '</li>',
+           groupUC = group.charAt().toUpperCase() + group.slice(1);
+
+      base = base.replace( "|pin|", groupUC);
+      base = base.replace( "|alt|", groupUC);
+
       endRes = Math.round( endRes*10 ) / 10;
+
       if ( link != "" ){
         base = base.replace( "|link|", link);
         }
