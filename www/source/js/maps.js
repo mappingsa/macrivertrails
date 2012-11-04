@@ -474,7 +474,7 @@ $(function() {
 
     var buildMarkerULList = function( item, link, position, group ) {
 
-      var endRes = userLoc ? getMarkerDistance( position.Xa, position.Ya, userLoc.Xa, userLoc.Ya ) : null,
+      var endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : null,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
 
