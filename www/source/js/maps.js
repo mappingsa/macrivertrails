@@ -182,7 +182,8 @@ $(function() {
     $submitDirections = $page.find( ".submitDirections" ),
     $results = $page.find( ".results" ),
     $topMarkerNav = $page.find(".topMarkerNav"),
-    $directions = $(".directions"),
+    $directions = $page.find(".directions"),
+    $headerTitle = $page.find(".mapsheader h1"),
     $activeGroupButton = null,
     infoBox = null,
     urlVars,
@@ -239,7 +240,9 @@ $(function() {
         selTodo = undefined;
         }
       else if (selTodo !== undefined) {
-
+        var lists = localStore.getLists(),
+            title = lists[selTodo].title;
+        $headerTitle.text(title);
         }
       else {
         fullLoad = true;
@@ -370,7 +373,7 @@ $(function() {
     iscrollview.resizeWrapper();
     gmap.option( "zoom", 14 );
     $directionsFields.show();
-    $(".mapsheader h1").text("Directions");
+    $headerTitle.text("Directions");
     };
 
   var showMarkerList = function(){
