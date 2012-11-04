@@ -1040,11 +1040,11 @@ ul.tweetList{
 }
 
 .mainlogo {
-    width:231px;
-    height:40px;
+    width:285px;
+    height:60px;
     background:url('../images/header.png') top center no-repeat;
     margin:0 auto;
-    background-size: 185px 40px;
+    background-size: 280px 55px;
 }
 
 .rtheader {
