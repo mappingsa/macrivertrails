@@ -197,7 +197,7 @@ $(function() {
 
     markerListItemTemplate =
       '<li class="big-arrow" data-icon="false">' +
-        '<a href="|link|">|itemtitle||distance|' +
+        '<a href="|link|">|title||distance|' +
           '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
         '</a>' +
       '</li>',
@@ -383,19 +383,24 @@ $(function() {
     };
 
   var showMarkerList = function(){
-    var myMarkers = null;
-    markerListULReset();
-    myMarkers = gmap.get( "markers" );
+    var myMarkers = gmap.get( "markers" ),
+        list = "",
+        $list,
+        $markerListItems;
+
     $.each( myMarkers, function(i, tmarker) {
-        buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position, tmarker.group);
+        list += buildMarkerListItem( tmarker );
       });
 
-      // sort list by nearest and apply jQuery Mobile UI
-      var $markerListItems = $markerList.find("li");
-      $markerListItems.tsort("span.ml-sort");
-      markerListview.refresh();
-      $markerListNote.show();
+    $list = $(list);
 
+    // sort list by nearest and apply jQuery Mobile UI
+    $markerListItems = $list.find("li");
+    $markerListItems.tsort("span.ml-sort");
+
+    $markerList.empty().append($list);
+    markerListview.refresh();
+    $markerListNote.show();
     };
 
     var makePrettyAddress = function(loc, type) {
@@ -484,36 +489,31 @@ $(function() {
       return false;
     });
 
-    var buildMarkerULList = function( item, link, position, group ) {
-
-      var endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : null,
+    // Builds a single markerlist item, returns it
+    var buildMarkerListItem = function(marker) {
+      var position = marker.position,
+          title = marker.mTitle,
+          group = marker.group,
+          link = marker.mLink,
+          endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
-
       if (group === "rv" || group === "boatramp" || group === "info" ) {
-        return;
+        return "";
         }
-
-      base = base.replace( "|pin|", groupUC);
-      base = base.replace( "|alt|", groupUC);
-
       endRes = Math.round( endRes*10 ) / 10;
-
-      if ( link != "" ){
-        base = base.replace( "|link|", link);
-        }
-      else {
-        base = base.replace( "|link|", "#" );
-        }
+      base = base.replace( "|pin|", groupUC);
+      base = base.replace( "|alt|", groupUC );
+      base = base.replace( "|link|", link.length ? link : "#" );
       if (knownLocation) {
-        base = base.replace( "|itemtitle|", item);
-        base = base.replace("|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
+        base = base.replace( "|title|", title);
+        base = base.replace( "|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
         }
       else {
-        base = base.replace( "|itemtitle|", '<span class="ml-sort">' + item + "</span>" );
-        base = base.replace("|distance|", "");
+        base = base.replace( "|title|", '<span class="ml-sort">' + title + "</span>" );
+        base = base.replace( "|distance|", "" );
         }
-      $markerList.append(base);
+      return base;
       };
 
     var markerListULReset = function() {
