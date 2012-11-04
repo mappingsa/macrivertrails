@@ -27,7 +27,7 @@
       openMenu = function(fadeTime) {
         $menu.css("opacity", "0");
         $menu.animate(
-          { opacity: "0.85" },
+          { opacity: "1.0" },
           fadeTime === undefined ? 400 : fadeTime,
           "linear"
           );
@@ -60,9 +60,9 @@
       var $a = $(this),
           $img = $a.find("img"),
           $menu = $page.find(".menu"),
-          section = $page.data("section"),
-          item = $page.data("item"),
-          title = $page.data("title");
+          section = $page.jqmData("section"),
+          item = $page.jqmData("item"),
+          title = $page.jqmData("title");
       event.preventDefault();
       if ( $a.hasClass("is-fav") ) {
         localStore.removeFavourite(section, item);
@@ -79,9 +79,9 @@
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
         //$popup = $page.find(".itin-popup"),
-        section = $page.data("section"),
-        item = $page.data("item"),
-        title = $page.data("title");
+        section = $page.jqmData("section"),
+        item = $page.jqmData("item"),
+        title = $page.jqmData("title");
     event.preventDefault();
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
@@ -111,9 +111,9 @@
     // Add to New Itinerary button on Add Itinerary popup
     $page.find(".new-itin-submit-btn").on("vclick", function(event) {
       var $a = $(this),
-          section = $page.data("section"),
-          item = $page.data("item"),
-          title = $page.data("title"),
+          section = $page.jqmData("section"),
+          item = $page.jqmData("item"),
+          title = $page.jqmData("title"),
           $form = $a.closest("form"),
           $textInput = $form.find("input"),
           val = $textInput.val(),
@@ -130,7 +130,11 @@
       var $li = $(this),
       section = $li.jqmData("section");
       event.preventDefault();
-      $.mobile.changePage("map/index.html?section=" + section );
+      $.mobile.changePage("map/index.html",
+        {
+          "data": "section=" + section,
+          "transition": "fade"
+        } );
     });
 
     $('.homeImageSlider').flexslider({
@@ -187,15 +191,15 @@
         $menu = $page.find(".menu"),
         $favA = $menu.find(".toggle-fav"),
         $itinA = $menu.find(".itin-btn"),
-        section = $page.data("section"),
-        item = $page.data("item"),
+        section = $page.jqmData("section"),
+        item = $page.jqmData("item"),
         $addItinList = $page.find(".itin-list"),
         $itinList = $page.find(".itin-list"),
         $newItinItem = $itinList.find(".li-new-itin");
 
     // Update menu to reflect favourite status of item
     if ( localStore.isFavourite(section, item) ) {
-      $favA.addClass("is-fav").find("span").text("REMOVE FAV");
+      $favA.addClass("is-fav").find("span").text("REMOVE FAVOURITE");
       }
     else {
       $favA.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
@@ -245,11 +249,11 @@
   $(document).on("vclick", ".btn-remove-todo", function(event) {
     var $a = $(this),
         $li = $a.closest("li"),
-        section = $li.data("section"),
-        item = $li.data("item"),
+        section = $li.jqmData("section"),
+        item = $li.jqmData("item"),
         $wrapper = $li.closest(".ui-listview"),
         $collapsible = $li.closest(".ui-collapsible"),
-        listID = $wrapper.data("list-id");
+        listID = $collapsible.jqmData("list-id");
     event.preventDefault();
     $li.remove();
     localStore.removeFromList( listID, section, item );
@@ -266,6 +270,21 @@
         }
       }
     $wrapper.iscrollview("refresh");
+  });
+
+  /* Map buttons on Todo page collapsible headers */
+  $(document).on("vclick", ".todo-map-btn", function(event) {
+    var $span = $(this),
+        $collapsible = $span.closest(".ui-collapsible"),
+        listID = $collapsible.jqmData("list-id");
+
+    $.mobile.changePage( "map/index.html",
+      {
+        "data" :       "todo=" + listID,
+        "transition" : "fade"
+      }
+    );
+
   });
 
   }(jQuery));
@@ -285,15 +304,15 @@ var localStore = function() {
       itemTemplate =
         '<li data-section="|section|" data-item="|item|">\
          <a href="|href|">|title|\
-         <img src="map/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
+         <img src="images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
          </a>\
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',
 
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="false">\
+        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
           <h3>|title|</h3>\
-          <ul data-role="listview" data-split-icon="delete" data-list-id="|id|">|list|</ul>\
+          <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
 
       itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
@@ -489,11 +508,34 @@ var localStore = function() {
     buildLists: function() {
       var lists = localStore.getLists(),  // Get the list of lists
           listHTML = "",
+          $list,
+          $collapsibleHeadings,
           $scrollerContent = $(".todo-page .iscroll-content");
       $.each( lists, function(i)  {
         listHTML += localStore.buildList(i);
         });
-      $scrollerContent.empty().append(listHTML).trigger("create");
+
+      $list = $(listHTML);
+      $scrollerContent.empty().append($list);
+      $scrollerContent.trigger("create");
+      $collapsibleHeadings = $scrollerContent.find(".ui-collapsible");
+      /* TODO: Move styles to stylesheet */
+      $collapsibleHeadings.append(
+        '<div class="todo-map-btn"\
+             style="border-top-right-radius:6px; border-bottom-right-radius:6px;\
+             display:block; position:absolute; top:0;right:0;\
+             width: 40px;height:40px; background:black;">\
+          \
+            <div \
+            style="background: transparent; color:white;\
+             background-image: url(images/103-map.png);\
+             background-repeat: none;\
+             position:absolute;top:6px;right:6px;display:block;\
+             width:26px;height:21px;"\
+           >\
+           </div>\
+           \
+         </div>');
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
