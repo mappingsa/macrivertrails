@@ -196,15 +196,6 @@ $(function() {
 
     $canvas.gmap( { callback: function() {
       gmap = this;
-
-      google.maps.event.addListener(gmap, "zoom_changed", function() {
-        showMarkerList();
-        });
-
-      google.maps.event.addListener(gmap, "center_changed", function() {
-        showMarkerList();
-        });
-
       }
     });
 
