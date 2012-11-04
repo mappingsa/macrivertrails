@@ -388,7 +388,6 @@ $(function() {
     $topMarkerNav.height(0).hide().trigger("updatelayout");
     iscrollview.resizeWrapper();
     gmap.option( "zoom", 14 );
-    $directionsFields.show();
     $headerTitle.text("Directions");
     };
 
@@ -433,7 +432,12 @@ $(function() {
           centerLng = position.coords.longitude;
           knownLocation = true;
           $markerListNote.text( markerListNoteLocationKnown );
-          $from.val(centerLat + "," + centerLng );   // Set from field for directions
+
+          if (loadingSingle) {
+            $from.val(centerLat + "," + centerLng );   // Set from field for directions
+            makePrettyAddress(userLoc, 1);
+            $directionsFields.show();
+          }
 
           var image = new google.maps.MarkerImage (
             "./images/bluedot_retina.png", null, null,
@@ -466,16 +470,9 @@ $(function() {
           }
 
         userLoc = new google.maps.LatLng( centerLat, centerLng );
-
-        if (loadingSingle && knownLocation){
-          makePrettyAddress(userLoc, 1);
-          }
-
         showMarkerList();
-
         gmap.option( "center", userLoc );
         gmap.option( "zoom", 6 );
-
       });
     };
 
