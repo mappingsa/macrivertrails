@@ -200,7 +200,10 @@ $(function() {
         '<a href="|link|">|itemtitle||distance|' +
           '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
         '</a>' +
-      '</li>';
+      '</li>',
+
+      markerListNoteLocationKnown = "Distance displayed in list is based on a straight path from your location.",
+      markerListNoteLocationUnknown = "Distance is not shown because your current location is unknown. Please enable/permit geolocation services (if available) to show distances."
 
     $canvas.gmap( { callback: function() {
       gmap = this;
@@ -413,7 +416,7 @@ $(function() {
           centerLat = position.coords.latitude;
           centerLng = position.coords.longitude;
           knownLocation = true;
-
+          $markerListNote.text( markerListNoteLocationKnown );
           $from.val(centerLat + "," + centerLng );   // Set from field for directions
 
           var image = new google.maps.MarkerImage (
@@ -438,6 +441,7 @@ $(function() {
           centerLat = defaultLat;
           centerLng = defaultLng;
           knownLocation = false;
+          $markerListNote.text( markerListNoteLocationUnknown );
 
           $from.val("");    // Clear from field for directions
 
