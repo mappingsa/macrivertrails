@@ -307,8 +307,6 @@ $(function() {
 
     addMyLocation(false);
 
-    showMarkerList();
-
     gmap.refresh();
 
     iscrollview.refresh();
@@ -354,7 +352,6 @@ $(function() {
           }
         });
       addMyLocation(false);
-      showMarkerList();
     });
 
   var closeInfoWindow = function() {
@@ -459,6 +456,8 @@ $(function() {
           makePrettyAddress(userLoc, 1);
           }
 
+        showMarkerList();
+
         gmap.option( "center", userLoc );
         gmap.option( "zoom", 6 );
 
@@ -506,7 +505,7 @@ $(function() {
       else {
         base = base.replace( "|link|", "#" );
         }
-      if (endRes) {
+      if (knownLocation) {
         base = base.replace( "|itemtitle|", item);
         base = base.replace("|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
         }
