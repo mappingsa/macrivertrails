@@ -367,27 +367,22 @@ $(function() {
     };
 
   var showMarkerList = function(){
-    var itemInView = false,
-        myMarkers = null;
+    var myMarkers = null;
     if (fullLoad){
       return false;
       }
     markerListULReset();
     myMarkers = gmap.get( "markers" );
     $.each( myMarkers, function(i, tmarker) {
-      var isInViewport = gmap.inViewport( tmarker );
-      if (isInViewport) {
         buildMarkerULList(tmarker.mTitle, tmarker.mLink, tmarker.position);
-        itemInView = true;
-        }
       });
-    if (itemInView){
+
       // sort list by nearest and apply jQuery Mobile UI
       var $markerListItems = $markerList.find("li");
       $markerListItems.tsort("span.ml-sort");
       markerListview.refresh();
       $markerListNote.show();
-      }
+
     };
 
     var makePrettyAddress = function(loc, type) {
