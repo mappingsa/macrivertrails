@@ -413,44 +413,50 @@ $(function() {
 
     var addMyLocation = function(centerOnMe){
       gmap.getCurrentPosition( function(position, status) {
+
         if (status === "OK") {
           centerLat = position.coords.latitude;
           centerLng = position.coords.longitude;
           knownLocation = true;
-        }
+
+          $from.val(centerLat + "," + centerLng );   // Set from field for directions
+
+          var image = new google.maps.MarkerImage (
+            "./images/bluedot_retina.png", null, null,
+            new google.maps.Point( 8, 8 ),
+            new google.maps.Size( 17, 17 )
+            );
+
+          gmap.addMarker( {
+            icon: image,
+            id: "client",
+            position: userLoc,
+            bounds: false,
+            optimized: false,
+            title: "My Location",
+            visible: true,
+            flat: true
+            } );
+            }
+
         else {
           centerLat = defaultLat;
           centerLng = defaultLng;
           knownLocation = false;
+
+          $from.val("");    // Clear from field for directions
+
           $noLocationPopup.popup("open");
           setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
-        }
+          }
 
         userLoc = new google.maps.LatLng( centerLat, centerLng );
 
-        $from.val(centerLat + "," + centerLng );
-        var image = new google.maps.MarkerImage (
-            "./images/bluedot_retina.png", null, null,
-            new google.maps.Point( 8, 8 ),
-            new google.maps.Size( 17, 17 )
-        );
-
-        gmap.addMarker( {
-          icon: image,
-          id: "client",
-          position: userLoc,
-          bounds: false,
-          optimized: false,
-          title: "My Location",
-          visible: true,
-          flat: true } );
-
-        if (loadingSingle){
+        if (loadingSingle && knownLocation){
           makePrettyAddress(userLoc, 1);
           }
-        else {
-          gmap.option( "center", userLoc ); }
 
+        gmap.option( "center", userLoc );
         gmap.option( "zoom", 6 );
 
       });
