@@ -243,6 +243,8 @@ $(function() {
         var lists = localStore.getLists(),
             title = lists[selTodo].title;
         $headerTitle.text(title);
+        $topMarkerNav.height(0).hide().trigger("updatelayout");
+        iscrollview.resizeWrapper();
         }
       else {
         fullLoad = true;
