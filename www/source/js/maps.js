@@ -462,7 +462,7 @@ $(function() {
         userLoc = new google.maps.LatLng( centerLat, centerLng );
         showMarkerList();
         gmap.option( "center", userLoc );
-        gmap.option( "zoom", 6 );
+        gmap.option( "zoom", 4 );
       });
     };
 
