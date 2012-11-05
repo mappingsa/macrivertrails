@@ -4,11 +4,11 @@ $(function() {
   // Google Maps JS is not required until the first use of the map page. They are fine here for
   // now, since we currently still always load Google Maps JS in <head>.
   //
-  // It's not desireable to initialize the big markers array on every pageinit, so it is initialized once
+  // It's not desireable to initialize the big places array on every pageinit, so it is initialized once
   // here in the outer closure.
   //
   // We will need to keep an "initialized" variable here, and on first pageinit if false, create the
-  // marker images and backfill the markers table. (i.e. the icon variables should be removed here in the
+  // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
   var
     cycle = new google.maps.MarkerImage('images/Cycle-pin.png', new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
@@ -24,7 +24,7 @@ $(function() {
     info = new google.maps.MarkerImage('images/info.png', new google.maps.Size(32,37), new google.maps.Point(0,0), new google.maps.Point(10,10)),
     rv = new google.maps.MarkerImage('images/rv.png', new google.maps.Size(32,37), new google.maps.Point(0,0), new google.maps.Point(10,10)),
 
-  markers = [
+  places = [
     {'group': 'cycle', 'icon': cycle, 'item': 'geurie',  'position': '-32.400028, 148.818317', 'title': 'Geurie-Bald Hill Mountain Bike Trails', 'text': 'Geurie-Bald Hill Mountain Bike Trails' ,'bounds': false,'animation': google.maps.Animation.DROP },
     {'group': 'cycle', 'icon': cycle, 'item': 'beni', 'position': '-32.246925, 148.72464', 'title': 'Beni State Conservation Area cycling, Dubbo', 'text': 'Beni State Conservation Area cycling, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
     {'group': 'cycle', 'icon': cycle, 'item': 'powterpark', 'position': '-32.239314, 148.611986', 'title': 'Powter Park BMX Track, Dubbo', 'text': 'Powter Park BMX Track, Dubbo' ,'bounds': false,'animation': google.maps.Animation.DROP },
@@ -166,10 +166,6 @@ $(function() {
     {'group': 'rv', 'icon': rv, 'position': '-32.553644, 148.928628', 'bounds': false,'animation': google.maps.Animation.DROP }
   ],
 
-
-  defaultLat = -32.249085,    // Dubbo
-  defaultLng = 148.604826,
-
   markerListItemTemplate =
   '<li class="big-arrow" data-icon="false">' +
     '<a href="|link|">|title||distance|' +
@@ -187,10 +183,11 @@ $(function() {
   $(document).on( "pageinit", ".map-page", function() {
 
     var
-      centerLat = defaultLat,
-      centerLng = defaultLng,
-      userLoc = new google.maps.LatLng( centerLat, centerLng ),
       knownLocation = false,
+      defaultLoc = new google.maps.LatLng(-32.249085, 148.604826),  // Dubbo
+      userLoc = undefined,                                          // Initially unknown
+      centerLoc = defaultLoc,                                       // Where to center the map
+      tripOriginLoc = userLoc,                                      // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
       $page = $( this ),
@@ -248,14 +245,20 @@ $(function() {
       loadingSingle = false;
       fullLoad = false;
 
+      // Single place = "get directions"  group=<group name>&item=<item name>
       if ( selItem.length && selGroup.length ){
         loadingSingle = true;
         selTodo = undefined;
         }
+
+      // Group - clicked on a group header in Browse (same result as group button on map )
+      // group=<group name>
       else if (selGroup.length) {
         selItem = "";
         selTodo = undefined;
         }
+
+      // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
       else if (selTodo !== undefined) {
         var lists = localStore.getLists(),
             title = lists[selTodo].title;
@@ -263,6 +266,8 @@ $(function() {
         $topMarkerNav.height(0).hide().trigger("updatelayout");
         iscrollview.resizeWrapper();
         }
+
+      // All places "nearby" button (location=me)
       else {
         fullLoad = true;
         selItem = "";
@@ -279,26 +284,26 @@ $(function() {
         }
 
       //-------------------------------------------------------v
-      $.each( markers, function(i, marker) {
+      $.each( places, function(i, place) {
         if ( ( (selTodo === undefined) &&
-               (!selItem.length || selItem === marker.item) && // Test marker/group
-               (!selGroup.length || selGroup === marker.group)
+               (!selItem.length || selItem === place.item) && // Test item/group
+               (!selGroup.length || selGroup === place.group)
              )  ||
-             ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, marker.group, marker.item)  === selTodo) )
+             ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, place.group, place.item)  === selTodo) )
            ) {
-           if ( selItem === marker.item && selGroup === marker.group) {
-             $to.attr("value",  marker.position);
-             $toPretty.attr("value", marker.title);
+           if ( selItem === place.item && selGroup === place.group) {
+             $to.attr("value",  place.position);
+             $toPretty.attr("value", place.title);
            }
 
            gmap.addMarker( {
-               position: marker.position,
+               position: place.position,
                bounds: true,
-               icon: marker.icon,
-               group: marker.group,
-               mTitle: marker.title,
-               mLink: markerLink(marker),
-               } ).click(function() { openInfoWindow(marker, this); });
+               icon: place.icon,
+               group: place.group,
+               mTitle: place.title,
+               mLink: markerLink(place),
+               } ).click(function() { openInfoWindow(place, this); });
 
           }
       });
@@ -308,18 +313,18 @@ $(function() {
       resetMapForSingle();
       }
 
-    addMyLocation(false);
-
+    addMyLocation();
     gmap.refresh();
-
     iscrollview.refresh();
+
     });
+
     //--------------------- pagebeforeshow ---------------------------^
 
     // ---------- Top Navbar buttons. Shows markers for each trail ---v
     $page.on("vclick", ".markerNav", function( e ){
       var $button = $(this),
-          selItem = $button.data( "group" );
+          selGroup = $button.data( "group" );
       e.preventDefault();
       closeInfoWindow();
       if ($.activeGroupButton) {
@@ -336,19 +341,19 @@ $(function() {
           fullLoad = false;
         }
 
-      $.each( markers, function(i, marker) {
-        if ( marker.group === selItem || selItem === "all" ){
+      $.each( places, function(i, place) {
+        if ( place.group === selGroup || selGroup === "all" ){
           gmap.addMarker( {
-            position: marker.position,
+            position: place.position,
             bounds: true,
-            icon: marker.icon,
-            group: marker.group,
-            mTitle: marker.title,
-            mLink: markerLink(marker),
-            }).click(function() {openInfoWindow(marker, this); });
+            icon: place.icon,
+            group: place.group,
+            mTitle: place.title,
+            mLink: markerLink(place),
+            }).click(function() {openInfoWindow(place, this); });
           }
         });
-      addMyLocation(false);
+      addMyLocation();
     });
 
   var closeInfoWindow = function() {
@@ -358,22 +363,28 @@ $(function() {
     }
   };
 
-  var openInfoWindow = function(marker, markerElement) {
-    var $box = $('<div class="inner"><a href="' + markerLink(marker) + '">'  + marker.title + '</a></div>'),
+  var openInfoWindow = function(place, markerElement) {
+    var $box = $('<div class="inner"><a href="' + markerLink(place) + '">'  + place.title + '</a></div>'),
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
         options = {
           content: $box[0],
           closeBoxMargin: "14px 5px 2px 2px",
-          closeBoxURL: "../images/298-circlex.png",
+          closeBoxURL: "../images/298-circlex.png"
           };
-    closeInfoWindow();
+    closeInfoWindow();  // Close the previous info window, if open
     infoBox = new InfoBox(options);
     infoBox.open(gmap.get('map'), markerElement);
     if ( (!loadingSingle) && knownLocation ) {
-      gmap.option( "center", userLoc );
-      $to.attr("value",  marker.position);
-      $toPretty.attr("value", marker.title);
+      $to.attr("value",  place.position);
+      $toPretty.attr("value", place.title);
       $directionsFields.show();
+      iscrollview.refresh();
       }
+    centerLoc = new google.maps.LatLng(lat, lng);
+    gmap.option( "center", centerLoc );
+    gmap.refresh();
   };
 
   var resetMapForSingle = function(){
@@ -381,6 +392,7 @@ $(function() {
     $topMarkerNav.height(0).hide().trigger("updatelayout");
     iscrollview.resizeWrapper();
     gmap.option( "zoom", 14 );
+    gmap.refresh();
     $headerTitle.text("Directions");
     };
 
@@ -417,18 +429,22 @@ $(function() {
         });
       };
 
-    var addMyLocation = function(centerOnMe){
+    var addMyLocation = function(){
       gmap.getCurrentPosition( function(position, status) {
 
         if (status === "OK") {
-          centerLat = position.coords.latitude;
-          centerLng = position.coords.longitude;
+
+          userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
+          centerLoc = userLoc;
+          tripOriginLoc = userLoc;
           knownLocation = true;
+
           $markerListNote.text( markerListNoteLocationKnown );
-          $from.val(centerLat + "," + centerLng );   // Set from field for directions
-          makePrettyAddress(userLoc, 1);
+          $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+          makePrettyAddress(tripOriginLoc, 1);
           if (loadingSingle) {
             $directionsFields.show();
+            iscrollview.refresh();
             }
           var image = new google.maps.MarkerImage (
             "./images/bluedot_retina.png", null, null,
@@ -445,24 +461,35 @@ $(function() {
             visible: true,
             flat: true
             } );
-            }
 
-        else {
-          centerLat = defaultLat;
-          centerLng = defaultLng;
-          knownLocation = false;
-          $markerListNote.text( markerListNoteLocationUnknown );
-
-          $from.val("");    // Clear from field for directions
-
-          $noLocationPopup.popup("open");
-          setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
+          // Do NOT re-center map. It should already be centered on the location of interest
+          gmap.option( "zoom", 4 );
+          gmap.refresh();
           }
 
-        userLoc = new google.maps.LatLng( centerLat, centerLng );
+        else {
+
+          userLoc = undefined;
+          tripOriginLoc = undefined;
+          knownLocation = false;
+          $markerListNote.text( markerListNoteLocationUnknown );
+          $from.val("");    // Clear from field for directions
+          $directionsFields.hide();
+
+          /* TODO: This popup causes trouble when the user refreshes the browser
+                   The page will transition then to the previous page.
+                   Not sure that this popup is really necessary, given that we
+                   have an explanitory note in the markerlist notes.
+          $noLocationPopup.popup("open");
+          setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
+          */
+          }
+
         showMarkerList();
-        gmap.option( "center", userLoc );
-        gmap.option( "zoom", 4 );
+        iscrollview.refresh();
+        //gmap.option( "center", userLoc );
+        //gmap.option( "zoom", 4 );
+        //gmap.refresh();
       });
     };
 
@@ -487,11 +514,11 @@ $(function() {
     });
 
     // Builds a single markerlist item, returns it
-    var buildMarkerListItem = function(marker) {
-      var position = marker.position,
-          title = marker.mTitle,
-          group = marker.group,
-          link = marker.mLink,
+    var buildMarkerListItem = function(place) {
+      var position = place.position,
+          title = place.mTitle,
+          group = place.group,
+          link = place.mLink,
           endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
@@ -533,10 +560,18 @@ $(function() {
       return vars;
       };
 
-    var markerLink = function(marker) {
-      var group = marker.group,
+    var markerLink = function(place) {
+      var group = place.group,
           dir = group.charAt(0).toUpperCase() + group.slice(1);
-      return "../" + dir + "/" + marker.item + ".html";
+      return "../" + dir + "/" + place.item + ".html";
+      };
+
+    // remove multiple, leading or trailing spaces
+    var trim = function(s) {
+      s = s.replace(/(^\s*)|(\s*$)/gi,"");
+      s = s.replace(/[ ]{2,}/gi," ");
+      s = s.replace(/\n /,"\n");
+      return s;
       };
 
   });
