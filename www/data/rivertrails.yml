@@ -27,6 +27,7 @@ debug:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js
+        - google.maps.v3.utility.geolocationmarker.js
 
 web:
     stylesheets:
@@ -58,6 +59,7 @@ web:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js
+        - google.maps.v3.utility.geolocationmarker.js
 
 phonegap:
     stylesheets:
@@ -90,6 +92,7 @@ phonegap:
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js
+        - google.maps.v3.utility.geolocationmarker.js
         - phonegap-init
 
 
