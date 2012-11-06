@@ -434,7 +434,9 @@ $(function() {
         if (status === "OK") {
 
           userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
-          centerLoc = userLoc;
+          if (!loadingSingle) {
+            centerLoc = userLoc;
+          }
           tripOriginLoc = userLoc;
           knownLocation = true;
 
@@ -461,7 +463,9 @@ $(function() {
             flat: true
             } );
 
-          // Do NOT re-center map. It should already be centered on the location of interest
+          if (!loadingSingle) {
+            gmap.option( "center", centerLoc );
+            }
           gmap.option( "zoom", 4 );
           gmap.refresh();
           }
