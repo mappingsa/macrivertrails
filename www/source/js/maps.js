@@ -314,6 +314,9 @@ $(function() {
       gmap.option( "zoom", 14 );
       $headerTitle.text("Directions");
       }
+    else {
+        gmap.option( "zoom", 4 );
+    }
 
     addMyLocation();
     gmap.refresh();
@@ -457,14 +460,11 @@ $(function() {
             flat: true
             } );
 
-          if (loadingSingle) {
-            //gmap.option( "zoom", 14 );
-            }
-          else {
+          if (!loadingSingle) {
             gmap.option( "zoom", 4 );
             gmap.option( "center", centerLoc );
+            gmap.refresh();
             }
-          gmap.refresh();
           }
 
         else {
