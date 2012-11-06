@@ -395,20 +395,18 @@ $(function() {
   var showMarkerList = function(){
     var myMarkers = gmap.get( "markers" ),
         list = "",
-        $list,
         $markerListItems;
 
     $.each( myMarkers, function(i, tmarker) {
         list += buildMarkerListItem( tmarker );
       });
 
-    $list = $(list);
+    $markerList.empty().append(list);
 
     // sort list by nearest and apply jQuery Mobile UI
-    $markerListItems = $list.find("li");
+    $markerListItems = $markerList.find("li");
     $markerListItems.tsort("span.ml-sort");
 
-    $markerList.empty().append($list);
     markerListview.refresh();
     $markerListNote.show();
     };
