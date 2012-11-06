@@ -218,7 +218,8 @@ $(function() {
       selLocation,
       selLocationMe,
       selTodo,
-      $noLocationPopup = $(".no-location-popup");
+      $noLocationPopup = $(".no-location-popup"),
+      geoLocationMarker;
 
     $canvas.gmap( { callback: function() { gmap = this; }
 
@@ -447,6 +448,7 @@ $(function() {
             $directionsFields.show();
             iscrollview.refresh();
             }
+            /*
           var image = new google.maps.MarkerImage (
             "./images/bluedot_retina.png", null, null,
             new google.maps.Point( 8, 8 ),
@@ -461,13 +463,20 @@ $(function() {
             title: "My Location",
             visible: true,
             flat: true
-            } );
+            } ); */
 
           if (!loadingSingle) {
-            gmap.option( "zoom", 4 );
-            gmap.option( "center", centerLoc );
+            //gmap.option( "zoom", 4 );
+            //gmap.option( "center", centerLoc );
+            gmap.option( "zoom", 18 );
+            gmap.option( "center", userLoc );
             gmap.refresh();
             }
+
+          // Add geolocation marker if not already present
+          if (!geoLocationMarker) {
+            geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+          }
           }
 
         else {
