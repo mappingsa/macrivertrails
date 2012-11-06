@@ -73,7 +73,7 @@ phonegap:
         - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2.min
-        - cordova-1.8.0
+        - cordova-2.2.0
         - geolocation
         - jquery.tinysort
         - store
