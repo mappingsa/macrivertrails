@@ -308,8 +308,11 @@ $(function() {
       });
       //--------------- each  --------------------------------^
 
-    if (loadingSingle){
-      resetMapForSingle();
+    if (loadingSingle) {
+      $topMarkerNav.height(0).hide().trigger("updatelayout");
+      iscrollview.resizeWrapper();
+      gmap.option( "zoom", 14 );
+      $headerTitle.text("Directions");
       }
 
     addMyLocation();
@@ -386,15 +389,6 @@ $(function() {
     gmap.refresh();
   };
 
-  var resetMapForSingle = function(){
-    var thisMarker = gmap.get( "markers" );
-    $topMarkerNav.height(0).hide().trigger("updatelayout");
-    iscrollview.resizeWrapper();
-    gmap.option( "zoom", 14 );
-    gmap.refresh();
-    $headerTitle.text("Directions");
-    };
-
   var showMarkerList = function(){
     var myMarkers = gmap.get( "markers" ),
         list = "",
@@ -463,10 +457,13 @@ $(function() {
             flat: true
             } );
 
-          if (!loadingSingle) {
+          if (loadingSingle) {
+            //gmap.option( "zoom", 14 );
+            }
+          else {
+            gmap.option( "zoom", 4 );
             gmap.option( "center", centerLoc );
             }
-          gmap.option( "zoom", 4 );
           gmap.refresh();
           }
 
