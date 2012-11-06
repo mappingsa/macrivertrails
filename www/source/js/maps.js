@@ -11,18 +11,22 @@ $(function() {
   // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
   var
-    cycle = new google.maps.MarkerImage("images/Cycle-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    heritage = new google.maps.MarkerImage("images/Heritage-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    nature = new google.maps.MarkerImage("images/Nature-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    produce = new google.maps.MarkerImage("images/Produce-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    river = new google.maps.MarkerImage("images/River-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    fishing = new google.maps.MarkerImage("images/Fishing-pin.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    shadow = new google.maps.MarkerImage("images/shadow.png", new google.maps.Size(30,42), new google.maps.Point(0,0), new google.maps.Point(10, 10)),
+    pinSize = new google.maps.Size(30,42),
+    altPinSize = new google.maps.Size(32,37),
+    infoBoxOffset = new google.maps.Size(-30, -10),
 
-    boatramp = new google.maps.MarkerImage("images/boatramp.png", new google.maps.Size(32,37), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    info = new google.maps.MarkerImage("images/info.png", new google.maps.Size(32,37), new google.maps.Point(0,0), new google.maps.Point(10,10)),
-    rv = new google.maps.MarkerImage("images/rv.png", new google.maps.Size(32,37), new google.maps.Point(0,0), new google.maps.Point(10,10)),
+    cycle = new google.maps.MarkerImage( "images/Cycle-pin.png", pinSize ),
+    heritage = new google.maps.MarkerImage( "images/Heritage-pin.png", pinSize ),
+    nature = new google.maps.MarkerImage("images/Nature-pin.png", pinSize ),
+    produce = new google.maps.MarkerImage("images/Produce-pin.png", pinSize ),
+    river = new google.maps.MarkerImage("images/River-pin.png", pinSize ),
+    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin.png", pinSize ),
+    fishing = new google.maps.MarkerImage("images/Fishing-pin.png", pinSize ),
+    shadow = new google.maps.MarkerImage("images/shadow.png", pinSize ),
+
+    boatramp = new google.maps.MarkerImage("images/boatramp.png", altPinSize ),
+    info = new google.maps.MarkerImage("images/info.png", altPinSize ),
+    rv = new google.maps.MarkerImage("images/rv.png", altPinSize ),
 
   places = [
     {"group": "cycle", "icon": cycle, "item": "geurie",  "position": "-32.400028, 148.818317", "title": "Geurie-Bald Hill Mountain Bike Trails" },
@@ -369,16 +373,20 @@ $(function() {
   };
 
   var openInfoWindow = function(place, markerElement) {
-    var $box = $('<div class="inner"><a href="' + markerLink(place) + '">'  + place.title + '</a></div>'),
+    var box = '<div class="inner"><a href="' + markerLink(place) + '">'  + place.title + '</a></div>',
         coords = place.position.split(","),
         lat = trim(coords[0]),
         lng = trim(coords[1]),
         options = {
-          content: $box[0],
+          content: box,
           closeBoxMargin: "14px 5px 2px 2px",
-          closeBoxURL: "../images/298-circlex.png"
+          closeBoxURL: "../images/298-circlex.png",
+          infoBoxClearance: 2,
+          pixelOffset: infoBoxOffset
           };
     closeInfoWindow();  // Close the previous info window, if open
+    centerLoc = new google.maps.LatLng(lat, lng);
+    gmap.option( "center", centerLoc );
     infoBox = new InfoBox(options);
     infoBox.open(gmap.get('map'), markerElement);
     if ( (!loadingSingle) && knownLocation ) {
@@ -387,9 +395,6 @@ $(function() {
       $directionsFields.show();
       iscrollview.refresh();
       }
-    centerLoc = new google.maps.LatLng(lat, lng);
-    gmap.option( "center", centerLoc );
-    gmap.refresh();
   };
 
   var showMarkerList = function(){
