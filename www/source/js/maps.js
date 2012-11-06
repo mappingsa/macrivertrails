@@ -148,22 +148,24 @@ $(function() {
     {'group': 'fishing', 'icon': fishing, 'item': 'brian', 'position': '-31.685056, 147.835917', 'title': 'Brian Egan Weir, Warren', 'text': 'Brian Egan Weir, Warren' ,'bounds': false,'animation': google.maps.Animation.DROP },
     {'group': 'fishing', 'icon': fishing, 'item': 'quinines', 'position': '-31.655992, 147.792636', 'title': 'Quinines Reserve, Warren', 'text': 'Quinines Reserve, Warren' ,'bounds': false,'animation': google.maps.Animation.DROP },
 
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.21039, 148.23812', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.192102, 148.610495', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.248102, 148.595737', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.250138, 148.598792', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.541935, 148.935469', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.22588, 148.247326', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.696519, 149.092608', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.766391, 149.143586', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'boatramp', 'icon': boatramp, 'position': '-31.685998, 147.834187', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'info', 'icon': info, 'position': '-32.553037, 148.940964', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'info', 'icon': info, 'position': '-32.243408, 148.601667', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'info', 'icon': info, 'position': '-31.699748, 147.837154', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'info', 'icon': info, 'position': '-32.233914, 148.242014', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'rv', 'icon': rv, 'position': '-32.277955, 148.588445', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'rv', 'icon': rv, 'position': '-31.696939, 147.839889', 'bounds': false,'animation': google.maps.Animation.DROP },
-    {'group': 'rv', 'icon': rv, 'position': '-32.553644, 148.928628', 'bounds': false,'animation': google.maps.Animation.DROP }
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.21039,  148.23812', title:  'Boat Ramp' },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.192102, 148.610495', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.248102, 148.595737', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.250138, 148.598792', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.541935, 148.935469', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.22588,  148.247326', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-32.766391, 149.143586', title: 'Boat Ramp'  },
+    {'group': 'boatramp', 'icon': boatramp, 'position': '-31.685998, 147.834187', title: 'Boat Ramp'  } ,
+
+    {'group': 'info', 'icon': info, 'position': '-32.553037, 148.940964', 'title': 'Wellington Vistor Information Centre' },
+    {'group': 'info', 'icon': info, 'position': '-32.243408, 148.601667', 'title': 'Dubbo Visitor Information Centre' },
+    {'group': 'info', 'icon': info, 'position': '-31.699748, 147.837154', 'title': 'Warren Visitor Information Centre' },
+    {'group': 'info', 'icon': info, 'position': '-32.233914, 148.242014', 'title': 'Narromine Vistor Information Centre' },
+
+    {'group': 'rv', 'icon': rv, 'position': '-32.277955, 148.588445', 'title': 'Dubbo RV dump site' } ,
+    {'group': 'rv', 'icon': rv, 'position': '-31.696939, 147.839889', 'title': 'Warren RV dump site' },
+    {'group': 'rv', 'icon': rv, 'position': '-32.553644, 148.928628', 'title': 'Wellington RV dump site' },
+    {'group': 'rv', 'icon': rv, 'position': '-32.233914, 148.242014', 'title': 'narromine RV dump site'}
   ],
 
   markerListItemTemplate =
@@ -293,7 +295,7 @@ $(function() {
            ) {
            if ( selItem === place.item && selGroup === place.group) {
              $to.attr("value",  place.position);
-             $toPretty.attr("value", place.title);
+             $toPretty.attr("value", place['title']);
            }
 
            gmap.addMarker( {
@@ -348,7 +350,7 @@ $(function() {
             bounds: true,
             icon: place.icon,
             group: place.group,
-            mTitle: place.title,
+            mTitle: place['title'],
             mLink: markerLink(place),
             }).click(function() {openInfoWindow(place, this); });
           }
@@ -514,11 +516,11 @@ $(function() {
     });
 
     // Builds a single markerlist item, returns it
-    var buildMarkerListItem = function(place) {
-      var position = place.position,
-          title = place.mTitle,
-          group = place.group,
-          link = place.mLink,
+    var buildMarkerListItem = function(marker) {
+      var position = marker.position,
+          title = marker.mTitle,
+          group = marker.group,
+          link = marker.mLink,
           endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
