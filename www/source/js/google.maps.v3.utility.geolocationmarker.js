@@ -37,7 +37,7 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
     'draggable': false,
     'flat': true,
     'icon': new google.maps.MarkerImage(
-        'https://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
+       '../map/images/bluedot_retina.png',
         new google.maps.Size(34, 34),
         null,
         new google.maps.Point(8, 8),
