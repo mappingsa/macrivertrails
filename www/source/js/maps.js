@@ -451,7 +451,6 @@ $(function() {
             $directionsFields.show();
             iscrollview.refresh();
             }
-            /*
           var image = new google.maps.MarkerImage (
             "./images/bluedot_retina.png", null, null,
             new google.maps.Point( 8, 8 ),
@@ -462,18 +461,15 @@ $(function() {
             id: "client",
             position: userLoc,
             bounds: false,
-            flat: true,
             optimized: false,
             title: "My Location",
             visible: true,
             flat: true
-            } ); */
+            } );
 
           if (!loadingSingle) {
-            //gmap.option( "zoom", 4 );
-            //gmap.option( "center", centerLoc );
-            gmap.option( "zoom", 18 );
-            gmap.option( "center", userLoc );
+            gmap.option( "zoom", 4 );
+            gmap.option( "center", centerLoc );
             gmap.refresh();
             }
 
