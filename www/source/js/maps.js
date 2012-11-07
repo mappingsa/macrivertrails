@@ -295,7 +295,7 @@ $(function() {
         $activeGroupButton.addClass("ui-btn-active");
         }
 
-      //---------- Add markers for selected placed ------------v
+      //---------- Add markers for selected places ------------v
       $.each( places, function(i, place) {
 
         group = place.group,
@@ -322,7 +322,7 @@ $(function() {
           }
 
           gmap.addMarker( {
-            position: place.position,
+            position: position,
             bounds: !loadingSingle && !isInfoPlace,
             optimzed: false,
             flat:true,
@@ -373,26 +373,38 @@ $(function() {
       gmap.clear( "markers" );
       if ( selItem === "all" ){
         fullLoad = true;
-        markerListULReset();
         }
       else {
           fullLoad = false;
         }
 
+      markerListULReset();
+
       $.each( places, function(i, place) {
-        if ( place.group === selGroup || selGroup === "all" ){
+        group = place.group,
+        item = place.item,
+        position = place.position,
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        isInfoPlace = isInfoGroup(group);
+
+        if ( group === selGroup || selGroup === "all" || isInfoPlace ){
           gmap.addMarker( {
-            position: place.position,
+            position: position,
             bounds: true,
-            optimized:false,
+            optimized: false,
             flat: true,
             icon: place.icon,
-            group: place.group,
-            mTitle: place['title'],
+            group: group,
+            mTitle: place["title"],
             mLink: markerLink(place),
             }).click(function() {openInfoWindow(place, this); });
           }
+
         });
+
+      gmap.refresh();
       addMyLocation();
     });
 
