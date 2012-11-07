@@ -14,6 +14,7 @@ $(function() {
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
     infoBoxOffset = new google.maps.Size(-30, -10),
+    hereMarkerSize = new google.maps.Size(17, 17),
 
     cycle = new google.maps.MarkerImage( "images/Cycle-pin-map@2x.png", pinSize, null, null, pinSize ),
     heritage = new google.maps.MarkerImage( "images/Heritage-pin-map@2x.png", pinSize, null, null, pinSize ),
@@ -26,6 +27,8 @@ $(function() {
     boatramp = new google.maps.MarkerImage("images/boatramp.png", altPinSize ),
     info = new google.maps.MarkerImage("images/info.png", altPinSize ),
     rv = new google.maps.MarkerImage("images/rv.png", altPinSize ),
+
+    hereMarker = new google.maps.MarkerImage ("images/bluedot_retina.png", hereMarkerSize, null, null, hereMarkerSize),
 
   places = [
     {"group": "cycle", "icon": cycle, "item": "geurie",  "position": "-32.400028, 148.818317", "title": "Geurie-Bald Hill Mountain Bike Trails" },
@@ -432,11 +435,24 @@ $(function() {
         });
       };
 
+    var addHereMarker = function( pos ) {
+      gmap.addMarker( {
+        icon: hereMarker,
+        id: "client",
+        position: pos,
+        bounds: false,
+        optimized: false,
+        title: "My Location",
+        visible: true,
+        flat: true
+        } );
+      };
+
     var addMyLocation = function(){
+
       gmap.getCurrentPosition( function(position, status) {
 
         if (status === "OK") {
-
           userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
           if (!loadingSingle) {
             centerLoc = userLoc;
@@ -447,25 +463,12 @@ $(function() {
           $markerListNote.text( markerListNoteLocationKnown );
           $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
           makePrettyAddress(tripOriginLoc, 1);
-          if (loadingSingle) {
+          if (loadingSingle) {          // Now that we have a user location, reveal the directions fields
             $directionsFields.show();
             iscrollview.refresh();
             }
-          var image = new google.maps.MarkerImage (
-            "./images/bluedot_retina.png", null, null,
-            new google.maps.Point( 8, 8 ),
-            new google.maps.Size( 17, 17 )
-            );
-          gmap.addMarker( {
-            icon: image,
-            id: "client",
-            position: userLoc,
-            bounds: false,
-            optimized: false,
-            title: "My Location",
-            visible: true,
-            flat: true
-            } );
+
+          addHereMarker(position);
 
           if (!loadingSingle) {
             gmap.option( "zoom", 4 );
@@ -476,11 +479,9 @@ $(function() {
           // Add geolocation marker if not already present
           if (!geoLocationMarker) {
             geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+            }
           }
-          }
-
         else {
-
           userLoc = undefined;
           tripOriginLoc = undefined;
           knownLocation = false;
