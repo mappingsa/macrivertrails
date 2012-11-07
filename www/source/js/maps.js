@@ -11,7 +11,7 @@ $(function() {
   // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
   var
-    zoomLevelAll = 6,
+    zoomLevelAll = 7,
     zoomLevelNearby = 12,
     zoomLevelPlace = 14,
 
@@ -404,6 +404,7 @@ $(function() {
 
         });
 
+    gmap.option( "zoom", zoomLevelAll );
       gmap.refresh();
       addMyLocation();
     });
