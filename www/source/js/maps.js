@@ -14,6 +14,7 @@ $(function() {
     zoomLevelAll = 7,
     zoomLevelNearby = 12,
     zoomLevelPlace = 14,
+    zoomlevelUser = 16,
 
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
@@ -378,8 +379,6 @@ $(function() {
           fullLoad = false;
         }
 
-      markerListULReset();
-
       $.each( places, function(i, place) {
         group = place.group,
         item = place.item,
@@ -392,7 +391,7 @@ $(function() {
         if ( group === selGroup || selGroup === "all" || isInfoPlace ){
           gmap.addMarker( {
             position: position,
-            bounds: true,
+            bounds: !knownLocation,
             optimized: false,
             flat: true,
             icon: place.icon,
@@ -404,7 +403,9 @@ $(function() {
 
         });
 
-    gmap.option( "zoom", zoomLevelAll );
+      if ( !knownLocation ) {
+        gmap.option( "zoom", zoomLevelAll );
+      }
       gmap.refresh();
       addMyLocation();
     });
@@ -500,15 +501,19 @@ $(function() {
           if (loadingSingle) {
             $directionsFields.show();
             iscrollview.refresh();
-            addHereMarker(position);    // Just add a static here marker
-            gmap.refresh();
             }
-          else {
+
+            addHereMarker( userLoc );    // Just add a static here marker
+            gmap.option( "center", centerLoc );
+            gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelNearby );
+            gmap.refresh();
+
+            /*
             // Add dynamic geolocation marker if not already present
             if (!geoLocationMarker) {
               geoLocationMarker = new GeolocationMarker(gmap.get("map"));
               }
-            }
+            */
           }
         else {     // Couldn't get location
           userLoc = undefined;
