@@ -11,6 +11,10 @@ $(function() {
   // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
   var
+    zoomLevelAll = 6,
+    zoomLevelNearby = 12,
+    zoomLevelPlace = 14,
+
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
     infoBoxOffset = new google.maps.Size(-30, -10),
@@ -223,9 +227,11 @@ $(function() {
       $noLocationPopup = $(".no-location-popup"),
       geoLocationMarker;
 
-    $canvas.gmap( { callback: function() { gmap = this; }
-
-    });
+    $canvas.gmap( {
+      center: defaultLoc,
+      zoom: zoomLevelAll,
+      callback: function() { gmap = this; }
+    } );
 
     //---------------------------------------------  v
     $page.on("pageshow resize", function( event ) {
@@ -289,30 +295,42 @@ $(function() {
         $activeGroupButton.addClass("ui-btn-active");
         }
 
-      //-------------------------------------------------------v
+      //---------- Add markers for selected placed ------------v
       $.each( places, function(i, place) {
+
+        group = place.group,
+        item = place.item,
+        position = place.position,
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        isInfoPlace = isInfoGroup(group);
+
         if ( ( (selTodo === undefined) &&
-               (!selItem.length || selItem === place.item) && // Test item/group
-               (!selGroup.length || selGroup === place.group)
-             )  ||
-             ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, place.group, place.item)  === selTodo) )
-           ) {
-           if ( selItem === place.item && selGroup === place.group) {
-             $to.attr("value",  place.position);
-             $toPretty.attr("value", place['title']);
-           }
+               (!selItem.length || selItem === item) && // Test item/group
+               (!selGroup.length || selGroup === group)
+             )
+             || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
+             || isInfoPlace
+          ) {
+        if ( selItem === item && selGroup === group) {  // Want to see single place - "directions"
+          centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
+          gmap.option( "center", centerLoc );
+          $to.attr("value",  place.position);          // Prepare to get directions,
+          $toPretty.attr("value", place['title']);     // But don't show direcitons fields yet
+                                                       // (Not until/unless we get user location )
+          }
 
-           gmap.addMarker( {
-               position: place.position,
-               bounds: true,
-               optimzed: false,
-               flat:true,
-               icon: place.icon,
-               group: place.group,
-               mTitle: place.title,
-               mLink: markerLink(place),
-               } ).click(function() { openInfoWindow(place, this); });
-
+          gmap.addMarker( {
+            position: place.position,
+            bounds: !loadingSingle && !isInfoPlace,
+            optimzed: false,
+            flat:true,
+            icon: place.icon,
+            group: group,
+            mTitle: place["title"],
+            mLink: markerLink(place),
+            } ).click(function() { openInfoWindow(place, this); });
           }
       });
       //--------------- each  --------------------------------^
@@ -320,17 +338,23 @@ $(function() {
     if (loadingSingle) {
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       iscrollview.resizeWrapper();
-      gmap.option( "zoom", 14 );
       $headerTitle.text("Directions");
       }
-    else {
-        gmap.option( "zoom", 4 );
-    }
 
+    // Note that increasing the zoom level closer than the
+    // bounds of selected markers is ineffective, as the map
+    // area will be expanded to the bounds
+    //
+    // Bounds are not set when loading single, so any zoom
+    // level desired can be used in that case.
+    //
+    // After getting GPS position, markers are re-drawn with
+    // bounds off, and a desired zoom level is then applied
+    // if the map was entred from "nearby" link
+    gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
     addMyLocation();
     gmap.refresh();
     iscrollview.refresh();
-
     });
 
     //--------------------- pagebeforeshow ---------------------------^
@@ -449,9 +473,7 @@ $(function() {
       };
 
     var addMyLocation = function(){
-
       gmap.getCurrentPosition( function(position, status) {
-
         if (status === "OK") {
           userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
           if (!loadingSingle) {
@@ -459,29 +481,23 @@ $(function() {
           }
           tripOriginLoc = userLoc;
           knownLocation = true;
-
           $markerListNote.text( markerListNoteLocationKnown );
           $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
           makePrettyAddress(tripOriginLoc, 1);
-          if (loadingSingle) {          // Now that we have a user location, reveal the directions fields
+          if (loadingSingle) {
             $directionsFields.show();
             iscrollview.refresh();
-            }
-
-          addHereMarker(position);
-
-          if (!loadingSingle) {
-            gmap.option( "zoom", 4 );
-            gmap.option( "center", centerLoc );
+            addHereMarker(position);    // Just add a static here marker
             gmap.refresh();
             }
-
-          // Add geolocation marker if not already present
-          if (!geoLocationMarker) {
-            geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+          else {
+            // Add dynamic geolocation marker if not already present
+            if (!geoLocationMarker) {
+              geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+              }
             }
           }
-        else {
+        else {     // Couldn't get location
           userLoc = undefined;
           tripOriginLoc = undefined;
           knownLocation = false;
@@ -500,9 +516,6 @@ $(function() {
 
         showMarkerList();
         iscrollview.refresh();
-        //gmap.option( "center", userLoc );
-        //gmap.option( "zoom", 4 );
-        //gmap.refresh();
       });
     };
 
@@ -535,7 +548,7 @@ $(function() {
           endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
-      if (group === "rv" || group === "boatramp" || group === "info" ) {
+      if ( isInfoGroup(group) ) {
         return "";
         }
       endRes = Math.round( endRes*10 ) / 10;
@@ -585,6 +598,12 @@ $(function() {
       s = s.replace(/[ ]{2,}/gi," ");
       s = s.replace(/\n /,"\n");
       return s;
+      };
+
+      // Is the given group an "into-type" group?
+      // These are places that do not have an associated page.
+      var isInfoGroup = function(group) {
+        return group === "boatramp" || group === "rv" || group === "info"
       };
 
   });
