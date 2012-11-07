@@ -14,7 +14,7 @@ $(function() {
     zoomLevelAll = 7,
     zoomLevelNearby = 12,
     zoomLevelPlace = 14,
-    zoomlevelUser = 16,
+    zoomLevelUser = 18,
 
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
@@ -324,7 +324,8 @@ $(function() {
 
           gmap.addMarker( {
             position: position,
-            bounds: !loadingSingle && !isInfoPlace,
+            //bounds: !loadingSingle && !isInfoPlace,
+            bounds: false,
             optimzed: false,
             flat:true,
             icon: place.icon,
@@ -391,7 +392,8 @@ $(function() {
         if ( group === selGroup || selGroup === "all" || isInfoPlace ){
           gmap.addMarker( {
             position: position,
-            bounds: !knownLocation,
+            //bounds: !knownLocation,
+            bounds: false,
             optimized: false,
             flat: true,
             icon: place.icon,
@@ -406,8 +408,8 @@ $(function() {
       if ( !knownLocation ) {
         gmap.option( "zoom", zoomLevelAll );
       }
-      gmap.refresh();
       addMyLocation();
+      gmap.refresh();
     });
 
   var closeInfoWindow = function() {
@@ -498,23 +500,17 @@ $(function() {
           $markerListNote.text( markerListNoteLocationKnown );
           $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
           makePrettyAddress(tripOriginLoc, 1);
+          addHereMarker( userLoc );
           if (loadingSingle) {
             $directionsFields.show();
             iscrollview.refresh();
-            }
-
-            addHereMarker( userLoc );    // Just add a static here marker
+            } else {
             gmap.option( "center", centerLoc );
-            gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelNearby );
-            gmap.refresh();
-
-            /*
-            // Add dynamic geolocation marker if not already present
-            if (!geoLocationMarker) {
-              geoLocationMarker = new GeolocationMarker(gmap.get("map"));
-              }
-            */
+            gmap.option( "zoom", zoomLevelNearby );
+            }
+          setTimeout( function () { gmap.refresh(); }, 0 );
           }
+
         else {     // Couldn't get location
           userLoc = undefined;
           tripOriginLoc = undefined;
@@ -533,6 +529,12 @@ $(function() {
           }
 
         showMarkerList();
+
+          // Add dynamic geolocation marker if not already present
+          //if (!geoLocationMarker) {
+           // geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+          //  }
+
         iscrollview.refresh();
       });
     };
