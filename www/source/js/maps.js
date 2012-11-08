@@ -7,7 +7,7 @@ $(function() {
     zoomLevelPlace = 14,      // Always use this zoom for get directions
     zoomLevelUser = 18,       // "locate me" button
 
-    maxNearbyDist = 500,      // Max km from default center to center on user location
+    maxNearbyDist = 1000,     // Max km from default center to center on user location
                               // If user is further than this, then we will center on default
                               // location
 
