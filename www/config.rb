@@ -168,8 +168,8 @@ configure :build do
   # Enable cache buster
   # activate :cache_buster
 
-  # Use relative URLs
-  activate :relative_assets
+  # Use relative URLs if we do not have a base
+  activate :relative_assets if !data.rivertrails[build_target].base
 
   # Compress PNGs after build
   # First: gem install middleman-smusher
