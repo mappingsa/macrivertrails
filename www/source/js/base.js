@@ -310,7 +310,7 @@ var localStore = function() {
          </li>',
 
       listTemplate = ' \
-        <div data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
+        <div class="todo-collapsible" data-role="collapsible" data-collapsed="false" data-list-id="|id|">\
           <h3>|title|</h3>\
           <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
@@ -519,23 +519,8 @@ var localStore = function() {
       $scrollerContent.empty().append($list);
       $scrollerContent.trigger("create");
       $collapsibleHeadings = $scrollerContent.find(".ui-collapsible");
-      /* TODO: Move styles to stylesheet */
       $collapsibleHeadings.append(
-        '<div class="todo-map-btn"\
-             style="border-top-right-radius:6px; border-bottom-right-radius:6px;\
-             display:block; position:absolute; top:0;right:0;\
-             width: 40px;height:40px; background:black;">\
-          \
-            <div \
-            style="background: transparent; color:white;\
-             background-image: url(images/103-map.png);\
-             background-repeat: none;\
-             position:absolute;top:6px;right:6px;display:block;\
-             width:26px;height:21px;"\
-           >\
-           </div>\
-           \
-         </div>');
+        '<div class="todo-map-btn"><div class="todo-map-btn-inner"></div></div>');
     },
 
     // Build a list of Itineraries for the Add to Itinerary popup
