@@ -1,5 +1,21 @@
 $(function() {
 
+
+  var
+    zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
+    zoomLevelNearby = 12,     // nearby, todo, browse once location is known
+    zoomLevelPlace = 14,      // Always use this zoom for get directions
+    zoomLevelUser = 18,       // "locate me" button
+
+    maxNearbyDist = 1000,     // Max km from default center to center on user location
+                              // If user is further than this, then we will center on default
+                              // location
+
+    // TODO: Update this to geographical center of the region
+    defaultLat = -32.249085,  // Default center location (Dubbo)
+    defaultLng = 148.604826,
+
+
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
   // Google Maps JS is not required until the first use of the map page. They are fine here for
   // now, since we currently still always load Google Maps JS in <head>.
@@ -10,23 +26,25 @@ $(function() {
   // We will need to keep an "initialized" variable here, and on first pageinit if false, create the
   // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
-  var
+
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
     infoBoxOffset = new google.maps.Size(-30, -10),
+    hereMarkerSize = new google.maps.Size(17, 17),
 
-    cycle = new google.maps.MarkerImage( "images/Cycle-pin.png", pinSize ),
-    heritage = new google.maps.MarkerImage( "images/Heritage-pin.png", pinSize ),
-    nature = new google.maps.MarkerImage("images/Nature-pin.png", pinSize ),
-    produce = new google.maps.MarkerImage("images/Produce-pin.png", pinSize ),
-    river = new google.maps.MarkerImage("images/River-pin.png", pinSize ),
-    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin.png", pinSize ),
-    fishing = new google.maps.MarkerImage("images/Fishing-pin.png", pinSize ),
-    shadow = new google.maps.MarkerImage("images/shadow.png", pinSize ),
+    cycle = new google.maps.MarkerImage( "images/Cycle-pin-map@2x.png", pinSize, null, null, pinSize ),
+    heritage = new google.maps.MarkerImage( "images/Heritage-pin-map@2x.png", pinSize, null, null, pinSize ),
+    nature = new google.maps.MarkerImage("images/Nature-pin-map@2x.png", pinSize, null, null, pinSize ),
+    produce = new google.maps.MarkerImage("images/Produce-pin-map@2x.png", pinSize, null, null, pinSize ),
+    river = new google.maps.MarkerImage("images/River-pin-map@2x.png", pinSize, null, null, pinSize ),
+    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin-map@2x.png", pinSize, null, null, pinSize ),
+    fishing = new google.maps.MarkerImage("images/Fishing-pin-map@2x.png", pinSize, null, null, pinSize ),
 
     boatramp = new google.maps.MarkerImage("images/boatramp.png", altPinSize ),
     info = new google.maps.MarkerImage("images/info.png", altPinSize ),
     rv = new google.maps.MarkerImage("images/rv.png", altPinSize ),
+
+    hereMarker = new google.maps.MarkerImage ("images/bluedot_retina.png", hereMarkerSize, null, null, hereMarkerSize),
 
   places = [
     {"group": "cycle", "icon": cycle, "item": "geurie",  "position": "-32.400028, 148.818317", "title": "Geurie-Bald Hill Mountain Bike Trails" },
@@ -187,7 +205,7 @@ $(function() {
 
     var
       knownLocation = false,
-      defaultLoc = new google.maps.LatLng(-32.249085, 148.604826),  // Dubbo
+      defaultLoc = new google.maps.LatLng(defaultLat, defaultLng ),
       userLoc = undefined,                                          // Initially unknown
       centerLoc = defaultLoc,                                       // Where to center the map
       tripOriginLoc = userLoc,                                      // Origin of trip for distance, directions
@@ -218,11 +236,14 @@ $(function() {
       selLocation,
       selLocationMe,
       selTodo,
-      $noLocationPopup = $(".no-location-popup");
+      $noLocationPopup = $(".no-location-popup"),
+      geoLocationMarker;
 
-    $canvas.gmap( { callback: function() { gmap = this; }
-
-    });
+    $canvas.gmap( {
+      center: defaultLoc,
+      zoom: zoomLevelAll,
+      callback: function() { gmap = this; }
+    } );
 
     //---------------------------------------------  v
     $page.on("pageshow resize", function( event ) {
@@ -286,28 +307,43 @@ $(function() {
         $activeGroupButton.addClass("ui-btn-active");
         }
 
-      //-------------------------------------------------------v
+      //---------- Add markers for selected places ------------v
       $.each( places, function(i, place) {
+
+        group = place.group,
+        item = place.item,
+        position = place.position,
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        isInfoPlace = isInfoGroup(group);
+
         if ( ( (selTodo === undefined) &&
-               (!selItem.length || selItem === place.item) && // Test item/group
-               (!selGroup.length || selGroup === place.group)
-             )  ||
-             ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, place.group, place.item)  === selTodo) )
-           ) {
-           if ( selItem === place.item && selGroup === place.group) {
-             $to.attr("value",  place.position);
-             $toPretty.attr("value", place['title']);
-           }
+               (!selItem.length || selItem === item) && // Test item/group
+               (!selGroup.length || selGroup === group)
+             )
+             || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
+             || isInfoPlace
+          ) {
+        if ( selItem === item && selGroup === group) {  // Want to see single place - "directions"
+          centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
+          gmap.option( "center", centerLoc );
+          $to.attr("value",  place.position);          // Prepare to get directions,
+          $toPretty.attr("value", place['title']);     // But don't show direcitons fields yet
+                                                       // (Not until/unless we get user location )
+          }
 
-           gmap.addMarker( {
-               position: place.position,
-               bounds: true,
-               icon: place.icon,
-               group: place.group,
-               mTitle: place.title,
-               mLink: markerLink(place),
-               } ).click(function() { openInfoWindow(place, this); });
-
+          gmap.addMarker( {
+            position: position,
+            //bounds: !loadingSingle && !isInfoPlace,
+            bounds: false,
+            optimzed: false,
+            flat:true,
+            icon: place.icon,
+            group: group,
+            mTitle: place["title"],
+            mLink: markerLink(place),
+            } ).click(function() { openInfoWindow(place, this); });
           }
       });
       //--------------- each  --------------------------------^
@@ -315,17 +351,22 @@ $(function() {
     if (loadingSingle) {
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       iscrollview.resizeWrapper();
-      gmap.option( "zoom", 14 );
       $headerTitle.text("Directions");
       }
-    else {
-        gmap.option( "zoom", 4 );
-    }
 
+    // Note that increasing the zoom level closer than the
+    // bounds of selected markers is ineffective, as the map
+    // area will be expanded to the bounds
+    //
+    // Bounds are not set when loading single, so any zoom
+    // level desired can be used in that case.
+    //
+    // After getting GPS position, markers are re-drawn with
+    // bounds off, and a desired zoom level is then applied
+    // if the map was entred from "nearby" link
+    gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
     addMyLocation();
-    gmap.refresh();
     iscrollview.refresh();
-
     });
 
     //--------------------- pagebeforeshow ---------------------------^
@@ -344,24 +385,39 @@ $(function() {
       gmap.clear( "markers" );
       if ( selItem === "all" ){
         fullLoad = true;
-        markerListULReset();
         }
       else {
           fullLoad = false;
         }
 
       $.each( places, function(i, place) {
-        if ( place.group === selGroup || selGroup === "all" ){
+        group = place.group,
+        item = place.item,
+        position = place.position,
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        isInfoPlace = isInfoGroup(group);
+
+        if ( group === selGroup || selGroup === "all" || isInfoPlace ){
           gmap.addMarker( {
-            position: place.position,
-            bounds: true,
+            position: position,
+            //bounds: !knownLocation,
+            bounds: false,
+            optimized: false,
+            flat: true,
             icon: place.icon,
-            group: place.group,
-            mTitle: place['title'],
+            group: group,
+            mTitle: place["title"],
             mLink: markerLink(place),
             }).click(function() {openInfoWindow(place, this); });
           }
+
         });
+
+      if ( !knownLocation ) {
+        gmap.option( "zoom", zoomLevelAll );
+      }
       addMyLocation();
     });
 
@@ -428,50 +484,52 @@ $(function() {
         });
       };
 
+    var addHereMarker = function( pos ) {
+      gmap.addMarker( {
+        icon: hereMarker,
+        id: "client",
+        position: pos,
+        bounds: false,
+        optimized: false,
+        title: "My Location",
+        visible: true,
+        flat: true
+        } );
+      };
+
     var addMyLocation = function(){
       gmap.getCurrentPosition( function(position, status) {
 
         if (status === "OK") {
+          lat = position.coords.latitude,
+          lng = position.coords.longitude,
+          distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() ),
+          outOfRegion = distFromDefaultLoc > maxNearbyDist;
 
-          userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
-          if (!loadingSingle) {
+          userLoc = new google.maps.LatLng(  lat, lng );
+
+          if (!loadingSingle && !outOfRegion) {
             centerLoc = userLoc;
           }
+
           tripOriginLoc = userLoc;
           knownLocation = true;
 
           $markerListNote.text( markerListNoteLocationKnown );
           $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
           makePrettyAddress(tripOriginLoc, 1);
+          addHereMarker( userLoc );
           if (loadingSingle) {
             $directionsFields.show();
             iscrollview.refresh();
             }
-          var image = new google.maps.MarkerImage (
-            "./images/bluedot_retina.png", null, null,
-            new google.maps.Point( 8, 8 ),
-            new google.maps.Size( 17, 17 )
-            );
-          gmap.addMarker( {
-            icon: image,
-            id: "client",
-            position: userLoc,
-            bounds: false,
-            optimized: false,
-            title: "My Location",
-            visible: true,
-            flat: true
-            } );
-
-          if (!loadingSingle) {
-            gmap.option( "zoom", 4 );
+          else {
             gmap.option( "center", centerLoc );
-            gmap.refresh();
+            gmap.option( "zoom", zoomLevelNearby );
             }
           }
 
-        else {
-
+        else {     // Couldn't get location
           userLoc = undefined;
           tripOriginLoc = undefined;
           knownLocation = false;
@@ -488,13 +546,16 @@ $(function() {
           */
           }
 
-        showMarkerList();
-        iscrollview.refresh();
-        //gmap.option( "center", userLoc );
-        //gmap.option( "zoom", 4 );
-        //gmap.refresh();
-      });
-    };
+          showMarkerList();
+
+          // Add dynamic geolocation marker if not already present
+          //if (!geoLocationMarker) {
+           // geoLocationMarker = new GeolocationMarker(gmap.get("map"));
+          //  }
+
+          iscrollview.refresh();
+        });
+      };
 
     $submitDirections.on("click",  function () {
       gmap.displayDirections ( {
@@ -506,12 +567,11 @@ $(function() {
         function (success, response) {
           if (success) {
             $results.show();
-            iscrollview.refresh();
             }
           else {
             $results.hide();
-            iscrollview.refresh();
             }
+          iscrollview.refresh();
         });
       return false;
     });
@@ -525,7 +585,7 @@ $(function() {
           endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
           base = markerListItemTemplate,
           groupUC = group.charAt().toUpperCase() + group.slice(1);
-      if (group === "rv" || group === "boatramp" || group === "info" ) {
+      if ( isInfoGroup(group) ) {
         return "";
         }
       endRes = Math.round( endRes*10 ) / 10;
@@ -575,6 +635,12 @@ $(function() {
       s = s.replace(/[ ]{2,}/gi," ");
       s = s.replace(/\n /,"\n");
       return s;
+      };
+
+      // Is the given group an "into-type" group?
+      // These are places that do not have an associated page.
+      var isInfoGroup = function(group) {
+        return group === "boatramp" || group === "rv" || group === "info"
       };
 
   });
