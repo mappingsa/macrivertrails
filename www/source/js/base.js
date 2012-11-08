@@ -27,7 +27,7 @@
       openMenu = function(fadeTime) {
         $menu.css("opacity", "0");
         $menu.animate(
-          { opacity: "1.0" },
+          { opacity: "0.85" },
           fadeTime === undefined ? 400 : fadeTime,
           "linear"
           );
@@ -50,7 +50,7 @@
           }
     });
 
-    $page.find(".go-web, .go-phone, go-mail").bind("vclick", function(event) {
+    $page.find(".go-web, .go-phone, .go-mail").bind("vclick", function(event) {
       var $a = $(this),
           $menu = $page.find(".menu");
       closeMenu();
