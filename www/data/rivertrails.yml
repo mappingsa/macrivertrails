@@ -32,7 +32,7 @@ debug:
         - google.maps.v3.utility.geolocationmarker.js
 
 web:
-    base: http://web2008/macriverTRAILS/
+    base: http://web2008/macriver/
     stylesheets:
         - webfonts-cabin-google
         - webfonts-caviar
