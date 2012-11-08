@@ -1,5 +1,5 @@
 debug:
-    #base: http://localhost:4567/             # Generic localhost
+    base: http://localhost:4567/             # Generic localhost
     #base: http://emerac-lan.lan:4567/        # Jon Tara Macbook
     stylesheets:
         - webfonts-cabin
@@ -32,7 +32,7 @@ debug:
         - google.maps.v3.utility.geolocationmarker.js
 
 web:
-    #base: http://maps.mappingsa.com.au/macriverTRAILS/
+    base: http://maps.mappingsa.com.au/macriverTRAILS/
     stylesheets:
         - webfonts-cabin-google
         - webfonts-caviar
