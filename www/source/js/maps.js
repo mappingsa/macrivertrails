@@ -1,5 +1,21 @@
 $(function() {
 
+
+  var
+    zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
+    zoomLevelNearby = 12,     // nearby, todo, browse once location is known
+    zoomLevelPlace = 14,      // Always use this zoom for get directions
+    zoomLevelUser = 18,       // "locate me" button
+
+    maxNearbyDist = 500,      // Max km from default center to center on user location
+                              // If user is further than this, then we will center on default
+                              // location
+
+    // TODO: Update this to geographical center of the region
+    defaultLat = -32.249085,  // Default center location (Dubbo)
+    defaultLng = 148.604826,
+
+
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
   // Google Maps JS is not required until the first use of the map page. They are fine here for
   // now, since we currently still always load Google Maps JS in <head>.
@@ -10,11 +26,6 @@ $(function() {
   // We will need to keep an "initialized" variable here, and on first pageinit if false, create the
   // marker images and backfill the places table. (i.e. the icon variables should be removed here in the
   // outer closure and initialized on first pageinit, which can be done based on the group name. )
-  var
-    zoomLevelAll = 7,
-    zoomLevelNearby = 12,
-    zoomLevelPlace = 14,
-    zoomLevelUser = 18,
 
     pinSize = new google.maps.Size(30,42),
     altPinSize = new google.maps.Size(32,37),
@@ -194,7 +205,7 @@ $(function() {
 
     var
       knownLocation = false,
-      defaultLoc = new google.maps.LatLng(-32.249085, 148.604826),  // Dubbo
+      defaultLoc = new google.maps.LatLng(defaultLat, defaultLng ),
       userLoc = undefined,                                          // Initially unknown
       centerLoc = defaultLoc,                                       // Where to center the map
       tripOriginLoc = userLoc,                                      // Origin of trip for distance, directions
@@ -490,13 +501,22 @@ $(function() {
 
     var addMyLocation = function(){
       gmap.getCurrentPosition( function(position, status) {
+
         if (status === "OK") {
-          userLoc = new google.maps.LatLng( position.coords.latitude, position.coords.longitude );
-          if (!loadingSingle) {
+          lat = position.coords.latitude,
+          lng = position.coords.longitude,
+          distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() ),
+          outOfRegion = distFromDefaultLoc > maxNearbyDist;
+
+          userLoc = new google.maps.LatLng(  lat, lng );
+
+          if (!loadingSingle && !outOfRegion) {
             centerLoc = userLoc;
           }
+
           tripOriginLoc = userLoc;
           knownLocation = true;
+
           $markerListNote.text( markerListNoteLocationKnown );
           $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
           makePrettyAddress(tripOriginLoc, 1);
@@ -504,7 +524,8 @@ $(function() {
           if (loadingSingle) {
             $directionsFields.show();
             iscrollview.refresh();
-            } else {
+            }
+          else {
             gmap.option( "center", centerLoc );
             gmap.option( "zoom", zoomLevelNearby );
             }
