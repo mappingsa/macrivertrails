@@ -366,7 +366,6 @@ $(function() {
     // if the map was entred from "nearby" link
     gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
     addMyLocation();
-    gmap.refresh();
     iscrollview.refresh();
     });
 
@@ -420,7 +419,6 @@ $(function() {
         gmap.option( "zoom", zoomLevelAll );
       }
       addMyLocation();
-      gmap.refresh();
     });
 
   var closeInfoWindow = function() {
@@ -529,7 +527,6 @@ $(function() {
             gmap.option( "center", centerLoc );
             gmap.option( "zoom", zoomLevelNearby );
             }
-          setTimeout( function () { gmap.refresh(); }, 0 );
           }
 
         else {     // Couldn't get location
@@ -549,16 +546,16 @@ $(function() {
           */
           }
 
-        showMarkerList();
+          showMarkerList();
 
           // Add dynamic geolocation marker if not already present
           //if (!geoLocationMarker) {
            // geoLocationMarker = new GeolocationMarker(gmap.get("map"));
           //  }
 
-        iscrollview.refresh();
-      });
-    };
+          iscrollview.refresh();
+        });
+      };
 
     $submitDirections.on("click",  function () {
       gmap.displayDirections ( {
@@ -570,12 +567,11 @@ $(function() {
         function (success, response) {
           if (success) {
             $results.show();
-            iscrollview.refresh();
             }
           else {
             $results.hide();
-            iscrollview.refresh();
             }
+          iscrollview.refresh();
         });
       return false;
     });
