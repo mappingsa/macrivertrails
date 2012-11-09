@@ -1,5 +1,9 @@
-/* Test scss.erb: Build Target is <%= build_target %> */
-
+$buildTarget: '<%= build_target %>';
+$base: '<%= data.rivertrails[build_target].base %>';
+/*
+   buildTarget: '#{$buildTarget}'
+   base: '#{$base}'
+*/
 $imagePath: '/images/';
 $typePath: 'type/';
 
