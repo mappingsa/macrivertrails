@@ -332,13 +332,14 @@ hr.ornamental { background:url("../images/ornamental.png") center no-repeat; bac
   border-top: 1px #3E4555 solid;
   border-bottom: 1px #191D27 solid;
   color: #DBE0E8;
-  font-size: 12px;
+  font-size: 14px;
+  fonmt-weight: bold;
   text-decoration: none;
   display: block;
-  padding-top: 10px;
+  padding-top: 15px;
   padding-right:  10px;
-  padding-bottom:  10px;
-  padding-left: 7px;
+  padding-bottom:  15px;
+  padding-left: 10px;
   text-shadow: 0 1px 1px #212631;
 }
 
@@ -1165,18 +1166,48 @@ margin-left: -45px;
   background-image: url('../images/icon_favorities.png');
 }
 
-
-.itin-icon {
+.menu .ui-icon-custom-itin {
   width: 33px;
   height: 16px;
   float: left;
-  background-image: url('../images/04-squiggle.png');
   background-size: 100% auto;
 }
 
-.menu .itin-btn.is-itin .fav-icon {
-  background-image: url('../images/04-squiggle.png');
+.menu .ui-icon-custom-phone {
+  width: 24px;
+  height: 24px;
+  float: left;
+  background-size: 100% auto;
 }
+
+.menu .ui-icon-custom-web {
+  width: 30px;
+  height: 30px;
+  float: left;
+  background-size: 100% auto;
+}
+
+.menu .ui-icon-custom-email {
+  width: 24px;
+  height: 24px;
+  float: left;
+  background-size: 100% auto;
+}
+
+.menu .ui-icon-custom-itin {
+  width: 33px;
+  height: 16px;
+  float: left;
+  background-size: 100% auto;
+}
+
+.menu .ui-icon-custom-directions {
+  width: 22px;
+  height: 28px;
+  float: left;
+  background-size: 100% auto;
+}
+
 
 .browse-tab .ui-icon  { background-image: url(../images/12-eye.png); background-size: 24px 16px; }
 .nearby-tab .ui-icon  { background-image: url(../images/74-location.png); background-size: 20px 20px; }
@@ -1185,6 +1216,12 @@ margin-left: -45px;
 .info-tab .ui-icon    { background-image: url(../images/42-x-info.png); background-size: 20px 20px; }
 
 .ui-icon-custom-map     { background-image: url(../images/103-map.png); background-size: 26px 21px; }
+.ui-icon-custom-phone   { background-image: url(../images/75-phone.png); background-size: 24px 24px; }
+.ui-icon-custom-web     { background-image: url(../images/203-spiderweb.png); background-size: 30px 30px; }
+.ui-icon-custom-itin    { background-image: url(../images/04-squiggle.png); background-size: 33px 16px; }
+.ui-icon-custom-email   { background-image: url(../images/287-at.png); background-size: 24px 24px; }
+.ui-icon-custom-directions { background-image: url(../images/60-signpost.png); background-size: 22px 28px; }
+
 .ui-icon-custom-zoomin  { background-image: url(../images/267-zoomin.png); background-size: 22px 22px; }
 .ui-icon-custom-zoomout { background-image: url(../images/268-zoomout.png); background-size: 22px 22px; }
 span.ui-icon.ui-icon-shadow.zoomin { width:22px; height:22px; }
@@ -1208,7 +1245,11 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
   .info-tab .ui-icon    { background-image: url(../images/42-x-info@2x.png); }
 
   .ui-icon-custom-map   { background-image: url(../images/103-map@2x.png); }
-  .itin-icon            { background-image: url(../images/04-squiggle@2x.png); }
+  .ui-icon-custom-phone { background-image: url(../images/75-phone@2x.png); }
+  .ui-icon-custom-web   { background-image: url(../images/203-spiderweb.png); }
+  .ui-icon-custom-itin  { background-image: url(../images/04-squiggle@2x.png); }
+  .ui-icon-custom-email { background-image: url(../images/287-at@2x.png); }
+  .ui-icon-custom-directions { background-image: url(../images/60-signpost@2x.png); }
   .ui-icon-zoomin       { background-image: url(../images/267-zoomin@2x.png); }
   .ui-icon-zoomout      { background-image: url(../images/268-zoomout@2x.png); }
 
@@ -1265,6 +1306,9 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
 .todo-collapsible {
   position: relative;
+}
+
+.todo-collapsible .ui-collapsible-heading {
 }
 
 .todo-map-btn {
