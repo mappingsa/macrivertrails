@@ -23,7 +23,8 @@ debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - jquery.mobile-1.2.0
+        #- jquery.mobile-1.2.0
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -58,7 +59,7 @@ web:
         - maps
         #- http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
         # Using patched jQuery Mobile
-        - jquery.mobile-1.2.0
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -94,7 +95,7 @@ phonegap:
         - maps
         #- jquery.mobile-1.2.0.min
         # Using patched jQuery Mobile
-        - jquery.mobile-1.2.0
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
