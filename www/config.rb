@@ -156,7 +156,8 @@ configure :build do
     activate :minify_css
     activate :minify_javascript
     ignore '/js/jquery.mobile-1.1.1.js'
-    ignore '/js/jquery.mobile-1.2.0.js'
+    # Using patched jQuery Mobile
+    #ignore '/js/jquery.mobile-1.2.0.js'
     ignore '/js/jquery-1.7.2.js'
     ignore '/js/jquery-1.8.2.js'
     ignore '/css/jquery.mobile.structure-1.1.1.css'
