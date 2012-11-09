@@ -7,8 +7,6 @@ html lang="en-AU"
     = blank_line
     title = current_page.data.title
     = partial :meta
-    - if base
-      base href="#{base}"
       = blank_line
     = stylesheet_link_tag data.rivertrails[build_target].stylesheets
     = blank_line
