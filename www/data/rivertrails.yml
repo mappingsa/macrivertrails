@@ -1,5 +1,5 @@
 debug:
-    base: http://localhost:4567/                        # To test from localhost URL
+    #base: http://localhost:4567/                        # To test from localhost URL
     #base: http://emerac-lan.lan:4567/                  # To test from elsewhere on LAN
     # Doesn't work
     #base: file:///Users/jon/workspace/rivertrails/www/build/debug/ # To test from filesystem
@@ -35,7 +35,7 @@ debug:
         - google.maps.v3.utility.geolocationmarker.js
 
 web:
-    base: http://web2008/macriver/
+    #base: http://web2008/macriver/
     stylesheets:
         - webfonts-cabin-google
         - webfonts-caviar

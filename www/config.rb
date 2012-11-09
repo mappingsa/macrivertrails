@@ -90,7 +90,7 @@ helpers do
 
   # returns relative path from current page to given path
   def path_to(path)
-    #Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
+    Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
     path
   end
 
@@ -106,20 +106,19 @@ helpers do
   end
 
   def path_root
-    #path_to '/'
-    path_to ''
+    path_to '/'
   end
 
   def path_images
-    path_to '/images'
+    path_to '/images/'
   end
 
   def path_info
-    path_to '/Info'
+    path_to '/Info/'
   end
 
   def path_map
-    path_to '/map'
+    path_to '/map/'
   end
 
   # Helper to add active class if current_page basename (not including extension)
