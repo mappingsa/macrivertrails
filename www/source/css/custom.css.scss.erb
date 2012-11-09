@@ -1,9 +1,9 @@
 /* Test scss.erb: Build Target is <%= build_target %> */
 
-$image_path: "/images/";
+$imagePath: '/images/';
 
-@function image_url($path) {
-  @return url('#{$image_path}#{$path}')
+@function imageUrl($path) {
+  @return url('#{$imagePath}#{$path}')
 }
 
 .ui-mobile {
@@ -20,7 +20,7 @@ $image_path: "/images/";
      on a link will display the URL in a popup. This is pretty darn annoying. */
   -webkit-touch-callout: none;
 
-  /* Shut off content selection, because it's really annoying when dragging
+  /* Shut off content selection, because it is really annoying when dragging
      You might like to do this only for scroller content, though, or enable it for certain
      text you want the user to be able to cut-and-paste */
   -webkit-user-select: none;
@@ -35,7 +35,7 @@ $image_path: "/images/";
      min-height of the page to 320px. It does this (unsuccessfully, in 1.0.1, but successfully
      in 1.1) in order to keep the Mobile Safari location bar from appearing during page
      transitions. But this causes a problem in desktop Safari if the height is <320px.
-     If you resize to <320 in a desktop browser, you will see a scrollbar if you don't
+     If you resize to <320 in a desktop browser, you will see a scrollbar if you do not
      use this style.
  */
   overflow:hidden;
@@ -128,9 +128,7 @@ $image_path: "/images/";
    ========================================================================== */
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
-   /* background: url('/images/whitey.png') 0 0; */
-   /* background: url('#{$image_path}whitey.png') 0 0; */
-   background: image_url('whitey.png') 0 0;
+   background: imageUrl('whitey.png') 0 0;
    background-size: 203px 317px;
    text-shadow: none;
 }
@@ -199,8 +197,6 @@ that they will override CSS in the standard JQM structure CSS */
   margin-bottom:3px
 }
 
-hr.ornamental { background:url("/images/ornamental.png") center no-repeat; background-size:960px 10px; height:10px; width:100%; border:none; margin:0; padding:0 }
-
 .shadow1box {text-align:center; margin:0; height:28px}
 .shadow1 {width:100%; height:28px; margin:0}
 
@@ -216,7 +212,7 @@ hr.ornamental { background:url("/images/ornamental.png") center no-repeat; backg
   background: -o-linear-gradient(rgba(30,87,153,1) ,rgba(125,185,232,0)); /* Opera 11.10+ */
   background: -ms-linear-gradient(rgba(30,87,153,1), rgba(125,185,232,0) ); /* IE10+ */
   background: linear-gradient( rgba(30,87,153,1) ,rgba(125,185,232,0) ); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
 }
 
 .icon-set{
@@ -362,7 +358,7 @@ hr.ornamental { background:url("/images/ornamental.png") center no-repeat; backg
   background-image: none !important;
 }
 a.menuBtn{
-  background: transparent url(/images/icon_list_bullets.png) top left no-repeat !important;
+  background: transparent iamgeUrl('icon_list_bullets.png') top left no-repeat !important;
   width:31px;
   height:31px;
   background-size: 30px 30px;
@@ -551,13 +547,14 @@ border-radius: .4em;
     color:#eee;
     height:40px;
     text-shadow: 0 -1px 1px #000;
-    background:url("") #151515; background-size: 5px 5px;
+    background-color: #151515;
+    background-size: 5px 5px;
 }
 
 .logo {
     width:231px;
     height:40px;
-    background:url("") top center no-repeat;
+    background:url() top center no-repeat;
     margin:0 auto;
     background-size: 185px 40px;
 }
@@ -586,7 +583,7 @@ h1.ui-title {
 }
 
 .big-arrow .ui-link-inherit {
-    background-image: url("/images/arrow.png") ;
+    background-image: imageUrl('arrow.png') ;
     background-position: right;
     background-repeat: no-repeat;
     background-size: 10px 14px;
@@ -774,7 +771,8 @@ h1.ui-title {
    ========================================================================== */
 .ui-btn-up-b {
     border: 0;
-    background:url("") #151515; background-size: 5px 5px;
+    background-color: #151515;
+    background-size: 5px 5px;
     font-weight: normal;
     color:  #0099FF;
     text-shadow: 0 -1px 1px #000;
@@ -820,7 +818,7 @@ h1.ui-title {
 
 
 /* =============================================================================
-   Footer Nav Icons --[ Recommend to delete CSS for icons you don't use ]--
+   Footer Nav Icons  Recommend to delete CSS for icons you do not use
    ========================================================================== */
 .custom-icons .ui-btn .ui-btn-inner {
     padding-top: 35px !important;
@@ -980,7 +978,8 @@ ul.tweetList{
 
 #jstwitter {
     width:100%;
-    background:url("/images/twitterBack.png") repeat;
+    background: imageUrl('twitterBack.png') repeat;
+
     -webkit-border-radius: 6px;
     -moz-border-radius: 6px;
     border-radius: 6px;
@@ -1019,7 +1018,7 @@ ul.tweetList{
    ========================================================================== */
 #errors {
     border:1px solid #cd0a0a;
-    background:url("/images/contact-error.png") 50% 50% repeat;
+    background:imageUrl('contact-error.png') 50% 50% repeat;
     color:#fff;
     padding: 5px;
     text-shadow:0 1px 0 #111
@@ -1052,7 +1051,7 @@ ul.tweetList{
 .mainlogo {
     width:285px;
     height:60px;
-    background:url('/images/header.png') top center no-repeat;
+    background:imageUrl('header.png') top center no-repeat;
     margin:0 auto;
     background-size: 280px 55px;
 }
@@ -1117,8 +1116,8 @@ margin-right: -5px;
 margin-bottom: 15px;
 margin-left: -45px;
 }
-.rtheader a.homeBtn {background:url('/images/icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
-.rtheader a.backBtn {background:url('/images/icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+.rtheader a.homeBtn {background:imageUrl('icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+.rtheader a.backBtn {background:imageUrl('icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
 
 /* Popup Infobox in maps
    Note: transparent background by default. The viewable box is the div below, and is offset from .infoBox */
@@ -1149,7 +1148,7 @@ margin-left: -45px;
   font-weight: bold;
   }
 
-  /* Trail pins are in @2x resolution (30x42). We can't use media query because they aren't used
+  /* Trail pins are in @2x resolution (30x42). We can not use media query because they are not used
    as background imgages, so just resize to device-based units.
 
      The pins are sized 2X for the map page, but here they are being resized slightly larger, so
@@ -1167,12 +1166,12 @@ margin-left: -45px;
   width: 20px;
   height: 20px;
   float: left;
-  background-image: url('/images/icon_favorities_add.png');
+  background-image: imageUrl('icon_favorities_add.png');
   background-size: 100% auto;
 }
 
 .menu .toggle-fav.is-fav .fav-icon {
-  background-image: url('/images/icon_favorities.png');
+  background-image: imageUrl('icon_favorities.png');
 }
 
 
@@ -1180,56 +1179,56 @@ margin-left: -45px;
   width: 33px;
   height: 16px;
   float: left;
-  background-image: url('/images/04-squiggle.png');
+  background-image: imageUrl('04-squiggle.png');
   background-size: 100% auto;
 }
 
 .menu .itin-btn.is-itin .fav-icon {
-  background-image: url('/images/04-squiggle.png');
+  background-image: imageUrl('04-squiggle.png');
 }
 
-.browse-tab .ui-icon  { background-image: url(/images/12-eye.png); background-size: 24px 16px; }
-.nearby-tab .ui-icon  { background-image: url(/images/74-location.png); background-size: 20px 20px; }
-.fishing-tab .ui-icon { background-image: url(/images/233-fish.png); background-size: 28px 13px; }
-.todo-tab .ui-icon    { background-image: url(/images/117-todo.png); background-size: 18px 19px; }
-.info-tab .ui-icon    { background-image: url(/images/42-x-info.png); background-size: 20px 20px; }
+.browse-tab .ui-icon  { background-image: imageUrl('12-eye.png'); background-size: 24px 16px; }
+.nearby-tab .ui-icon  { background-image: imageUrl('74-location.png'); background-size: 20px 20px; }
+.fishing-tab .ui-icon { background-image: imageUrl('233-fish.png'); background-size: 28px 13px; }
+.todo-tab .ui-icon    { background-image: imageUrl('117-todo.png'); background-size: 18px 19px; }
+.info-tab .ui-icon    { background-image: imageUrl('42-x-info.png'); background-size: 20px 20px; }
 
-.ui-icon-custom-map     { background-image: url(/images/103-map.png); background-size: 26px 21px; }
-.ui-icon-custom-zoomin  { background-image: url(/images/267-zoomin.png); background-size: 22px 22px; }
-.ui-icon-custom-zoomout { background-image: url(/images/268-zoomout.png); background-size: 22px 22px; }
+.ui-icon-custom-map     { background-image: imageUrl('103-map.png'); background-size: 26px 21px; }
+.ui-icon-custom-zoomin  { background-image: imageUrl('267-zoomin.png'); background-size: 22px 22px; }
+.ui-icon-custom-zoomout { background-image: imageUrl('268-zoomout.png'); background-size: 22px 22px; }
 span.ui-icon.ui-icon-shadow.zoomin { width:22px; height:22px; }
 span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 
-.ui-icon-custom-pin-all       {background-image: url(/images/All-pin.png);       background-size: 25px 18px; }
-.ui-icon-custom-pin-river     {background-image: url(/images/River-pin.png);     background-size: 25px 18px; }
-.ui-icon-custom-pin-heritage  {background-image: url(/images/Heritage-pin.png);  background-size: 25px 18px; }
-.ui-icon-custom-pin-nature    {background-image: url(/images/Nature-pin.png);    background-size: 25px 18px; }
-.ui-icon-custom-pin-produce   {background-image: url(/images/Produce-pin.png);   background-size: 25px 18px; }
-.ui-icon-custom-pin-cycle     {background-image: url(/images/Cycle-pin.png);     background-size: 25px 18px; }
-.ui-icon-custom-pin-riverbedz {background-image: url(/images/Riverbedz-pin.png); background-size: 25px 18px; }
-.ui-icon-custom-pin-fishing   {background-image: url(/images/Fishing-pin.png);   background-size: 25px 18px; }
+.ui-icon-custom-pin-all       {background-image: imageUrl('All-pin.png');       background-size: 25px 18px; }
+.ui-icon-custom-pin-river     {background-image: imageUrl('River-pin.png');     background-size: 25px 18px; }
+.ui-icon-custom-pin-heritage  {background-image: imageUrl('Heritage-pin.png');  background-size: 25px 18px; }
+.ui-icon-custom-pin-nature    {background-image: imageUrl('Nature-pin.png');    background-size: 25px 18px; }
+.ui-icon-custom-pin-produce   {background-image: imageUrl('Produce-pin.png');   background-size: 25px 18px; }
+.ui-icon-custom-pin-cycle     {background-image: imageUrl('Cycle-pin.png');     background-size: 25px 18px; }
+.ui-icon-custom-pin-riverbedz {background-image: imageUrl('Riverbedz-pin.png'); background-size: 25px 18px; }
+.ui-icon-custom-pin-fishing   {background-image: imageUrl('Fishing-pin.png');   background-size: 25px 18px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .browse-tab .ui-icon  { background-image: url(/images/12-eye@2x.png); }
-  .nearby-tab .ui-icon  { background-image: url(/images/74-location@2x.png); }
-  .fishing-tab .ui-icon { background-image: url(/images/233-fish@2x.png); }
-  .todo-tab .ui-icon    { background-image: url(/images/117-todo@2x.png); }
-  .info-tab .ui-icon    { background-image: url(/images/42-x-info@2x.png); }
+  .browse-tab .ui-icon  { background-image: imageUrl('12-eye@2x.png'); }
+  .nearby-tab .ui-icon  { background-image: imageUrl('74-location@2x.png'); }
+  .fishing-tab .ui-icon { background-image: imageUrl('233-fish@2x.png'); }
+  .todo-tab .ui-icon    { background-image: imageUrl('117-todo@2x.png'); }
+  .info-tab .ui-icon    { background-image: imageUrl('42-x-info@2x.png'); }
 
-  .ui-icon-custom-map   { background-image: url(/images/103-map@2x.png); }
-  .itin-icon            { background-image: url(/images/04-squiggle@2x.png); }
-  .ui-icon-zoomin       { background-image: url(/images/267-zoomin@2x.png); }
-  .ui-icon-zoomout      { background-image: url(/images/268-zoomout@2x.png); }
+  .ui-icon-custom-map   { background-image: imageUrl('103-map@2x.png'); }
+  .itin-icon            { background-image: imageUrl('04-squiggle@2x.png'); }
+  .ui-icon-zoomin       { background-image: imageUrl('267-zoomin@2x.png'); }
+  .ui-icon-zoomout      { background-image: imageUrl('268-zoomout@2x.png'); }
 
-.ui-icon-custom-pin-all       {background-image: url(/images/All-pin@2x.png); }
-.ui-icon-custom-pin-river     {background-image: url(/images/River-pin@2x.png); }
-.ui-icon-custom-pin-heritage  {background-image: url(/images/Heritage-pin@2x.png); }
-.ui-icon-custom-pin-nature    {background-image: url(/images/Nature-pin@2x.png); }
-.ui-icon-custom-pin-produce   {background-image: url(/images/Produce-pin@2x.png); }
-.ui-icon-custom-pin-cycle     {background-image: url(/images/Cycle-pin@2x.png); }
-.ui-icon-custom-pin-riverbedz {background-image: url(/images/Riverbedz-pin@2x.png); }
-.ui-icon-custom-pin-fishing   {background-image: url(/images/Fishing-pin@2x.png); }
+.ui-icon-custom-pin-all       {background-image: imageUrl('All-pin@2x.png'); }
+.ui-icon-custom-pin-river     {background-image: imageUrl('River-pin@2x.png'); }
+.ui-icon-custom-pin-heritage  {background-image: imageUrl('Heritage-pin@2x.png'); }
+.ui-icon-custom-pin-nature    {background-image: imageUrl('Nature-pin@2x.png'); }
+.ui-icon-custom-pin-produce   {background-image: imageUrl('Produce-pin@2x.png'); }
+.ui-icon-custom-pin-cycle     {background-image: imageUrl('Cycle-pin@2x.png'); }
+.ui-icon-custom-pin-riverbedz {background-image: imageUrl('Riverbedz-pin@2x.png'); }
+.ui-icon-custom-pin-fishing   {background-image: imageUrl('Fishing-pin@2x.png'); }
 }
 
 .place-menu-icon {
@@ -1292,7 +1291,7 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 .todo-map-btn-inner {
   background: transparent;
   color:white;
-  background-image: url(/images/103-map.png);
+  background-image: imageUrl('103-map.png');
   background-repeat: none;
   position:absolute;
   top:6px;
