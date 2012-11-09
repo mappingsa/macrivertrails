@@ -1,0 +1,32 @@
+/* Load webfonts from the server (website) or local files (PhoneGap) */
+/* Conversions done by fontsquirrel.com */
+
+@import 'paths';
+
+@font-face {
+    font-family: 'Cabin';
+    font-weight: normal;
+    font-style: normal;
+    font-variant: normal;
+    src: typeUrl('Cabin-Regular-webfont.eot'); /* IE9 */
+    src: local('Cabin'),
+         local('CabinRegular'),
+         typeUrl('Cabin-Regular-webfont.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+         typeUrl('Cabin-Regular-webfont.woff') format('woff'), /* Modern browsers */
+         typeUrl('Cabin-Regular-webfont.ttf') format('truetype'), /* Safari, Android, iOS */
+         typeUrl('Cabin-Regular-webfont.svg#CabinRegular') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'Cabin';
+    font-weight: bold;
+    font-style: normal;
+    font-variant: normal;
+    src: url('Cabin-Bold-webfont.eot');
+    src: local('Cabin Bold'),
+         local('CabinBold'),
+         typeUrl('Cabin-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         typeUrl('Cabin-Bold-webfont.woff') format('woff'),
+         typeUrl('Cabin-Bold-webfont.ttf') format('truetype'),
+         typeUrl('Cabin-Bold-webfont.svg#CabinBold') format('svg');
+}
