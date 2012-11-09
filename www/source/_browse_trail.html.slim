@@ -4,6 +4,6 @@
 - index_data = index_page.data
 = partial :browse_divider, :locals => {:dir => dir, :index_data => index_data, :section => section}
 - index_data.list.each do |place|
-  = partial :browse_place, :locals => {:url => "#{dir}/#{place.file}.html", :caption => place.caption, :dir => dir }
+  = partial :browse_place, :locals => {:url => "/#{dir}/#{place.file}.html", :caption => place.caption, :dir => dir }
 
 

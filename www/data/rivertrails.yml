@@ -1,6 +1,8 @@
 debug:
-    base: http://localhost:4567/             # Generic localhost
-    #base: http://emerac-lan.lan:4567/        # Jon Tara Macbook
+    base: http://localhost:4567/                        # To test from localhost URL
+    #base: http://emerac-lan.lan:4567/                  # To test from elsewhere on LAN
+    # Doesn't work
+    #base: file:///Users/jon/workspace/rivertrails/www/build/debug/ # To test from filesystem
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -54,7 +56,9 @@ web:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
+        #- http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
+        # Using patched jQuery Mobile
+        - jquery.mobile-1.2.0
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -88,7 +92,9 @@ phonegap:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - jquery.mobile-1.2.0.min
+        #- jquery.mobile-1.2.0.min
+        # Using patched jQuery Mobile
+        - jquery.mobile-1.2.0
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider

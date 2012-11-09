@@ -78,8 +78,8 @@
     // Add to Itinerary button on place menu
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
-        //$popup = $page.find(".itin-popup"),
         section = $page.jqmData("section"),
+        sectionUC = section.charAt().toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
     event.preventDefault();
@@ -89,7 +89,7 @@
       closeMenu(1000);
         }
     else {
-      $.mobile.changePage( "../itin_dialog.html" );
+      $.mobile.changePage( "/itin-dialog.html" );
       }
   });
 
@@ -130,7 +130,7 @@
       var $li = $(this),
       section = $li.jqmData("section");
       event.preventDefault();
-      $.mobile.changePage("map/index.html",
+      $.mobile.changePage("/map/index.html",
         {
           "data": "section=" + section,
           "transition": "fade"
@@ -278,7 +278,7 @@
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
 
-    $.mobile.changePage( "map/index.html",
+    $.mobile.changePage( "/map/index.html",
       {
         "data" :       "todo=" + listID,
         "transition" : "fade"

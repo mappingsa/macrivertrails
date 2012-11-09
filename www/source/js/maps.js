@@ -32,19 +32,19 @@ $(function() {
     infoBoxOffset = new google.maps.Size(-30, -10),
     hereMarkerSize = new google.maps.Size(17, 17),
 
-    cycle = new google.maps.MarkerImage( "../map/images/Cycle-pin-map@2x.png", pinSize, null, null, pinSize ),
-    heritage = new google.maps.MarkerImage( "../map/images/Heritage-pin-map@2x.png", pinSize, null, null, pinSize ),
-    nature = new google.maps.MarkerImage("../map/images/Nature-pin-map@2x.png", pinSize, null, null, pinSize ),
-    produce = new google.maps.MarkerImage("../map/images/Produce-pin-map@2x.png", pinSize, null, null, pinSize ),
-    river = new google.maps.MarkerImage("../map/images/River-pin-map@2x.png", pinSize, null, null, pinSize ),
-    riverbedz = new google.maps.MarkerImage("../map/images/Riverbedz-pin-map@2x.png", pinSize, null, null, pinSize ),
-    fishing = new google.maps.MarkerImage("../map/images/Fishing-pin-map@2x.png", pinSize, null, null, pinSize ),
+    cycle = new google.maps.MarkerImage( "/map/images/Cycle-pin-map@2x.png", pinSize, null, null, pinSize ),
+    heritage = new google.maps.MarkerImage( "/map/images/Heritage-pin-map@2x.png", pinSize, null, null, pinSize ),
+    nature = new google.maps.MarkerImage("/map/images/Nature-pin-map@2x.png", pinSize, null, null, pinSize ),
+    produce = new google.maps.MarkerImage("/map/images/Produce-pin-map@2x.png", pinSize, null, null, pinSize ),
+    river = new google.maps.MarkerImage("/map/images/River-pin-map@2x.png", pinSize, null, null, pinSize ),
+    riverbedz = new google.maps.MarkerImage("/map/images/Riverbedz-pin-map@2x.png", pinSize, null, null, pinSize ),
+    fishing = new google.maps.MarkerImage("/map/images/Fishing-pin-map@2x.png", pinSize, null, null, pinSize ),
 
-    boatramp = new google.maps.MarkerImage("../map/images/boatramp.png", altPinSize ),
-    info = new google.maps.MarkerImage("../map/images/info.png", altPinSize ),
-    rv = new google.maps.MarkerImage("../map/images/rv.png", altPinSize ),
+    boatramp = new google.maps.MarkerImage("/map/images/boatramp.png", altPinSize ),
+    info = new google.maps.MarkerImage("/map/images/info.png", altPinSize ),
+    rv = new google.maps.MarkerImage("/map/images/rv.png", altPinSize ),
 
-    hereMarker = new google.maps.MarkerImage ("../map/images/bluedot_retina.png", hereMarkerSize, null, null, hereMarkerSize),
+    hereMarker = new google.maps.MarkerImage ("/map/images/bluedot_retina.png", hereMarkerSize, null, null, hereMarkerSize),
 
   places = [
     {"group": "cycle", "icon": cycle, "item": "geurie",  "position": "-32.400028, 148.818317", "title": "Geurie-Bald Hill Mountain Bike Trails" },
@@ -190,7 +190,7 @@ $(function() {
   markerListItemTemplate =
   '<li class="big-arrow" data-icon="false">' +
     '<a href="|link|">|title||distance|' +
-      '<img src="../images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+      '<img src="/images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
     '</a>' +
   '</li>',
 
@@ -436,7 +436,7 @@ $(function() {
         options = {
           content: box,
           closeBoxMargin: "14px 5px 2px 2px",
-          closeBoxURL: "../map/images/298-circlex.png",
+          closeBoxURL: "/map/images/298-circlex.png",
           infoBoxClearance: 2,
           pixelOffset: infoBoxOffset
           };
@@ -626,7 +626,7 @@ $(function() {
     var markerLink = function(place) {
       var group = place.group,
           dir = group.charAt(0).toUpperCase() + group.slice(1);
-      return "../" + dir + "/" + place.item + ".html";
+      return "/" + dir + "/" + place.item + ".html";
       };
 
     // remove multiple, leading or trailing spaces

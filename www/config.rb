@@ -90,7 +90,8 @@ helpers do
 
   # returns relative path from current page to given path
   def path_to(path)
-    Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
+    #Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
+    path
   end
 
   # returns relative paths to various directories
@@ -100,8 +101,13 @@ helpers do
   # is needed because, in PhoneGap, we are referencing a local filesystem, and root-relative
   # paths are not useful, because they reference the filesystem root, and not the www root.
 
+  def base_defined?
+    !!data.rivertrails[build_target].base
+  end
+
   def path_root
-    path_to '/'
+    #path_to '/'
+    path_to ''
   end
 
   def path_images
@@ -169,7 +175,8 @@ configure :build do
   # activate :cache_buster
 
   # Use relative URLs if we do not have a base
-  activate :relative_assets if !data.rivertrails[build_target].base
+  #activate :relative_assets if !base_defined?
+  activate :relative_assets
 
   # Compress PNGs after build
   # First: gem install middleman-smusher
