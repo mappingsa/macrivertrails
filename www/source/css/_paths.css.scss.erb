@@ -1,7 +1,12 @@
 /* Test scss.erb: Build Target is <%= build_target %> */
 
 $imagePath: '/images/';
+$typePath: 'type/';
 
 @function imageUrl($path) {
   @return url('#{$imagePath}#{$path}')
+}
+
+@function typeUrl($path) {
+  @return url('#{$typePath}#{$path}')
 }
