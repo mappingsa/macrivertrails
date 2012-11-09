@@ -1,10 +1,4 @@
-/* Test scss.erb: Build Target is <%= build_target %> */
-
-$imagePath: '/images/';
-
-@function imageUrl($path) {
-  @return url('#{$imagePath}#{$path}')
-}
+@import 'paths';
 
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
