@@ -1,4 +1,11 @@
 /* Test scss.erb: Build Target is <%= build_target %> */
+
+$image_path: "/images/";
+
+@function image_url($path) {
+  @return url('#{$image_path}#{$path}')
+}
+
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
@@ -108,7 +115,7 @@
    ========================================================================== */
 
 .ui-dialog {
-  background:url("") #222 !important;
+  background-color: #222 !important;
   background-size: 20px 20px !important;
 }
 
@@ -121,7 +128,9 @@
    ========================================================================== */
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
-   background: url('/images/whitey.png') 0 0;
+   /* background: url('/images/whitey.png') 0 0; */
+   /* background: url('#{$image_path}whitey.png') 0 0; */
+   background: image_url('whitey.png') 0 0;
    background-size: 203px 317px;
    text-shadow: none;
 }
