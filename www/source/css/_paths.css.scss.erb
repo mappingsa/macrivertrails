@@ -1,11 +1,14 @@
 $buildTarget: '<%= build_target %>';
-$base: '<%= data.rivertrails[build_target].base %>';
+$baseURI: '<%= base_uri %>';
+$imagePath: '<%= path_images %>';
+$typePath: 'type/';
+
 /*
    buildTarget: '#{$buildTarget}'
-   base: '#{$base}'
+   baseURI: '#{$baseURI}'
+   imagePath: '#{$imagePath}'
+   typePath: '#{$typePath}'
 */
-$imagePath: '/images/';
-$typePath: 'type/';
 
 @function imageUrl($path) {
   @return url('#{$imagePath}#{$path}')

@@ -77,22 +77,23 @@ helpers do
 
   def build_target
     if ENV['MIDDLEMAN_BUILD_TARGET']
-      ENV['MIDDLEMAN_BUILD_TARGET'].downcase.to_sym
+      ENV['MIDDLEMAN_BUILD_TARGET'].downcase
     else
-      :debug
+      'debug'
     end
   end
 
-  def jqm_version
-    JQM_VERSION
+  def base_uri
+    data.rivertrails.debug.base_uri
   end
-
 
   # returns relative path from current page to given path
+  # path is supplied in site-relative form
   def path_to(path)
-    Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s
-    path
+    rp = Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s + '/'
+    rp == './' ? '' : rp
   end
+
 
   # returns relative paths to various directories
   #
@@ -100,25 +101,28 @@ helpers do
   # structure, and that need to reference another directory by relative path. Relative path
   # is needed because, in PhoneGap, we are referencing a local filesystem, and root-relative
   # paths are not useful, because they reference the filesystem root, and not the www root.
-
-  def base_defined?
-    !!data.rivertrails[build_target].base
-  end
+  #
+  # This is also now used as a substitute for using a <base> tag, which does not work
+  # correctly with jQuery Mobile.
 
   def path_root
-    path_to '/'
+    base_uri ? base_uri  : path_to( '/' )
   end
 
   def path_images
-    path_to '/images/'
+    base_uri ? ( base_uri + 'images/' ) : path_to( '/images' )
+  end
+
+  def path_sponsor_images
+    base_uri ? ( base_uri + 'images/sponsors/' ) : path_to( '/images/sponsors' )
   end
 
   def path_info
-    path_to '/Info/'
+    base_uri ? ( base_uri + 'Info/' ) : path_to( '/Info' )
   end
 
   def path_map
-    path_to '/map/'
+    base_uri ? ( base_uri + 'map/' ) : path_to( '/map' )
   end
 
   # Helper to add active class if current_page basename (not including extension)
@@ -151,7 +155,7 @@ configure :build do
   # activate :minify_css
 
   # Minify Javascript on build
-  if build_target != :debug
+  if build_target != 'debug'
     activate :minify_css
     activate :minify_javascript
     # This is a production build.
