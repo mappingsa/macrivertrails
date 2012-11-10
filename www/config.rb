@@ -145,6 +145,14 @@ helpers do
     path_map + uri
   end
 
+  def path_map_images
+    base_uri ? ( base_uri + 'map/images/' ) : path_to( '/map/images' )
+  end
+
+  def map_images_uri(uri)
+    path_map_images + uri
+  end
+
   # Helper to add active class if current_page basename (not including extension)
   #  matches supplied string.
   # Returns a hash meant to be used as a Slim splat attribute
