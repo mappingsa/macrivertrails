@@ -109,20 +109,40 @@ helpers do
     base_uri ? base_uri  : path_to( '/' )
   end
 
+  def root_uri(uri)
+    path_root + uri
+  end
+
   def path_images
     base_uri ? ( base_uri + 'images/' ) : path_to( '/images' )
+  end
+
+  def images_uri(uri)
+    path_images + uri
   end
 
   def path_sponsor_images
     base_uri ? ( base_uri + 'images/sponsors/' ) : path_to( '/images/sponsors' )
   end
 
+  def sponsor_images_uri(uri)
+    path_sponsor_images + uri
+  end
+
   def path_info
     base_uri ? ( base_uri + 'Info/' ) : path_to( '/Info' )
   end
 
+  def info_uri(uri)
+    path_info + uri
+  end
+
   def path_map
     base_uri ? ( base_uri + 'map/' ) : path_to( '/map' )
+  end
+
+  def map_uri(uri)
+    path_map + uri
   end
 
   # Helper to add active class if current_page basename (not including extension)
