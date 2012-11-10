@@ -122,7 +122,7 @@ helpers do
   end
 
   def path_sponsor_images
-    base_uri ? ( base_uri + 'images/sponsors/' ) : path_to( '/images/sponsors' )
+    base_uri ? ( base_uri + 'images/Sponsors/' ) : path_to( '/images/sponsors' )
   end
 
   def sponsor_images_uri(uri)
