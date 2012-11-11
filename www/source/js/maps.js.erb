@@ -4,6 +4,14 @@
 
 */
 
+  function onInfoWindowLink (href) {
+    $.mobile.changePage(href,
+      {
+      "transition": "slide"
+      } );
+    return false;
+    };
+
 $(function() {
 
 
@@ -431,11 +439,13 @@ $(function() {
     if (infoBox) {
       infoBox.close();
       infoBox = null;
-    }
-  };
+      }
+    };
 
   var openInfoWindow = function(place, markerElement) {
-    var box = '<div class="inner"><a href="' + markerLink(place) + '">'  + place.title + '</a></div>',
+    var url = markerLink(place),
+        box = '<div class="inner"><a class="infobox-link" onclick="onInfoWindowLink(' + "'" + url + "'" + ');" >'  + place.title + '</a></div>',
+    //var box = '<div class="inner"><a class="infobox-link" onclick="testClickOnInfoWindowLink();">'  + place.title + '</a></div>',
         coords = place.position.split(","),
         lat = trim(coords[0]),
         lng = trim(coords[1]),
@@ -451,6 +461,7 @@ $(function() {
     gmap.option( "center", centerLoc );
     infoBox = new InfoBox(options);
     infoBox.open(gmap.get('map'), markerElement);
+
     if ( (!loadingSingle) && knownLocation ) {
       $to.attr("value",  place.position);
       $toPretty.attr("value", place.title);
