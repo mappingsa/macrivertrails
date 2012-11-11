@@ -120,11 +120,11 @@ helpers do
   end
 
   def path_images
-    base_uri ? ( base_uri + 'images/' ) : path_to( '/images', from )
+    base_uri ? ( base_uri + 'images/' ) : path_to( '/images')
   end
 
   def images_uri(uri)
-    path_images(from) + uri
+    path_images + uri
   end
 
   def path_sponsor_images

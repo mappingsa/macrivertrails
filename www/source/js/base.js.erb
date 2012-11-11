@@ -1,4 +1,9 @@
 
+/*
+    build_target: '<%= build_target %>',
+    base_uri: '<%= base_uri %>',
+*/
+
 (function ($) {
   // Comment-out the following line in order to be able to evaluate expressions
   // in Safari debug console when at a breakpoint!
@@ -89,7 +94,7 @@
       closeMenu(1000);
         }
     else {
-      $.mobile.changePage( "<%= root_uri 'itin-dialog.html' %> " );
+      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %> " );
       }
   });
 
@@ -130,7 +135,7 @@
       var $li = $(this),
       section = $li.jqmData("section");
       event.preventDefault();
-      $.mobile.changePage("<%= map_uri 'index.html' %>",
+      $.mobile.changePage("map/index.html",
         {
           "data": "section=" + section,
           "transition": "fade"
@@ -278,7 +283,7 @@
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
 
-    $.mobile.changePage( "<%= map_uri 'index.html' %>",
+    $.mobile.changePage( "map/index.html",
       {
         "data" :       "todo=" + listID,
         "transition" : "fade"
@@ -304,7 +309,7 @@ var localStore = function() {
       itemTemplate =
         '<li data-section="|section|" data-item="|item|">\
          <a href="|href|">|title|\
-         <img src="<%= path_images %>|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
+         <img src="images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
          </a>\
          <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
          </li>',
@@ -561,7 +566,7 @@ var localStore = function() {
           if (listID === this.listID) {
             thisItem = thisItem.replace('|section|', this.section);
             thisItem = thisItem.replace('|item|', this.item);
-            thisItem = thisItem.replace('|href|', '<%= path_root %>' + sectionUC + "/" + this.item + ".html");
+            thisItem = thisItem.replace('|href|', sectionUC + "/" + this.item + ".html");
             thisItem = thisItem.replace('|title|', this.title);
             thisItem = thisItem.replace('|alt|', sectionUC);
             thisItem = thisItem.replace('|pin|', sectionUC);
