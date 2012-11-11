@@ -50,7 +50,9 @@
     # very buggy. This capability is promised for JQM 1.3.
     #
     # base_uri, if defined, is prepended to those URIs that require path
-    # traversal as an alternative to relative paths.
+    # traversal as an alternative to relative paths. You must always include
+    # a trailing '/' in the base_uri since URIs in the HTML files used with
+    # the helpers always omit a leading '/'.
     #
     # base_uri may be needed when testing against a local filesystem on
     # a desktop computer using certain browsers (likely Chrome)
@@ -66,7 +68,7 @@ debug:
     base_uri: /                                   # To test from any server root
     #base_uri: http://localhost:4567/             # To test from localhost URL
     #base_uri: http://emerac-lan.lan:4567/        # To test from elsewhere on LAN
-    #base_uri: /projects/rivertrails              # sub-site of a server
+    #base_uri: /projects/rivertrails/             # sub-site of a server
     #base_uri: file:///Users/jon/workspace/rivertrails/www/build/debug/ # To test from filesystem
     stylesheets:
         - webfonts-cabin
