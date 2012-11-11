@@ -3,6 +3,7 @@
 body
   = blank_line
   @page.trail-page class="#{current_page.data.section}" data-dom-cache="true"
+    = partial :middleman_info
     = partial :trail_header
     @content data-iscroll="true"
       = blank_line

@@ -2,6 +2,7 @@
 = partial :head
 body
   .place-page@page data-section="#{current_page.data.section}" data-item="#{current_page.data.item}" data-title="#{current_page.data.title}"
+    = partial :middleman_info
     = partial :place_header
     = partial :place_menu
     div data-iscroll="true"
