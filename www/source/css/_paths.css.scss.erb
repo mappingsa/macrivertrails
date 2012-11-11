@@ -1,13 +1,13 @@
-<% r = current_resource %>
 $buildTarget: '<%= build_target %>';
 $baseURI: '<%= base_uri %>';
 $imagePath: '<%= base_uri ? (base_uri + 'images/') : '../images/' %>';
 $typePath: 'type/';
 
 /*
-    build_target: '#{$buildTarget}',
-    base_uri: '#{$baseURI}',
-    image_path: '#{$imagePath}'
+    $buildTarget: '#{$buildTarget}',
+    $baseUri: '#{$baseURI}',
+    $imagePath: '#{$imagePath}',
+    $typePath: '#{$typePath}'
 */
 
 @function imageUrl($path) {
