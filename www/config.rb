@@ -87,10 +87,16 @@ helpers do
     data.rivertrails.debug.base_uri
   end
 
-  # returns relative path from current page to given path
+  # returns relative path from provided or current file path to given path
   # path is supplied in site-relative form
-  def path_to(path)
-    rp = Pathname.new(Pathname.new( path ).relative_path_from( Pathname.new( '/' + current_page.destination_path ).dirname) ).cleanpath.to_s + '/'
+  #
+  # from_file_path_in is optional - if absent, we will get the current
+  #   page path from Middleman. It must be supplied for Javascript that is constructing
+  #   elements on a page from a script in js path. (So using current file path would
+  #   be incorrect)
+  def path_to(to)
+    from = Pathname.new('/' + current_resource.destination_path).dirname
+    rp = Pathname.new( Pathname.new(to).relative_path_from(from) ).cleanpath.to_s + '/'
     rp == './' ? '' : rp
   end
 
@@ -114,11 +120,11 @@ helpers do
   end
 
   def path_images
-    base_uri ? ( base_uri + 'images/' ) : path_to( '/images' )
+    base_uri ? ( base_uri + 'images/' ) : path_to( '/images', from )
   end
 
   def images_uri(uri)
-    path_images + uri
+    path_images(from) + uri
   end
 
   def path_sponsor_images
