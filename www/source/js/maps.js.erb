@@ -1,3 +1,9 @@
+/*
+    build_target: '<%= build_target %>',
+    base_uri: '<%= base_uri %>',
+
+*/
+
 $(function() {
 
 
@@ -190,7 +196,7 @@ $(function() {
   markerListItemTemplate =
   '<li class="big-arrow" data-icon="false">' +
     '<a href="|link|">|title||distance|' +
-      '<img src="<%= path_images %>|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+      '<img src="<%= (base_uri ? base_uri : '../') + 'images/' %>|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">' +
     '</a>' +
   '</li>',
 
@@ -626,7 +632,7 @@ $(function() {
     var markerLink = function(place) {
       var group = place.group,
           dir = group.charAt(0).toUpperCase() + group.slice(1);
-      return "<%= path_root %>" + dir + "/" + place.item + ".html";
+      return "<%= (base_uri ? base_uri : '../')%>" + dir + "/" + place.item + ".html";
       };
 
     // remove multiple, leading or trailing spaces
