@@ -65,7 +65,7 @@
     #
 
 debug:
-    base_uri: /                                   # To test from any server root
+    #base_uri: /                                   # To test from any server root
     #base_uri: http://localhost:4567/             # To test from localhost URL
     #base_uri: http://emerac-lan.lan:4567/        # To test from elsewhere on LAN
     #base_uri: /projects/rivertrails/             # sub-site of a server
@@ -136,6 +136,13 @@ web:
         - google.maps.v3.utility.infobox.js
         - google.maps.v3.utility.geolocationmarker.js
 
+# For Phonegap builds, the browser is using file: protocol. '/' refers to the
+# root of the filesystem, so site-relative URLs will not work, since the
+# content is located below the root of the filesystem.
+#
+# You can use either file-relative URLs (by not defining base_uri) or absolute
+# URLs, giving the path to the base using file:///. The latter is necessary
+# if the browser will not tolerate directory traversal (../) in relative URLs.
 phonegap:
     # iOS:
     #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
