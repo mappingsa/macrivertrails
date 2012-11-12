@@ -1,6 +1,75 @@
+    # Setting base_uri
+    #
+    # If you do not define base_uri, you will get normalized relative URIs.
+    #
+    # All URIs in this site are written in a current-path-relative form.
+    #
+    # URIs referencing the same path as the referring file are written
+    # with no prefix. e.g. if index.html references a.html in the same
+    # directory, it is written simply as a.html.
+    #
+    # URIs referencing some sub-path, below the path of the reffering file
+    # are also written with no prefix. e.g. if index.html references a.html
+    # one path down, say, at Info, it is written as Info/a.html.
+    #
+    # URIs that need to traverse paths (i.e. need to go "up" the tree, and
+    # then possibly back down are all written using helpers. The helpers
+    # allow these paths to be re-written at build time to adjust to the
+    # needs of various browser and server environments.
+    #
+    # If it should become necessary, it would not be difficult to expand
+    # this concept to make use of helpers for ALL URIs referenced within the
+    # site.
+    #
+    # The helpers will re-write the URI in two different possible ways,
+    # depending on the settings in rivertrails.yml.
+    #
+    # The helpers are used, where needed, in HTML, CSS, and JS files.
+    # Vendored CSS and JS files fro third-party libraries generally do not
+    # require the use of helpers, as they genrally have their paths arranged
+    # to avoid path traversal.
+    #
+    # if base_uri is not defined, then URI paths requiring traversal will be
+    # re-written using normalized relative paths.
+    #
+    #  ../index.html
+    #  ../Info/index.html
+    #
+    # The form ./index.html is avoided, since it is the same as index.html,
+    # and is problematical for some browsers.
+    #
+    # The helper knows the path of the file making the reference, and will
+    # adjust the path accordingly.
+    #
+    # This should work in most environments.
+    #
+    # If not, you can set base_uri. base_uri does not make use of a <base>
+    # tag, since these do not yet work properly with jQuery Mobile.
+    # jQuery Mobile creates a <base> tag on every page itself, but does not
+    # yet properly deal with a pre-existing <base> tag. It tries, but it is
+    # very buggy. This capability is promised for JQM 1.3.
+    #
+    # base_uri, if defined, is prepended to those URIs that require path
+    # traversal as an alternative to relative paths. You must always include
+    # a trailing '/' in the base_uri since URIs in the HTML files used with
+    # the helpers always omit a leading '/'.
+    #
+    # base_uri may be needed when testing against a local filesystem on
+    # a desktop computer using certain browsers (likely Chrome)
+    #
+    # base_uri may or may not be needed for PhoneGap.
+    #
+    # For a conventional web server, with assets starting at the root of the
+    # site, base_uri may simply be set to '/'. If the site starts at some
+    # sub-path, then the sub-path should be set as base_uri.
+    #
+
 debug:
-    base: http://localhost:4567/             # Generic localhost
-    #base: http://emerac-lan.lan:4567/        # Jon Tara Macbook
+    #base_uri: /                                   # To test from any server root
+    #base_uri: http://localhost:4567/             # To test from localhost URL
+    #base_uri: http://emerac-lan.lan:4567/        # To test from elsewhere on LAN
+    #base_uri: /projects/rivertrails/             # sub-site of a server
+    #base_uri: file:///Users/jon/workspace/rivertrails/www/build/debug/ # To test from filesystem
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -21,7 +90,8 @@ debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - jquery.mobile-1.2.0
+        #- jquery.mobile-1.2.0
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -32,7 +102,7 @@ debug:
         - google.maps.v3.utility.geolocationmarker.js
 
 web:
-    base: http://web2008/macriver/
+    #base_uri: http://web2008/macriver/
     stylesheets:
         - webfonts-cabin-google
         - webfonts-caviar
@@ -54,7 +124,9 @@ web:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
+        #- http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
+        # Using patched jQuery Mobile
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -64,8 +136,18 @@ web:
         - google.maps.v3.utility.infobox.js
         - google.maps.v3.utility.geolocationmarker.js
 
+# For Phonegap builds, the browser is using file: protocol. '/' refers to the
+# root of the filesystem, so site-relative URLs will not work, since the
+# content is located below the root of the filesystem.
+#
+# You can use either file-relative URLs (by not defining base_uri) or absolute
+# URLs, giving the path to the base using file:///. The latter is necessary
+# if the browser will not tolerate directory traversal (../) in relative URLs.
 phonegap:
-    #base /root/directory/for/web/content
+    # iOS:
+    #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
+    # Android
+    #base_uri: file:///android_asset/www/_assets/
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -88,7 +170,9 @@ phonegap:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - maps
-        - jquery.mobile-1.2.0.min
+        #- jquery.mobile-1.2.0.min
+        # Using patched jQuery Mobile
+        - jquery.mobile-1.2.0-patched
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider

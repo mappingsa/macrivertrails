@@ -1,4 +1,9 @@
 
+/*
+    build_target: '<%= build_target %>',
+    base_uri: '<%= base_uri %>',
+*/
+
 (function ($) {
   // Comment-out the following line in order to be able to evaluate expressions
   // in Safari debug console when at a breakpoint!
@@ -58,8 +63,6 @@
 
     $page.find(".toggle-fav").bind("vclick", function(event) {
       var $a = $(this),
-          $img = $a.find("img"),
-          $menu = $page.find(".menu"),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
           title = $page.jqmData("title");
@@ -78,8 +81,8 @@
     // Add to Itinerary button on place menu
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
-        //$popup = $page.find(".itin-popup"),
         section = $page.jqmData("section"),
+        sectionUC = section.charAt().toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
     event.preventDefault();
@@ -89,7 +92,7 @@
       closeMenu(1000);
         }
     else {
-      $.mobile.changePage( "../itin_dialog.html" );
+      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %> " );
       }
   });
 

@@ -2,7 +2,7 @@
 title: Community
 ---
 <div data-role="page" class="community-page">
-
+<%= partial :middleman_info %>
 <%= partial :info_header %>
 <%= partial :info_tabbar %>
 
@@ -12,42 +12,42 @@ title: Community
 <ul class="slides">
                 <li>
                     <a>
-                    <img src="../images/Sponsors/IWRA.jpg" />
+                    <img src="<%= sponsor_images_uri 'IWRA.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-      <img src="../images/tina-trout-codweb.jpg" />
+      <img src="<%= images_uri 'tina-trout-codweb.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/IWRAweb.jpg" />
+                    <img src="<%= images_uri 'IWRAweb.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/Wade.jpg" />
+                    <img src="<%= images_uri 'Wade.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/dubbo-dragonweb.jpg" />
+                    <img src="<%= images_uri 'dubbo-dragonweb.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/dubbo-dragonweb3.jpg" />
+                    <img src="<%= images_uri 'dubbo-dragonweb3.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/Fieldnatsweb.jpg" />
+                    <img src="<%= images_uri 'Fieldnatsweb.jpg' %>" />
       </a>
                 </li>
                 <li>
                     <a>
-                    <img src="../images/Fieldnatsweb2.jpg" />
+                    <img src="<%= images_uri 'Fieldnatsweb2.jpg' %>" />
       </a>
                 </li>
            </ul>

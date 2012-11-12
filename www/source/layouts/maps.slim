@@ -2,6 +2,7 @@
 body
   = blank_line
   @page.map-page
+    = partial :middleman_info
     = partial :map_header
     = partial :map_tabbar
     @content data-iscroll="true"

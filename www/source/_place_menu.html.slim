@@ -20,15 +20,15 @@
   ul
     li
       a.go-phone*telPopup href="#{tel_url}"
-        img src="../images/75-phone.png" height="16px" width="18px" PHONE
+        img src="#{ images_uri '75-phone.png' }" height="16px" width="18px" PHONE
     li
       a.go-web*webPopup href="#{web_url}"
-        img src="../images/icon_blog.png" height="20px" width="20px" WEB
+        img src="#{ images_uri 'icon_blog.png' }" height="20px" width="20px" WEB
     li
       a.go-mail*mailPopup href="#{mail_url}"
-        img src="../images/icon_mail.png" height="20px" width="20px" MAIL
+        img src="#{ images_uri 'icon_mail.png' }" height="20px" width="20px" MAIL
     li
-      a href="../map/index.html?section=#{section}&item=#{place.item}"
+      a href="#{ map_uri 'index.html?section=' +  section + '&item=' + place.item }"
         div.place-menu-icon.trail-pin class="ui-icon-custom-pin-#{place.section}"
         span GET DIRECTIONS
     li

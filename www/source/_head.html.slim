@@ -1,15 +1,12 @@
 / head for most parts of the site
-- base = data.rivertrails[build_target].base
 =blank_line
 doctype 5
 html lang="en-AU"
+  = partial :middleman_info
   head
     = blank_line
     title = current_page.data.title
     = partial :meta
-    - if base
-      base href="#{base}"
-      = blank_line
     = stylesheet_link_tag data.rivertrails[build_target].stylesheets
     = blank_line
     = javascript_include_tag data.rivertrails[build_target].scripts
