@@ -119,6 +119,10 @@ helpers do
     path_root + uri
   end
 
+  def home_uri
+    root_uri('index.html')
+  end
+
   def path_images
     base_uri ? ( base_uri + 'images/' ) : path_to( '/images')
   end
