@@ -350,7 +350,7 @@ $(function() {
           gmap.addMarker( {
             position: position,
             //bounds: !loadingSingle && !isInfoPlace,
-            bounds: false,
+            bounds: selTodo !== undefined && !isInfoGroup(group),
             optimzed: false,
             flat:true,
             icon: place.icon,
