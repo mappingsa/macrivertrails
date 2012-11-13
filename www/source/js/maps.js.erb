@@ -64,7 +64,39 @@ $(function() {
 
     hereMarker = new google.maps.MarkerImage ("images/bluedot_retina.png", hereMarkerSize, null, null, hereMarkerSize),
 
+  hereMarkerZindex = 20,
+
+  groups = {
+    "boatramp":  { "zIndex": 1},
+    "rv":        { "zIndex": 2},
+    "info":      { "zIndex": 3},
+    "cycle":     { "zIndex": 10},
+    "produce" :  { "zIndex": 10},
+    "heritage":  { "zIndex": 10},
+    "nature":    { "zIndex": 10},
+    "river":     { "zIndex": 10},
+    "riverbedz": { "zIndex": 10},
+    "fishing":   { "zIndex": 10}
+  }
+
   places = [
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.21039,  148.23812", title:  "Boat Ramp" },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.192102, 148.610495", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.248102, 148.595737", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.250138, 148.598792", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.541935, 148.935469", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.22588,  148.247326", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.766391, 149.143586", title: "Boat Ramp"  },
+    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-31.685998, 147.834187", title: "Boat Ramp"  },
+    {"group": "rv", "icon": rv, "item": "", "position": "-32.277955, 148.588445", "title": "Dubbo RV dump site" },
+    {"group": "rv", "icon": rv, "item": "", "position": "-31.696939, 147.839889", "title": "Warren RV dump site" },
+    {"group": "rv", "icon": rv, "item": "", "position": "-32.553644, 148.928628", "title": "Wellington RV dump site" },
+    {"group": "rv", "icon": rv, "item": "", "position": "-32.233914, 148.242014", "title": "narromine RV dump site"},
+    {"group": "info", "icon": info, "item": "", "position": "-32.553037, 148.940964", "title": "Wellington Vistor Information Centre" },
+    {"group": "info", "icon": info, "item": "", "position": "-32.243408, 148.601667", "title": "Dubbo Visitor Information Centre" },
+    {"group": "info", "icon": info, "item": "", "position": "-31.699748, 147.837154", "title": "Warren Visitor Information Centre" },
+    {"group": "info", "icon": info, "item": "", "position": "-32.233914, 148.242014", "title": "Narromine Vistor Information Centre" },
+
     {"group": "cycle", "icon": cycle, "item": "geurie",  "position": "-32.400028, 148.818317", "title": "Geurie-Bald Hill Mountain Bike Trails" },
     {"group": "cycle", "icon": cycle, "item": "beni", "position": "-32.246925, 148.72464", "title": "Beni State Conservation Area cycling, Dubbo" },
     {"group": "cycle", "icon": cycle, "item": "powterpark", "position": "-32.239314, 148.611986", "title": "Powter Park BMX Track, Dubbo" },
@@ -186,23 +218,7 @@ $(function() {
     {"group": "fishing", "icon": fishing, "item": "warren", "position": "-32.227100, 148.352958", "title": "Warren Weir Reserve - upstream" },
     {"group": "fishing", "icon": fishing, "item": "victora",  "position": "-31.695536, 147.838031", "title": "Oxley Park - Macquarie Park - Ebert Park - Victoria Parks, Warren" },
     {"group": "fishing", "icon": fishing, "item": "brian", "position": "-31.685056, 147.835917", "title": "Brian Egan Weir, Warren" },
-    {"group": "fishing", "icon": fishing, "item": "quinines", "position": "-31.655992, 147.792636", "title": "Quinines Reserve, Warren" },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.21039,  148.23812", title:  "Boat Ramp" },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.192102, 148.610495", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.248102, 148.595737", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.250138, 148.598792", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.541935, 148.935469", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.22588,  148.247326", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-32.766391, 149.143586", title: "Boat Ramp"  },
-    {"group": "boatramp", "icon": boatramp, "item": "", "position": "-31.685998, 147.834187", title: "Boat Ramp"  },
-    {"group": "info", "icon": info, "item": "", "position": "-32.553037, 148.940964", "title": "Wellington Vistor Information Centre" },
-    {"group": "info", "icon": info, "item": "", "position": "-32.243408, 148.601667", "title": "Dubbo Visitor Information Centre" },
-    {"group": "info", "icon": info, "item": "", "position": "-31.699748, 147.837154", "title": "Warren Visitor Information Centre" },
-    {"group": "info", "icon": info, "item": "", "position": "-32.233914, 148.242014", "title": "Narromine Vistor Information Centre" },
-    {"group": "rv", "icon": rv, "item": "", "position": "-32.277955, 148.588445", "title": "Dubbo RV dump site" },
-    {"group": "rv", "icon": rv, "item": "", "position": "-31.696939, 147.839889", "title": "Warren RV dump site" },
-    {"group": "rv", "icon": rv, "item": "", "position": "-32.553644, 148.928628", "title": "Wellington RV dump site" },
-    {"group": "rv", "icon": rv, "item": "", "position": "-32.233914, 148.242014", "title": "narromine RV dump site"}
+    {"group": "fishing", "icon": fishing, "item": "quinines", "position": "-31.655992, 147.792636", "title": "Quinines Reserve, Warren" }
   ],
 
   markerListItemTemplate =
@@ -328,13 +344,14 @@ $(function() {
       //---------- Add markers for selected places ------------v
       $.each( places, function(i, place) {
 
-        group = place.group,
-        item = place.item,
-        position = place.position,
-        coords = place.position.split(","),
-        lat = trim(coords[0]),
-        lng = trim(coords[1]),
-        isInfoPlace = isInfoGroup(group);
+        var group = place.group,
+            item = place.item,
+            position = place.position,
+            coords = place.position.split(","),
+            lat = trim(coords[0]),
+            lng = trim(coords[1]),
+            isInfoPlace = isInfoGroup(group),
+            zIndex = groupZindex(group);
 
         if ( ( (selTodo === undefined) &&
                (!selItem.length || selItem === item) && // Test item/group
@@ -361,6 +378,7 @@ $(function() {
             group: group,
             mTitle: place["title"],
             mLink: markerLink(place),
+            zIndex: zIndex,
             } ).click(function() { openInfoWindow(place, this); });
           }
       });
@@ -409,13 +427,14 @@ $(function() {
         }
 
       $.each( places, function(i, place) {
-        group = place.group,
-        item = place.item,
-        position = place.position,
-        coords = place.position.split(","),
-        lat = trim(coords[0]),
-        lng = trim(coords[1]),
-        isInfoPlace = isInfoGroup(group);
+        var group = place.group,
+            item = place.item,
+            position = place.position,
+            coords = place.position.split(","),
+            lat = trim(coords[0]),
+            lng = trim(coords[1]),
+            isInfoPlace = isInfoGroup(group),
+            zIndex = groupZindex(group);
 
         if ( group === selGroup || selGroup === "all" || isInfoPlace ){
           gmap.addMarker( {
@@ -428,6 +447,7 @@ $(function() {
             group: group,
             mTitle: place["title"],
             mLink: markerLink(place),
+            zIndex: zIndex,
             }).click(function() {openInfoWindow(place, this); });
           }
 
@@ -514,7 +534,8 @@ $(function() {
         optimized: false,
         title: "My Location",
         visible: true,
-        flat: true
+        flat: true,
+        zIndex: hereMarkerZindex
         } );
       };
 
@@ -662,6 +683,10 @@ $(function() {
       // These are places that do not have an associated page.
       var isInfoGroup = function(group) {
         return group === "boatramp" || group === "rv" || group === "info"
+      };
+
+      var groupZindex = function(group) {
+        return groups[group].zIndex;
       };
 
   });
