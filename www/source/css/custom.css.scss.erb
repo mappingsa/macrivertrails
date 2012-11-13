@@ -241,30 +241,64 @@ that they will override CSS in the standard JQM structure CSS */
   position:absolute;
   width: 40px;
   height: 36px;
+  background-size: 40px 36px;
   top: 80px;
+  background-attach: top left;
+  background-repeat: no-repeat;
   -webkit-filter: drop-shadow(-2px 3px 3px rgba(0, 0, 0, 0.8) );
 }
 
 .home-produce .icon {
   right: 155px;
+  background-image: imageUrl('produce.png');
 }
 .home-river .icon {
   right: 115px;
+  background-image: imageUrl('river.png');
 }
 .home-heritage .icon {
   right: 150px;
+  background-image: imageUrl('heritage.png');
 }
 .home-nature .icon {
   right: 136px;
+  background-image: imageUrl('nature.png');
 }
 .home-cycle .icon {
   right: 130px;
+  background-image: imageUrl('cycle.png');
 }
 .home-riverbedz .icon {
   right: 110px;
+  background-image: imageUrl('riverbedz.png');
 }
 .home-fishing .icon {
   right: 84px;
+  background-image: imageUrl('fishing.png');
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+.home-produce .icon {
+  background-image: imageUrl('produce@2x.png');
+}
+.home-river .icon {
+  background-image: imageUrl('river@2x.png');
+}
+.home-heritage .icon {
+  background-image: imageUrl('heritage@2x.png');
+}
+.home-nature .icon {
+  background-image: imageUrl('nature@2x.png');
+}
+.home-cycle .icon {
+  background-image: imageUrl('cycle@2x.png');
+}
+.home-riverbedz .icon {
+  background-image: imageUrl('riverbedz@2x.png');
+}
+.home-fishing .icon {
+  background-image: imageUrl('fishing@2x.png');
+}
 }
 
 .home-menu .tile-title {
