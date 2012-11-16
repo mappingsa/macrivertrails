@@ -1,0 +1,111 @@
+// Populate the map, based on URL params
+createMap = function() {
+    // attempt to get specifc marker data from item  page
+    urlVars = getUrlVars();
+    selGroup = urlVars["section"] || "";
+    selItem = urlVars["item"] || "";
+    selLocation = urlVars["location"] || "";
+    selLocationMe = selLocation === "me";
+    selTodo = urlVars["todo"];    // This one only, undefined if not present
+    if (selTodo) {
+      selTodo = parseInt(selTodo);  // Default to 0 (Favourites) if not an integer
+    }
+    loadingSingle = false;
+    fullLoad = false;
+    // Single place = "get directions"  group=<group name>&item=<item name>
+    if ( selItem.length && selGroup.length ){
+      loadingSingle = true;
+      selTodo = undefined;
+      }
+    // Group - clicked on a group header in Browse (same result as group button on map )
+    // group=<group name>
+    else if (selGroup.length) {
+      selItem = "";
+      selTodo = undefined;
+      }
+    // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
+    else if (selTodo !== undefined) {
+      var lists = localStore.getLists(),
+          title = lists[selTodo].title;
+      $headerTitle.text(title);
+      $topMarkerNav.height(0).hide().trigger("updatelayout");
+      iscrollview.resizeWrapper();
+      }
+    // All places "nearby" button (location=me)
+    else {
+      fullLoad = true;
+      selItem = "";
+      }
+    // Set the appropriate tabbar button active
+    if (selLocationMe) {
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+      $activeGroupButton.addClass("ui-btn-active");
+      }
+    else if (selGroup) {
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
+      $activeGroupButton.addClass("ui-btn-active");
+      }
+
+    //---------- Add markers for selected places ------------v
+    $.each( places, function(i, place) {
+
+      var group = place.group,
+          item = place.item,
+          position = place.position,
+          coords = place.position.split(","),
+          lat = trim(coords[0]),
+          lng = trim(coords[1]),
+          showAlways = groupShowAlways(group),
+          zIndex = groupZindex(group);
+
+      if ( ( (selTodo === undefined) &&
+             (!selItem.length || selItem === item) && // Test item/group
+             (!selGroup.length || selGroup === group)
+           )
+           || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
+           || showAlways
+        ) {
+        if ( selItem === item && selGroup === group) {  // Want to see single place - "directions"
+          centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
+          gmap.option( "center", centerLoc );
+          $to.attr("value",  place.position);          // Prepare to get directions,
+          $toPretty.attr("value", place['title']);     // But don't show direcitons fields yet
+                                                       // (Not until/unless we get user location )
+          }
+        gmap.addMarker( {
+          position: position,
+          //bounds: !loadingSingle && !isInfoPlace,
+          bounds: selTodo !== undefined && !showAlways,
+          optimized: false,
+          flat:true,
+          icon: place.icon,
+          group: group,
+          mTitle: place["title"],
+          mLink: markerLink(place),
+          zIndex: zIndex,
+          } ).click(function() { openInfoWindow(place, this); });
+        }
+    });
+
+    //--------------- each  --------------------------------^
+
+  if (loadingSingle) {
+    $topMarkerNav.height(0).hide().trigger("updatelayout");
+    iscrollview.resizeWrapper();
+    $headerTitle.text("Directions");
+    }
+
+  // Note that increasing the zoom level closer than the
+  // bounds of selected markers is ineffective, as the map
+  // area will be expanded to the bounds
+  //
+  // Bounds are not set when loading single, so any zoom
+  // level desired can be used in that case.
+  //
+  // After getting GPS position, markers are re-drawn with
+  // bounds off, and a desired zoom level is then applied
+  // if the map was entred from "nearby" link
+  gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
+  addMyLocation();
+  iscrollview.refresh();
+  }

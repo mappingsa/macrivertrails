@@ -1,0 +1,64 @@
+addHereMarker = function( pos ) {
+    gmap.addMarker( {
+      icon: hereMarker,
+      id: "client",
+      position: pos,
+      bounds: false,
+      optimized: false,
+      title: "My Location",
+      visible: true,
+      flat: true,
+      zIndex: hereMarkerZindex
+      } );
+    },
+
+addMyLocation = function(){
+  gmap.getCurrentPosition( function(position, status) {
+    if (status === "OK") {
+      lat = position.coords.latitude,
+      lng = position.coords.longitude,
+      distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() ),
+      outOfRegion = distFromDefaultLoc > maxNearbyDist;
+      userLoc = new google.maps.LatLng(  lat, lng );
+      if (!loadingSingle && !outOfRegion) {
+        centerLoc = userLoc;
+      }
+      tripOriginLoc = userLoc;
+      knownLocation = true;
+      $markerListNote.text( markerListNoteLocationKnown );
+      $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+      makePrettyAddress(tripOriginLoc, 1);
+      addHereMarker( userLoc );
+      if (loadingSingle) {
+        $directionsFields.show();
+        iscrollview.refresh();
+        }
+      else {
+        gmap.option( "center", centerLoc );
+        gmap.option( "zoom", zoomLevelNearby );
+        }
+      } // status === "OK"
+    else {     // Couldn't get location
+      userLoc = undefined;
+      tripOriginLoc = undefined;
+      knownLocation = false;
+      $markerListNote.text( markerListNoteLocationUnknown );
+      $from.val("");    // Clear from field for directions
+      $directionsFields.hide();
+
+      /* TODO: This popup causes trouble when the user refreshes the browser
+               The page will transition then to the previous page.
+               Not sure that this popup is really necessary, given that we
+               have an explanitory note in the markerlist notes.
+      $noLocationPopup.popup("open");
+      setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
+      */
+      }
+    showMarkerList();
+    // Add dynamic geolocation marker if not already present
+    //if (!geoLocationMarker) {
+    // geoLocationMarker = new GeolocationMarker(map);
+    //  }
+    iscrollview.refresh();
+  });
+}

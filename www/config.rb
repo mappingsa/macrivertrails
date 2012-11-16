@@ -179,13 +179,9 @@ helpers do
 end
 
 set :css_dir, 'css'
-
 set :js_dir, 'js'
-
 set :images_dir, 'images'
-
 set :build_dir, "build/#{build_target}"
-
 
 # Build-specific configuration
 configure :build do

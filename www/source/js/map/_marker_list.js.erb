@@ -1,0 +1,59 @@
+// Map functions dealing with the markerlist. This is the list of places shown underneath
+// the map, which correspond to the trail markers shown on the map.
+
+showMarkerList = function(){
+var myMarkers = gmap.get( "markers" ),
+    list = "",
+    $markerListItems;
+
+  $.each( myMarkers, function(i, tmarker) {
+    list += buildMarkerListItem( tmarker );
+    });
+
+  $markerList.empty().append(list);
+
+  // sort list by nearest and apply jQuery Mobile UI
+  $markerListItems = $markerList.find("li");
+  $markerListItems.tsort("span.ml-sort");
+
+  markerListview.refresh();
+  $markerListNote.show();
+  },
+
+// Builds a single markerlist item, returns it
+buildMarkerListItem = function(marker) {
+  var position = marker.position,
+      title = marker.mTitle,
+      group = marker.group,
+      link = marker.mLink,
+      endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
+      base = markerListItemTemplate,
+      groupUC = group.charAt().toUpperCase() + group.slice(1);
+  if ( groupShowAlways(group) ) {
+    return "";
+    }
+  endRes = Math.round( endRes*10 ) / 10;
+  base = base.replace( "|pin|", groupUC);
+  base = base.replace( "|alt|", groupUC );
+  base = base.replace( "|link|", link.length ? link : "#" );
+  if (knownLocation) {
+    base = base.replace( "|title|", title);
+    base = base.replace( "|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
+    }
+  else {
+    base = base.replace( "|title|", '<span class="ml-sort">' + title + "</span>" );
+    base = base.replace( "|distance|", "" );
+    }
+  return base;
+  },
+
+markerListULReset = function() {
+  $markerList.empty();
+  $markerListNote.hide();
+},
+
+markerLink = function(place) {
+  var group = place.group,
+      dir = group.charAt(0).toUpperCase() + group.slice(1);
+  return "<%= (base_uri ? base_uri : '../')%>" + dir + "/" + place.item + ".html";
+  }

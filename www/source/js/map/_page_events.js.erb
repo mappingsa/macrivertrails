@@ -1,0 +1,76 @@
+
+$page.on("pageshow resize", function( event ) {
+  gmap.refresh();
+  iscrollview.refresh();
+  });
+
+// Top Navbar buttons. Shows markers for each trail ---
+$page.on("vclick", ".markerNav", function( e ){
+  var $button = $(this),
+      selGroup = $button.data( "group" );
+  e.preventDefault();
+  closeInfoWindow();
+  if ($.activeGroupButton) {
+    $activeGroupButton.removeClass("ui-btn-active");
+    }
+  $button.addClass("ui-btn-active");
+  $activeGroupButton = $button;
+  gmap.clear( "markers" );
+  if ( selItem === "all" ){
+    fullLoad = true;
+    }
+  else {
+      fullLoad = false;
+    }
+
+  $.each( places, function(i, place) {
+    var group = place.group,
+        item = place.item,
+        position = place.position,
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        showAlways = groupShowAlways(group),
+        zIndex = groupZindex(group);
+
+    if ( group === selGroup || selGroup === "all" || showAlways ){
+      gmap.addMarker( {
+        position: position,
+        //bounds: !knownLocation,
+        bounds: false,
+        optimized: false,
+        flat: true,
+        icon: place.icon,
+        group: group,
+        mTitle: place["title"],
+        mLink: markerLink(place),
+        zIndex: zIndex,
+        }).click(function() {openInfoWindow(place, this); });
+      }
+
+    });
+
+  if ( !knownLocation ) {
+    gmap.option( "zoom", zoomLevelAll );
+  }
+  addMyLocation();
+});
+
+$submitDirections.on("click",  function () {
+  gmap.displayDirections ( {
+    origin: $from.val(),
+    destination: $to.val(),
+    travelMode: google.maps.DirectionsTravelMode.DRIVING
+    },
+    { panel: $directions[0] },
+    function (success, response) {
+      if (success) {
+        $results.show();
+        }
+      else {
+        $results.hide();
+        }
+      iscrollview.refresh();
+    });
+  return false;
+  });
