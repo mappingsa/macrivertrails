@@ -5,7 +5,7 @@ $page.on("pageshow resize", function( event ) {
   });
 
 // Top Navbar buttons. Shows markers for each trail ---
-$markerList.on("vclick", ".markerNav", function( e ){
+$topMarkerNav.on("vclick", ".markerNav", function( e ){
   var $button = $(this),
       selGroup = $button.data( "group" );
   e.preventDefault();
