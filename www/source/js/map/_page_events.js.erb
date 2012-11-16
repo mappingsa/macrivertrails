@@ -36,7 +36,6 @@ $markerList.on("vclick", ".markerNav", function( e ){
     if ( group === selGroup || selGroup === "all" || showAlways ){
       gmap.addMarker( {
         position: position,
-        //bounds: !knownLocation,
         bounds: false,
         optimized: false,
         flat: true,
