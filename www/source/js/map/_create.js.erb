@@ -69,7 +69,7 @@ createMap = function() {
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
           $to.attr("value",  place.position);          // Prepare to get directions,
-          $toPretty.attr("value", place['title']);     // But don't show direcitons fields yet
+          $toPretty.attr("value", place.title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
           }
         gmap.addMarker( {
@@ -79,7 +79,7 @@ createMap = function() {
           flat:true,
           icon: place.icon,
           group: group,
-          mTitle: place["title"],
+          mTitle: place.title,
           mLink: markerLink(place),
           zIndex: zIndex,
           } ).click(function() { openInfoWindow(place, this); });
