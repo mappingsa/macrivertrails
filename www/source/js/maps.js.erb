@@ -132,6 +132,11 @@ $(function() {
   $canvas.gmap( {
     center: defaultLoc,
     zoom: zoomLevelAll,
+    <%= if build_target == 'debug' %>
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.SMALL
+      },
+    <% end %>
     callback: function() {
       gmap = this;
       map = gmap.get("map");
