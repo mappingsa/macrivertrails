@@ -7,7 +7,7 @@ $page.on("pageshow resize", function( event ) {
 // Top Navbar buttons. Shows markers for each trail ---
 $topMarkerNav.on("vclick", ".markerNav", function( e ){
   var $button = $(this),
-      selGroup = $button.data( "group" );
+      selGroup = $button.jqmData( "group" );
   e.preventDefault();
   closeInfoWindow();
   if ($.activeGroupButton) {
@@ -16,12 +16,13 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   $button.addClass("ui-btn-active");
   $activeGroupButton = $button;
   gmap.clear( "markers" );
-  if ( selItem === "all" ){
-    fullLoad = true;
+  fullLoad = selGroup === "all";
+
+  if ( !knownLocation ) {
+    gmap.option( "zoom", zoomLevelAll );
     }
-  else {
-      fullLoad = false;
-    }
+
+  addMyLocation();
 
   $.each( places, function(i, place) {
     var group = place.group,
@@ -33,7 +34,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
         showAlways = groupShowAlways(group),
         zIndex = groupZindex(group);
 
-    if ( group === selGroup || selGroup === "all" || showAlways ){
+    if ( fullLoad || showAlways || group === selGroup ){
       gmap.addMarker( {
         position: position,
         bounds: false,
@@ -41,7 +42,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
         flat: true,
         icon: place.icon,
         group: group,
-        mTitle: place["title"],
+        mTitle: place.title,
         mLink: markerLink(place),
         zIndex: zIndex,
         }).click(function() {openInfoWindow(place, this); });
@@ -49,10 +50,6 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
 
     });
 
-  if ( !knownLocation ) {
-    gmap.option( "zoom", zoomLevelAll );
-  }
-  addMyLocation();
 });
 
 $submitDirections.on("click",  function () {
