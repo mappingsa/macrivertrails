@@ -26,6 +26,8 @@ $(function() {
     defaultLat = -32.249085,  // Default center location (Dubbo)
     defaultLng = 148.604826,
 
+    geoLocationActiveTime = 30000, // # of mSec to run dynamic geolocation before shutting off
+
 
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
   // Google Maps JS is not required until the first use of the map page. They are fine here for

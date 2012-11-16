@@ -1,4 +1,4 @@
-addHereMarker = function( pos ) {
+addStaticHereMarker = function( pos ) {
     gmap.addMarker( {
       icon: hereMarker,
       id: "client",
@@ -11,6 +11,18 @@ addHereMarker = function( pos ) {
       zIndex: hereMarkerZindex
       } );
     },
+
+addDynamicHereMarker = function() {
+  if (!geoLocationMarker) {
+    geoLocationMarker = new GeolocationMarker(map);
+    geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
+   setTimeout(function() {
+      pos = geoLocationMarker.getPosition();
+      geoLocationMarker.setMap(undefined);
+      addStaticHereMarker(pos);
+      }, geoLocationActiveTime);
+    }
+},
 
 addMyLocation = function(){
   gmap.getCurrentPosition( function(position, status) {
@@ -28,7 +40,9 @@ addMyLocation = function(){
       $markerListNote.text( markerListNoteLocationKnown );
       $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
       makePrettyAddress(tripOriginLoc, 1);
-      addHereMarker( userLoc );
+      addStaticHereMarker( userLoc );
+      // Add dynamic geolocation marker if not already present
+     //addDynamicHereMarker();
       if (loadingSingle) {
         $directionsFields.show();
         iscrollview.refresh();
@@ -55,10 +69,6 @@ addMyLocation = function(){
       */
       }
     showMarkerList();
-    // Add dynamic geolocation marker if not already present
-    //if (!geoLocationMarker) {
-    // geoLocationMarker = new GeolocationMarker(map);
-    //  }
     iscrollview.refresh();
   });
 }
