@@ -32,9 +32,6 @@ addMyLocation = function(){
       distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() ),
       outOfRegion = distFromDefaultLoc > maxNearbyDist;
       userLoc = new google.maps.LatLng(  lat, lng );
-      if (!loadingSingle && !outOfRegion) {
-        centerLoc = userLoc;
-      }
       tripOriginLoc = userLoc;
       knownLocation = true;
       $markerListNote.text( markerListNoteLocationKnown );
@@ -47,7 +44,8 @@ addMyLocation = function(){
         $directionsFields.show();
         iscrollview.refresh();
         }
-      else {
+      else if (!outOfRegion && selTodo === undefined) {
+        centerLoc = userLoc;
         gmap.option( "center", centerLoc );
         gmap.option( "zoom", zoomLevelNearby );
         }
