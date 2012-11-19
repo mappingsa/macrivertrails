@@ -1,5 +1,7 @@
 // Populate the map, based on URL params
 createMap = function() {
+    var lists, title;
+
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
     selGroup = urlVars["section"] || "";
@@ -7,11 +9,17 @@ createMap = function() {
     selLocation = urlVars["location"] || "";
     selLocationMe = selLocation === "me";
     selTodo = urlVars["todo"];    // This one only, undefined if not present
+
     if (selTodo) {
       selTodo = parseInt(selTodo);  // Default to 0 (Favourites) if not an integer
+      }
+    else {
+      selTodo = undefined;   // Make sure it is undefined (in case just empty) since we test against undefined specifically
     }
+
     loadingSingle = false;
     fullLoad = false;
+
     // Single place = "get directions"  group=<group name>&item=<item name>
     if ( selItem.length && selGroup.length ){
       loadingSingle = true;
@@ -25,8 +33,8 @@ createMap = function() {
       }
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
-      var lists = localStore.getLists(),
-          title = lists[selTodo].title;
+      lists = localStore.getLists();
+      title = lists[selTodo].title;
       $headerTitle.text(title);
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       iscrollview.resizeWrapper();
@@ -48,10 +56,10 @@ createMap = function() {
 
     //---------- Add markers for selected places ------------v
     $.each( places, function(i, place) {
-
       var group = place.group,
           item = place.item,
           position = place.position,
+          title = place["title"],
           coords = place.position.split(","),
           lat = trim(coords[0]),
           lng = trim(coords[1]),
@@ -59,8 +67,8 @@ createMap = function() {
           zIndex = groupZindex(group);
 
       if ( ( (selTodo === undefined) &&
-             (!selItem.length || selItem === item) && // Test item/group
-             (!selGroup.length || selGroup === group)
+             (!!selItem || selItem === item) && // Test item/group
+             (!!selGroup || selGroup === group)
            )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
@@ -69,7 +77,7 @@ createMap = function() {
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
           $to.attr("value",  place.position);          // Prepare to get directions,
-          $toPretty.attr("value", place.title);        // But don't show direcitons fields yet
+          $toPretty.attr("value", title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
           }
         gmap.addMarker( {
@@ -79,7 +87,7 @@ createMap = function() {
           flat:true,
           icon: groupIcon(group),
           group: group,
-          mTitle: place.title,
+          mTitle: title,
           mLink: markerLink(place),
           zIndex: zIndex,
           } ).click(function() { openInfoWindow(place, this); });
