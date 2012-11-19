@@ -1,0 +1,33 @@
+  closeInfoWindow = function() {
+    if (infoBox) {
+      infoBox.close();
+      infoBox = null;
+      }
+    },
+
+  openInfoWindow = function(place, markerElement) {
+    var url = markerLink(place),
+        box = '<div class="inner"><a class="infobox-link" onclick="onInfoWindowLink(' + "'" + url + "'" + ');" >'  + place.title + '</a></div>',
+        coords = place.position.split(","),
+        lat = trim(coords[0]),
+        lng = trim(coords[1]),
+        options = {
+          content: box,
+          closeBoxMargin: "14px 5px 2px 2px",
+          closeBoxURL: "images/298-circlex.png",
+          infoBoxClearance: 2,
+          pixelOffset: infoBoxOffset
+          };
+    closeInfoWindow();  // Close the previous info window, if open
+    centerLoc = new google.maps.LatLng(lat, lng);
+    gmap.option( "center", centerLoc );
+    infoBox = new InfoBox(options);
+    infoBox.open(map, markerElement);
+
+    if ( (!loadingSingle) && knownLocation ) {
+      $to.attr("value",  place.position);
+      $toPretty.attr("value", place.title);
+      $directionsFields.show();
+      iscrollview.refresh();
+      }
+  }

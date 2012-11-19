@@ -1,0 +1,30 @@
+// Utility functions to be defined inside the pageinit callback
+
+// Create a form field with street address from coordinates
+makePrettyAddress = function( loc, type ) {
+  var geocoder = new google.maps.Geocoder();
+  geocoder.geocode( {location: loc}, function(addresses ) {
+  if (type === 1 ){
+      $fromPretty.attr( "value", addresses[0].formatted_address);
+      }
+  else {
+      $toPretty.attr( "value", addresses[0].formatted_address );
+      }
+    });
+  },
+
+// Get the URL parameters
+getUrlVars = function()
+  {
+  var vars = [],
+      hash,
+      i,
+      url = $page.data("url"),
+      hashes = url.toLowerCase().slice(url.indexOf("?") + 1).split("&");
+  for(i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split("=");
+    vars.push(hash[0]);
+    vars[hash[0]] = hash[1];
+    }
+  return vars;
+  }
