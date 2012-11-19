@@ -33,7 +33,7 @@ $(function() {
   // Google Maps JS is not required until the first use of the map page. They are fine here for
   // now, since we currently still always load Google Maps JS in <head>.
   //
-  // It's not desireable to initialize the big places array on every pageinit, so it is initialized once
+  // It is not desireable to initialize the big places array on every pageinit, so it is initialized once
   // here in the outer closure.
   //
   // We will need to keep an "initialized" variable here, and on first pageinit if false, create the
@@ -88,9 +88,9 @@ $(function() {
     var
       knownLocation = false,
       defaultLoc = new google.maps.LatLng(defaultLat, defaultLng ),
-      userLoc = undefined,                                          // Initially unknown
-      centerLoc = defaultLoc,                                       // Where to center the map
-      tripOriginLoc = userLoc,                                      // Origin of trip for distance, directions
+      userLoc = undefined,                             // Initially unknown
+      centerLoc = defaultLoc,                          // Where to center the map
+      tripOriginLoc = userLoc,                         // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
       $page = $( this ),
@@ -111,8 +111,8 @@ $(function() {
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
-      $activeGroupButton = null,
-      infoBox = null,
+      $activeGroupButton,
+      infoBox,
       urlVars,
       selGroup,
       selItem,
