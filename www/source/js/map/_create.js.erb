@@ -104,7 +104,9 @@ createMap = function() {
   // After getting GPS position, markers are re-drawn with
   // bounds off, and a desired zoom level is then applied
   // if the map was entred from "nearby" link
-  gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
+  if (selTodo === undefined) {
+    gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
+  }
   addMyLocation();
   iscrollview.refresh();
   }
