@@ -77,7 +77,7 @@ createMap = function() {
           bounds: selTodo !== undefined && !showAlways,
           optimized: false,
           flat:true,
-          icon: place.icon,
+          icon: groupIcon(group),
           group: group,
           mTitle: place.title,
           mLink: markerLink(place),
