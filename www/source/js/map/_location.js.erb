@@ -44,7 +44,7 @@ addMyLocation = function(){
         $directionsFields.show();
         iscrollview.refresh();
         }
-      else if (!outOfRegion && selTodo === undefined) {
+      else if ( (!outOfRegion) && (selTodo === undefined) ) {
         centerLoc = userLoc;
         gmap.option( "center", centerLoc );
         gmap.option( "zoom", zoomLevelNearby );

@@ -83,9 +83,16 @@ $(function() {
     <%= partial 'js/map/utils' %>
     ;
 
+  $(document).on ("pageremove", ".map-page", function() {
+    var $page = $(this),
+        gmap = $page.jqmData("gmap");
+    gmap.destroy();
+  });
+
   // Initialize a map page
   $(document).on( "pageinit", ".map-page", function() {
     var
+      $page = $( this ),
       knownLocation = false,
       defaultLoc = new google.maps.LatLng(defaultLat, defaultLng ),
       userLoc = undefined,                             // Initially unknown
@@ -93,7 +100,6 @@ $(function() {
       tripOriginLoc = userLoc,                         // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
-      $page = $( this ),
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
@@ -141,6 +147,7 @@ $(function() {
     <% end %>
     callback: function() {
       gmap = this;
+      $page.jqmData("gmap", gmap);
       map = gmap.get("map");
       createMap();
       }

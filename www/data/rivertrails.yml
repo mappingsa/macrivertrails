@@ -95,7 +95,8 @@ debug:
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        - jquery.ui.map
+        # - jquery.ui.map
+        - jquery.ui.map-patched
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js
@@ -130,7 +131,8 @@ web:
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        - jquery.ui.map
+        # - jquery.ui.map
+        - jquery.ui.map-patched
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js
@@ -176,7 +178,8 @@ phonegap:
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        - jquery.ui.map
+        # - jquery.ui.map
+        - jquery.ui.map-patched
         - jquery.ui.map.services
         - jquery.ui.map.extensions
         - google.maps.v3.utility.infobox.js

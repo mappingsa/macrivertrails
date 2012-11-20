@@ -20,10 +20,6 @@ createMap = function() {
     loadingSingle = false;
     fullLoad = false;
 
-    if (selTodo === undefined) {
-      gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
-    }
-
     // Single place = "get directions"  group=<group name>&item=<item name>
     if ( selItem.length && selGroup.length ){
       loadingSingle = true;
@@ -42,11 +38,14 @@ createMap = function() {
       $headerTitle.text(title);
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       iscrollview.resizeWrapper();
+      selItem = "";
+      selGroup = "";
       }
     // All places "nearby" button (location=me)
     else {
       fullLoad = true;
       selItem = "";
+      selGroup = "";
       }
     // Set the appropriate tabbar button active
     if (selLocationMe) {
@@ -57,6 +56,8 @@ createMap = function() {
       $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
       $activeGroupButton.addClass("ui-btn-active");
       }
+
+    gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelAll );
 
     //---------- Add markers for selected places ------------v
     gmap.clear( "markers" );
@@ -72,10 +73,7 @@ createMap = function() {
           showAlways = groupShowAlways(group),
           zIndex = groupZindex(group);
 
-      if ( ( (selTodo === undefined) &&
-             (!!selItem || selItem === item) && // Test item/group
-             (!!selGroup || selGroup === group)
-           )
+      if ( ( (selTodo === undefined) && (selItem === item) && (selGroup === group) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
            || fullLoad
@@ -100,7 +98,6 @@ createMap = function() {
           } ).click(function() { openInfoWindow(place, this); });
         }
     });
-
     //--------------- each  --------------------------------^
 
   if (loadingSingle) {
@@ -111,4 +108,17 @@ createMap = function() {
 
   addMyLocation();
   iscrollview.refresh();
+
+  var bounds = gmap.get("bounds");
+    setTimeout ( function() {
+      if (bounds) {
+        map.fitBounds(bounds);
+        gmap.refresh();
+        }
+      else {
+        gmap.refresh();
+      }
+    }, 0);
+
+
   }
