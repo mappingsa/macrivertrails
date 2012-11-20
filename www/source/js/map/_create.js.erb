@@ -20,6 +20,10 @@ createMap = function() {
     loadingSingle = false;
     fullLoad = false;
 
+    if (selTodo === undefined) {
+      gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
+    }
+
     // Single place = "get directions"  group=<group name>&item=<item name>
     if ( selItem.length && selGroup.length ){
       loadingSingle = true;
@@ -55,6 +59,8 @@ createMap = function() {
       }
 
     //---------- Add markers for selected places ------------v
+    gmap.clear( "markers" );
+    gmap.set( "bounds", null );
     $.each( places, function(i, place) {
       var group = place.group,
           item = place.item,
@@ -72,6 +78,7 @@ createMap = function() {
            )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
+           || fullLoad
         ) {
         if ( selItem === item && selGroup === group) {  // Want to see single place - "directions"
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
@@ -102,19 +109,6 @@ createMap = function() {
     $headerTitle.text("Directions");
     }
 
-  // Note that increasing the zoom level closer than the
-  // bounds of selected markers is ineffective, as the map
-  // area will be expanded to the bounds
-  //
-  // Bounds are not set when loading single, so any zoom
-  // level desired can be used in that case.
-  //
-  // After getting GPS position, markers are re-drawn with
-  // bounds off, and a desired zoom level is then applied
-  // if the map was entred from "nearby" link
-  if (selTodo === undefined) {
-    gmap.option( "zoom", loadingSingle ? zoomLevelPlace : zoomLevelAll );
-  }
   addMyLocation();
   iscrollview.refresh();
   }
