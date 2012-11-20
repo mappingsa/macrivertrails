@@ -163,6 +163,14 @@ helpers do
     path_map_images + uri
   end
 
+  def external_href(uri)
+    'href="' + uri + '" rel="external" target="_blank"'
+  end
+
+  def external_link(uri)
+    '<a ' + external_href(uri) + '>' + uri + '</a>'
+  end
+
   # Helper to add active class if current_page basename (not including extension)
   #  matches supplied string.
   # Returns a hash meant to be used as a Slim splat attribute
