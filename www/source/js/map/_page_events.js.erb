@@ -16,6 +16,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   $button.addClass("ui-btn-active");
   $activeGroupButton = $button;
   gmap.clear( "markers" );
+  gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
   if ( !knownLocation ) {
