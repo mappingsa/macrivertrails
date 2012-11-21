@@ -1,8 +1,6 @@
 // Populate the map, based on URL params
 createMap = function() {
-    var lists,
-        title,
-        nonInfoMarkerCount = 0;   // Count of how many non-info/rv/boatramp markers placed;
+    var lists, title;
 
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
@@ -87,9 +85,6 @@ createMap = function() {
           $toPretty.attr("value", title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
           }
-        if (!showAlways) {
-          nonInfoMarkerCount++;
-        }
         gmap.addMarker( {
           position: position,
           bounds: selTodo !== undefined && !showAlways,
@@ -116,7 +111,7 @@ createMap = function() {
 
   var bounds = gmap.get("bounds");
     setTimeout ( function() {
-      if (bounds && nonInfoMarkerCount > 1) {
+      if (bounds) {
         map.fitBounds(bounds);
         gmap.refresh();
         }
