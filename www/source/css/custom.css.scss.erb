@@ -1163,8 +1163,27 @@ margin-right: -5px;
 margin-bottom: 15px;
 margin-left: -45px;
 }
-.rtheader a.homeBtn {background:imageUrl('icon_home.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
-.rtheader a.backBtn {background:imageUrl('icon_arrow_left.png') no-repeat;width:35px;height:35px;display:block;right:6px;top:.2em;}
+
+.homeBtn {
+  background-image: imageUrl('icon_home.png');
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 36px;
+  background-size: 100% auto;
+}
+
+.backBtn {
+  background-image: imageUrl('icon_arrow_left.png');
+  background-repeat: no-repeat;
+  width: 36px;
+  height: 36px;
+  background-size: 100% auto;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
+  .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
+}
 
 /* Popup Infobox in maps
    Note: transparent background by default. The viewable box is the div below, and is offset from .infoBox */
