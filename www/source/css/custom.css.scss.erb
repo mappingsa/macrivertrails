@@ -228,9 +228,28 @@ that they will override CSS in the standard JQM structure CSS */
 .home-menu .metro-tile {
   width: 300px;
   height: 120px;
+  background-size: 100% auto;
   -webkit-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
   -moz-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
+}
+
+.river-tile { background-image: imageUrl('Image-River.png'); }
+.heritage-tile { background-image: imageUrl('Image-Heritage.png'); }
+.nature-tile { background-image: imageUrl('Image-Nature.png'); }
+.produce-tile { background-image: imageUrl('Image-Produce.png'); }
+.cycle-tile { background-image: imageUrl('Image-Cycle.png'); }
+.riverbedz-tile { background-image: imageUrl('Image-Riverbedz.png'); }
+.fishing-tile { background-image: imageUrl('Image-Fishing.png'); }
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .river-tile { background-image: imageUrl('Image-River@2x.png'); }
+  .heritage-tile { background-image: imageUrl('Image-Heritage@2x.png'); }
+  .nature-tile { background-image: imageUrl('Image-Nature@2x.png'); }
+  .produce-tile { background-image: imageUrl('Image-Produce@2x.png'); }
+  .cycle-tile { background-image: imageUrl('Image-Cycle@2x.png'); }
+  .riverbedz-tile { background-image: imageUrl('Image-Riverbedz@2x.png'); }
+  .fishing-tile { background-image: imageUrl('Image-Fishing@2x.png'); }
 }
 
 .home-menu a {
