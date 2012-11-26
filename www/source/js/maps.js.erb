@@ -490,10 +490,12 @@ createMap = function() {
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
     selLocationMe = selLocation === "me";
-    selTodo = urlVars["todo"];    // This one only, undefined if not present
+    selTodo = urlVars["todo"],   // This one only, undefined if not present
+    todoCount = 0;               // Count of ToDo items to map
 
     if (selTodo) {
       selTodo = parseInt(selTodo);  // Default to 0 (Favourites) if not an integer
+      todoCount = localStore.listCount(selTodo);
       }
     else {
       selTodo = undefined;   // Make sure it is undefined (in case just empty) since we test against undefined specifically
@@ -560,16 +562,21 @@ createMap = function() {
            || showAlways
            || fullLoad
         ) {
-        if ( selItem === item && selGroup === group) {  // Want to see single place - "directions"
+        if ( (selItem === item && selGroup === group) ||                 // Single place
+             (selTodo !== undefined && todoCount === 1 && !showAlways)   // Todo with only one place
+           ) {  // Want to see single place - "directions"
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
+          }
+
+        if ( selItem === item && selGroup === group) {
           $to.attr("value",  place.position);          // Prepare to get directions,
           $toPretty.attr("value", title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
           }
         gmap.addMarker( {
           position: position,
-          bounds: selTodo !== undefined && !showAlways,
+          bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
           optimized: false,
           flat:true,
           icon: groupIcon(group),

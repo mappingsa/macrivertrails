@@ -386,6 +386,19 @@ var localStore = function() {
       return (foundID);
       },
 
+    // Get # of items in list
+    // ListID 0 = Favourites
+    // ListID 1-n = Itinerary
+    listCount: function (listID) {
+      var savedItems = store.get(todoKey),
+          count = 0;
+      if (savedItems === undefined) {
+        return 0;
+        }
+      $.each( savedItems, function(i) { if ( this.listID === listID ) { count++; } } );
+      return count;
+      },
+
     // Determine if the given list is empty
     // ListID 0 = Favourites
     // ListID 1-n = Itinerary
