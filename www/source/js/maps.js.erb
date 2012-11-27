@@ -423,6 +423,20 @@ addDynamicHereMarker = function() {
   if (!geoLocationMarker) {
     geoLocationMarker = new GeolocationMarker(map);
     geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
+    geoLocationMarker.addListener("accuracy_changed", function() {
+      var accuracy = geoLocationMarker.getAccuracy();
+      $.noop();
+    });
+    geoLocationMarker.addListener("position_changed", function() {
+      var position = geoLocationMarker.getPosition();
+      $.noop();
+    });
+    geoLocationMarker.addListener("geolocation_error", function(error) {
+      var code = error.code,
+          message = error.message;
+      $.noop();
+    });
+
    setTimeout(function() {
       pos = geoLocationMarker.getPosition();
       geoLocationMarker.setMap(undefined);
