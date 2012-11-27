@@ -62,7 +62,7 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
     'fillColor': '61a0bf',
     'fillOpacity': .4,
     'strokeWeight': 1,
-    'zIndex': 1
+    'zIndex': 20
   };
 
   if(opt_circleOpts) {
