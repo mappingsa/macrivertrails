@@ -47,7 +47,7 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
     'optimized': false,
     'position': new google.maps.LatLng(0, 0),
     'title': 'Current location',
-    'zIndex': 2
+    'zIndex': 20
   };
 
   if(opt_markerOpts) {
