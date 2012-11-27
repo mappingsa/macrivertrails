@@ -434,11 +434,21 @@ addDynamicHereMarker = function() {
     geoLocationMarker.addListener("geolocation_error", function(error) {
       var code = error.code,
           message = error.message;
-      $.noop();
+      userLoc = undefined;
+      tripOriginLoc = undefined;
+      knownLocation = false;
+      $markerListNote.text( markerListNoteLocationUnknown );
+      $from.val("");    // Clear from field for directions
+      $directionsFields.hide();
+      geoLocationMarker.unbindAll();
+      geoLocation.setMap(undefined);
+      //$noLocationPopup.popup("open");
+      //setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
     });
 
    setTimeout(function() {
       pos = geoLocationMarker.getPosition();
+      geoLocationMarker.unbindAll();
       geoLocationMarker.setMap(undefined);
       addStaticHereMarker(pos);
       }, geoLocationActiveTime);
