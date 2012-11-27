@@ -229,6 +229,8 @@ that they will override CSS in the standard JQM structure CSS */
   width: 300px;
   height: 120px;
   background-size: 100% auto;
+  background-position: top left;
+  background-repeat: no-repeat;
   -webkit-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
   -moz-box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.7), 2px 2px 2px 2px rgba(0,0,0,0.3);
@@ -297,27 +299,13 @@ that they will override CSS in the standard JQM structure CSS */
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-.home-produce .icon {
-  background-image: imageUrl('produce@2x.png');
-}
-.home-river .icon {
-  background-image: imageUrl('river@2x.png');
-}
-.home-heritage .icon {
-  background-image: imageUrl('heritage@2x.png');
-}
-.home-nature .icon {
-  background-image: imageUrl('nature@2x.png');
-}
-.home-cycle .icon {
-  background-image: imageUrl('cycle@2x.png');
-}
-.home-riverbedz .icon {
-  background-image: imageUrl('riverbedz@2x.png');
-}
-.home-fishing .icon {
-  background-image: imageUrl('fishing@2x.png');
-}
+.home-produce .icon   { background-image: imageUrl('produce@2x.png'); }
+.home-river .icon     { background-image: imageUrl('river@2x.png'); }
+.home-heritage .icon  { background-image: imageUrl('heritage@2x.png'); }
+.home-nature .icon    { background-image: imageUrl('nature@2x.png'); }
+.home-cycle .icon     { background-image: imageUrl('cycle@2x.png'); }
+.home-riverbedz .icon { background-image: imageUrl('riverbedz@2x.png'); }
+.home-fishing .icon   { background-image: imageUrl('fishing@2x.png'); }
 }
 
 .home-menu .tile-title {
@@ -404,22 +392,25 @@ that they will override CSS in the standard JQM structure CSS */
   background: transparent !important;
   background-image: none !important;
 }
-a.menuBtn{
-  background: transparent imageUrl('icon_list_bullets.png') top left no-repeat !important;
-  width:31px;
-  height:31px;
-  background-size: 30px 30px;
-  text-indent:-999em !important;
-  display:block !important;
-  -webkit-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
-  -moz-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
-  -ms-box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
-  box-shadow: 0 0 0 rgba(150px,150px,150px,.3) !important;
+
+.menuBtn {
+  width:36px;
+  height:36px;
+  background-color: transparent;
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-image: imageUrl('icon_list_bullets.png');
 }
-a.menuBtn .ui-btn-inner{
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .menuBtn { background-image: imageUrl('icon_list_bullets@2x.png'); }
+}
+
+.menuBtn .ui-btn-inner{
   border:none;
 }
-a.menuBtn:hover{
+.menuBtn:hover{
   border:none !important;
 }
 
@@ -1165,19 +1156,24 @@ margin-left: -45px;
 }
 
 .homeBtn {
-  background-image: imageUrl('icon_home.png');
-  background-repeat: no-repeat;
   width: 36px;
   height: 36px;
+  background-color: transparent;
+  background-position: top left;
+  background-repeat: no-repeat;
   background-size: 100% auto;
+  background-image: imageUrl('icon_home.png');
+
 }
 
 .backBtn {
-  background-image: imageUrl('icon_arrow_left.png');
-  background-repeat: no-repeat;
   width: 36px;
   height: 36px;
+  background-color: transparent;
+  background-position: top left;
+  background-repeat: no-repeat;
   background-size: 100% auto;
+  background-image: imageUrl('icon_arrow_left.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1301,13 +1297,6 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
   float: left;
   background-size: 100% auto;
 }
-
-/*
-.place-menu-icon-pin {
-  width: 18px
-  height: 25px;
-}
-*/
 
 .new-itin-submit {
 
