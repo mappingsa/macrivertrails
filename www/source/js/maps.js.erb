@@ -239,6 +239,31 @@ $(function() {
 // _utils.js.erb start
 // Utility functions included in the outer closure of maps.js
 
+<%= if build_target == 'debug' %>
+      // Formats number with fixed digits
+    pad = function(num, digits, padChar) {
+        var str = num.toString(),
+            _padChar = padChar || "0";
+        while (str.length < digits) { str = _padChar + str; }
+        return str;
+      },
+
+      // Format time for logging
+    toTime = function(date) {
+        return pad(date.getHours(), 2) + ":" +
+               pad(date.getMinutes(), 2) + ":" +
+               pad(date.getSeconds(), 2) + "." +
+               pad(date.getMilliseconds(), 3);
+      },
+<% end %>
+
+logTime = function(msg) {
+<%if build_target == 'debug' %>
+      var time = new Date();
+      console.log(toTime(time) + " " + msg);
+<% endif %>
+  },
+
 // remove multiple, leading or trailing spaces
 trim = function(s) {
     s = s.replace(/(^\s*)|(\s*$)/gi,"");
@@ -421,19 +446,23 @@ addStaticHereMarker = function( pos ) {
 
 addDynamicHereMarker = function() {
   if (!geoLocationMarker) {
+    logTime("Adding dynamic here marker");
     geoLocationMarker = new GeolocationMarker(map);
     geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
     geoLocationMarker.addListener("accuracy_changed", function() {
       var accuracy = geoLocationMarker.getAccuracy();
+      console.time("geolocation accuracy_changed to " + accuracy);
       $.noop();
     });
     geoLocationMarker.addListener("position_changed", function() {
       var position = geoLocationMarker.getPosition();
+      logTime("geolocation position_changed to " + position);
       $.noop();
     });
     geoLocationMarker.addListener("geolocation_error", function(error) {
       var code = error.code,
           message = error.message;
+      logTime("geolocation_error " + code + " " + message);
       userLoc = undefined;
       tripOriginLoc = undefined;
       knownLocation = false;
@@ -441,12 +470,13 @@ addDynamicHereMarker = function() {
       $from.val("");    // Clear from field for directions
       $directionsFields.hide();
       geoLocationMarker.unbindAll();
-      geoLocation.setMap(undefined);
+      geoLocationMarker.setMap(undefined);
       //$noLocationPopup.popup("open");
       //setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
     });
 
    setTimeout(function() {
+      logTime("eolocation timed-out, stopping geolocation");
       pos = geoLocationMarker.getPosition();
       geoLocationMarker.unbindAll();
       geoLocationMarker.setMap(undefined);
