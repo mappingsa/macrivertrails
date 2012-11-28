@@ -7,6 +7,9 @@
 # apple nuisance files
 .DS_Store
 .AppleDouble
+*.swp
+*.lock
+profile
 
 # Windows nuisance files
 Thumbs.db
@@ -37,6 +40,13 @@ www/build/
 # RVM per-project/diretory settings
 *.rvmrc
 
-# XCode user settings
+# XCode private settings
+*.pbxuser
+*.mode1v3
+*.mode2v2
+*.perspectivev3
 xcuserdata
+
+# XCode temporary files that should never be committed
+*~.nib
 
