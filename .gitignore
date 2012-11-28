@@ -37,3 +37,6 @@ www/build/
 # RVM per-project/diretory settings
 *.rvmrc
 
+# XCode user settings
+xcuserdata
+
