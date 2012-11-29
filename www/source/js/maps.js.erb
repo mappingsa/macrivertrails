@@ -288,6 +288,8 @@ groupIcon = function(group) {
 // _utils.js.erb.end
     ;
 
+  logTime("maps.js");
+
   $(document).on ("pageremove", ".map-page", function() {
     var $page = $(this),
         gmap = $page.jqmData("gmap");
@@ -450,13 +452,15 @@ addDynamicHereMarker = function() {
     geoLocationMarker = new GeolocationMarker(map);
     geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
     geoLocationMarker.addListener("accuracy_changed", function() {
-      var accuracy = geoLocationMarker.getAccuracy();
-      console.time("geolocation accuracy_changed to " + accuracy);
+      var accuracy = geoLocationMarker.getAccuracy(),
+          position = geoLocationMarker.getPosition();
+      logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
       $.noop();
     });
     geoLocationMarker.addListener("position_changed", function() {
-      var position = geoLocationMarker.getPosition();
-      logTime("geolocation position_changed to " + position);
+      var position = geoLocationMarker.getPosition(),
+          accuracy = geoLocationMarker.getAccuracy();
+      logTime("geolocation position_changed to " + position, + " accuracy = ", + accuracy);
       $.noop();
     });
     geoLocationMarker.addListener("geolocation_error", function(error) {
@@ -670,8 +674,9 @@ createMap = function() {
 
 // _page_utils.js.erb start
 // Utility functions to be defined inside the pageinit callback
-
 // Create a form field with street address from coordinates
+// type = 0, "to" address (not used, becuase we use the description from the places table)
+// type = 1, "from" address (user location)
 makePrettyAddress = function( loc, type ) {
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode( {location: loc}, function(addresses ) {
