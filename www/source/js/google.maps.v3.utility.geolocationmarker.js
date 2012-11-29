@@ -40,7 +40,7 @@ function GeolocationMarker(opt_map, opt_markerOpts, opt_circleOpts) {
        '../map/images/bluedot@2x.png',
         new google.maps.Size(34, 34),
         null,
-        new google.maps.Point(8, 8),
+        new google.maps.Point(8.5, 8.5),
         new google.maps.Size(17, 17)),
 
     // This marker may move frequently - don't force canvas tile redraw

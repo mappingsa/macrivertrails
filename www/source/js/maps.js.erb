@@ -62,7 +62,9 @@ $(function() {
     info = new google.maps.MarkerImage("images/info" + res + ".png", altPinSize, null, null, altPinSize ),
     rv = new google.maps.MarkerImage("images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
 
-    hereMarker = new google.maps.MarkerImage ("images/greendot" + res + ".png", hereMarkerSize, null, null, hereMarkerSize),
+    hereMarker = new google.maps.MarkerImage ("images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
+
+
 
     hereMarkerZindex = 20,
 
@@ -453,7 +455,7 @@ addStaticHereMarker = function( pos ) {
       title: "My Location",
       visible: true,
       flat: true,
-      zIndex: hereMarkerZindex
+      zIndex: hereMarkerZindex,
       } ).click(function() {addMyLocation()} );
     },
 
