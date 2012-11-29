@@ -16,9 +16,10 @@ $(function() {
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 12,     // nearby, todo, browse once location is known
     zoomLevelPlace = 14,      // Always use this zoom for get directions
-    zoomLevelUser = 18,       // "locate me" button
+    zoomLevelUser = 19,       // "locate me" button
 
-    maxNearbyDist = 1000,     // Max km from default center to center on user location
+    maxNearbyDist = 0,
+    //maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
                               // If user is further than this, then we will center on default
                               // location
 
@@ -26,7 +27,7 @@ $(function() {
     defaultLat = -32.249085,  // Default center location (Dubbo)
     defaultLng = 148.604826,
 
-    geoLocationActiveTime = 60000, // # of mSec to run dynamic geolocation before shutting off
+    geoLocationActiveTime = 10000, // # of mSec to run dynamic geolocation before shutting off
 
 
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
@@ -162,6 +163,7 @@ $(function() {
     {group: "nature", item: "macquariemarshsouth",  position: "-30.924103, 147.459008", title: "South Macquarie Marsh Nature Reserve" },
     {group: "nature", item: "macquariemarshnorth",  position: "-30.814878, 147.500178", title: "North Macquarie Marsh Nature Reserve" },
     {group: "nature", item: "touristpark",  position: "-32.223497, 148.229931", title: "Scenic helicopter rides over the Macquarie Marshes" },
+    {group: "river", item: "mookereawa", position: "-32.770344, 149.148642", title: "Mookerawa Waters State Park Lake Burrendong" },
     {group: "river", item: "mookereawa", position: "-32.770344, 149.148642", title: "Mookerawa Waters State Park Lake Burrendong" },
     {group: "river", item: "johnoxley", position: "-32.542912, 148.933151", title: "John Oxley Park, Wellington" },
     {group: "river", item: "cameronpark",  position: "-32.553005, 148.941086", title: "Cameron and Pioneer Park, Wellington" },
@@ -333,7 +335,15 @@ groupIcon = function(group) {
       selLocationMe,
       selTodo,
       $noLocationPopup = $(".no-location-popup"),
+      staticHereMarker,
       geoLocationMarker,
+      geoLocationTimeoutID,
+      geocoder = new google.maps.Geocoder(),
+      geocoderBusy = false,      // True is a geocoding request is outstanding
+      geocodingDeferred = false, // True if a geocoding request has been deferred due to outstanding request
+      deferredGeocodingType,     // Type of deferred geocoding, 0 = to, 1 = from
+      lastGeocodeTime,           // Last time that a geocoding request was made
+
 // _info_window.js.erb start
 closeInfoWindow = function() {
   if (infoBox) {
@@ -431,9 +441,10 @@ markerLink = function(place) {
   return "<%= (base_uri ? base_uri : '../')%>" + dir + "/" + place.item + ".html";
   }
 // _marker_list.js.erb end
+,
 // _location.js.erb start
 addStaticHereMarker = function( pos ) {
-    gmap.addMarker( {
+    staticHereMarker = gmap.addMarker( {
       icon: hereMarker,
       id: "client",
       position: pos,
@@ -443,58 +454,86 @@ addStaticHereMarker = function( pos ) {
       visible: true,
       flat: true,
       zIndex: hereMarkerZindex
-      } );
+      } ).click(function() {addMyLocation()} );
     },
 
-addDynamicHereMarker = function() {
-  if (!geoLocationMarker) {
-    logTime("Adding dynamic here marker");
-    geoLocationMarker = new GeolocationMarker(map);
-    geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
-    geoLocationMarker.addListener("accuracy_changed", function() {
-      var accuracy = geoLocationMarker.getAccuracy(),
-          position = geoLocationMarker.getPosition();
-      logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
-      $.noop();
-    });
-    geoLocationMarker.addListener("position_changed", function() {
-      var position = geoLocationMarker.getPosition(),
-          accuracy = geoLocationMarker.getAccuracy();
-      logTime("geolocation position_changed to " + position, + " accuracy = ", + accuracy);
-      $.noop();
-    });
-    geoLocationMarker.addListener("geolocation_error", function(error) {
-      var code = error.code,
-          message = error.message;
-      logTime("geolocation_error " + code + " " + message);
-      userLoc = undefined;
-      tripOriginLoc = undefined;
-      knownLocation = false;
-      $markerListNote.text( markerListNoteLocationUnknown );
-      $from.val("");    // Clear from field for directions
-      $directionsFields.hide();
-      geoLocationMarker.unbindAll();
-      geoLocationMarker.setMap(undefined);
-      //$noLocationPopup.popup("open");
-      //setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
-    });
-
-   setTimeout(function() {
-      logTime("geolocation timed-out, stopping geolocation");
-      pos = geoLocationMarker.getPosition();
-      geoLocationMarker.unbindAll();
-      geoLocationMarker.setMap(undefined);
-      addStaticHereMarker(pos);
-      }, geoLocationActiveTime);
+removeStaticHereMarker = function() {
+  if (staticHereMarker) {
+    staticHereMarker.get(0).setMap(null);
+    staticHereMarker = undefined;
     }
+  },
+
+stopGeolocation = function() {
+  geoLocationMarker.unbindAll();
+  geoLocationMarker.setMap(null);
+  geoLocationMarker = undefined;
+  },
+
+addMyLocation = function() {
+
+  if (geoLocationMarker) {
+    return;
+    }
+
+  logTime("Adding dynamic here marker");
+  removeStaticHereMarker();
+  geoLocationMarker = new GeolocationMarker(map);
+  geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
+
+  geoLocationMarker.addListener("accuracy_changed", function() {
+    var accuracy = geoLocationMarker.getAccuracy(),
+        position = geoLocationMarker.getPosition();
+    logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
+    $.noop();
+  });
+
+  geoLocationMarker.addListener("position_changed", function() {
+    var position = geoLocationMarker.getPosition(),
+        accuracy = geoLocationMarker.getAccuracy();
+    logTime("geolocation position_changed to " + position, + " accuracy = ", + accuracy);
+
+    userLoc = position;
+    tripOriginLoc = userLoc;
+    knownLocation = true;
+
+    centerLoc = userLoc;
+    gmap.option( "center", centerLoc );
+    gmap.option( "zoom", zoomLevelUser /*zoomLevelNearby*/ );
+
+  });
+
+  geoLocationMarker.addListener("geolocation_error", function(error) {
+    var code = error.code,
+        message = error.message;
+    logTime("geolocation_error " + code + " " + message);
+    clearTimeout(geoLocationTimeoutID);
+    userLoc = undefined;
+    tripOriginLoc = undefined;
+    knownLocation = false;
+    $markerListNote.text( markerListNoteLocationUnknown );
+    $from.val("");    // Clear from field for directions
+    $directionsFields.hide();
+    stopGeolocation();
+  });
+
+  geoLocationTimeoutID = setTimeout( function() {
+    var pos;
+    logTime("geolocation timed-out, stopping geolocation");
+    if (geoLocationMarker) {
+      pos = geoLocationMarker.getPosition();
+      stopGeolocation();
+      addStaticHereMarker(pos);
+      }
+    }, geoLocationActiveTime);
 },
 
-addMyLocation = function(){
-  gmap.getCurrentPosition( function(position, status) {
-    if (status === "OK") {
-      lat = position.coords.latitude,
-      lng = position.coords.longitude,
-      distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() ),
+/*
+addMyLocation = function() {
+  gmap.getCurrentPosition( function(position) {
+      var lat = position.coords.latitude,
+          lng = position.coords.longitude,
+          distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() );
       outOfRegion = distFromDefaultLoc > maxNearbyDist;
       userLoc = new google.maps.LatLng(  lat, lng );
       tripOriginLoc = userLoc;
@@ -503,8 +542,6 @@ addMyLocation = function(){
       $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
       makePrettyAddress(tripOriginLoc, 1);
       addStaticHereMarker( userLoc );
-      // Add dynamic geolocation marker if not already present
-     //addDynamicHereMarker();
       if (loadingSingle) {
         $directionsFields.show();
         iscrollview.refresh();
@@ -522,19 +559,13 @@ addMyLocation = function(){
       $markerListNote.text( markerListNoteLocationUnknown );
       $from.val("");    // Clear from field for directions
       $directionsFields.hide();
-
-      /* TODO: This popup causes trouble when the user refreshes the browser
-               The page will transition then to the previous page.
-               Not sure that this popup is really necessary, given that we
-               have an explanitory note in the markerlist notes.
-      $noLocationPopup.popup("open");
-      setTimeout(function() { $noLocationPopup.popup("close"); }, 2500);
-      */
       }
     showMarkerList();
     iscrollview.refresh();
   });
 }
+*/
+
 // _location.js.erb end
 
 // _create.js.erb start
@@ -653,8 +684,7 @@ createMap = function() {
     $headerTitle.text("Directions");
     }
 
-  //addMyLocation();
-  addDynamicHereMarker();
+  addMyLocation();
   iscrollview.refresh();
 
   var bounds = gmap.get("bounds");
@@ -678,14 +708,23 @@ createMap = function() {
 // type = 0, "to" address (not used, becuase we use the description from the places table)
 // type = 1, "from" address (user location)
 makePrettyAddress = function( loc, type ) {
-  var geocoder = new google.maps.Geocoder();
-  geocoder.geocode( {location: loc}, function(addresses ) {
-  if (type === 1 ){
-      $fromPretty.attr( "value", addresses[0].formatted_address);
+  if (geocoderBusy) {
+    logTime("geocoder is busy, so request has been deferred");
+    geocodingDeferred = true;
+    deferredGeocodingType = type;
+    return;
+  }
+  geocoderBusy = true;
+  geocoder.geocode( {location: loc}, function(addresses, status ) {
+    if (status === google.maps.GeocoderStatus.OK) {
+      if (type === 1 ){
+        $fromPretty.attr( "value", addresses[0].formatted_address);
+        }
+      else {
+        $toPretty.attr( "value", addresses[0].formatted_address );
+        }
       }
-  else {
-      $toPretty.attr( "value", addresses[0].formatted_address );
-      }
+    geocoderBusy = false;
     });
   },
 
@@ -732,7 +771,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
     gmap.option( "zoom", zoomLevelAll );
     }
 
-  //addMyLocation();
+  addMyLocation();
 
   $.each( places, function(i, place) {
     var group = place.group,
