@@ -239,7 +239,7 @@ $(function() {
 // _utils.js.erb start
 // Utility functions included in the outer closure of maps.js
 
-<%= if build_target == 'debug' %>
+<% if build_target == 'debug' %>
       // Formats number with fixed digits
     pad = function(num, digits, padChar) {
         var str = num.toString(),
@@ -261,7 +261,7 @@ logTime = function(msg) {
 <%if build_target == 'debug' %>
       var time = new Date();
       console.log(toTime(time) + " " + msg);
-<% endif %>
+<% end %>
   },
 
 // remove multiple, leading or trailing spaces
