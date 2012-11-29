@@ -476,7 +476,7 @@ addDynamicHereMarker = function() {
     });
 
    setTimeout(function() {
-      logTime("eolocation timed-out, stopping geolocation");
+      logTime("geolocation timed-out, stopping geolocation");
       pos = geoLocationMarker.getPosition();
       geoLocationMarker.unbindAll();
       geoLocationMarker.setMap(undefined);
