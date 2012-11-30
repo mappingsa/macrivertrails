@@ -294,9 +294,10 @@ groupIcon = function(group) {
 
   logTime("maps.js");
 
-  $(document).on ("pageremove", ".map-page", function() {
+  $(document).on("pageremove", ".map-page", function() {
     var $page = $(this),
         gmap = $page.jqmData("gmap");
+    stopGeolocation();
     gmap.destroy();
   });
 
@@ -467,14 +468,34 @@ removeStaticHereMarker = function() {
   },
 
 stopGeolocation = function() {
-  geoLocationMarker.unbindAll();
-  geoLocationMarker.setMap(null);
-  geoLocationMarker = undefined;
+  if (geoLocationTimeoutID) {
+    clearTimeout(geoLocationTimeoutID);
+    geoLocationTimeoutID = undefined;
+    }
+  if (geoLocationMarker) {
+    geoLocationMarker.unbindAll();
+    geoLocationMarker.setMap(null);
+    geoLocationMarker = undefined;
+    }
+  },
+
+// Callback to shut off geolocation after a timeout
+geoLocationTimeout = function() {
+  logTime("geolocation timed-out, stopping geolocation");
+  geoLocationTimeoutID = undefined;
+  if (geoLocationMarker) {
+    addStaticHereMarker(geoLocationMarker.getPosition());
+    stopGeolocation();
+    }
   },
 
 addMyLocation = function() {
 
+  // If we have a marker active already, simply reset it's timeout
   if (geoLocationMarker) {
+    logTime("dynamic here marker already active - resetting timeout");
+    clearTimeout(geoLocationTimeoutID);
+    geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
     return;
     }
 
@@ -483,13 +504,17 @@ addMyLocation = function() {
   geoLocationMarker = new GeolocationMarker(map);
   geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
 
+  // updated accuracy callback
+  // We don't currently do anything here except log.
+  // The marker code handles changing the circle diameter
+  // This would be the place to display accuracy if we want to show a numeric figure
   geoLocationMarker.addListener("accuracy_changed", function() {
     var accuracy = geoLocationMarker.getAccuracy(),
         position = geoLocationMarker.getPosition();
     logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
-    $.noop();
   });
 
+  // updated location callback
   geoLocationMarker.addListener("position_changed", function() {
     var position = geoLocationMarker.getPosition(),
         accuracy = geoLocationMarker.getAccuracy();
@@ -497,19 +522,31 @@ addMyLocation = function() {
 
     userLoc = position;
     tripOriginLoc = userLoc;
-    knownLocation = true;
 
+    // Location unknown -> known
+    if (!knownLocation) {
+      $markerListNote.text( markerListNoteLocationKnown );
+      $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+      if (loadingSingle) {
+        $directionsFields.show();
+        iscrollview.refresh();
+        }
+      knownLocation = true;
+      }
+
+    makePrettyAddress(tripOriginLoc, 1);
+
+    // Update map center and zoom
     centerLoc = userLoc;
     gmap.option( "center", centerLoc );
     gmap.option( "zoom", zoomLevelUser /*zoomLevelNearby*/ );
-
   });
 
+  // Error callback
   geoLocationMarker.addListener("geolocation_error", function(error) {
     var code = error.code,
         message = error.message;
     logTime("geolocation_error " + code + " " + message);
-    clearTimeout(geoLocationTimeoutID);
     userLoc = undefined;
     tripOriginLoc = undefined;
     knownLocation = false;
@@ -519,15 +556,8 @@ addMyLocation = function() {
     stopGeolocation();
   });
 
-  geoLocationTimeoutID = setTimeout( function() {
-    var pos;
-    logTime("geolocation timed-out, stopping geolocation");
-    if (geoLocationMarker) {
-      pos = geoLocationMarker.getPosition();
-      stopGeolocation();
-      addStaticHereMarker(pos);
-      }
-    }, geoLocationActiveTime);
+  // Set timer to stop geolocation after an interval
+  geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
 },
 
 /*
