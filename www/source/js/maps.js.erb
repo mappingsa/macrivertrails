@@ -855,6 +855,21 @@ $submitDirections.on("click",  function () {
     });
   return false;
   });
+
+// Location button in header bar
+$locationBtn.on("vclick", function(event) {
+  event.preventDefault();
+  if ($locationBtn.hasClass("on")) {
+    if (geoLocationMarker) {
+      addStaticHereMarker(geoLocationMarker.getPosition());
+      }
+    stopGeolocation();
+    }
+  else {
+    addMyLocation();
+    }
+});
+
 // _page_events.js.erb end
 
   // Instantiate the map object on the canvas element
