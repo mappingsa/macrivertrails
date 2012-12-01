@@ -1177,6 +1177,7 @@ margin-left: -45px;
 
 .locationBtn {
   @extend %hdrBtn;
+  width: 30px; height: 30px;
 }
 
 .locationBtn.on {
@@ -1190,6 +1191,8 @@ margin-left: -45px;
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
   .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
+  .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
+  .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
 }
 
 /* Popup Infobox in maps
