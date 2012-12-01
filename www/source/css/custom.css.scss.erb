@@ -1155,25 +1155,36 @@ margin-bottom: 15px;
 margin-left: -45px;
 }
 
-.homeBtn {
-  width: 32px;
-  height: 32px;
-  background-color: transparent;
-  background-position: top left;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-image: imageUrl('icon_home.png');
+%hdrBtn {
+  width: 32px; height: 32px;
+  background: {
+    color: transparent;
+    position: top left;
+    repeat: no-repeat;
+    size: 100% auto;
+  }
+}
 
+.homeBtn {
+  @extend %hdrBtn;
+  image: imageUrl('icon_home.png');
 }
 
 .backBtn {
-  width: 32px;
-  height: 32px;
-  background-color: transparent;
-  background-position: top left;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-image: imageUrl('icon_arrow_left.png');
+  @extend %hdrBtn;
+  image: imageUrl('icon_arrow_left.png');
+}
+
+.locationBtn {
+  @extend %hdrBtn;
+}
+
+.locationBtn.on {
+  background-image: imageUrl('location-on.png');
+}
+
+.locationBtn.off {
+  background-image: imageUrl('location-off.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1298,24 +1309,11 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
   background-size: 100% auto;
 }
 
-.new-itin-submit {
-
-}
-
-.new-itin-input {
-
-}
-
-.new-itin-submit-btn {
-
-}
-
 .itin-header-title {
   text-align: center;
 }
 
 /* Todo page collapsible headers with split-button */
-
 .todo-page .ui-collapsible-heading {
   margin-right: 40px;
   border-top-right-radius: 0;

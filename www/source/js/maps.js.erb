@@ -329,6 +329,7 @@ groupIcon = function(group) {
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
+      $locationBtn = $page.find(".locationBtn"),
       $activeGroupButton,
       infoBox,
       urlVars,
@@ -476,6 +477,7 @@ stopGeolocation = function() {
     geoLocationMarker.unbindAll();
     geoLocationMarker.setMap(null);
     geoLocationMarker = undefined;
+    $locationBtn.removeClass("on").addClass("off");
     }
   },
 
@@ -556,6 +558,8 @@ addMyLocation = function() {
     stopGeolocation();
   });
 
+
+   $locationBtn.removeClass("off").addClass("on");
   // Set timer to stop geolocation after an interval
   geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
 },
