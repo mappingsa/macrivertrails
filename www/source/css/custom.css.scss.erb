@@ -1167,17 +1167,23 @@ margin-left: -45px;
 
 .homeBtn {
   @extend %hdrBtn;
-  image: imageUrl('icon_home.png');
+  background-image: imageUrl('icon_home.png');
 }
 
 .backBtn {
   @extend %hdrBtn;
-  image: imageUrl('icon_arrow_left.png');
+  background-image: imageUrl('icon_arrow_left.png');
 }
 
 .locationBtn {
   @extend %hdrBtn;
   width: 30px; height: 30px;
+}
+
+.ui-header .locationBtn {
+  position: absolute;
+  top: 6px;
+  right: 42px;
 }
 
 .locationBtn.on {
