@@ -13,13 +13,15 @@
 
 $(function() {
   var
+    testing = <%= build_target == 'debug' %>,
+    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
+
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
-    zoomLevelNearby = 12,     // nearby, todo, browse once location is known
+    zoomLevelNearby = 11,     // nearby, todo, browse once location is known
     zoomLevelPlace = 14,      // Always use this zoom for get directions
     zoomLevelUser = 19,       // "locate me" button
 
-    maxNearbyDist = 0,
-    //maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
+    maxNearbyDist = testingOutOfRegion ? 0 : 1000,     // Max km from default center to center on user location, or 0 to disable
                               // If user is further than this, then we will center on default
                               // location
 
@@ -27,7 +29,7 @@ $(function() {
     defaultLat = -32.249085,  // Default center location (Dubbo)
     defaultLng = 148.604826,
 
-    geoLocationActiveTime = 10000, // # of mSec to run dynamic geolocation before shutting off
+    geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
 
 
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
@@ -406,6 +408,11 @@ var myMarkers = gmap.get( "markers" ),
   $markerListNote.show();
   },
 
+// Update the marker list distances
+  updateMarkerListDistances = function() {
+  // To be completed
+  },
+
 // Builds a single markerlist item, returns it
 buildMarkerListItem = function(marker) {
   var position = marker.position,
@@ -519,11 +526,16 @@ addMyLocation = function() {
   // updated location callback
   geoLocationMarker.addListener("position_changed", function() {
     var position = geoLocationMarker.getPosition(),
-        accuracy = geoLocationMarker.getAccuracy();
+        accuracy = geoLocationMarker.getAccuracy(),
+        lat = position.lat(),
+        lng = position.lng(),
+        distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() );
+    outOfRegion = distFromDefaultLoc > maxNearbyDist;
     logTime("geolocation position_changed to " + position, + " accuracy = ", + accuracy);
 
     userLoc = position;
     tripOriginLoc = userLoc;
+    makePrettyAddress(tripOriginLoc, 1);
 
     // Location unknown -> known
     if (!knownLocation) {
@@ -531,18 +543,22 @@ addMyLocation = function() {
       $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
       if (loadingSingle) {
         $directionsFields.show();
-        iscrollview.refresh();
+        }
+
+      else if ( (!outOfRegion) && (selTodo === undefined) ) {
+        // Update map center and zoom
+        centerLoc = userLoc;
+        gmap.option( "center", centerLoc );
+        gmap.option( "zoom", zoomLevelNearby );
         }
       knownLocation = true;
+      showMarkerList();
+      iscrollview.refresh();
       }
-
-    makePrettyAddress(tripOriginLoc, 1);
-
-    // Update map center and zoom
-    centerLoc = userLoc;
-    gmap.option( "center", centerLoc );
-    gmap.option( "zoom", zoomLevelUser /*zoomLevelNearby*/ );
-  });
+    else {
+      updateMarkerListDistances();
+      }
+    });
 
   // Error callback
   geoLocationMarker.addListener("geolocation_error", function(error) {
@@ -556,6 +572,8 @@ addMyLocation = function() {
     $from.val("");    // Clear from field for directions
     $directionsFields.hide();
     stopGeolocation();
+    showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
+    iscrollview.refresh();
   });
 
 
@@ -666,7 +684,7 @@ createMap = function() {
       $activeGroupButton.addClass("ui-btn-active");
       }
 
-    gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelAll );
+    gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
 
     //---------- Add markers for selected places ------------v
     gmap.clear( "markers" );
