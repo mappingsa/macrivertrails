@@ -314,6 +314,7 @@ groupIcon = function(group) {
       tripOriginLoc = userLoc,                         // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
+      findMe = false,
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
@@ -544,19 +545,25 @@ addMyLocation = function() {
       if (loadingSingle) {
         $directionsFields.show();
         }
-
-      else if ( (!outOfRegion) && (selTodo === undefined) ) {
-        // Update map center and zoom
-        centerLoc = userLoc;
-        gmap.option( "center", centerLoc );
-        gmap.option( "zoom", zoomLevelNearby );
-        }
       knownLocation = true;
       showMarkerList();
       iscrollview.refresh();
       }
     else {
       updateMarkerListDistances();
+      }
+
+    if (findMe) {
+      gmap.option( "zoom", zoomLevelUser );
+    }
+
+    if ( (!outOfRegion) && (selTodo === undefined) ) {
+      // Update map center and zoom
+      centerLoc = userLoc;
+      gmap.option( "center", centerLoc );
+      if (!findMe) {
+        gmap.option( "zoom", zoomLevelNearby );
+        }
       }
     });
 
@@ -841,11 +848,16 @@ $locationBtn.on("vclick", function(event) {
   event.preventDefault();
   if ($locationBtn.hasClass("on")) {
     if (geoLocationMarker) {
+      findMe = false;
       addStaticHereMarker(geoLocationMarker.getPosition());
       }
     stopGeolocation();
     }
   else {
+    findMe = true;
+    if (knownLocation) {
+      gmap.option( "zoom", zoomLevelUser );
+      }
     addMyLocation();
     }
 });
