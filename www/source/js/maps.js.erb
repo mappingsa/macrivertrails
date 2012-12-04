@@ -582,44 +582,6 @@ addMyLocation = function() {
   geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
 },
 
-/*
-addMyLocation = function() {
-  gmap.getCurrentPosition( function(position) {
-      var lat = position.coords.latitude,
-          lng = position.coords.longitude,
-          distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() );
-      outOfRegion = distFromDefaultLoc > maxNearbyDist;
-      userLoc = new google.maps.LatLng(  lat, lng );
-      tripOriginLoc = userLoc;
-      knownLocation = true;
-      $markerListNote.text( markerListNoteLocationKnown );
-      $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
-      makePrettyAddress(tripOriginLoc, 1);
-      addStaticHereMarker( userLoc );
-      if (loadingSingle) {
-        $directionsFields.show();
-        iscrollview.refresh();
-        }
-      else if ( (!outOfRegion) && (selTodo === undefined) ) {
-        centerLoc = userLoc;
-        gmap.option( "center", centerLoc );
-        gmap.option( "zoom", zoomLevelNearby );
-        }
-      } // status === "OK"
-    else {     // Couldn't get location
-      userLoc = undefined;
-      tripOriginLoc = undefined;
-      knownLocation = false;
-      $markerListNote.text( markerListNoteLocationUnknown );
-      $from.val("");    // Clear from field for directions
-      $directionsFields.hide();
-      }
-    showMarkerList();
-    iscrollview.refresh();
-  });
-}
-*/
-
 // _location.js.erb end
 
 // _create.js.erb start
