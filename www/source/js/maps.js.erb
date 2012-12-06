@@ -791,9 +791,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
-  if ( !knownLocation ) {
-    gmap.option( "zoom", zoomLevelAll );
-    }
+  gmap.option( "zoom", knownLocation ? zoomLevelNearby : zoomLevelAll );
 
   addMyLocation();
 
