@@ -1209,11 +1209,16 @@ margin-left: -45px;
   background-image: imageUrl('location-off.png');
 }
 
+.locationBtn.disabled {
+  background-image: imageUrl('location-off-cross.png');
+}
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
   .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
   .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
   .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
+  .locationBtn.disabled { background-image: imageUrl('location-off-cross@2x.png'); }
 }
 
 .mapsheader .ui-title {

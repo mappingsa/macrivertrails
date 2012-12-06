@@ -485,7 +485,7 @@ stopGeolocation = function() {
     geoLocationMarker.unbindAll();
     geoLocationMarker.setMap(null);
     geoLocationMarker = undefined;
-    $locationBtn.removeClass("on").addClass("off");
+    $locationBtn.removeClass("on disabled").addClass("off");
     }
   },
 
@@ -579,12 +579,13 @@ addMyLocation = function() {
     $from.val("");    // Clear from field for directions
     $directionsFields.hide();
     stopGeolocation();
+   $locationBtn.removeClass("on off").addClass("disabled");
     showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
     iscrollview.refresh();
   });
 
 
-   $locationBtn.removeClass("off").addClass("on");
+   $locationBtn.removeClass("off disabled").addClass("on");
   // Set timer to stop geolocation after an interval
   geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
 },
