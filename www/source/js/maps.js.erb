@@ -14,14 +14,17 @@
 $(function() {
   var
     testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
+    testingOutOfRegion = true,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
     zoomLevelPlace = 14,      // Always use this zoom for get directions
     zoomLevelUser = 19,       // "locate me" button
 
-    maxNearbyDist = testingOutOfRegion ? 0 : 1000,     // Max km from default center to center on user location, or 0 to disable
+    useSmoothZoom = true,     // true to use smooth zoom for trail markers/location button
+    smoothZoomTimePerLevel = 150, // Time per zoom level, in mSec
+
+    maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
                               // If user is further than this, then we will center on default
                               // location
 
@@ -350,6 +353,55 @@ groupIcon = function(group) {
       geocodingDeferred = false, // True if a geocoding request has been deferred due to outstanding request
       deferredGeocodingType,     // Type of deferred geocoding, 0 = to, 1 = from
       lastGeocodeTime,           // Last time that a geocoding request was made
+      zoomChangedListener,
+      zoomChangeTimer,
+
+// Smooth zoom from current level to desired level
+// Google Maps V3 doesn't provide this functionality. It will only smooth zoom one level
+// TODO: measure actual time between steps, and either subtract from timer or skip
+// steps
+smoothZoom = function(targetZoom) {
+  var currentZoom = map.getZoom(),
+      nextZoom;
+
+  // Cancel any previous timer
+  if (zoomChangeTimer) {
+    clearTimeout(zoomChangeTimer);
+    zoomChangeTimer = undefined;
+    }
+
+  // Cancel any previous listener
+  if (zoomChangedListener) {
+    google.maps.event.removeListener(zoomChangedListener);
+    zoomnChangedListener = undefined;
+  }
+
+  if (currentZoom === targetZoom) {
+    return;
+    }
+
+  nextZoom = currentZoom + (currentZoom > targetZoom ? -1 : 1);
+
+  zoomChangedListener = google.maps.event.addListener(map, 'zoom_changed', function(event){
+    google.maps.event.removeListener(zoomChangedListener);
+    zoomChangedListener = undefined;
+    smoothZoom(targetZoom);
+    });
+
+  zoomChangeTimer = setTimeout(function() {
+    map.setZoom(nextZoom);
+    }, smoothZoomTimePerLevel);
+
+  },
+
+zoomTo = function(targetZoom) {
+    if (useSmoothZoom) {
+      smoothZoom(targetZoom);
+      }
+    else {
+      gmap.option( "zoom", targetZoom );
+      }
+  },
 
 // _info_window.js.erb start
 closeInfoWindow = function() {
@@ -531,7 +583,7 @@ addMyLocation = function() {
         lat = position.lat(),
         lng = position.lng(),
         distFromDefaultLoc = getMarkerDistance( lat, lng, defaultLoc.lat(), defaultLoc.lng() );
-    outOfRegion = distFromDefaultLoc > maxNearbyDist;
+    outOfRegion = (!testingOutOfRegion) && (distFromDefaultLoc > maxNearbyDist);
     logTime("geolocation position_changed to " + position, + " accuracy = ", + accuracy);
 
     userLoc = position;
@@ -554,7 +606,7 @@ addMyLocation = function() {
       }
 
     if (findMe) {
-      gmap.option( "zoom", zoomLevelUser );
+      zoomTo(zoomLevelUser);
     }
 
     if ( (!outOfRegion) && (selTodo === undefined) ) {
@@ -791,7 +843,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
-  gmap.option( "zoom", knownLocation ? zoomLevelNearby : zoomLevelAll );
+  zoomTo( knownLocation ? zoomLevelNearby : zoomLevelAll );
 
   addMyLocation();
 
@@ -855,7 +907,7 @@ $locationBtn.on("vclick", function(event) {
   else {
     findMe = true;
     if (knownLocation) {
-      gmap.option( "zoom", zoomLevelUser );
+      zoomTo(zoomLevelUser);
       }
     addMyLocation();
     }
