@@ -14,7 +14,7 @@
 $(function() {
   var
     testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = true,  // Set true for easy testing of dynamic user marker on real device when out of region
+    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
@@ -22,7 +22,7 @@ $(function() {
     zoomLevelUser = 19,       // "locate me" button
 
     useSmoothZoom = true,     // true to use smooth zoom for trail markers/location button
-    smoothZoomTimePerLevel = 150, // Time per zoom level, in mSec
+    smoothZoomTimePerLevel = 0, // Mimimum time per zoom level, in mSec, seems best left at 0
 
     maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
                               // If user is further than this, then we will center on default
@@ -352,8 +352,9 @@ groupIcon = function(group) {
       geocodingDeferred = false, // True if a geocoding request has been deferred due to outstanding request
       deferredGeocodingType,     // Type of deferred geocoding, 0 = to, 1 = from
       lastGeocodeTime,           // Last time that a geocoding request was made
-      zoomChangedListener,
+      boundsChangedListener,
       zoomChangeTimer,
+      zoomStartTime,             // Timestamp when last zoom step started
 
 // Smooth zoom from current level to desired level
 // Google Maps V3 doesn't provide this functionality. It will only smooth zoom one level
@@ -362,39 +363,36 @@ groupIcon = function(group) {
 smoothZoom = function(targetZoom) {
   var currentZoom = map.getZoom(),
       nextZoom;
-
-  // Cancel any previous timer
-  if (zoomChangeTimer) {
-    clearTimeout(zoomChangeTimer);
-    zoomChangeTimer = undefined;
-    }
-
-  // Cancel any previous listener
-  if (zoomChangedListener) {
-    google.maps.event.removeListener(zoomChangedListener);
-    zoomnChangedListener = undefined;
-  }
-
   if (currentZoom === targetZoom) {
     return;
     }
-
   nextZoom = currentZoom + (currentZoom > targetZoom ? -1 : 1);
-
-  zoomChangedListener = google.maps.event.addListener(map, 'zoom_changed', function(event){
-    google.maps.event.removeListener(zoomChangedListener);
-    zoomChangedListener = undefined;
-    smoothZoom(targetZoom);
-    });
-
-  zoomChangeTimer = setTimeout(function() {
-    map.setZoom(nextZoom);
-    }, smoothZoomTimePerLevel);
-
+  zoomStartTime = new Date();
+  map.setZoom(nextZoom);
+  boundsChangedListener = google.maps.event.addListener(map, 'bounds_changed', function(event){
+    var elapsed = new Date() - zoomStartTime,
+        pauseTime = (elapsed < smoothZoomTimePerLevel) ? smoothZoomTimePerLevel : 0;
+    google.maps.event.removeListener(boundsChangedListener);
+    boundsChangedListener = undefined;
+    zoomChangeTimer = setTimeout(function() {
+      zoomChangeTimer = undefined;
+      smoothZoom(targetZoom);
+      }, smoothZoomTimePerLevel);
+      });
   },
 
 zoomTo = function(targetZoom) {
     if (useSmoothZoom) {
+    // Cancel any previous listener
+      if (boundsChangedListener) {
+        google.maps.event.removeListener(boundsChangedListener);
+        zoomnChangedListener = undefined;
+        }
+      // Cancel any previous timer
+      if (zoomChangeTimer) {
+        clearTimeout(zoomChangeTimer);
+        zoomChangeTimer = undefined;
+        }
       smoothZoom(targetZoom);
       }
     else {
