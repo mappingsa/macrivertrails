@@ -14,7 +14,7 @@
 $(function() {
   var
     testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
+    testingOutOfRegion = true,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
@@ -347,6 +347,7 @@ groupIcon = function(group) {
       staticHereMarker,
       geoLocationMarker,
       geoLocationTimeoutID,
+      geoLocationContinuous = false,   // True for continuous gelocation. Set/reset by location button
       geocoder = new google.maps.Geocoder(),
       geocoderBusy = false,      // True is a geocoding request is outstanding
       geocodingDeferred = false, // True if a geocoding request has been deferred due to outstanding request
@@ -548,13 +549,19 @@ geoLocationTimeout = function() {
     }
   },
 
+// Add a dynamic geolocation marker and start gelocation
+// If continuous=true, keep geolocation active, else stop after a timeout
 addMyLocation = function() {
-
   // If we have a marker active already, simply reset it's timeout
   if (geoLocationMarker) {
     logTime("dynamic here marker already active - resetting timeout");
-    clearTimeout(geoLocationTimeoutID);
-    geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
+    if (geoLocationTimeoutID) {
+      clearTimeout(geoLocationTimeoutID);
+      geoLocationTimeoutID = undefined;
+      }
+    if (!geoLocationContinuous) {
+      geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
+      }
     return;
     }
 
@@ -636,7 +643,9 @@ addMyLocation = function() {
 
    $locationBtn.removeClass("off disabled").addClass("on");
   // Set timer to stop geolocation after an interval
-  geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
+  if (!geoLocationContinuous) {
+    geoLocationTimeoutID = setTimeout(geoLocationTimeout, geoLocationActiveTime);
+    }
 },
 
 // _location.js.erb end
@@ -899,6 +908,7 @@ $locationBtn.on("vclick", function(event) {
       findMe = false;
       addStaticHereMarker(geoLocationMarker.getPosition());
       }
+    geoLocationContinuous = false;
     stopGeolocation();
     }
   else {
@@ -906,6 +916,7 @@ $locationBtn.on("vclick", function(event) {
     if (knownLocation) {
       zoomTo(zoomLevelUser);
       }
+    geoLocationContinuous = true;
     addMyLocation();
     }
 });
