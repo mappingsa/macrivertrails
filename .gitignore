@@ -50,3 +50,6 @@ xcuserdata
 # XCode temporary files that should never be committed
 *~.nib
 
+# Phonegap www directory content pointed-to by symlink
+phonegap/ios/www/*
+
