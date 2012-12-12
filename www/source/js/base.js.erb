@@ -133,11 +133,18 @@
       var $li = $(this),
       section = $li.jqmData("section");
       event.preventDefault();
+      /*
       $.mobile.changePage("map/index.html",
         {
           "data": "section=" + section,
           "transition": "fade"
         } );
+      */
+      $.mobile.changePage("map/index.html",
+        {
+          "transition": "fade"
+        } );
+
     });
 
     $('.homeImageSlider').flexslider({
@@ -281,9 +288,17 @@
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
 
+    /*
     $.mobile.changePage( "map/index.html",
       {
         "data" :       "todo=" + listID,
+        "transition" : "fade"
+      }
+    );
+    */
+
+    $.mobile.changePage( "map/index.html",
+      {
         "transition" : "fade"
       }
     );
