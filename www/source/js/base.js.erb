@@ -78,6 +78,17 @@
         closeMenu(1000);
     });
 
+    // Get Directions button on place menu
+    $page.find(".directions-btn").on("vclick", function(event) {
+    var $a = $(this),
+        section = $page.jqmData("section"),
+        sectionUC = section.charAt().toUpperCase() + section.slice(1),
+        item = $page.jqmData("item"),
+        title = $page.jqmData("title");
+    event.preventDefault();
+    $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
+  });
+
     // Add to Itinerary button on place menu
     $page.find(".itin-btn").on("vclick", function(event) {
     var $a = $(this),
@@ -92,7 +103,7 @@
       closeMenu(1000);
         }
     else {
-      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %> " );
+      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %>" );
       }
   });
 
@@ -140,7 +151,7 @@
           "transition": "fade"
         } );
       */
-      $.mobile.changePage("map/index.html",
+      $.mobile.changePage("/map/index.html",
         {
           "transition": "fade"
         } );
@@ -297,7 +308,7 @@
     );
     */
 
-    $.mobile.changePage( "map/index.html",
+    $.mobile.changePage( "/map/index.html",
       {
         "transition" : "fade"
       }

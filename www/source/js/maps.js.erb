@@ -1,6 +1,6 @@
 /*
     build_target: '<%= build_target %>',
-    base_uri: '<%= base_uri %>',
+    base_uri: '<%= base_uri %>'
 */
 
   function onInfoWindowLink (href) {
@@ -13,15 +13,16 @@
 
 $(function() {
   var
+    baseUri = "<%= base_uri ? base_uri : '../' %>",
     testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = true,  // Set true for easy testing of dynamic user marker on real device when out of region
+    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
     zoomLevelPlace = 14,      // Always use this zoom for get directions
     zoomLevelUser = 19,       // "locate me" button
 
-    useSmoothZoom = true,     // true to use smooth zoom for trail markers/location button
+    useSmoothZoom = false,     // true to use smooth zoom for trail markers/location button
     smoothZoomTimePerLevel = 0, // Mimimum time per zoom level, in mSec, seems best left at 0
 
     maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
@@ -55,28 +56,26 @@ $(function() {
     use2X = pixelRatio >= 1.5,
     res = use2X ? "@2x" : "",
 
-    cycle = new google.maps.MarkerImage( "images/Cycle-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    heritage = new google.maps.MarkerImage( "images/Heritage-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    nature = new google.maps.MarkerImage("images/Nature-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    produce = new google.maps.MarkerImage("images/Produce-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    river = new google.maps.MarkerImage("images/River-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    fishing = new google.maps.MarkerImage("images/Fishing-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    cycle = new google.maps.MarkerImage( baseUri + "map/images/Cycle-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    heritage = new google.maps.MarkerImage( baseUri + "map/images/Heritage-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    nature = new google.maps.MarkerImage( baseUri + "map/images/Nature-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    produce = new google.maps.MarkerImage( baseUri + "map/images/Produce-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    river = new google.maps.MarkerImage(baseUri + "map/images/River-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    riverbedz = new google.maps.MarkerImage(baseUri + "map/images/Riverbedz-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    fishing = new google.maps.MarkerImage(baseUri + "map/images/Fishing-pin-map" + res + ".png", pinSize, null, null, pinSize ),
 
-    boatramp = new google.maps.MarkerImage("images/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
-    info = new google.maps.MarkerImage("images/info" + res + ".png", altPinSize, null, null, altPinSize ),
-    rv = new google.maps.MarkerImage("images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
+    boatramp = new google.maps.MarkerImage( baseUri + "map/iamges/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
+    info = new google.maps.MarkerImage( baseUri + "map/images/info" + res + ".png", altPinSize, null, null, altPinSize ),
+    rv = new google.maps.MarkerImage( baseUri + "map/images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
 
-    hereMarker = new google.maps.MarkerImage ("images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
-
-
+    hereMarker = new google.maps.MarkerImage ( baseUri + "map/images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
 
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
     '<li class="big-arrow" data-icon="false">' +
       '<a href="|link|">|title||distance|' +
-        '<img src="<%= (base_uri ? base_uri : '../') + 'images/' %>|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+        '<img src="' + baseUri + 'images/|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
       '</a>' +
     '</li>',
 
@@ -418,7 +417,7 @@ openInfoWindow = function(place, markerElement) {
       options = {
         content: box,
         closeBoxMargin: "14px 5px 2px 2px",
-        closeBoxURL: "images/298-circlex.png",
+        closeBoxURL: baseUri + "map/images/298-circlex.png",
         infoBoxClearance: 2,
         pixelOffset: infoBoxOffset
         };
@@ -500,7 +499,7 @@ markerListULReset = function() {
 markerLink = function(place) {
   var group = place.group,
       dir = group.charAt(0).toUpperCase() + group.slice(1);
-  return "<%= (base_uri ? base_uri : '../')%>" + dir + "/" + place.item + ".html";
+  return baseUri + dir + "/" + place.item + ".html";
   }
 // _marker_list.js.erb end
 ,
@@ -716,6 +715,7 @@ createMap = function() {
     gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
 
     //---------- Add markers for selected places ------------v
+
     gmap.clear( "markers" );
     gmap.set( "bounds", null );
     $.each( places, function(i, place) {
@@ -746,6 +746,7 @@ createMap = function() {
           $toPretty.attr("value", title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
           }
+
         gmap.addMarker( {
           position: position,
           bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
@@ -755,11 +756,14 @@ createMap = function() {
           group: group,
           mTitle: title,
           mLink: markerLink(place),
-          zIndex: zIndex,
+          zIndex: zIndex
           } ).click(function() { openInfoWindow(place, this); });
+
         }
     });
+
     //--------------- each  --------------------------------^
+
 
   if (loadingSingle) {
     $topMarkerNav.height(0).hide().trigger("updatelayout");
@@ -831,13 +835,13 @@ getUrlVars = function()
 
 //_page_events.js.erb start
 
-$page.on( "pageshow", function() {
-createMap();
-});
+$page.on( "pagebeforeshow", function() {
+  createMap();
+  });
 
 $page.on( "pagehide", function() {
-stopGeolocation();
-});
+  stopGeolocation();
+  });
 
 $page.on("resize", function( event ) {
   gmap.refresh();
