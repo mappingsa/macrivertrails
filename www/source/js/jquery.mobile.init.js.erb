@@ -24,14 +24,31 @@ $(document).bind("mobileinit", function(){
         hintAcceleration = isAppleWebkit,     // true if should hint hardware acceleration
         $html = $("html");  // Where we will put the classes
 
+    <% if build_target == 'phonegap' %>
 
-    // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
-    // URL bar. For PhoneGap, it's better to disable pushstate
-    $.mobile.pushStateEnabled = true;
+      // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
+      // URL bar. For PhoneGap, it's better to disable pushstate
+      $.mobile.pushStateEnabled = false;
+
+      // Replace calls to window.history.back with PhoneGap navigation helper if available
+      $.mobile.phonegapNavigationEnabled = true;
+
+      // Allow cross-domain calls
+      $.support.cors = true;
+      $.mobile.allowCrossDomainPages = true;
+
+    <% else %>
+
+      $.mobile.pushStateEnabled = true;
+
+    <% end %>
+
+
     // TODO: This doesn't seem to actually work and is undocumented. It is, however, present
     // in the jQuery Mobile code. Research how to actually disable orientation change, most
     // likely with an event handler.
     $.mobile.orientationChangeEnabled = false;
+
     $.mobile.defaultPageTransition = "slide";
 
     // Add some classes to HTML so that we can write CSS that is responsive to browser model
