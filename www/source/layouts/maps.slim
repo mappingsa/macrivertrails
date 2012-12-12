@@ -1,7 +1,7 @@
 = partial :head
 body
   = blank_line
-  @page.map-page
+  @page.map-page data-dom-cache="true"
     = partial :middleman_info
     = partial :map_header
     = partial :map_tabbar
