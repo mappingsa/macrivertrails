@@ -1,6 +1,6 @@
 /*
  * jquery.mobile.transition-handler-simple.js
- * Version 1.3
+ * Version 1.3.3
  * Add a simple simultaneous handler that assumes pages don't need to be scrolled.
  * Suitable for use with pages designed for viewport height, possibly using iScroll, etc.
  *
@@ -36,7 +36,6 @@ $(document).on("mobileinit", function createSimpleHandler() {
       deferred.resolve( name, reverse, $to, $from, true );
       };
 
-    $to.css("z-index", -10);
     $to.addClass( $.mobile.activePageClass );
     // Note: In many applications the following line may be unnecessary, and may be removed
     $.mobile.focusPage( $to );  // Send focus to page as it is now display: block
@@ -53,11 +52,12 @@ $(document).on("mobileinit", function createSimpleHandler() {
         $to
           .height( screenHeight ) // Note: setting an explicit height helps eliminate tiling in the transitions
           .addClass( name + " in" + reverseClass );
-         $from
-           .height( screenHeight )
-           .addClass( name + " out" + reverseClass );
+        if ($from) {
+          $from
+            .height( screenHeight )
+            .addClass( name + " out" + reverseClass );
+          }
       }
-    $to.css("z-index", "");
     return deferred.promise();
     }
   $.mobile.transitionHandlers.simple = simpleHandler;
