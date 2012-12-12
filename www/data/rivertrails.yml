@@ -164,7 +164,7 @@ phonegap:
         - geolocation
         - jquery.tinysort
         - store
-        - jquery.mobile.init-phonegap
+        - jquery.mobile.init
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
