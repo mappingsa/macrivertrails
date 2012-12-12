@@ -14,7 +14,7 @@
 $(function() {
   var
     testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
+    testingOutOfRegion = true,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
@@ -656,7 +656,8 @@ createMap = function() {
     var lists, title;
 
     // attempt to get specifc marker data from item  page
-    urlVars = getUrlVars();
+   // urlVars = getUrlVars();
+    urlVars = {};
     selGroup = urlVars["section"] || "";
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
@@ -829,6 +830,15 @@ getUrlVars = function()
       ;
 
 //_page_events.js.erb start
+
+$page.on( "pageshow", function() {
+createMap();
+});
+
+$page.on( "pagehide", function() {
+stopGeolocation();
+});
+
 $page.on("resize", function( event ) {
   gmap.refresh();
   iscrollview.refresh();
@@ -936,7 +946,7 @@ $locationBtn.on("vclick", function(event) {
       gmap = this;
       $page.jqmData("gmap", gmap);
       map = gmap.get("map");
-      createMap();
+      //createMap();
       }
     });
 
