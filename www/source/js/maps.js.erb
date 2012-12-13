@@ -45,7 +45,7 @@ $(function() {
     defaultLat = -32.249085,  // Default center location (Dubbo)
     defaultLng = 148.604826,
 
-    geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
+    geoLocationActiveTime = testing ? 20000 : 60000, // # of mSec to run dynamic geolocation before shutting off
 
     previousMapQuery,        // Saved previous map query, to avoid unnecessary redraws
 
@@ -979,6 +979,7 @@ $locationBtn.on("vclick click", function(event) {
     callback: function() {
       gmap = this;
       $page.jqmData("gmap", gmap);
+      map = gmap.get("map");
       }
     });
 
