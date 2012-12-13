@@ -848,11 +848,17 @@ $page.on("resize", function( event ) {
   iscrollview.refresh();
   });
 
+
 // Top Navbar buttons. Shows markers for each trail ---
-$topMarkerNav.on("vclick", ".markerNav", function( e ){
+$topMarkerNav.on("vclick click", ".markerNav", function( e ) {
+
+  e.preventDefault();
+  if (e.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+
   var $button = $(this),
       selGroup = $button.jqmData( "group" );
-  e.preventDefault();
+
   closeInfoWindow();
   if ($.activeGroupButton) {
     $activeGroupButton.removeClass("ui-btn-active");
@@ -915,8 +921,12 @@ $submitDirections.on("click",  function () {
   });
 
 // Location button in header bar
-$locationBtn.on("vclick", function(event) {
+$locationBtn.on("vclick click", function(event) {
+
   event.preventDefault();
+  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+
   if ($locationBtn.hasClass("on")) {
     if (geoLocationMarker) {
       findMe = false;
@@ -933,7 +943,7 @@ $locationBtn.on("vclick", function(event) {
     geoLocationContinuous = true;
     addMyLocation();
     }
-});
+  });
 
 // _page_events.js.erb end
 
