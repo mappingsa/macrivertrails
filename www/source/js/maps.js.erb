@@ -47,6 +47,8 @@ $(function() {
 
     geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
 
+    previousMapQuery,        // Saved previous map query, to avoid unnecessary redraws
+
 
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
   // Google Maps JS is not required until the first use of the map page. They are fine here for
@@ -76,7 +78,7 @@ $(function() {
     riverbedz = new google.maps.MarkerImage(baseUri + "map/images/Riverbedz-pin-map" + res + ".png", pinSize, null, null, pinSize ),
     fishing = new google.maps.MarkerImage(baseUri + "map/images/Fishing-pin-map" + res + ".png", pinSize, null, null, pinSize ),
 
-    boatramp = new google.maps.MarkerImage( baseUri + "map/iamges/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
+    boatramp = new google.maps.MarkerImage( baseUri + "map/images/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
     info = new google.maps.MarkerImage( baseUri + "map/images/info" + res + ".png", altPinSize, null, null, altPinSize ),
     rv = new google.maps.MarkerImage( baseUri + "map/images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
 
@@ -669,8 +671,7 @@ createMap = function() {
     var lists, title;
 
     // attempt to get specifc marker data from item  page
-   // urlVars = getUrlVars();
-    urlVars = {};
+    urlVars = getUrlVars();
     selGroup = urlVars["section"] || "";
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
@@ -778,7 +779,6 @@ createMap = function() {
 
     //--------------- each  --------------------------------^
 
-
   if (loadingSingle) {
     $topMarkerNav.height(0).hide().trigger("updatelayout");
     iscrollview.resizeWrapper();
@@ -850,9 +850,11 @@ getUrlVars = function()
 
 //_page_events.js.erb start
 
+// Modify map according to mapQuery, if mapQuery is present and has changed
 $page.on( "pagebeforeshow", function() {
-  if (mapQuery) {
+  if (mapQuery && ( mapQuery !== previousMapQuery) ) {
     createMap();
+    previousMapQuery = mapQuery;
     mapQuery = undefined;
     }
   });

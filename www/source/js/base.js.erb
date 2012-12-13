@@ -91,9 +91,11 @@
                                                // did everything we want on the vclick
     var $a = $(this),
         section = $page.jqmData("section"),
-        sectionUC = section.charAt().toUpperCase() + section.slice(1),
+        sectionUC = section.charAt(0).toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
+
+    mapQuery = "section=" +  section + "&item=" + item;
     $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
   });
 
@@ -104,7 +106,7 @@
                                                // did everything we want on the vclick
     var $a = $(this),
         section = $page.jqmData("section"),
-        sectionUC = section.charAt().toUpperCase() + section.slice(1),
+        sectionUC = section.charAt(0).toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
     if ( $a.hasClass("is-itin") ) {
@@ -615,7 +617,7 @@ var localStore = function() {
       else {
         $.each(savedItems, function(i) {
           var thisItem = itemTemplate,
-              sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
+              sectionUC = this.section.charAt(0).toUpperCase() + this.section.slice(1);
           if (listID === this.listID) {
             thisItem = thisItem.replace('|section|', this.section);
             thisItem = thisItem.replace('|item|', this.item);
