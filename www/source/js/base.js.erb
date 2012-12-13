@@ -44,9 +44,12 @@
     });
 
     // Show menu
-    $showMenuBtn.bind("vclick", function(event) {
-      var menuIsHidden = $menu.is(":hidden");
+    $showMenuBtn.bind("vclick click", function(event) {
+
       event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      var menuIsHidden = $menu.is(":hidden");
       if (menuIsHidden) {
         openMenu();
         }
@@ -61,12 +64,15 @@
       closeMenu();
       });
 
-    $page.find(".toggle-fav").bind("vclick", function(event) {
+    $page.find(".toggle-fav").bind("vclick click", function(event) {
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
           title = $page.jqmData("title");
-      event.preventDefault();
       if ( $a.hasClass("is-fav") ) {
         localStore.removeFavourite(section, item);
         $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
@@ -79,24 +85,28 @@
     });
 
     // Get Directions button on place menu
-    $page.find(".directions-btn").on("vclick", function(event) {
+    $page.find(".directions-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
     var $a = $(this),
         section = $page.jqmData("section"),
         sectionUC = section.charAt().toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
-    event.preventDefault();
     $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
   });
 
     // Add to Itinerary button on place menu
-    $page.find(".itin-btn").on("vclick", function(event) {
+    $page.find(".itin-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
     var $a = $(this),
         section = $page.jqmData("section"),
         sectionUC = section.charAt().toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
-    event.preventDefault();
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
@@ -109,21 +119,24 @@
 
     // Add to Itinerary button (list item) on Add Itinerary popup
     $page.find(".itin-list").on("vclick", ".itin-add-btn", function(event) {
+      // Not an <a> tag (it's an <li>) so don't need to handle click event
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
           title = $page.jqmData("title"),
           $li = $a.closest("li"),
           id = $li.jqmData("itin-id");
-      event.preventDefault();
       localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
       setTimeout(function() {
         $page.dialog("close");
         }, 0);
     });
 
-    // Add to New Itinerary button on Add Itinerary popup
-    $page.find(".new-itin-submit-btn").on("vclick", function(event) {
+    // Add New Itinerary button on Add Itinerary popup
+    $page.find(".new-itin-submit-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
@@ -132,7 +145,6 @@
           $textInput = $form.find("input"),
           val = $textInput.val(),
           listID;
-      event.preventDefault();
       listID = localStore.addList(val.toUpperCase());
       localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
       setTimeout(function() {
@@ -141,9 +153,9 @@
     });
 
     $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
+      // Not an <a> tag, so don't need to deal with click
       var $li = $(this),
       section = $li.jqmData("section");
-      event.preventDefault();
       /*
       $.mobile.changePage("map/index.html",
         {
@@ -267,7 +279,11 @@
   });
 
   // "delete" buttons to the right of items on ToDo page
-  $(document).on("vclick", ".btn-remove-todo", function(event) {
+  $(document).on("vclick click", ".btn-remove-todo", function(event) {
+
+    event.preventDefault();
+    if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
     var $a = $(this),
         $li = $a.closest("li"),
         section = $li.jqmData("section"),
@@ -275,7 +291,6 @@
         $wrapper = $li.closest(".ui-listview"),
         $collapsible = $li.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-    event.preventDefault();
     $li.remove();
     localStore.removeFromList( listID, section, item );
     if (!$wrapper.children().length) {
@@ -295,6 +310,7 @@
 
   /* Map buttons on Todo page collapsible headers */
   $(document).on("vclick", ".todo-map-btn", function(event) {
+    // Note this is not an <a> tag, so don't need to worry about click
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
