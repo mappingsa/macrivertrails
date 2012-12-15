@@ -320,7 +320,13 @@ showMap = function(queryString, transition) {
     // Get Directions button on place menu
     $page.find(".nearby-tab a").on("click", function(event) {
       event.preventDefault();
-      showMap("location=me", "fade");
+      if ( $page.is(".map-page") ) {
+        mapQuery = "location=me";
+        createMap();
+        }
+      else {
+        showMap("location=me", "fade");
+        }
       });
 
     // Get Directions button on place menu
