@@ -9,10 +9,16 @@
   // in Safari debug console when at a breakpoint!
   //"use strict";
 
-  var refreshScroller = function(slider) {
-    $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
-    };
+  var
+    refreshScroller = function(slider) {
+      $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
+      },
 
+    showMap = function(queryString, transition) {
+      var mapUri = "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>";
+      mapQuery = queryString;
+      $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+      };
 
   $(document).on('pageinit', ".ui-page", function() {
     var
@@ -95,8 +101,9 @@
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
 
-    mapQuery = "section=" +  section + "&item=" + item;
-    $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
+   // mapQuery = "section=" +  section + "&item=" + item;
+    //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
+    showMap("section=" +  section + "&item=" + item);
   });
 
     // Add to Itinerary button on place menu
@@ -158,8 +165,9 @@
       // Not an <a> tag, so don't need to deal with click
       var $li = $(this),
       section = $li.jqmData("section");
-      mapQuery = "section=" + section;
-      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { "transition": "fade"} );
+      //mapQuery = "section=" + section;
+      //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { "transition": "fade"} );
+      showMap("section=" + section, "fade");
     });
 
     $('.homeImageSlider').flexslider({
@@ -306,8 +314,9 @@
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-    mapQuery = "todo=" + listID;
-    $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { transition: "fade" } );
+    //mapQuery = "todo=" + listID;
+    //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { transition: "fade" } );
+    showMap("todo=" + listID, "fade");
     });
 
   }(jQuery));
