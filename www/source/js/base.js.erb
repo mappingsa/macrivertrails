@@ -306,23 +306,9 @@
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-
-    /*
-    $.mobile.changePage( "map/index.html",
-      {
-        "data" :       "todo=" + listID,
-        "transition" : "fade"
-      }
-    );
-    */
-
-    $.mobile.changePage( "/map/index.html",
-      {
-        "transition" : "fade"
-      }
-    );
-
-  });
+    mapQuery = "todo=" + listID;
+    $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { transition: "fade" } );
+    });
 
   }(jQuery));
 
