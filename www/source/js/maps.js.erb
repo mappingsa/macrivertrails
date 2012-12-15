@@ -304,11 +304,52 @@ groupZindex = function(group) {
 
 groupIcon = function(group) {
   return groups[group].icon;
-  }
-// _utils.js.erb.end
-    ;
+  },
+
+showMap = function(queryString, transition) {
+  var mapUri = "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>";
+  mapQuery = queryString;
+  $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+  };
 
   logTime("maps.js");
+
+  $(document).on('pageinit', ".ui-page", function() {
+    var $page = $(this);
+
+    // Get Directions button on place menu
+    $page.find(".nearby-tab a").on("click", function(event) {
+      event.preventDefault();
+      showMap("location=me", "fade");
+      });
+
+    // Get Directions button on place menu
+    $page.find(".directions-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      var section = $page.jqmData("section"),
+        item = $page.jqmData("item");
+      showMap("section=" +  section + "&item=" + item);
+      });
+
+    $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
+      // Not an <a> tag, so don't need to deal with click
+      var $li = $(this),
+      section = $li.jqmData("section");
+      showMap("section=" + section, "fade");
+      });
+
+    /* Map buttons on Todo page collapsible headers */
+    $(document).on("vclick", ".todo-map-btn", function(event) {
+      // Note this is not an <a> tag, so don't need to worry about click
+      var $span = $(this),
+          $collapsible = $span.closest(".ui-collapsible"),
+          listID = $collapsible.jqmData("list-id");
+      showMap("todo=" + listID, "fade");
+      });
+
+    });
 
   $(document).on("pageremove", ".map-page", function() {
     var $page = $(this),
