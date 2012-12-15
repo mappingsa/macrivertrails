@@ -158,18 +158,8 @@
       // Not an <a> tag, so don't need to deal with click
       var $li = $(this),
       section = $li.jqmData("section");
-      /*
-      $.mobile.changePage("map/index.html",
-        {
-          "data": "section=" + section,
-          "transition": "fade"
-        } );
-      */
-      $.mobile.changePage("/map/index.html",
-        {
-          "transition": "fade"
-        } );
-
+      mapQuery = "section=" + section;
+      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { "transition": "fade"} );
     });
 
     $('.homeImageSlider').flexslider({

@@ -131,7 +131,6 @@ $(function() {
     {group: "info", item: "", position: "-32.243408, 148.601667", title: "Dubbo Visitor Information Centre" },
     {group: "info", item: "", position: "-31.699748, 147.837154", title: "Warren Visitor Information Centre" },
     {group: "info", item: "", position: "-32.233914, 148.242014", title: "Narromine Vistor Information Centre" },
-
     {group: "cycle", item: "geurie",  position: "-32.400028, 148.818317", title: "Geurie-Bald Hill Mountain Bike Trails" },
     {group: "cycle", item: "beni", position: "-32.246925, 148.72464", title: "Beni State Conservation Area cycling, Dubbo" },
     {group: "cycle", item: "powterpark", position: "-32.239314, 148.611986", title: "Powter Park BMX Track, Dubbo" },
@@ -744,19 +743,19 @@ createMap = function() {
           showAlways = groupShowAlways(group),
           zIndex = groupZindex(group);
 
-      if ( ( (selTodo === undefined) && (selItem === item) && (selGroup === group) )
+      if ( ( (selTodo === undefined) && (selGroup === group) && ( (selItem.length === 0) || (selItem === item) ) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
            || fullLoad
         ) {
-        if ( (selItem === item && selGroup === group) ||                 // Single place
+        if ( (loadingSingle) ||
              (selTodo !== undefined && todoCount === 1 && !showAlways)   // Todo with only one place
            ) {  // Want to see single place - "directions"
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
           }
 
-        if ( selItem === item && selGroup === group) {
+        if ( loadingSingle ) {
           $to.attr("value",  place.position);          // Prepare to get directions,
           $toPretty.attr("value", title);        // But don't show direcitons fields yet
                                                        // (Not until/unless we get user location )
