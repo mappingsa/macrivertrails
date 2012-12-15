@@ -722,6 +722,9 @@ createMap = function() {
       $activeGroupButton.addClass("ui-btn-active");
       }
     else if (selGroup) {
+      if ($activeGroupButton) {
+        $activeGroupButton.removeClass("ui-btn-active");
+        }
       $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
       $activeGroupButton.addClass("ui-btn-active");
       }
@@ -879,7 +882,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
       selGroup = $button.jqmData( "group" );
 
   closeInfoWindow();
-  if ($.activeGroupButton) {
+  if ($activeGroupButton) {
     $activeGroupButton.removeClass("ui-btn-active");
     }
   $button.addClass("ui-btn-active");
