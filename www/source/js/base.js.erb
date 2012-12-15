@@ -91,6 +91,11 @@
     });
 
     // Get Directions button on place menu
+    $page.find(".nearby-tab a").on("click", function(event) {
+      showMap("location=me", "fade");
+      });
+
+    // Get Directions button on place menu
     $page.find(".directions-btn").on("vclick click", function(event) {
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
