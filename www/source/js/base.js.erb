@@ -92,6 +92,7 @@
 
     // Get Directions button on place menu
     $page.find(".nearby-tab a").on("click", function(event) {
+      event.preventDefault();
       showMap("location=me", "fade");
       });
 
@@ -100,14 +101,8 @@
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
-    var $a = $(this),
-        section = $page.jqmData("section"),
-        sectionUC = section.charAt(0).toUpperCase() + section.slice(1),
-        item = $page.jqmData("item"),
-        title = $page.jqmData("title");
-
-   // mapQuery = "section=" +  section + "&item=" + item;
-    //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>" );
+    var section = $page.jqmData("section"),
+        item = $page.jqmData("item");
     showMap("section=" +  section + "&item=" + item);
   });
 
@@ -170,8 +165,6 @@
       // Not an <a> tag, so don't need to deal with click
       var $li = $(this),
       section = $li.jqmData("section");
-      //mapQuery = "section=" + section;
-      //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { "transition": "fade"} );
       showMap("section=" + section, "fade");
     });
 
@@ -319,8 +312,6 @@
     var $span = $(this),
         $collapsible = $span.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-    //mapQuery = "todo=" + listID;
-    //$.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>", { transition: "fade" } );
     showMap("todo=" + listID, "fade");
     });
 
