@@ -386,10 +386,13 @@ showMap = function(queryString, transition) {
       $fromPretty = $page.find( ".fromPretty" ),
       $directionsFields = $page.find( ".directionsFields" ),
       $markerList = $page.find( ".marker-list"),
+      $mapSubpage = $page.find(".map-subpage"),
+      $markerListSubpage = $page.find(".markerlist-subpage"),
       markerListview = $markerList.data( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
+      $markerListBtn = $page.find(" .markerListBtn"),
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
@@ -919,6 +922,16 @@ $page.on("resize", function( event ) {
   iscrollview.refresh();
   });
 
+
+$markerListBtn.on("vclick click", function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+
+  $mapSubpage.slideToggle();
+  $markerListSubpage.fadeIn();
+
+  });
 
 // Top Navbar buttons. Shows markers for each trail ---
 $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
