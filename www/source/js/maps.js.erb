@@ -379,7 +379,6 @@ showMap = function(queryString, transition) {
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
-      iscrollview = $page.find( ".iscroll-wrapper" ).data( "iscrollview" ),
       $to = $page.find( ".to" ),
       $toPretty = $page.find( ".toPretty" ),
       $from = $page.find( ".from" ),
@@ -495,7 +494,6 @@ openInfoWindow = function(place, markerElement) {
     $to.attr("value",  place.position);
     $toPretty.attr("value", place.title);
     $directionsFields.show();
-    iscrollview.refresh();
     }
 }
 // _info_window.js.erb end
@@ -666,7 +664,6 @@ addMyLocation = function() {
         }
       knownLocation = true;
       showMarkerList();
-      iscrollview.refresh();
       }
     else {
       updateMarkerListDistances();
@@ -700,7 +697,6 @@ addMyLocation = function() {
     stopGeolocation();
    $locationBtn.removeClass("on off").addClass("disabled");
     showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
-    iscrollview.refresh();
   });
 
 
@@ -757,7 +753,6 @@ createMap = function() {
       title = lists[selTodo].title;
       $headerTitle.text(title);
       $topMarkerNav.height(0).hide().trigger("updatelayout");
-      iscrollview.resizeWrapper();
       selItem = "";
       selGroup = "";
       }
@@ -836,12 +831,10 @@ createMap = function() {
 
   if (loadingSingle) {
     $topMarkerNav.height(0).hide().trigger("updatelayout");
-    iscrollview.resizeWrapper();
     $headerTitle.text("Directions");
     }
 
   addMyLocation();
-  iscrollview.refresh();
 
   var bounds = gmap.get("bounds");
     setTimeout ( function() {
@@ -920,7 +913,6 @@ $page.on( "pagehide", function() {
 
 $page.on("resize", function( event ) {
   gmap.refresh();
-  iscrollview.refresh();
   });
 
 
@@ -1008,7 +1000,6 @@ $submitDirections.on("click",  function () {
       else {
         $results.hide();
         }
-      iscrollview.refresh();
     });
   return false;
   });
