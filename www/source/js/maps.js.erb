@@ -392,7 +392,8 @@ showMap = function(queryString, transition) {
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
-      $markerListBtn = $page.find(" .markerListBtn"),
+      $markerListBtn = $page.find(".markerListBtn"),
+      $mapBtn = $page.find(".mapBtn"),
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
@@ -928,8 +929,16 @@ $markerListBtn.on("vclick click", function (event) {
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
 
-  $mapSubpage.slideToggle();
-  $markerListSubpage.fadeIn();
+  $mapSubpage.slideUp(1000);
+  $markerListSubpage.slideDown(1000);
+  });
+
+$mapBtn.on("vclick click", function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+  $mapSubpage.slideDown(1000);
+  $markerListSubpage.slideUp(1000);
 
   });
 
