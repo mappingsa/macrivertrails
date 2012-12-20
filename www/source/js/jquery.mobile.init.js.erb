@@ -13,6 +13,7 @@ $(document).bind("mobileinit", function(){
         isApple = (/^apple computer/).test(vendor),
         isIOS = (/iphone|ipod|ipad/).test(platform),
         isAndroid = (/android/).test(platform),
+        isFirefox = (/firefox/i).test(navigator.userAgent),
         isAppleWebkit =  isWebkit && isApple,
         isAppleWebkitMobile = isAppleWebkit && isIOS,
         isAppleWebkitDesktop = isAppleWebkit && !isIOS,
@@ -62,22 +63,25 @@ $(document).bind("mobileinit", function(){
       // Make this a separate class, in case other platforms might need this as well
       // Currently, I don't know of any, but it seems prudent to keep this separate
       $html.addClass("hint-acceleration");
-    }
+      }
     if (isAppleWebkitMobile) {
       $html.addClass("is-apple-webkit-mobile");
-    }
+      }
     if (isAppleWebkitFullscreen) {
       $html.addClass("is-apple-webkit-mobile-fullscreen");
-    }
+      }
     if (isAppleWebkitMobileWebview) {
       $html.addClass("is-apple-webkit-mobile-webview");
-    }
+      }
     if (isAppleWebkitDesktop) {
       $html.addClass("is-apple-webkit-desktop");
-    }
+      }
     if (isIpad) {
       $html.addClass("is-ipad");
-    }
+      }
+    if (isFirefox) {
+      $html.addClass("is-firefox");
+      }
 
 
 });

@@ -2,34 +2,30 @@
 layout: maps
 title: Mcquarie River Trails - Map
 ---
-<div>
-    <div class="map-canvas map-subpage"></div>
+<div class="map-canvas"></div>
 
-    <div class="markerlist-subpage" style="display:none;">
-      <ul data-role="listview" data-inset="true" class="marker-list"></ul>
-      <div class="markerListNote" style=" width: 100%; text-align: center; display: none;"></div>
-    </div>
+<div class="markerlist-subpage" style="display:none;">
+  <ul data-role="listview" data-inset="true" class="marker-list"></ul>
+  <div class="markerListNote" style=" width: 100%; text-align: center; display: none;"></div>
+</div>
 
-    <div class="directionsFields" style="display:none;">
-      <label for="from">From</label>
-      <input class="from ui-bar-c" type="text" value=""  style="display: none;"/>
-      <input class="fromPretty ui-bar-c" type="text" value="" />
-      <label for="to">To</label>
-      <input class="to ui-bar-c" type="text" value="" style="display: none;"/>
-      <input class="toPretty ui-bar-c" type="text" value="" />
-      <a class="submitDirections" href="#" data-role="button" data-icon="search">Get directions</a>
-    </div>
+<div class="directionsFields" style="display:none;">
+  <label for="from">From</label>
+  <input class="from ui-bar-c" type="text" value=""  style="display: none;"/>
+  <input class="fromPretty ui-bar-c" type="text" value="" />
+  <label for="to">To</label>
+  <input class="to ui-bar-c" type="text" value="" style="display: none;"/>
+  <input class="toPretty ui-bar-c" type="text" value="" />
+  <a class="submitDirections" href="#" data-role="button" data-icon="search">Get directions</a>
+</div>
 
-  <div class="results ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
-    <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">Results</div>
-    <div class="directions"></div>
-    <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined"></div>
-  </div>
+<div class="results ui-listview ui-listview-inset ui-corner-all ui-shadow" style="display:none;">
+  <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-top ui-btn-up-undefined">Results</div>
+  <div class="directions"></div>
+  <div class="ui-li ui-li-divider ui-btn ui-bar-b ui-corner-bottom ui-btn-up-undefined"></div>
+</div>
 
-  <br>
-
-  <div data-role="popup" class="no-location-popup">
-    <p>Unable to get current position</p>
-  </div>
+<div data-role="popup" class="no-location-popup">
+  <p>Unable to get current position</p>
 </div>
 
