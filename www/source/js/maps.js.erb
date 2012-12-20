@@ -576,7 +576,7 @@ resizeMapCanvas = function() {
   //viewportHeight = this.$window.height();   // Wrong
   viewportHeight = document.documentElement.clientHeight;
   //barsHeight = calculateBarsHeight();
-  barsHeight = 100 + ( loadingSingle ? 0 : 64);
+  barsHeight = 40 /* header */ + 58 /* footer/tabbbar */ + ( loadingSingle ? 0 : 64 /* trail tabbar */ );
 
   newWrapperHeight =
     viewportHeight -
@@ -1032,6 +1032,7 @@ $page.on( "pagebeforeshow", function() {
     mapQuery = undefined;
     }
   resizeMapCanvas();
+  gmap.refresh();
   });
 
 $page.on( "pagehide", function() {
@@ -1040,7 +1041,7 @@ $page.on( "pagehide", function() {
 
 $(window).on("resize", function( event ) {
   resizeMapCanvas();
-  //gmap.refresh();
+  gmap.refresh();
   });
 
 
@@ -1048,18 +1049,16 @@ $markerListBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
-
-  $canvas.slideUp(1000);
-  $markerListSubpage.slideDown(1000);
+  $canvas.removeClass("subpage-active in").addClass("fade out");
+  $markerListSubpage.addClass("subpage-active fade in")
   });
 
 $mapBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
-  $canvas.slideDown(1000);
-  $markerListSubpage.slideUp(1000);
-
+  $markerListSubpage.removeClass("subpage-active in").addClass("fade out");
+  $canvas.addClass("subpage-active fade in");
   });
 
 // Top Navbar buttons. Shows markers for each trail ---
