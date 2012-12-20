@@ -576,7 +576,7 @@ resizeMapCanvas = function() {
   //viewportHeight = this.$window.height();   // Wrong
   viewportHeight = document.documentElement.clientHeight;
   //barsHeight = calculateBarsHeight();
-  barsHeight = 164;
+  barsHeight = 100 + ( loadingSingle ? 0 : 64);
 
   newWrapperHeight =
     viewportHeight -
@@ -584,7 +584,7 @@ resizeMapCanvas = function() {
     wrapperHeightAdjustForBoxModel  +       // Make adjustment based on content-box model
     // Note: the following will fail for Safari desktop with Develop/User Agent/iPhone
     // Fake fullscreen or webview by using custom user agent and removing "Safari" from string
-    (isAppleWebkitMobile && (!isAppleWebkitFullScreen) && (!isIpad) ? 60 : 0)    // Add 60px for space recovered from Mobile Safari address bar
+    (isAppleWebkitMobile && (!isAppleWebkitFullScreen) && (!isIpad) ? 60 : 0);  // Add 60px for space recovered from Mobile Safari address bar
 
   $canvas.css("height", newWrapperHeight);
   },
@@ -1026,12 +1026,12 @@ getUrlVars = function()
 
 // Modify map according to mapQuery, if mapQuery is present and has changed
 $page.on( "pagebeforeshow", function() {
-  resizeMapCanvas();
   if (mapQuery && ( mapQuery !== previousMapQuery) ) {
     createMap();
     previousMapQuery = mapQuery;
     mapQuery = undefined;
     }
+  resizeMapCanvas();
   });
 
 $page.on( "pagehide", function() {
