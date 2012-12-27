@@ -385,7 +385,8 @@ showMap = function(queryString, transition) {
       $directionsFields = $page.find( ".directionsFields" ),
       $markerList = $page.find( ".marker-list"),
       $markerListSubpage = $page.find(".markerlist-subpage"),
-      markerListview = $markerList.data( "listview" ),
+      markerListScroller = $markerListSubpage.jqmData("iscrollview"),
+      markerListview = $markerList.jqmData( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
@@ -1050,15 +1051,16 @@ $markerListBtn.on("vclick click", function (event) {
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
   $canvas.removeClass("subpage-active in").addClass("fade out");
-  $markerListSubpage.addClass("subpage-active fade in")
+  $markerListSubpage.removeClass("reverse").addClass("subpage-active slideup in");
+  markerListScroller.refresh();
   });
 
 $mapBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
-  $markerListSubpage.removeClass("subpage-active in").addClass("fade out");
-  $canvas.addClass("subpage-active fade in");
+  $canvas.removeClass("out").addClass("subpage-active in");
+  $markerListSubpage.removeClass("subpage-active").addClass("reverse");
   });
 
 // Top Navbar buttons. Shows markers for each trail ---
