@@ -1063,6 +1063,7 @@ $mapBtn.on("vclick click", function (event) {
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
   if ( !($markerListSubpage.hasClass("subpage-active") ) ) { return; }
+  if ( $markerListSubpage.hasClass("out") ) { return; }
   $markerListSubpage.removeClass("in").addClass("slideup out reverse");
   $markerListSubpage.animationComplete( function () {
     $markerListSubpage.removeClass("subpage-active slideup out reverse");
