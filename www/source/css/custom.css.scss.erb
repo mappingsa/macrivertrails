@@ -137,9 +137,22 @@
    ========================================================================== */
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
-   background: imageUrl('whitey.png') 0 0;
+   background-image: imageUrl('whitey.png');
    background-size: 203px 317px;
    text-shadow: none;
+}
+
+
+.map-page.ui-body-c,
+.map-page .ui-body-c,
+.browse-page.ui-body-c,
+.browse-page .ui-body-c {
+  background-image: none;
+  background-color: #f9f9f9;  // Copied from theme
+  }
+
+.map-page .subpage {
+  background-color: #f9f9f9;  // TODO: not sure where background transparency is coming from - just override it
 }
 
 
@@ -213,7 +226,7 @@ that they will override CSS in the standard JQM structure CSS */
 .shadow2 {width:100%}
 
 
-.main_div_blue {
+.home-page {
   background-size: auto;
   background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
