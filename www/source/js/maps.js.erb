@@ -629,7 +629,8 @@ openInfoWindow = function(place, markerElement) {
 // the map, which correspond to the trail markers shown on the map.
 
 showMarkerList = function(){
-var myMarkers = gmap.get( "markers" ),
+  if ( !($markerListSubpage.hasClass("subpage-active")) ) { return; }  // Don't update if not shown
+  var myMarkers = gmap.get( "markers" ),
     list = "",
     $markerListItems;
 
@@ -1052,6 +1053,7 @@ $markerListBtn.on("vclick click", function (event) {
                                        // did everything we want on the vclick
   if ( $markerListSubpage.hasClass("subpage-active") ) { return; }
   $markerListSubpage.removeClass("out reverse").addClass("subpage-active slideup in");
+  showMarkerList();
   markerListScroller.refresh();
   $markerListSubpage.animationComplete( function () {
     $markerListSubpage.removeClass("slideup in reverse");
