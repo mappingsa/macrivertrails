@@ -1050,20 +1050,22 @@ $markerListBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
-  //$canvas.removeClass("subpage-active in").addClass("fade out");
-  $markerListSubpage.removeClass("reverse").addClass("subpage-active slideup in");
+  if ( $markerListSubpage.hasClass("subpage-active") ) { return; }
+  $markerListSubpage.removeClass("out reverse").addClass("subpage-active slideup in");
   markerListScroller.refresh();
+  $markerListSubpage.animationComplete( function () {
+    $markerListSubpage.removeClass("slideup in reverse");
+    });
   });
 
 $mapBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
-  //$canvas.removeClass("out").addClass("subpage-active in");
-  //$markerListSubpage.removeClass("subpage-active").addClass("reverse");
-  $markerListSubpage.addClass("reverse");
+  if ( !($markerListSubpage.hasClass("subpage-active") ) ) { return; }
+  $markerListSubpage.removeClass("in").addClass("slideup out reverse");
   $markerListSubpage.animationComplete( function () {
-    $markerListSubpage.removeClass("subpage-active");
+    $markerListSubpage.removeClass("subpage-active slideup out reverse");
     });
   });
 
