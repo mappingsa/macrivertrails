@@ -38,11 +38,13 @@
 /* Fixes for page transition flicker */
 
 .is-apple-webkit .ui-page,
-.is-apple-webkit .ui-page > div {
+.is-apple-webkit .ui-page > div,
+.is-apple-webkit .subpage {
   -webkit-transform: translateZ(0); /* This should be for iOS only */
 }
 
-.ui-page {
+.ui-page,
+.subpage {
  -webkit-backface-visibility: hidden;
 }
 
@@ -1217,23 +1219,83 @@ margin-left: -45px;
   @extend %hdrBtn;
 }
 
-.markerListBtn {  // Temporary
-  @extend %hdrBtn;
+.map-button {
   position: absolute;
-  top: 6px;
-  right: 84px;
+  height: 40px;
+  width: 80px;
+  top: 0;
+  left: 50%;
+  margin-left: -40px;
+  background-color: transparent;
+  }
+
+.map-button-inner {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  top: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  //border-top-color: #ff9933;
+  border-top-color: rgb(0, 255, 0);
+  border-right-color: transparent;
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+.map-button-inner.active {
+  display: block;
+}
+
+.markerlist-button {
+  position: absolute;
+  height: 50px;
+  width: 80px;
+  bottom: -20px;
+  left: 50%;
+  margin-left: -40px;
+  background-color: transparent;
+  z-index: 3000;
+  }
+
+ .markerlist-button-inner {
+  position: absolute;
+  height: 26px;
+  width: 50px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -25px;
+  background-color: rgba(0, 200, 0, .7);
   background-image: imageUrl('259-list.png');
+  background-size: 30px 21px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(100, 100, 100, .8);
+  border-bottom-style: none;
+  -webkit-box-shadow: 0 -9px 6px -6px #777;
+  -webkit-transition: all 0.3s ease-out;
+  -webkit-transform: translateY(20px);
+  }
+
+.markerlist-button-inner.hover {
+  -webkit-transform: translateY(0);
 }
 
-.mapBtn {  // Temporary
-  @extend %hdrBtn;
-  position: absolute;
-  top: 6px;
-  right: 120px;
-  background-image: imageUrl('103-map.png');
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .markerlist-button-inner {
+    background-image: imageUrl('259-list@2x.png');
+  }
 }
 
-.ui-header .locationBtn {
+
+.mapsheader .locationBtn {
   position: absolute;
   top: 6px;
   right: 42px;

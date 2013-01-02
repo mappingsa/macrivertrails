@@ -384,14 +384,17 @@ showMap = function(queryString, transition) {
       $fromPretty = $page.find( ".fromPretty" ),
       $directionsFields = $page.find( ".directionsFields" ),
       $markerList = $page.find( ".marker-list"),
+      $subpageContainer = $page.find(".subpage-container"),
       $markerListSubpage = $page.find(".markerlist-subpage"),
       markerListScroller = $markerListSubpage.jqmData("iscrollview"),
       markerListview = $markerList.jqmData( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
-      $markerListBtn = $page.find(".markerListBtn"),
-      $mapBtn = $page.find(".mapBtn"),
+      $markerListBtn = $page.find(".markerlist-button"),
+      $markerListBtnInner = $page.find(".markerlist-button-inner"),
+      $mapBtn = $page.find(".map-button"),
+      $mapBtnInner = $page.find(".map-button-inner"),
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
@@ -588,6 +591,7 @@ resizeMapCanvas = function() {
     (isAppleWebkitMobile && (!isAppleWebkitFullScreen) && (!isIpad) ? 60 : 0);  // Add 60px for space recovered from Mobile Safari address bar
 
   $canvas.css("height", newWrapperHeight);
+  $subpageContainer.css("height", newWrapperHeight);
   },
 
 // _info_window.js.erb start
@@ -1047,6 +1051,14 @@ $(window).on("resize", function( event ) {
   });
 
 
+$markerListBtn.on("vmouseover", function (event) {
+  $markerListBtnInner.addClass("hover");
+  });
+
+$markerListBtn.on("vmouseout", function (event) {
+  $markerListBtnInner.removeClass("hover");
+  });
+
 $markerListBtn.on("vclick click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
@@ -1057,16 +1069,18 @@ $markerListBtn.on("vclick click", function (event) {
   markerListScroller.refresh();
   $markerListSubpage.animationComplete( function () {
     $markerListSubpage.removeClass("slideup in reverse");
+    $mapBtnInner.addClass("active");
     });
   });
 
-$mapBtn.on("vclick click", function (event) {
+$mapBtn.on("vmousedown click", function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                        // did everything we want on the vclick
   if ( !($markerListSubpage.hasClass("subpage-active") ) ) { return; }
   if ( $markerListSubpage.hasClass("out") ) { return; }
   $markerListSubpage.removeClass("in").addClass("slideup out reverse");
+  $mapBtnInner.removeClass("active");
   $markerListSubpage.animationComplete( function () {
     $markerListSubpage.removeClass("subpage-active slideup out reverse");
     });
