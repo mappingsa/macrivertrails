@@ -465,95 +465,6 @@ zoomTo = function(targetZoom) {
       }
   },
 
-//-----------------------------------------------------------------------
-// Determine the box-sizing model of an element
-// While jQuery normalizes box-sizing models when retriving geometry,
-// it doesn't consider it when SETTING geometry. So, this is useful when
-// setting geometry. (e.g. the height of the wrapper)
-//-----------------------------------------------------------------------
-getBoxSizing = function($elem) {
-  var $html = $("html"),
-      isFirefox = $html.hasClass("is-firefox"),
-      isWebkit = $html.hasClass("is-webkit"),
-      boxSizing,
-      prefix = "";
-
-  if (isFirefox)     { prefix = "-moz-"; }
-  else if (isWebkit) { prefix = "-webkit-"; } // note: can drop prefix for Chrome >=10, Safari >= 5.1 (534.12)
-  boxSizing = $elem.css(prefix + "box-sizing");
-  if (!boxSizing && prefix) { boxSizing = $elem.css("box-sizing"); }  // Not found, try again with standard CSS
-  if (!boxSizing) {     // Still not found - no CSS property available to guide us.
-    // See what JQuery thinks the global box model is
-    if ($.boxModel) { boxSizing = "content-box"; }
-    else            { boxSizing = "border-box"; }
-    }
-  return boxSizing;
-  },
-
-//-----------------------------------------------------------------
-// Get the height adjustment for setting the height of an element,
-// based on the content-box model
-//-----------------------------------------------------------------
-getHeightAdjustForBoxModel = function($elem) {
-  // Take into account the box model. This defaults to either W3C or traditional
-  // model for a given browser, but can be overridden with CSS
-  var adjust;
-  switch (getBoxSizing($elem)) {
-    case "border-box":      // AKA traditional, or IE5 (old browsers and IE quirks mode)
-      // only subtract margin
-      adjust = $elem.outerHeight(true) - $elem.outerHeight();
-      break;
-
-    case "padding-box":    // Firefox-only
-      // subtract margin and border
-      adjust = $elem.outerHeight() - $elem.height();
-      break;
-
-    case "content-box":     // AKA W3C  Ignore jshint warning
-    default:                // Ignore jslint warning
-      // We will subtract padding, border, margin
-      adjust = $elem.outerHeight(true) - $elem.height();
-      break;
-    }
-  return adjust;
-  },
-
-//--------------------------------------------------------
-// Calculate total bar heights.
-// code taken from jquery.mobile.iscrollview and slightly modified
-//--------------------------------------------------------
-calculateBarsHeight = function() {
-  var barsHeight = 0,
-      fixedHeightSelector = ":jqmData(role='header'), :jqmData(role='footer'), :jqmData(iscroll-fixed)",
-      // Persistent footers are sometimes inside the page, sometimes outside of all pages! (as
-      // direct descendant of <body>). And sometimes both. During transitions, the page that
-      // is transitioning in will have had it's persistent footer moved outside of the page,
-      // while all other pages will have their persistent footer internal to the page.
-      //
-      // To deal with this, we find iscroll-fixed elements in the page, as well as outside
-      // of the page (as direct descendants of <body>). We avoid double-counting persistent
-      // footers that have the same data-id. (Experimentally, then, we also permit the user
-      // to place fixed-height elements outside of the page, but unsure if this is of any
-      // practical use.)
-      $barsInPage = $page.find(fixedHeightSelector),
-      $barsOutsidePage = $("body").children(fixedHeightSelector);
-
-  $barsInPage.each(function() {  // Iterate over headers/footers/etc.
-      barsHeight += $(this).outerHeight(true);
-      });
-
-  $barsOutsidePage.each(function() {
-    var id = $(this).jqmData("id");  // Find data-id if present
-    // Count bars outside of the page if they don't have data-id (so not a persistent
-    // footer, but something the developer put there and tagged with data-iscroll-fixed class),
-    // or if a matching data-id is NOT found among the bars that are inside the page.
-    if (id === "" || !$barsInPage.is( ":jqmData(id='" + id + "')" )) {
-      barsHeight += $(this).outerHeight(true);
-      }
-    });
-  return barsHeight;
-  },
-
 //--------------------------------------------------------
 //Resize the map canvas to fill the
 // viewport remaining after all fixed-height elements
@@ -561,34 +472,7 @@ calculateBarsHeight = function() {
 // modified.
 //--------------------------------------------------------
 resizeMapCanvas = function() {
-  var then = null,
-       viewportHeight,
-       barsHeight,
-       newWrapperHeight,
-       $html = $("html"),
-       isAppleWebkitMobile = $html.hasClass("is-apple-webkit-mobile"),
-       isAppleWebkitFullScreen = $html.hasClass("is-apple-webkit-fullscreen"),
-       isIpad = $html.hasClass("is-ipad"),
-       wrapperHeightAdjustForBoxModel = getHeightAdjustForBoxModel($canvas);
-
-  // Get technically-correct viewport height. jQuery documentation is in error on this.
-  // The viewport height is NOT in all cases the same as the window height, because the height
-  // of window might have been manually set. And, guess what? jQuery Mobile sets it to 99.99%.
-  // The viewport is considered the parent of window, and can be retrieved as shown below.
-  // At 99.99% and common browser sizes, this is probably not an issue. But let's do it right.
-  //viewportHeight = this.$window.height();   // Wrong
-  viewportHeight = document.documentElement.clientHeight;
-  //barsHeight = calculateBarsHeight();
-  barsHeight = 40 /* header */ + 49 /* footer/tabbbar */ + ( loadingSingle ? 0 : 64 /* trail tabbar */ );
-
-  newWrapperHeight =
-    viewportHeight -
-    barsHeight -                        // Height of fixed bars or "other stuff" outside of the wrapper
-    wrapperHeightAdjustForBoxModel  +       // Make adjustment based on content-box model
-    // Note: the following will fail for Safari desktop with Develop/User Agent/iPhone
-    // Fake fullscreen or webview by using custom user agent and removing "Safari" from string
-    (isAppleWebkitMobile && (!isAppleWebkitFullScreen) && (!isIpad) ? 60 : 0);  // Add 60px for space recovered from Mobile Safari address bar
-
+  var newWrapperHeight = markerListScroller.wrapperH();
   $canvas.css("height", newWrapperHeight);
   $subpageContainer.css("height", newWrapperHeight);
   $canvas.trigger("updatelayout");  // Let jQuery mobile update fixed header/footer, collapsables, etc.
