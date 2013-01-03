@@ -472,10 +472,12 @@ zoomTo = function(targetZoom) {
 // modified.
 //--------------------------------------------------------
 resizeMapCanvas = function() {
-  var newWrapperHeight = markerListScroller.wrapperH();
-  $canvas.css("height", newWrapperHeight);
-  $subpageContainer.css("height", newWrapperHeight);
-  $canvas.trigger("updatelayout");  // Let jQuery mobile update fixed header/footer, collapsables, etc.
+  var newWrapperHeight;
+  setTimeout ( function() {
+    newWrapperHeight = markerListScroller.wrapperH();
+    $subpageContainer.css("height", newWrapperHeight);
+    $canvas.css("height", newWrapperHeight);
+    });
   },
 
 // _info_window.js.erb start
@@ -922,7 +924,6 @@ $page.on( "pagebeforeshow", function() {
     mapQuery = undefined;
     }
   resizeMapCanvas();
-  gmap.refresh();
   });
 
 $page.on( "pagehide", function() {
@@ -931,7 +932,6 @@ $page.on( "pagehide", function() {
 
 $(window).on("resize", function( event ) {
   resizeMapCanvas();
-  gmap.refresh();
   });
 
 
