@@ -571,7 +571,6 @@ resizeMapCanvas = function() {
        isIpad = $html.hasClass("is-ipad"),
        wrapperHeightAdjustForBoxModel = getHeightAdjustForBoxModel($canvas);
 
-  $canvas.trigger("updatelayout");  // Let jQuery mobile update fixed header/footer, collapsables, etc.
   // Get technically-correct viewport height. jQuery documentation is in error on this.
   // The viewport height is NOT in all cases the same as the window height, because the height
   // of window might have been manually set. And, guess what? jQuery Mobile sets it to 99.99%.
@@ -580,7 +579,7 @@ resizeMapCanvas = function() {
   //viewportHeight = this.$window.height();   // Wrong
   viewportHeight = document.documentElement.clientHeight;
   //barsHeight = calculateBarsHeight();
-  barsHeight = 40 /* header */ + 58 /* footer/tabbbar */ + ( loadingSingle ? 0 : 64 /* trail tabbar */ );
+  barsHeight = 40 /* header */ + 49 /* footer/tabbbar */ + ( loadingSingle ? 0 : 64 /* trail tabbar */ );
 
   newWrapperHeight =
     viewportHeight -
@@ -592,6 +591,7 @@ resizeMapCanvas = function() {
 
   $canvas.css("height", newWrapperHeight);
   $subpageContainer.css("height", newWrapperHeight);
+  $canvas.trigger("updatelayout");  // Let jQuery mobile update fixed header/footer, collapsables, etc.
   },
 
 // _info_window.js.erb start

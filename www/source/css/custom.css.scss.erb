@@ -1221,12 +1221,13 @@ margin-left: -45px;
 
 .map-button {
   position: absolute;
-  height: 40px;
+  height: 50px;
   width: 80px;
-  top: 0;
+  top: -20px;
   left: 50%;
   margin-left: -40px;
   background-color: transparent;
+  z-index: 3000 !important;
   }
 
 .map-button-inner {
@@ -1248,6 +1249,11 @@ margin-left: -45px;
 
 .map-button-inner.active {
   display: block;
+}
+
+.markerlist-subpage {
+   background-image: imageUrl('whitey.png');
+   background-size: 203px 317px;
 }
 
 .markerlist-button {
@@ -1293,7 +1299,6 @@ margin-left: -45px;
     background-image: imageUrl('259-list@2x.png');
   }
 }
-
 
 .mapsheader .locationBtn {
   position: absolute;
@@ -1388,6 +1393,10 @@ margin-left: -45px;
   float: left;
   background-image: imageUrl('04-squiggle.png');
   background-size: 100% auto;
+}
+
+.tabbar {
+  height: 49px;
 }
 
 .menu .itin-btn.is-itin .fav-icon {
