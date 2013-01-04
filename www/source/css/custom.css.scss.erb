@@ -70,17 +70,23 @@
 }
 
 /* Map sub-pages, works similar to JQM pages for transitions within a page */
+
+.subpage-container {
+  position: relative;
+}
+
 .subpage {
   top: 0;
   left: 0;
   width: 100%;
   position: absolute;
-  z-index: -1;
+  display: none;
   border: 0;
+  overflow: none;
 }
 
 .subpage-active {
-  z-index: 0;
+  display: block;
   overflow: visible;
 }
 

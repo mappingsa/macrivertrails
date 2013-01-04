@@ -386,6 +386,7 @@ showMap = function(queryString, transition) {
       $markerList = $page.find( ".marker-list"),
       $subpageContainer = $page.find(".subpage-container"),
       $markerListSubpage = $page.find(".markerlist-subpage"),
+      $directionsSubpage = $page.find(".directions-subpage"),
       markerListScroller = $markerListSubpage.jqmData("iscrollview"),
       markerListview = $markerList.jqmData( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
@@ -420,6 +421,28 @@ showMap = function(queryString, transition) {
       boundsChangedListener,
       zoomChangeTimer,
       zoomStartTime,             // Timestamp when last zoom step started
+
+  // Temporarily change subpage CSS to make it "visible" so that dimensions can be read.
+ //  Because event processing is synchronous, the browser won't render the
+  // change, as long as the subpage style is set back before the callback returns. So, a hidden
+  // subpage will remain hidden as long as _restorePageVisibility() is called before return.
+  // This way, we can just use normal dimension functions and avoid using jquery.actual, which
+  // slows things down significantly.
+  //
+  // jquery.actual goes up the tree from the element being measured and sets every element to
+  // visible, which is unnecessary. (We only have to be concerned about the subpage element, which
+  // we set to display:none for all but the currently-visible page.) It also does this
+  // for every dimension read. This essentially does the same thing, but then allows us to "batch"
+  // reading dimensions
+  setSubPageVisible = function($subpage) {
+    var hidden = $subpage.is(":hidden");
+    if (hidden) { $subpage.css("display", "block"); }
+    return hidden;
+  },
+
+  restoreSubPageVisibility = function($subpage, hidden) {
+   if (hidden) { $subpage.css("display", ""); }
+  },
 
 // Smooth zoom from current level to desired level
 // Google Maps V3 doesn't provide this functionality. It will only smooth zoom one level
@@ -472,12 +495,17 @@ zoomTo = function(targetZoom) {
 // modified.
 //--------------------------------------------------------
 resizeMapCanvas = function() {
-  var newWrapperHeight;
-  setTimeout ( function() {
-    newWrapperHeight = markerListScroller.wrapperH();
+    var newWrapperHeight,
+        hidden = setSubPageVisible($markerListSubpage);
+    markerListScroller.resizeWrapper(true);
+    restoreSubPageVisibility($markerListSubpage, hidden);
+    newWrapperHeight = $markerListSubpage.css("height");
     $subpageContainer.css("height", newWrapperHeight);
     $canvas.css("height", newWrapperHeight);
-    });
+    $directionsSubpage.css("height", newWrapperHeight);
+    setTimeout ( function() {
+      $.mobile.silentScroll(0);
+      });
   },
 
 // _info_window.js.erb start
@@ -595,7 +623,7 @@ addStaticHereMarker = function( pos ) {
       visible: true,
       flat: true,
       zIndex: hereMarkerZindex,
-      } ).click(function() {addMyLocation()} );
+      } ).click(function() { addMyLocation(); } );
     },
 
 removeStaticHereMarker = function() {
@@ -925,6 +953,12 @@ $page.on( "pagebeforeshow", function() {
     }
   resizeMapCanvas();
   });
+
+/*
+$page.on( "pageshow", function() {
+  resizeMapCanvas();
+  });
+*/
 
 $page.on( "pagehide", function() {
   stopGeolocation();
