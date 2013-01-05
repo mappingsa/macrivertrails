@@ -677,16 +677,6 @@ addMyLocation = function() {
   geoLocationMarker = new GeolocationMarker(map);
   geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
 
-  // updated accuracy callback
-  // We don't currently do anything here except log.
-  // The marker code handles changing the circle diameter
-  // This would be the place to display accuracy if we want to show a numeric figure
-  geoLocationMarker.addListener("accuracy_changed", function() {
-    var accuracy = geoLocationMarker.getAccuracy(),
-        position = geoLocationMarker.getPosition();
-    logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
-  });
-
   // updated location callback
   geoLocationMarker.addListener("position_changed", function() {
     var position = geoLocationMarker.getPosition(),
