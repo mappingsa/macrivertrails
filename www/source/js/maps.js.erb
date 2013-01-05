@@ -689,21 +689,27 @@ addMyLocation = function() {
 
     userLoc = position;
     tripOriginLoc = userLoc;
-    makePrettyAddress(tripOriginLoc, 1);
+    /* Just comment out this code for now - will be moved to directions subpage initialization  */
+
+    //makePrettyAddress(tripOriginLoc, 1);
 
     // Location unknown -> known
     if (!knownLocation) {
+      /*
       $markerListNote.text( markerListNoteLocationKnown );
       $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
-      if (loadingSingle) {
+       if (loadingSingle) {
         $directionsFields.show();
         }
+      */
       knownLocation = true;
       showMarkerList();
       }
+    /*
     else {
       updateMarkerListDistances();
       }
+    */
 
     if (findMe) {
       zoomTo(zoomLevelUser);
