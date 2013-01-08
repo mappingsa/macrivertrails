@@ -1,5 +1,7 @@
 @import 'paths';
 
+$hotspotBackgroundColor: <%= build_target === 'debug' ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
+
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
@@ -88,6 +90,22 @@
 .subpage-active {
   display: block;
   overflow: visible;
+}
+
+.place-list-item {
+  position: relative;
+}
+
+.directions-subpage {
+  padding: 0.5em;
+}
+
+.directions-button {
+  position: absolute;
+  width: 30px;
+  height: 38px;    // May not be right on different platforms
+  z-index: 1;
+  background-color: rgba(255, 0, 0, 0.2);
 }
 
 /* Theme overrides. */
@@ -1224,50 +1242,20 @@ margin-left: -45px;
   @extend %hdrBtn;
 }
 
-.map-button {
-  position: absolute;
-  height: 60px;
-  width: 80px;
-  top: -20px;
-  left: 50%;
-  margin-left: -40px;
-  background-color: transparent;
-  z-index: 3000;
-  }
-
-.map-button-inner {
-  position: absolute;
-  left: 50%;
-  margin-left: -10px;
-  top: 0;
-  border-style: solid;
-  border-width: 10px 10px 0 10px;
-  border-bottom-color: transparent;
-  border-left-color: transparent;
-  border-top-color: rgba(0, 255, 0, 0.6);
-  border-right-color: transparent;
-  height: 0;
-  width: 0;
-  display: none;
-}
-
-.map-button-inner.active {
-  display: block;
-}
-
-.markerlist-subpage {
+.markerlist-subpage,
+.directions-subpage {
    background-image: imageUrl('whitey.png');
    background-size: 203px 317px;
 }
 
 .markerlist-button {
   position: absolute;
-  height: 50px;
-  width: 80px;
-  bottom: -20px;
+  height: 40px;
+  width: 60px;
+  bottom: 0;
   left: 50%;
-  margin-left: -40px;
-  background-color: transparent;
+  margin-left: -30px;
+  background-color: $hotspotBackgroundColor;
   z-index: 3000;
   }
 
@@ -1298,10 +1286,65 @@ margin-left: -45px;
   -webkit-transform: translateY(0);
 }
 
+.close-markerlist-button {
+  position: absolute;
+  height: 40px;
+  width: 60px;
+  top: 0;
+  left: 50%;
+  margin-left: -30px;
+  background-color: $hotspotBackgroundColor;
+  z-index: 3000;
+  display: none;
+  }
+
+.close-markerlist-button-inner {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  top: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-top-color: rgba(0, 255, 0, 0.6);
+  border-right-color: transparent;
+  height: 0;
+  width: 0;
+}
+
+
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .markerlist-button-inner {
     background-image: imageUrl('259-list@2x.png');
   }
+}
+
+.close-directions-button {
+  position: absolute;
+  height: 60px;
+  width: 40px;
+  top: 50%;
+  margin-top: -30px;
+  right: 0;
+  background-color: $hotspotBackgroundColor;
+  z-index: 3000;
+  display: none;
+}
+
+.close-directions-button-inner {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  right: 0;
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-bottom-color: transparent;
+  border-top-color: transparent;
+  border-right-color: rgba(0, 255, 0, 1.0);
+  border-left-color: transparent;
+  height: 0;
+  width: 0;
 }
 
 .mapsheader .locationBtn {

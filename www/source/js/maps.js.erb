@@ -87,7 +87,8 @@ $(function() {
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
-    '<li class="big-arrow" data-icon="false">' +
+    '<li class="place-list-item big-arrow" data-icon="false" data-group="|group|" data-item="|item|">' +
+      '<div class="directions-button"></div>' +
       '<a href="|link|">|title||distance|' +
         '<img src="' + baseUri + 'images/|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
       '</a>' +
@@ -142,7 +143,7 @@ $(function() {
     {group: "produce", item: "cottagecraft",  position: "-32.23074, 148.240036", title: "Narromine Cottage Craft Shop" },
     {group: "produce", item: "woodshed",  position: "-32.232971, 148.240082", title: "The Woodshed Gallery, Narromine" },
     {group: "produce", item: "ewetwo",  position: "-32.033397, 147.985794", title: "Ewe Two, Trangie" },
-    {group: "produce", item: "bellriver",  position: "-32.687631, 148.945311", title: "Bell River Estate, Wellington," },
+    {group: "produce", item: "bellriver",  position: "-32.687631, 148.945311", title: "Bell River Estate, Wellington" },
     {group: "produce", item: "cactuscafe",  position: "-32.551264, 148.942136", title: "Cactus Cafe and Gallery, Wellington" },
     {group: "produce", item: "lazyriver",  position: "-32.296532, 148.627426", title: "Lazy River Estate, Dubbo" },
     {group: "produce", item: "farmers",  position: "-32.243450, 148.601672", title: "Farmers Market, Dubbo" },
@@ -277,6 +278,17 @@ $(function() {
       },
 <% end %>
 
+findPlace = function(group, item) {
+  var retval = null;
+  $.each( places, function(i, place) {
+    if (group === place.group && item === place.item) {
+      retval = place;
+      return false;
+    }
+  });
+  return retval;
+},
+
 logTime = function(msg) {
 <%if build_target == 'debug' %>
       var time = new Date();
@@ -382,20 +394,22 @@ showMap = function(queryString, transition) {
       $toPretty = $page.find( ".toPretty" ),
       $from = $page.find( ".from" ),
       $fromPretty = $page.find( ".fromPretty" ),
-      $directionsFields = $page.find( ".directionsFields" ),
       $markerList = $page.find( ".marker-list"),
       $subpageContainer = $page.find(".subpage-container"),
       $markerListSubpage = $page.find(".markerlist-subpage"),
       $directionsSubpage = $page.find(".directions-subpage"),
       markerListScroller = $markerListSubpage.jqmData("iscrollview"),
+      directionsScroller = $directionsSubpage.jqmData("iscrollview"),
       markerListview = $markerList.jqmData( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
       $markerListBtn = $page.find(".markerlist-button"),
       $markerListBtnInner = $page.find(".markerlist-button-inner"),
-      $mapBtn = $page.find(".map-button"),
-      $mapBtnInner = $page.find(".map-button-inner"),
+      $closeMarkerlistBtn = $page.find(".close-markerlist-button"),
+      $closeMarkerlistBtnInner = $page.find(".close-markerlist-button-inner"),
+      $closeDirectionsBtn = $page.find(".close-directions-button"),
+      $closeDirectionsBtnInner = $page.find(".close-directions-button-inner"),
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
@@ -534,12 +548,6 @@ openInfoWindow = function(place, markerElement) {
   gmap.option( "center", centerLoc );
   infoBox = new InfoBox(options);
   infoBox.open(map, markerElement);
-
-  if ( (!loadingSingle) && knownLocation ) {
-    $to.attr("value",  place.position);
-    $toPretty.attr("value", place.title);
-    $directionsFields.show();
-    }
 },
 // _info_window.js.erb end
 // _marker.js.erb start
@@ -576,6 +584,7 @@ buildMarkerListItem = function(marker) {
   var position = marker.position,
       title = marker.mTitle,
       group = marker.group,
+      item = marker.item,
       link = marker.mLink,
       endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
       base = markerListItemTemplate,
@@ -584,6 +593,8 @@ buildMarkerListItem = function(marker) {
     return "";
     }
   endRes = Math.round( endRes*10 ) / 10;
+  base = base.replace( "|group|", group);
+  base = base.replace("|item|", item);
   base = base.replace( "|pin|", groupUC);
   base = base.replace( "|res|", res);
   base = base.replace( "|alt|", groupUC );
@@ -695,12 +706,9 @@ addMyLocation = function() {
 
     // Location unknown -> known
     if (!knownLocation) {
-      /*
       $markerListNote.text( markerListNoteLocationKnown );
+      /*
       $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
-       if (loadingSingle) {
-        $directionsFields.show();
-        }
       */
       knownLocation = true;
       showMarkerList();
@@ -734,8 +742,6 @@ addMyLocation = function() {
     tripOriginLoc = undefined;
     knownLocation = false;
     $markerListNote.text( markerListNoteLocationUnknown );
-    $from.val("");    // Clear from field for directions
-    $directionsFields.hide();
     stopGeolocation();
    $locationBtn.removeClass("on off").addClass("disabled");
     showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
@@ -861,6 +867,7 @@ createMap = function() {
           flat:true,
           icon: groupIcon(group),
           group: group,
+          item: item,
           mTitle: title,
           mLink: markerLink(place),
           zIndex: zIndex
@@ -950,12 +957,6 @@ $page.on( "pagebeforeshow", function() {
   resizeMapCanvas();
   });
 
-/*
-$page.on( "pageshow", function() {
-  resizeMapCanvas();
-  });
-*/
-
 $page.on( "pagehide", function() {
   stopGeolocation();
   });
@@ -973,32 +974,67 @@ $markerListBtn.on("vmouseout", function (event) {
   $markerListBtnInner.removeClass("hover");
   });
 
-$markerListBtn.on("vclick click", function (event) {
-  event.preventDefault();
-  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
-                                       // did everything we want on the vclick
-  if ( $markerListSubpage.hasClass("subpage-active") ) { return; }
-  $markerListSubpage.removeClass("out reverse").addClass("subpage-active slideup in");
+$markerListBtn.on("vclick", function (event) {
+  $markerListBtn.hide();
+  $markerListSubpage.addClass("subpage-active slideup in");
   showMarkerList();
   markerListScroller.refresh();
   $markerListSubpage.animationComplete( function () {
-    $markerListSubpage.removeClass("slideup in reverse");
-    $mapBtnInner.addClass("active");
+    $canvas.removeClass("subpage-active");
+    $markerListSubpage.removeClass("slideup in");
+    $closeMarkerlistBtn.show();
     });
   });
 
-$mapBtn.on("vmousedown click", function (event) {
-  event.preventDefault();
-  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
-                                       // did everything we want on the vclick
-  if ( !($markerListSubpage.hasClass("subpage-active") ) ) { return; }
-  if ( $markerListSubpage.hasClass("out") ) { return; }
-  $markerListSubpage.removeClass("in").addClass("slideup out reverse");
-  $mapBtnInner.removeClass("active");
+$closeMarkerlistBtn.on("vclick", function (event) {
+  $closeMarkerlistBtn.hide();
+  $canvas.addClass("subpage-active");
+  $markerListSubpage.addClass("slideup out reverse");
   $markerListSubpage.animationComplete( function () {
     $markerListSubpage.removeClass("subpage-active slideup out reverse");
+    $markerListBtn.show();
     });
   });
+
+$page.on("vclick click", ".directions-button", function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }
+  var $this = $(this),
+      $li = $this.closest("li");
+      group = $li.jqmData("group"),
+      item = $li.jqmData("item"),
+      place = findPlace(group, item);
+
+  $closeMarkerlistBtn.hide();
+  $to.attr("value",  place.position);
+  $toPretty.attr("value", place.title);
+  if (knownLocation) {
+    $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+    makePrettyAddress(tripOriginLoc, 1);
+    }
+  else {
+    $from.val( defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
+    makePrettyAddress(defaultLoc, 1);
+    }
+  $markerListSubpage.addClass("slide out reverse");
+  $directionsSubpage.addClass("subpage-active slide in reverse");
+  $markerListSubpage.animationComplete( function () {
+    $directionsSubpage.removeClass("slide in reverse");
+    $markerListSubpage.removeClass("subpage-active slide out reverse");
+    $closeDirectionsBtn.show();
+    });
+});
+
+$page.on("vclick", ".close-directions-button", function (event) {
+  $closeDirectionsBtn.hide();
+  $canvas.addClass("subpage-active");
+  $directionsSubpage.addClass("slide out");
+  $directionsSubpage.animationComplete( function () {
+    $directionsSubpage.removeClass("subpage-active slide out");
+    $markerListBtn.show();
+    });
+  });
+
 
 // Top Navbar buttons. Shows markers for each trail ---
 $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
@@ -1042,6 +1078,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
         flat: true,
         icon: groupIcon(group),
         group: group,
+        item: item,
         mTitle: place.title,
         mLink: markerLink(place),
         zIndex: zIndex,
@@ -1061,7 +1098,7 @@ $submitDirections.on("click",  function () {
     { panel: $directions[0] },
     function (success, response) {
       if (success) {
-        $results.show();
+        $results.show().trigger("updatelayout");
         }
       else {
         $results.hide();
