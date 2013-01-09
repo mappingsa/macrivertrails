@@ -1025,7 +1025,7 @@ $page.on("vclick click", ".directions-button", function (event) {
     });
 });
 
-$page.on("vclick", ".close-directions-button", function (event) {
+var closeDirectionsSubpage = function() {
   $closeDirectionsBtn.hide();
   $canvas.addClass("subpage-active");
   $directionsSubpage.addClass("slide out");
@@ -1033,8 +1033,10 @@ $page.on("vclick", ".close-directions-button", function (event) {
     $directionsSubpage.removeClass("subpage-active slide out");
     $markerListBtn.show();
     });
-  });
+  };
 
+$page.on("vclick", ".close-directions-button", closeDirectionsSubpage);
+$directionsSubpage.on("swipeleft", closeDirectionsSubpage);
 
 // Top Navbar buttons. Shows markers for each trail ---
 $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
