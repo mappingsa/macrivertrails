@@ -87,7 +87,7 @@ $(function() {
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
-    '<li class="place-list-item big-arrow" data-icon="false" data-group="|group|" data-item="|item|">' +
+    '<li class="place-list-item big-arrow" data-ajax="false" data-group="|group|" data-item="|item|">' +
       '<div class="directions-button"></div>' +
       '<a href="|link|">|title||distance|' +
         '<img src="' + baseUri + 'images/|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
@@ -996,15 +996,7 @@ $closeMarkerlistBtn.on("vclick", function (event) {
     });
   });
 
-$page.on("vclick click", ".directions-button", function (event) {
-  event.preventDefault();
-  if (event.type === "click") { return; }
-  var $this = $(this),
-      $li = $this.closest("li");
-      group = $li.jqmData("group"),
-      item = $li.jqmData("item"),
-      place = findPlace(group, item);
-
+var openDirectionsSubpage = function(place) {
   $closeMarkerlistBtn.hide();
   $to.attr("value",  place.position);
   $toPretty.attr("value", place.title);
@@ -1023,7 +1015,28 @@ $page.on("vclick click", ".directions-button", function (event) {
     $markerListSubpage.removeClass("subpage-active slide out reverse");
     $closeDirectionsBtn.show();
     });
+  };
+
+$page.on("vclick click", ".directions-button", function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }
+  var $this = $(this),
+      $li = $this.closest("li");
+      group = $li.jqmData("group"),
+      item = $li.jqmData("item"),
+      place = findPlace(group, item);
+
+  openDirectionsSubpage(place);
 });
+
+
+$markerListSubpage.on("swiperight", ".place-list-item", function() {
+  var $li = $(this),
+      group = $li.jqmData("group"),
+      item = $li.jqmData("item"),
+      place = findPlace(group, item);
+  openDirectionsSubpage(place);
+  });
 
 var closeDirectionsSubpage = function() {
   $closeDirectionsBtn.hide();
