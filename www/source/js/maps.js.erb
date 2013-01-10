@@ -997,7 +997,7 @@ $markerListBtn.on("vmouseout", function (event) {
   $markerListBtnInner.removeClass("hover");
   });
 
-$markerListBtn.on("vclick", function (event) {
+$markerListBtn.on("vclick scrollstart", function (event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   $markerListBtn.hide();
@@ -1012,7 +1012,7 @@ $markerListBtn.on("vclick", function (event) {
     });
   });
 
-$closeMarkerlistBtn.on("vclick", function (event) {
+$closeMarkerlistBtn.on("vclick scrollstart", function (event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   $closeMarkerlistBtn.hide();
