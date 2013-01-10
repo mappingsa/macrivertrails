@@ -556,25 +556,30 @@ openInfoWindow = function(place, markerElement) {
 
 showMarkerList = function(){
   if ( !($markerListSubpage.hasClass("subpage-active")) ) { return; }  // Don't update if not shown
+  logTime("showMarkerList");
   var markers = gmap.get( "markers" ),
       markersLength = markers.length,
       list = "",
       $markerListItems,
       i = 0,
       markersLength = markers.length;
+  logTime("got markers from map");
 
   for (; i < markersLength; i++) {
     list += buildMarkerListItem( markers[i] );
     }
-
+  logTime("built markerlist string");
   $markerList.empty().append(list);
+  logTime("emptied and appended markerlist");
 
   // sort list by nearest and apply jQuery Mobile UI
   $markerListItems = $markerList.find(".place-list-item");
   $markerListItems.tsort("span.ml-sort");
-
+  logTime("sorted markerlist");
   markerListview.refresh();
+  logTime("refreshed markerlist");
   $markerListNote.show();
+  logTime("shown markerlistnote");
   },
 
 // Update the marker list distances
