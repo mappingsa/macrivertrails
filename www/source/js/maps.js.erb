@@ -87,9 +87,9 @@ $(function() {
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
-    '<li class="place-list-item big-arrow" data-ajax="false" data-group="|group|" data-item="|item|">' +
+    '<li class="place-list-item big-arrow" data-icon="false" data-group="|group|" data-item="|item|">' +
       '<div class="directions-button"></div>' +
-      '<a href="|link|">|title||distance|' +
+      '<a data-ajax="false" href="|link|">|title||distance|' +
         '<img src="' + baseUri + 'images/|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
       '</a>' +
     '</li>',
@@ -965,6 +965,29 @@ $(window).on("resize", function( event ) {
   resizeMapCanvas();
   });
 
+$markerListSubpage.on("vclick click vmouseover", ".place-list-item .ui-link-inherit", function(event) {
+
+  if (event.type === "click") {
+    event.preventDefault();
+    return;
+    }
+
+  if ($markerListSubpage.hasClass("transitioning")) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    return;
+    }
+
+  if (event.type === "vmouseover") {
+    return;
+    }
+
+  var $this = $(this),
+      url = $this.attr("href");
+  $.mobile.changePage(url, {"transition": "slide"} );
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  });
 
 $markerListBtn.on("vmouseover", function (event) {
   $markerListBtnInner.addClass("hover");
@@ -975,23 +998,28 @@ $markerListBtn.on("vmouseout", function (event) {
   });
 
 $markerListBtn.on("vclick", function (event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
   $markerListBtn.hide();
-  $markerListSubpage.addClass("subpage-active slideup in");
+  $markerListSubpage.addClass("subpage-active slideup in transitioning");
   showMarkerList();
   markerListScroller.refresh();
   $markerListSubpage.animationComplete( function () {
     $canvas.removeClass("subpage-active");
     $markerListSubpage.removeClass("slideup in");
     $closeMarkerlistBtn.show();
+    $markerListSubpage.removeClass("transitioning");
     });
   });
 
 $closeMarkerlistBtn.on("vclick", function (event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
   $closeMarkerlistBtn.hide();
   $canvas.addClass("subpage-active");
-  $markerListSubpage.addClass("slideup out reverse");
+  $markerListSubpage.addClass("slideup out reverse transitioning");
   $markerListSubpage.animationComplete( function () {
-    $markerListSubpage.removeClass("subpage-active slideup out reverse");
+    $markerListSubpage.removeClass("subpage-active slideup out reverse transitioning");
     $markerListBtn.show();
     });
   });
@@ -1028,7 +1056,6 @@ $page.on("vclick click", ".directions-button", function (event) {
 
   openDirectionsSubpage(place);
 });
-
 
 $markerListSubpage.on("swiperight", ".place-list-item", function() {
   var $li = $(this),
