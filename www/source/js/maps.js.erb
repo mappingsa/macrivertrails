@@ -556,18 +556,21 @@ openInfoWindow = function(place, markerElement) {
 
 showMarkerList = function(){
   if ( !($markerListSubpage.hasClass("subpage-active")) ) { return; }  // Don't update if not shown
-  var myMarkers = gmap.get( "markers" ),
-    list = "",
-    $markerListItems;
+  var markers = gmap.get( "markers" ),
+      markersLength = markers.length,
+      list = "",
+      $markerListItems,
+      i = 0,
+      markersLength = markers.length;
 
-  $.each( myMarkers, function(i, tmarker) {
-    list += buildMarkerListItem( tmarker );
-    });
+  for (; i < markersLength; i++) {
+    list += buildMarkerListItem( markers[i] );
+    }
 
   $markerList.empty().append(list);
 
   // sort list by nearest and apply jQuery Mobile UI
-  $markerListItems = $markerList.find("li");
+  $markerListItems = $markerList.find(".place-list-item");
   $markerListItems.tsort("span.ml-sort");
 
   markerListview.refresh();
@@ -713,11 +716,12 @@ addMyLocation = function() {
       knownLocation = true;
       showMarkerList();
       }
-    /*
+
+/*
     else {
       updateMarkerListDistances();
       }
-    */
+*/
 
     if (findMe) {
       zoomTo(zoomLevelUser);
@@ -1127,7 +1131,6 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
       }
 
     });
-
 });
 
 $submitDirections.on("click",  function () {
