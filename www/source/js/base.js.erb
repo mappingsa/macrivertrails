@@ -105,8 +105,10 @@
   });
 
     // Add to Itinerary button (list item) on Add Itinerary popup
-    $page.find(".itin-list").on("vclick", ".itin-add-btn", function(event) {
-      // Not an <a> tag (it's an <li>) so don't need to handle click event
+    $page.find(".itin-list").on("vclick click", ".itin-add-btn", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
@@ -296,7 +298,7 @@ var localStore = function() {
          <a href="|href|">|title|\
          <img src="images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
          </a>\
-         <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
+         <a class="btn-remove-todo">Remove</a>\
          </li>',
 
       listTemplate = ' \
@@ -305,7 +307,7 @@ var localStore = function() {
           <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
 
-      itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
+      itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn">|title|</a></li>';
 
       defaultLists = [
         { listID: 0, title: "MY FAVOURITES" },
