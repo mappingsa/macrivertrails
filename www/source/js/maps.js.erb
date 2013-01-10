@@ -87,10 +87,10 @@ $(function() {
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
-    '<li class="place-list-item big-arrow" data-icon="false" data-group="|group|" data-item="|item|">' +
+    '<li class="place-list-item big-arrow" data-icon="false" data-group="|g|" data-item="|i|">' +
       '<div class="directions-button"></div>' +
-      '<a data-ajax="false" href="|link|">|title||distance|' +
-        '<img src="' + baseUri + 'images/|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
+      '<a href="|l|">|t||d|' +
+        '<img src="' + baseUri + 'images/|p|-pin|r|.png" alt="|a|" class="ui-li-icon trail-pin">' +
       '</a>' +
     '</li>',
 
@@ -596,19 +596,22 @@ buildMarkerListItem = function(marker) {
     return "";
     }
   endRes = Math.round( endRes*10 ) / 10;
-  base = base.replace( "|group|", group);
-  base = base.replace("|item|", item);
-  base = base.replace( "|pin|", groupUC);
-  base = base.replace( "|res|", res);
-  base = base.replace( "|alt|", groupUC );
-  base = base.replace( "|link|", link.length ? link : "#" );
+  base = base
+    .replace( "|g|", group)
+    .replace( "|i|", item)
+    .replace( "|p|", groupUC)
+    .replace( "|r|", res)
+    .replace( "|a|", groupUC )
+    .replace( "|l|", link.length ? link : "#" );
   if (knownLocation) {
-    base = base.replace( "|title|", title);
-    base = base.replace( "|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
+    base = base
+      .replace( "|t|", title)
+      .replace( "|d|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
     }
   else {
-    base = base.replace( "|title|", '<span class="ml-sort">' + title + "</span>" );
-    base = base.replace( "|distance|", "" );
+    base = base
+      .replace( "|t|", '<span class="ml-sort">' + title + "</span>" )
+      .replace( "|d|", "" );
     }
   return base;
   },
