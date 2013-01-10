@@ -710,18 +710,10 @@ addMyLocation = function() {
     // Location unknown -> known
     if (!knownLocation) {
       $markerListNote.text( markerListNoteLocationKnown );
-      /*
-      $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
-      */
       knownLocation = true;
-      showMarkerList();
       }
 
-/*
-    else {
-      updateMarkerListDistances();
-      }
-*/
+    updateMarkerListDistances();
 
     if (findMe) {
       zoomTo(zoomLevelUser);
@@ -748,7 +740,6 @@ addMyLocation = function() {
     $markerListNote.text( markerListNoteLocationUnknown );
     stopGeolocation();
    $locationBtn.removeClass("on off").addClass("disabled");
-    showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
   });
 
 
@@ -1131,6 +1122,9 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
       }
 
     });
+
+  showMarkerList();
+
 });
 
 $submitDirections.on("click",  function () {
