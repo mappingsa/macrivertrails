@@ -629,7 +629,7 @@ addStaticHereMarker = function( pos ) {
       id: "client",
       position: pos,
       bounds: false,
-      optimized: false,
+      optimized: true,
       title: "My Location",
       visible: true,
       flat: true,
@@ -863,7 +863,7 @@ createMap = function() {
         gmap.addMarker( {
           position: position,
           bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
-          optimized: false,
+          optimized: true,
           flat:true,
           icon: groupIcon(group),
           group: group,
@@ -872,7 +872,6 @@ createMap = function() {
           mLink: markerLink(place),
           zIndex: zIndex
           } ).click(function() { openInfoWindow(place, this); });
-
         }
     });
 
@@ -1116,7 +1115,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
       gmap.addMarker( {
         position: position,
         bounds: false,
-        optimized: false,
+        optimized: true,
         flat: true,
         icon: groupIcon(group),
         group: group,
