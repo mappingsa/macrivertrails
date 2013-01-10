@@ -89,7 +89,7 @@ $(function() {
     markerListItemTemplate =
     '<li class="place-list-item big-arrow" data-icon="false" data-group="|g|" data-item="|i|">' +
       '<div class="directions-button"></div>' +
-      '<a href="|l|">|t||d|' +
+      '<a>|t||d|' +
         '<img src="' + baseUri + 'images/|p|-pin|r|.png" alt="|a|" class="ui-li-icon trail-pin">' +
       '</a>' +
     '</li>',
@@ -319,7 +319,7 @@ groupIcon = function(group) {
   },
 
 showMap = function(queryString, transition) {
-  var mapUri = "<%= (base_uri ? base_uri : '../') + 'map/index.html' %>";
+  var mapUri = baseUri + "map/index.html" ;
   mapQuery = queryString;
   $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
   };
@@ -601,8 +601,7 @@ buildMarkerListItem = function(marker) {
     .replace( "|i|", item)
     .replace( "|p|", groupUC)
     .replace( "|r|", res)
-    .replace( "|a|", groupUC )
-    .replace( "|l|", link.length ? link : "#" );
+    .replace( "|a|", groupUC );
   if (knownLocation) {
     base = base
       .replace( "|t|", title)
@@ -980,7 +979,11 @@ $markerListSubpage.on("vclick click vmouseover", ".place-list-item .ui-link-inhe
     }
 
   var $this = $(this),
-      url = $this.attr("href");
+      $li = $this.closest("li"),
+      group = $li.jqmData("group"),
+      groupUC = group.charAt().toUpperCase() + group.slice(1),
+      item = $li.jqmData("item"),
+      url = baseUri + groupUC + "/" + item + ".html";
   $.mobile.changePage(url, {"transition": "slide"} );
   event.preventDefault();
   event.stopImmediatePropagation();
