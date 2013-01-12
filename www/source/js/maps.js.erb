@@ -85,18 +85,8 @@ $(function() {
     hereMarker = new google.maps.MarkerImage ( baseUri + "map/images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
 
     hereMarkerZindex = 20,
-/*
+
     markerListItemTemplate =
-    '<li class="place-list-item big-arrow" data-icon="false" data-group="|g|" data-item="|i|">' +
-      '<div class="directions-button"></div>' +
-      '<a>|t||d|' +
-        '<img src="' + baseUri + 'images/|p|-pin|r|.png" alt="|a|" class="ui-li-icon trail-pin">' +
-      '</a>' +
-    '</li>',
-*/
-
-
-        markerListItemTemplate =
     '<li class="place-list-item big-arrow ui-btn ui-btn-up-c ui-btn-icon-right ui-li ui-li-has-count ui-li-has-icon" ' +
         'data-icon="false" data-group="|g|" data-item="|i|" data-corners="false" data-shadow="false" ' +
         'data-iconshadow="true" data-wrapperels="div" data-iconpos="right" data-theme="c">' +
@@ -589,10 +579,6 @@ showMarkerList = function(){
   $markerListItems = $markerList.find(".place-list-item");
   $markerListItems.tsort("span.ml-sort");
   logTime("sorted markerlist");
-  //markerListview.refresh();
-  //logTime("refreshed markerlist");
-  $markerListNote.show();
-  logTime("shown markerlistnote");
   },
 
 // Update the marker list distances
@@ -635,7 +621,7 @@ buildMarkerListItem = function(marker) {
 
 markerListULReset = function() {
   $markerList.empty();
-  $markerListNote.hide();
+  $markerListNote.text( "" );
 },
 
 markerLink = function(place) {
