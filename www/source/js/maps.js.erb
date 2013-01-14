@@ -393,9 +393,7 @@ showMap = function(queryString, transition) {
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
-      $to = $page.find( ".to" ),
       $toPretty = $page.find( ".toPretty" ),
-      $from = $page.find( ".from" ),
       $fromPretty = $page.find( ".fromPretty" ),
       $markerList = $page.find( ".marker-list"),
       $subpageContainer = $page.find(".subpage-container"),
@@ -856,9 +854,9 @@ createMap = function() {
           }
 
         if ( loadingSingle ) {
-          $to.attr("value",  place.position);          // Prepare to get directions,
-          $toPretty.attr("value", title);        // But don't show direcitons fields yet
-                                                       // (Not until/unless we get user location )
+          $page.jqmData("destination", place.position);
+          $toPretty.text(title);        // But don't show direcitons fields yet
+                                        // (Not until/unless we get user location )
           }
 
         gmap.addMarker( {
@@ -916,10 +914,10 @@ makePrettyAddress = function( loc, type ) {
   geocoder.geocode( {location: loc}, function(addresses, status ) {
     if (status === google.maps.GeocoderStatus.OK) {
       if (type === 1 ){
-        $fromPretty.attr( "value", addresses[0].formatted_address);
+        $fromPretty.text( addresses[0].formatted_address);
         }
       else {
-        $toPretty.attr( "value", addresses[0].formatted_address );
+        $toPretty.text( addresses[0].formatted_address );
         }
       }
     geocoderBusy = false;
@@ -1031,14 +1029,14 @@ $closeMarkerlistBtn.on("vclick scrollstart", function (event) {
 
 var openDirectionsSubpage = function(place) {
   $closeMarkerlistBtn.hide();
-  $to.attr("value",  place.position);
-  $toPretty.attr("value", place.title);
+  $page.jqmData("destination", place.position);
+  $toPretty.text(place.title);
   if (knownLocation) {
-    $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+    $page.jqmData("origin", tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
     makePrettyAddress(tripOriginLoc, 1);
     }
   else {
-    $from.val( defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
+    $page.jqmData("origin", defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
     makePrettyAddress(defaultLoc, 1);
     }
   $markerListSubpage.addClass("slide out reverse");
@@ -1140,8 +1138,8 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
 
 $submitDirections.on("click",  function () {
   gmap.displayDirections ( {
-    origin: $from.val(),
-    destination: $to.val(),
+    origin: $page.jqmData("origin"),
+    destination: $page.jqmData("destination"),
     travelMode: google.maps.DirectionsTravelMode.DRIVING
     },
     { panel: $directions[0] },
