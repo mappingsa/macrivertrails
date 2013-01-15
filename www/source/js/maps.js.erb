@@ -1006,7 +1006,9 @@ $markerListBtn.on("vclick scrollstart", function (event) {
     $canvas.removeClass("subpage-active");
     $markerListSubpage.removeClass("slideup in");
     $closeMarkerlistBtn.show();
-    $markerListSubpage.removeClass("transitioning");
+    setTimeout( function() {
+      $markerListSubpage.removeClass("transitioning");
+      }, 500 );
     });
   });
 
