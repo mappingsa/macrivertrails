@@ -52,4 +52,7 @@ xcuserdata
 
 # Phonegap www directory content pointed-to by symlink
 phonegap/ios/www/*
+# For now, ignore the symlink as well, as it isn't commiting correctly
+phonegap/ios/www
+
 
