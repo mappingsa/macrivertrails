@@ -84,7 +84,7 @@ helpers do
   end
 
   def base_uri
-    data.rivertrails.debug.base_uri
+    data.rivertrails[build_target].base_uri
   end
 
   # returns relative path from provided or current file path to given path
