@@ -144,7 +144,7 @@ web:
 # if the browser will not tolerate directory traversal (../) in relative URLs.
 phonegap-ios:
     # Substitute UUID for a-long-hex-string below
-    base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
+    #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
