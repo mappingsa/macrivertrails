@@ -49,7 +49,7 @@
 	<key>ExternalHosts</key>
 	  <array>
       <string>*.googleapis.com</string>
-      <string>maps.gstatic.com</string>
+      <string>*.gstatic.com</string>
 	  </array>
 	<key>Plugins</key>
 	<dict>
