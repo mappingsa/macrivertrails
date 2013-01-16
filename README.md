@@ -31,3 +31,16 @@ code.
 The script in `www/buildall.sh` will run Middleman build for all of them.
 
 The builds are placed in the corresponding directories under the `/build` directory.
+
+PhoneGap
+--------
+IMPORTANT!
+
+You must manually create a symlink in phonegap/ios to the Middleman-built content. This symlink
+is not checked-in to the repo, because EGit (Eclipse Git) gets horribly confused over this, and
+also because you might like to link to alternate content (e.g. a debug build).
+
+`cd phonegap/ios`
+`ln -s ../../www/build/phonegap-ios www`
+
+This location is .gitignored, so that git won't bug you to check it in.
