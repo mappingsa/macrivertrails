@@ -44,3 +44,6 @@ also because you might like to link to alternate content (e.g. a debug build).
 `ln -s ../../www/build/phonegap-ios www`
 
 This location is .gitignored, so that git won't bug you to check it in.
+
+Please remember you must do a Middleman build prior to building with XCode. I have not set-up
+XCode to automatically do the Middleman build.
