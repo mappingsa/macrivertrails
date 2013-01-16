@@ -117,7 +117,7 @@
 }
 */
 
-#pragma UIWebDelegate implementation
+/* #pragma UIWebDelegate implementation
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
@@ -133,7 +133,7 @@
     theWebView.backgroundColor = [UIColor blackColor];
 
     return [super webViewDidFinishLoad:theWebView];
-}
+} */
 
 /* Comment out the block below to over-ride */
 
