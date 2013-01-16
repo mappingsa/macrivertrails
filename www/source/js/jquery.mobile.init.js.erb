@@ -32,7 +32,9 @@ $(document).bind("mobileinit", function(){
       $.mobile.pushStateEnabled = false;
 
       // Replace calls to window.history.back with PhoneGap navigation helper if available
-      $.mobile.phonegapNavigationEnabled = true;
+      // It is recommended to set this to FALSE unless building for Android and doing full
+      // page refreshes (.e.g. data-rel="external"). We don't so set this false
+      $.mobile.phonegapNavigationEnabled = false;
 
       // Allow cross-domain calls
       $.support.cors = true;
