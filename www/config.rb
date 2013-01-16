@@ -164,7 +164,7 @@ helpers do
   end
 
   def external_href(uri)
-    'href="' + uri + '" rel="external" target="_blank"'
+    'href="' + uri + '" target="_blank"'
   end
 
   def external_link(uri)
