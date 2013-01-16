@@ -26,7 +26,7 @@
 $(function() {
   var
     baseUri = "<%= base_uri ? base_uri : '../' %>",
-    testing = <%= build_target == 'debug' %>,
+    testing = <%= build_target =~ /debug/ %>,
     testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
@@ -263,7 +263,7 @@ $(function() {
 // _utils.js.erb start
 // Utility functions included in the outer closure of maps.js
 
-<% if build_target == 'debug' %>
+<% if build_target =~ /debug/ %>
       // Formats number with fixed digits
     pad = function(num, digits, padChar) {
         var str = num.toString(),
@@ -293,7 +293,7 @@ findPlace = function(group, item) {
 },
 
 logTime = function(msg) {
-<%if build_target == 'debug' %>
+<%if build_target =~ /debug/ %>
       var time = new Date();
       console.log(toTime(time) + " " + msg);
 <% end %>
@@ -1182,7 +1182,7 @@ $locationBtn.on("vclick click", function(event) {
   $canvas.gmap( {
     center: defaultLoc,
     zoom: zoomLevelAll,
-    <% if build_target == 'debug' %>
+    <% if build_target =~ /debug/ %>
       zoomControlOptions: {
         style: google.maps.ZoomControlStyle.SMALL
       },

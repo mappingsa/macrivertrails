@@ -179,6 +179,45 @@ phonegap-ios:
         - google.maps.v3.utility.geolocationmarker.js
         - phonegap-init
 
+# For debugging PhoneGap build with Web Inspector
+# We use un-minimized assets
+phonegap-ios-debug:
+    # Substitute UUID for a-long-hex-string below
+    #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
+    stylesheets:
+        - webfonts-cabin
+        - webfonts-caviar
+        - jquery.mobile.theme-rivertrails-1.2.0
+        - jquery.mobile.structure-1.2.0
+        - jquery.mobile.simultaneous-transitions-replace
+        - flexslider
+        - jquery.mobile.iscrollview
+        - custom
+    scripts:
+        - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
+        # We can use jQuery 1.8.2 for Android/iOS
+        - jquery-1.7.2
+        - cordova-2.2.0
+        - geolocation
+        - jquery.tinysort
+        - store
+        - jquery.mobile.init
+        - jquery.mobile.transition-handler-simple
+        - jquery.mobile.simultaneous-transitions-replace-simple
+        - base
+        - maps
+        - jquery.mobile-1.2.0
+        - iscroll
+        - jquery.mobile.iscrollview
+        - jquery.flexslider
+        # - jquery.ui.map
+        - jquery.ui.map-patched
+        - jquery.ui.map.services
+        - jquery.ui.map.extensions
+        - google.maps.v3.utility.infobox.js
+        - google.maps.v3.utility.geolocationmarker.js
+        - phonegap-init
+
 phonegap-android:
     base_uri: file:///android_asset/www/_assets/
     stylesheets:
@@ -192,7 +231,7 @@ phonegap-android:
         - custom
     scripts:
         - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
-        # We can use jQuery 1.7.2 for Android/iOS
+        # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.7.2.min
         - cordova-2.2.0
         - geolocation

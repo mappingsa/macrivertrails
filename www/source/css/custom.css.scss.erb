@@ -1,6 +1,6 @@
 @import 'paths';
 
-$hotspotBackgroundColor: <%= build_target === 'debug' ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
+$hotspotBackgroundColor: <%= build_target =~ /debug/ ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
 
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
