@@ -41,6 +41,7 @@ is not checked-in to the repo, because EGit (Eclipse Git) gets horribly confused
 also because you might like to link to alternate content (e.g. a debug build).
 
 `cd phonegap/ios`
+
 `ln -s ../../www/build/phonegap-ios www`
 
 This location is .gitignored, so that git won't bug you to check it in.
