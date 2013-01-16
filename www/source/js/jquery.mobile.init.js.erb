@@ -25,7 +25,7 @@ $(document).bind("mobileinit", function(){
         hintAcceleration = isAppleWebkit,     // true if should hint hardware acceleration
         $html = $("html");  // Where we will put the classes
 
-    <% if build_target == 'phonegap' %>
+    <% if build_target =~ /phonegap/ %>
 
       // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
       // URL bar. For PhoneGap, it's better to disable pushstate
