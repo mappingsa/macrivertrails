@@ -26,7 +26,7 @@
 $(function() {
   var
     baseUri = "<%= base_uri ? base_uri : '../' %>",
-    testing = <%= build_target =~ /debug/ %>,
+    testing = <%= build_target =~ /debug/ ? 'true' : 'false' %>,
     testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
