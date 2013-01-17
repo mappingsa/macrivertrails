@@ -55,4 +55,8 @@ phonegap/ios/www/*
 # For now, ignore the symlink as well, as it isn't commiting correctly
 phonegap/ios/www
 
+# Ignore Phonegap project.pbxproj. You need to create a symlink to the appropriate developer-specific
+# file - i.e. project.jp.pbxproj or project.jt.pbxproj
+phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj
+
 
