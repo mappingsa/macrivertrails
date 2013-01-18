@@ -1,15 +1,16 @@
 - r = current_resource
-/!
-    build_target: '#{build_target}',
-    base_uri: '#{base_uri}',
-    current_path: '#{current_path}',
-    url: '#{r.url}',
-    path: '#{r.path}',
-    ext: '#{r.ext}',
-    mine_type: '#{r.mime_type}',
-    destination_path: '#{r.destination_path}',
-    source_file: '#{r.source_file}',
-    template?: '#{r.template?}',
-    path_root: '#{path_root}'
+- if build_target =~ /debug/
+    /!
+        build_target: '#{build_target}',
+        base_uri: '#{base_uri}',
+        current_path: '#{current_path}',
+        url: '#{r.url}',
+        path: '#{r.path}',
+        ext: '#{r.ext}',
+        mine_type: '#{r.mime_type}',
+        destination_path: '#{r.destination_path}',
+        source_file: '#{r.source_file}',
+        template?: '#{r.template?}',
+        path_root: '#{path_root}'
 - if ! defined? is_head
   .page-info data-path-root="#{path_root}"
