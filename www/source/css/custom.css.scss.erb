@@ -2,6 +2,13 @@
 
 $hotspotBackgroundColor: <%= build_target =~ /debug/ ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
 
+/* page-info div contains static information about the page placed there by Middleman, in
+   data- attributes. This is used as a convenient alternative to placing the data- attributes
+   in the page div itself. */
+.page-info {
+  display: none;   // Make sure that this div doesn't affect rendering
+}
+
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
