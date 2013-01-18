@@ -432,17 +432,44 @@ that they will override CSS in the standard JQM structure CSS */
 }
 
 /* =============================================================================
-   (ex) Slide out menu (no longer slide-out)
+   (ex) Fading place menu
    ========================================================================== */
-
 .menu {
   background:#262C3A;
   -webkit-text-size-adjust:none !important;
+  -moz-text-size-adjust:none !important;
+  -o-text-size-adjust:none !important;
   -ms-text-size-adjust:none !important;
-  display: none;
-  z-index: 10;
+  text-size-adjust:none !important;
   position: absolute;
   right: 0;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -moz-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -o-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -ms-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+}
+
+.menu.slow {
+  -webkit-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -moz-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -o-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -ms-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+}
+
+.menu.visible {
+  visibility: visible;
+  opacity: 0.9;
+  -webkit-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  -o-transition-delay: 0s;
+  -ms-transition-delay: 0s;
+  transition-delay: 0s;
+
 }
 
 .menu ul {
@@ -1321,7 +1348,7 @@ margin-left: -45px;
   border-color: rgba(100, 100, 100, .8);
   border-bottom-style: none;
   -webkit-box-shadow: 0 -9px 6px -6px #777;
-  -webkit-transition: all 0.3s ease-out;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
   -webkit-transform: translateY(20px);
   }
 

@@ -20,27 +20,22 @@
       $menu = $page.find(".menu"),
       $showMenuBtn = $page.find(".showMenu"),
 
-      closeMenu = function(fadeTime) {
-        $menu.animate(
-          { opacity: "0" },
-          fadeTime === undefined ? 400 : fadeTime,
-          "linear",
-          function() { $menu.hide(); }
-          );
+      closeMenu = function(slow) {
+        if (slow) {
+          $menu.addClass("slow");
+          }
+        else {
+          $menu.removeClass("slow");
+          }
+        $menu.removeClass("visible");
          },
 
-      openMenu = function(fadeTime) {
-        $menu.css("opacity", "0");
-        $menu.animate(
-          { opacity: "0.85" },
-          fadeTime === undefined ? 400 : fadeTime,
-          "linear"
-          );
-        $menu.show();
+      openMenu = function() {
+        $menu.removeClass("slow").addClass("visible");
         };
 
     $page.on("pagebeforeshow", function() {
-      $menu.hide();
+      $menu.removeClass("visible");
     });
 
     // Show menu
@@ -49,12 +44,12 @@
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
-      var menuIsHidden = $menu.is(":hidden");
-      if (menuIsHidden) {
-        openMenu();
+      var menuIsShown = $menu.hasClass("visible");
+      if (menuIsShown) {
+        closeMenu();
         }
       else {
-        closeMenu();
+        openMenu();
           }
     });
 
@@ -81,7 +76,7 @@
           localStore.saveFavourite( { listID: 0, section: section, item: item, title: title } );
           $a.addClass("is-fav").find("span").text("REMOVE FAV");
           }
-        closeMenu(1000);
+        closeMenu(true);
     });
 
     // Add to Itinerary button on place menu
@@ -97,7 +92,7 @@
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
-      closeMenu(1000);
+      closeMenu(true);
         }
     else {
       $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %>" );
