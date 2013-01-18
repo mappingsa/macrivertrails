@@ -19,6 +19,7 @@
       $page = $(this),
       $menu = $page.find(".menu"),
       $showMenuBtn = $page.find(".showMenu"),
+      $slider = $page.find(".flexslider");
 
       closeMenu = function(slow) {
         if (slow) {
@@ -37,6 +38,21 @@
     $page.on("pagebeforeshow", function() {
       $menu.removeClass("visible");
     });
+
+    $page.on("pagebeforehide", function() {
+      var slider = $slider.jqmData("flexslider");
+      if (slider) {
+        slider.pause();
+        }
+    });
+
+    $page.on("pageshow", function() {
+      var slider = $slider.jqmData("flexslider");
+      if (slider) {
+        slider.pause();  // Goofy - otherwise it will have multiple players!
+        slider.play();
+        }
+      });
 
     // Show menu
     $showMenuBtn.bind("vmousedown click", function(event) {
@@ -142,7 +158,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       touch: true,
       smoothHeight: false,
       start: refreshScroller,
@@ -156,7 +173,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       slideshow: true,
       touch: true,
       smoothHeight: false,
@@ -172,7 +190,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       slideshow: true,
       touch: true,
       randomize: false,
