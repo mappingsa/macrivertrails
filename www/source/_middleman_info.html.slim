@@ -11,4 +11,5 @@
     source_file: '#{r.source_file}',
     template?: '#{r.template?}',
     path_root: '#{path_root}'
-.page-info data-path-root="#{path_root}"
+- if ! defined? is_head
+  .page-info data-path-root="#{path_root}"

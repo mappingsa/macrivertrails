@@ -2,7 +2,7 @@
 =blank_line
 doctype 5
 html lang="en-AU"
-  = partial :middleman_info
+  = partial :middleman_info, :locals => { :is_head => true }
   head
     = blank_line
     title = current_page.data.title
