@@ -6,9 +6,12 @@ html lang="en-AU"
   head
     = blank_line
     title = current_page.data.title
-    = partial :meta
-    = stylesheet_link_tag data.rivertrails[build_target].stylesheets
-    = blank_line
-    = javascript_include_tag data.rivertrails[build_target].scripts
-    = blank_line
+    / PhoneGap build: only generate resources on home page
+    / Non-Phonegap build: generate resources on every page
+    - if (!(build_target =~ /phonegap/)) || (current_resource.path == 'index.html')
+      = partial :meta
+      = stylesheet_link_tag data.rivertrails[build_target].stylesheets
+      = blank_line
+      = javascript_include_tag data.rivertrails[build_target].scripts
+      = blank_line
 = blank_line
