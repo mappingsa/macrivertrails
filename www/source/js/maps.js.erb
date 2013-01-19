@@ -1053,6 +1053,7 @@ var openDirectionsSubpage = function(place) {
     }
   $markerListSubpage.addClass("slide out reverse");
   $directionsSubpage.addClass("subpage-active slide in reverse");
+  $headerTitle.text("Directions");
   $markerListSubpage.animationComplete( function () {
     $directionsSubpage.removeClass("slide in reverse");
     $markerListSubpage.removeClass("subpage-active slide out reverse");
