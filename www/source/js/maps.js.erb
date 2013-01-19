@@ -398,6 +398,7 @@ $(document).on('pageinit', ".ui-page", function() {
       $toPretty = $page.find( ".toPretty" ),
       $fromPretty = $page.find( ".fromPretty" ),
       $markerList = $page.find( ".marker-list"),
+      $subpageContainerOuter = $page.find(".subpage-container-outer"),
       $subpageContainer = $page.find(".subpage-container"),
       $markerListSubpage = $page.find(".markerlist-subpage"),
       $directionsSubpage = $page.find(".directions-subpage"),
@@ -513,13 +514,19 @@ zoomTo = function(targetZoom) {
 //--------------------------------------------------------
 resizeMapCanvas = function() {
     var newWrapperHeight,
+        newOuterWrapperHeight,
+        markerNavHeight,
         hidden = setSubPageVisible($markerListSubpage);
     markerListScroller.resizeWrapper(true);
+    //markerNavHeight = parseInt($topMarkerNav.css("height"));
+    markerNavHeight = 64;
     restoreSubPageVisibility($markerListSubpage, hidden);
-    newWrapperHeight = $markerListSubpage.css("height");
+    newWrapperHeight = $markerListSubpage.height(),
+    newOuterWrapperHeight = newWrapperHeight + markerNavHeight;
     $subpageContainer.css("height", newWrapperHeight);
+    $subpageContainerOuter.css("height", newOuterWrapperHeight);
     $canvas.css("height", newWrapperHeight);
-    $directionsSubpage.css("height", newWrapperHeight);
+    $directionsSubpage.css("height", newOuterWrapperHeight);
     setTimeout ( function() {
       $.mobile.silentScroll(0);
       });
