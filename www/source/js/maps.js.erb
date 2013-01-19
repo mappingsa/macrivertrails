@@ -863,6 +863,8 @@ createMap = function() {
           $page.jqmData("destination", place.position);
           $toPretty.text(title);        // But don't show direcitons fields yet
                                         // (Not until/unless we get user location )
+          openDirectionsSubpage(place, true);
+          $markerListBtn.hide();
           }
 
         gmap.addMarker( {
@@ -1039,7 +1041,7 @@ $closeMarkerlistBtn.on("vclick scrollstart", function (event) {
     });
   });
 
-var openDirectionsSubpage = function(place) {
+var openDirectionsSubpage = function(place, instant) {
   $closeMarkerlistBtn.hide();
   $page.jqmData("destination", place.position);
   $toPretty.text(place.title);
@@ -1051,14 +1053,21 @@ var openDirectionsSubpage = function(place) {
     $page.jqmData("origin", defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
     makePrettyAddress(defaultLoc, 1);
     }
-  $markerListSubpage.addClass("slide out reverse");
-  $directionsSubpage.addClass("subpage-active slide in reverse");
   $headerTitle.text("Directions");
-  $markerListSubpage.animationComplete( function () {
-    $directionsSubpage.removeClass("slide in reverse");
-    $markerListSubpage.removeClass("subpage-active slide out reverse");
+  if (instant) {
+    $directionsSubpage.addClass("subpage-active");
+    $markerListSubpage.removeClass("subpage-active");
     $closeDirectionsBtn.show();
-    });
+    }
+  else {
+    $markerListSubpage.addClass("slide out reverse");
+    $directionsSubpage.addClass("subpage-active slide in reverse");
+    $markerListSubpage.animationComplete( function () {
+      $directionsSubpage.removeClass("slide in reverse");
+      $markerListSubpage.removeClass("subpage-active slide out reverse");
+      $closeDirectionsBtn.show();
+      });
+    }
   };
 
 $page.on("vclick click", ".directions-button", function (event) {
