@@ -519,7 +519,7 @@ resizeMapCanvas = function() {
         hidden = setSubPageVisible($markerListSubpage);
     markerListScroller.resizeWrapper(true);
     //markerNavHeight = parseInt($topMarkerNav.css("height"));
-    markerNavHeight = 64;
+    markerNavHeight = loadingSingle ? 0 : 64;
     restoreSubPageVisibility($markerListSubpage, hidden);
     newWrapperHeight = $markerListSubpage.height(),
     newOuterWrapperHeight = newWrapperHeight + markerNavHeight;
