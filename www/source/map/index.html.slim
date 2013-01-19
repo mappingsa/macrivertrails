@@ -1,0 +1,55 @@
+---
+title: Mcquarie River Trails - Map
+---
+@page.map-page data-dom-cache="true"
+  = partial :middleman_info
+  = partial :map_header
+  .subpage-container-outer
+
+    = partial :map_tabbar
+
+    div
+    .subpage-container
+
+      .map-canvas.subpage.subpage-active
+
+      .markerlist-button
+        .markerlist-button-inner
+
+      .markerlist-subpage.subpage data-iscroll='{"resizeWrapper":false}'
+        ul.marker-list.ui-listview
+        .markerListNote
+
+      .close-markerlist-button
+        .close-markerlist-button-inner
+
+      .close-directions-button
+        .close-directions-button-inner
+
+    .directions-subpage.subpage data-iscroll='{"resizeWrapper":false}'
+      .directions-endpoints
+        .directions-endpoint.origin
+          h2
+            | From:
+          p.fromPretty
+        .directions-endpoint.destination
+          h2
+            | To:
+          p.toPretty
+      a.submitDirections href="#" data-role="button" data-icon="search" Get directions
+      .results.ui-listview.ui-listview-inset.ui-corner-all.ui-shadow
+        .ui-li.ui-li-divider.ui-btn.ui-bar-b.ui-corner-top.ui-btn-up-undefined Results
+        .directions
+        .ui-li.ui-li-divider.ui-btn.ui-bar-b.ui-corner-bottom.ui-btn-up-b-undefined
+
+  @popup.no-location-popup
+    p
+      | Unable to get current position
+
+  = partial :tabbar
+
+
+
+
+
+
