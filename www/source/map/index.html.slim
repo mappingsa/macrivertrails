@@ -5,7 +5,10 @@ title: Mcquarie River Trails - Map
   = partial :middleman_info
   = partial :map_header
   .subpage-container-outer
-
+    .close-markerlist-button
+      .close-markerlist-button-inner
+    .close-directions-button
+      .close-directions-button-inner
     = partial :map_tabbar
 
     div
@@ -20,11 +23,7 @@ title: Mcquarie River Trails - Map
         ul.marker-list.ui-listview
         .markerListNote
 
-      .close-markerlist-button
-        .close-markerlist-button-inner
 
-      .close-directions-button
-        .close-directions-button-inner
 
     .directions-subpage.subpage data-iscroll='{"resizeWrapper":false}'
       .directions-endpoints
