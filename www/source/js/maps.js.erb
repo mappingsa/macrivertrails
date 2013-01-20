@@ -820,7 +820,16 @@ createMap = function() {
       }
     if (selLocationMe) {
       $topMarkerNav.height(64).show().trigger("updatelayout");
+      $markerListSubpage.removeClass("subpage-active transitioning slideup in out reverse");
+      $directionsSubpage.removeClass("subpage-active transitioning slide in out reverse");
+      $canvas.addClass("subpage-active");
+      $closeDirectionsBtn.hide();
+      $closeMarkerlistBtn.hide();
+      $markerListBtn.show();
       // Set the appropriate tabbar button active
+      if ($activeGroupButton) {
+        $activeGroupButton.removeClass("ui-btn-active");
+        }
       $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
       $activeGroupButton.addClass("ui-btn-active");
       }
@@ -893,6 +902,8 @@ createMap = function() {
 
     //--------------- each  --------------------------------^
   addMyLocation();
+  resizeMapCanvas();
+  gmap.refresh();
 
   var bounds = gmap.get("bounds");
     setTimeout ( function() {
@@ -1059,7 +1070,7 @@ var openDirectionsSubpage = function(place, instant) {
   $headerTitle.text("Directions");
   if (instant) {
     $directionsSubpage.addClass("subpage-active");
-    $markerListSubpage.removeClass("subpage-active");
+    $markerListSubpage.removeClass("subpage-active transitioning slide in out reverse");
     $closeDirectionsBtn.show();
     }
   else {
