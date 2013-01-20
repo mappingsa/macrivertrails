@@ -1160,7 +1160,9 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
 
 });
 
-$submitDirections.on("click",  function () {
+$submitDirections.on("vclick click",  function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }
   gmap.displayDirections ( {
     origin: $page.jqmData("origin"),
     destination: $page.jqmData("destination"),
