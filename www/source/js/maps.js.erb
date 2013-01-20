@@ -333,7 +333,7 @@ $(document).on('pageinit', ".ui-page", function() {
       $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
       };
 
-  // Get Directions button on place menu
+  // Nearby tab on main tabbar
   $page.find(".nearby-tab a").on("click", function(event) {
     event.preventDefault();
     if ( $page.is(".map-page") ) {
@@ -818,8 +818,9 @@ createMap = function() {
       $headerTitle.text("Nearby");
 
       }
-    // Set the appropriate tabbar button active
     if (selLocationMe) {
+      $topMarkerNav.height(64).show().trigger("updatelayout");
+      // Set the appropriate tabbar button active
       $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
       $activeGroupButton.addClass("ui-btn-active");
       }
