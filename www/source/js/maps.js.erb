@@ -408,6 +408,7 @@ $(document).on('pageinit', ".ui-page", function() {
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
+      $directions = $page.find( ".directions" ),
       $markerListBtn = $page.find(".markerlist-button"),
       $markerListBtnInner = $page.find(".markerlist-button-inner"),
       $closeMarkerlistBtn = $page.find(".close-markerlist-button"),
@@ -845,7 +846,8 @@ createMap = function() {
           lat = trim(coords[0]),
           lng = trim(coords[1]),
           showAlways = groupShowAlways(group),
-          zIndex = groupZindex(group);
+          zIndex = groupZindex(group),
+          oldDestination;
 
       if ( ( (selTodo === undefined) && (selGroup === group) && ( (selItem.length === 0) || (selItem === item) ) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
@@ -860,11 +862,17 @@ createMap = function() {
           }
 
         if ( loadingSingle ) {
-          $page.jqmData("destination", place.position);
-          $toPretty.text(title);        // But don't show direcitons fields yet
-                                        // (Not until/unless we get user location )
-          openDirectionsSubpage(place, true);
+          oldDestination = $page.jqmData("destination");
+          if (place.position !== oldDestination) {
+            $page.jqmData("destination", place.position);
+            $toPretty.text(title);
+            $directions.empty();
+            $results.hide();
+            }
           $markerListBtn.hide();
+          $topMarkerNav.height(0).hide().trigger("updatelayout");
+          $headerTitle.text("Directions");
+          openDirectionsSubpage(place, true);
           }
 
         gmap.addMarker( {
@@ -883,12 +891,6 @@ createMap = function() {
     });
 
     //--------------- each  --------------------------------^
-
-  if (loadingSingle) {
-    $topMarkerNav.height(0).hide().trigger("updatelayout");
-    $headerTitle.text("Directions");
-    }
-
   addMyLocation();
 
   var bounds = gmap.get("bounds");
