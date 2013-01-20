@@ -1166,18 +1166,18 @@ $submitDirections.on("vclick click",  function (event) {
   gmap.displayDirections ( {
     origin: $page.jqmData("origin"),
     destination: $page.jqmData("destination"),
-    travelMode: google.maps.DirectionsTravelMode.DRIVING
+    travelMode: google.maps.DirectionsTravelMode.DRIVING,
     },
-    { panel: $directions[0] },
-    function (success, response) {
-      if (success) {
+    {
+    panel: $directions[0] },
+    function (result, status) {
+      if (status === "OK") {
         $results.show().trigger("updatelayout");
         }
       else {
         $results.hide();
         }
     });
-  return false;
   });
 
 // Location button in header bar
