@@ -517,7 +517,7 @@ that they will override CSS in the standard JQM structure CSS */
   top: 0;
   right: 0;
   background-color: transparent;
-  background-position: 8px 5px;
+  background-position: 8px 6px;
   background-repeat: no-repeat;
   background-size: 32px 28px;
   background-image: imageUrl('icon-menu@2x.png');
@@ -1279,27 +1279,36 @@ margin-left: -45px;
 }
 
 %hdrBtn {
-  width: 30px; height: 30px;
+  width: 48px;
+  height: 40px;
+  top: 0;
   background: {
     color: transparent;
     position: top left;
     repeat: no-repeat;
-    size: 100% auto;
+    size: 30px 30px;
   }
 }
 
-.homeBtn {
+.ui-header .homeBtn {
   @extend %hdrBtn;
+  right: 0;
+  background-position: 12px 5px;
   background-image: imageUrl('icon_home.png');
 }
 
-.backBtn {
+.ui-header .backBtn {
   @extend %hdrBtn;
+  left: 0;
+  background-position: 4px 6px;
   background-image: imageUrl('icon_arrow_left.png');
 }
 
-.locationBtn {
+.ui-header .locationBtn {
   @extend %hdrBtn;
+  position: absolute;
+  background-position: 18px 6px;
+  right: 46px;
 }
 
 .markerlist-subpage,
@@ -1430,30 +1439,24 @@ margin-left: -45px;
   width: 0;
 }
 
-.mapsheader .locationBtn {
-  position: absolute;
-  top: 6px;
-  right: 42px;
-}
-
-.locationBtn.on {
+.ui-header .locationBtn.on {
   background-image: imageUrl('location-on.png');
 }
 
-.locationBtn.off {
+.ui-header .locationBtn.off {
   background-image: imageUrl('location-off.png');
 }
 
-.locationBtn.disabled {
+.ui-header .locationBtn.disabled {
   background-image: imageUrl('location-off-cross.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
-  .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
-  .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
-  .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
-  .locationBtn.disabled { background-image: imageUrl('location-off-cross@2x.png'); }
+  .ui-header .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
+  .ui-header .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
+  .ui-header .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
+  .ui-header .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
+  .ui-header .locationBtn.disabled { background-image: imageUrl('location-off-cross@2x.png'); }
 }
 
 .mapsheader .ui-title {
