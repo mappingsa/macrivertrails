@@ -511,25 +511,20 @@ that they will override CSS in the standard JQM structure CSS */
   background-image: none !important;
 }
 
-.menuBtn {
-  width:36px;
-  height:36px;
+.ui-header .menuBtn {
+  width:48px;
+  height:40px;
+  top: 0;
+  right: 0;
   background-color: transparent;
-  background-position: top left;
+  background-position: 8px 5px;
   background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-image: imageUrl('icon_list_bullets.png');
+  background-size: 32px 28px;
+  background-image: imageUrl('icon-menu@2x.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .menuBtn { background-image: imageUrl('icon_list_bullets@2x.png'); }
-}
-
-.menuBtn .ui-btn-inner{
-  border:none;
-}
-.menuBtn:hover{
-  border:none !important;
+  .ui-header .menuBtn { background-image: imageUrl('icon-menu@2x.png'); }
 }
 
 /* =============================================================================

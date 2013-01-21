@@ -514,23 +514,24 @@ zoomTo = function(targetZoom) {
 // modified.
 //--------------------------------------------------------
 resizeMapCanvas = function() {
-    var newWrapperHeight,
-        newOuterWrapperHeight,
-        markerNavHeight,
-        hidden = setSubPageVisible($markerListSubpage);
-    markerListScroller.resizeWrapper(true);
-    //markerNavHeight = parseInt($topMarkerNav.css("height"));
-    markerNavHeight = ( $topMarkerNav.is(":hidden") ) ? 0 : 64;
-    restoreSubPageVisibility($markerListSubpage, hidden);
-    newWrapperHeight = $markerListSubpage.height(),
-    newOuterWrapperHeight = newWrapperHeight + markerNavHeight;
-    $subpageContainer.css("height", newWrapperHeight);
-    $subpageContainerOuter.css("height", newOuterWrapperHeight);
-    $canvas.css("height", newWrapperHeight);
-    $directionsSubpage.css("height", newOuterWrapperHeight);
-    setTimeout ( function() {
-      $.mobile.silentScroll(0);
-      });
+  var
+    newWrapperHeight,
+    newOuterWrapperHeight,
+    markerNavHeight,
+    hidden = setSubPageVisible($markerListSubpage);
+  markerListScroller.resizeWrapper(true);
+  //markerNavHeight = parseInt($topMarkerNav.css("height"));
+  markerNavHeight = ( $topMarkerNav.is(":hidden") ) ? 0 : 64;
+  restoreSubPageVisibility($markerListSubpage, hidden);
+  newWrapperHeight = $markerListSubpage.height(),
+  newOuterWrapperHeight = newWrapperHeight + markerNavHeight;
+  $subpageContainer.css("height", newWrapperHeight);
+  $subpageContainerOuter.css("height", newOuterWrapperHeight);
+  $canvas.css("height", newWrapperHeight);
+  $directionsSubpage.css("height", newOuterWrapperHeight);
+  setTimeout ( function() {
+    $.mobile.silentScroll(0);
+    });
   },
 
 // _info_window.js.erb start
@@ -856,8 +857,7 @@ createMap = function() {
           lat = trim(coords[0]),
           lng = trim(coords[1]),
           showAlways = groupShowAlways(group),
-          zIndex = groupZindex(group),
-          oldDestination;
+          zIndex = groupZindex(group);
 
       if ( ( (selTodo === undefined) && (selGroup === group) && ( (selItem.length === 0) || (selItem === item) ) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
@@ -872,16 +872,6 @@ createMap = function() {
           }
 
         if ( loadingSingle ) {
-          oldDestination = $page.jqmData("destination");
-          if (place.position !== oldDestination) {
-            $page.jqmData("destination", place.position);
-            $toPretty.text(title);
-            $directions.empty();
-            $results.hide();
-            }
-          $markerListBtn.hide();
-          $topMarkerNav.height(0).hide().trigger("updatelayout");
-          $headerTitle.text("Directions");
           openDirectionsSubpage(place, true);
           }
 
@@ -902,8 +892,6 @@ createMap = function() {
 
     //--------------- each  --------------------------------^
   addMyLocation();
-  resizeMapCanvas();
-  gmap.refresh();
 
   var bounds = gmap.get("bounds");
     setTimeout ( function() {
@@ -1056,9 +1044,18 @@ $closeMarkerlistBtn.on("vclick scrollstart", function (event) {
   });
 
 var openDirectionsSubpage = function(place, instant) {
+  var oldDestination = $page.jqmData("destination");
+  if (place.position !== oldDestination) {
+    $page.jqmData("destination", place.position);
+    $toPretty.text(place.title);
+    $directions.empty();
+    $results.hide();
+    }
+  $markerListBtn.hide();
   $closeMarkerlistBtn.hide();
-  $page.jqmData("destination", place.position);
-  $toPretty.text(place.title);
+  $topMarkerNav.height(0).hide().trigger("updatelayout");
+  resizeMapCanvas();
+  $headerTitle.text("Directions");
   if (knownLocation) {
     $page.jqmData("origin", tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
     makePrettyAddress(tripOriginLoc, 1);
@@ -1067,7 +1064,6 @@ var openDirectionsSubpage = function(place, instant) {
     $page.jqmData("origin", defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
     makePrettyAddress(defaultLoc, 1);
     }
-  $headerTitle.text("Directions");
   if (instant) {
     $directionsSubpage.addClass("subpage-active");
     $markerListSubpage.removeClass("subpage-active transitioning slide in out reverse");
