@@ -71,7 +71,7 @@
           }
     });
 
-    $homeBtn.bind("vmousedown click", function(event) {
+    $homeBtn.bind("vclick click", function(event) {
       var
         $a = $(this),
         transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
@@ -82,7 +82,7 @@
       $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'index.html' %>", { transition: transition } );
     });
 
-    $backBtn.bind("vmousedown click", function(event) {
+    $backBtn.bind("vclick click", function(event) {
       var
         $a = $(this),
         transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
