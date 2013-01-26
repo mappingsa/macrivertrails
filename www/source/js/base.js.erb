@@ -19,6 +19,8 @@
       $page = $(this),
       $menu = $page.find(".menu"),
       $showMenuBtn = $page.find(".menuBtn"),
+      $homeBtn = $page.find(".homeBtn"),
+      $backBtn = $page.find(".backBtn"),
       $slider = $page.find(".flexslider");
 
       closeMenu = function(slow) {
@@ -67,6 +69,28 @@
       else {
         openMenu();
           }
+    });
+
+    $homeBtn.bind("vmousedown click", function(event) {
+      var
+        $a = $(this),
+        transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'index.html' %>", { transition: transition } );
+    });
+
+    $backBtn.bind("vmousedown click", function(event) {
+      var
+        $a = $(this),
+        transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      window.history.back();
     });
 
     $page.find(".go-web, .go-phone, .go-mail").bind("vclick", function(event) {
