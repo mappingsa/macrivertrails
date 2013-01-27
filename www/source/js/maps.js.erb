@@ -772,6 +772,8 @@ revealCanvas = function() {
 createMap = function() {
     var lists, title;
 
+    gmap.clear("services");  // Clear any previous route from the map
+
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
     selGroup = urlVars["section"] || "";
