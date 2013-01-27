@@ -753,6 +753,15 @@ addMyLocation = function() {
     }
 },
 
+revealCanvas = function() {
+  $markerListSubpage.removeClass("subpage-active transitioning slideup in out reverse");
+  $directionsSubpage.removeClass("subpage-active transitioning slide in out reverse");
+  $canvas.addClass("subpage-active");
+  $closeDirectionsBtn.hide();
+  $closeMarkerlistBtn.hide();
+  $markerListBtn.show();
+},
+
 // _location.js.erb end
 
 // _create.js.erb start
@@ -794,6 +803,7 @@ createMap = function() {
       selTodo = undefined;
       $headerTitle.text("Nearby");
       $topMarkerNav.height(64).show().trigger("updatelayout");
+      revealCanvas();
       }
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
@@ -803,6 +813,7 @@ createMap = function() {
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       selItem = "";
       selGroup = "";
+      revealCanvas();
       }
     // All places "nearby" button (location=me)
     else {
@@ -814,12 +825,7 @@ createMap = function() {
       }
     if (selLocationMe) {
       $topMarkerNav.height(64).show().trigger("updatelayout");
-      $markerListSubpage.removeClass("subpage-active transitioning slideup in out reverse");
-      $directionsSubpage.removeClass("subpage-active transitioning slide in out reverse");
-      $canvas.addClass("subpage-active");
-      $closeDirectionsBtn.hide();
-      $closeMarkerlistBtn.hide();
-      $markerListBtn.show();
+      revealCanvas();
       // Set the appropriate tabbar button active
       if ($activeGroupButton) {
         $activeGroupButton.removeClass("ui-btn-active");
