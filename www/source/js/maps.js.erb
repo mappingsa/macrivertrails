@@ -804,7 +804,6 @@ createMap = function() {
       selTodo = undefined;
       $headerTitle.text(groups[selGroup].title);
       $topMarkerNav.height(64).show().trigger("updatelayout");
-      revealCanvas();
       }
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
@@ -814,7 +813,6 @@ createMap = function() {
       $topMarkerNav.height(0).hide().trigger("updatelayout");
       selItem = "";
       selGroup = "";
-      revealCanvas();
       }
     // All places "nearby" button (location=me)
     else {
@@ -826,7 +824,6 @@ createMap = function() {
       }
     if (selLocationMe) {
       $topMarkerNav.height(64).show().trigger("updatelayout");
-      revealCanvas();
       // Set the appropriate tabbar button active
       if ($activeGroupButton) {
         $activeGroupButton.removeClass("ui-btn-active");
@@ -834,7 +831,7 @@ createMap = function() {
       $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
       $activeGroupButton.addClass("ui-btn-active");
       }
-    else if (selGroup) {
+    else if (selGroup.length) {
       if ($activeGroupButton) {
         $activeGroupButton.removeClass("ui-btn-active");
         }
@@ -905,6 +902,9 @@ createMap = function() {
   addMyLocation();
   resizeMapCanvas();
   gmap.refresh();
+  if (!loadingSingle) {
+    revealCanvas();
+    }
 
   var bounds = gmap.get("bounds");
     setTimeout ( function() {
