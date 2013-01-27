@@ -792,6 +792,8 @@ createMap = function() {
     else if (selGroup.length) {
       selItem = "";
       selTodo = undefined;
+      $headerTitle.text("Nearby");
+      $topMarkerNav.height(64).show().trigger("updatelayout");
       }
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
