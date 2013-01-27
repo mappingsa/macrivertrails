@@ -106,16 +106,17 @@ $(function() {
 
 //_place_data.js.erb start
   groups = {
-    boatramp:  { zIndex: 1,   showAlways: true,  icon: boatramp },
-    rv:        { zIndex: 2,   showAlways: true,  icon: rv },
-    info:      { zIndex: 3,   showAlways: true,  icon: info },
-    cycle:     { zIndex: 10,  showAlways: false, icon: cycle },
-    produce:   { zIndex: 10,  showAlways: false, icon: produce },
-    heritage:  { zIndex: 10,  showAlways: false, icon: heritage },
-    nature:    { zIndex: 10,  showAlways: false, icon: nature },
-    river:     { zIndex: 10,  showAlways: false, icon: river },
-    riverbedz: { zIndex: 10,  showAlways: false, icon: riverbedz },
-    fishing:   { zIndex: 10,  showAlways: false, icon: fishing }
+    boatramp:  { zIndex: 1,   showAlways: true,  icon: boatramp,  title: "" },
+    rv:        { zIndex: 2,   showAlways: true,  icon: rv,        title: "" },
+    info:      { zIndex: 3,   showAlways: true,  icon: info,      title: "" },
+    cycle:     { zIndex: 10,  showAlways: false, icon: cycle,     title: "Cycle Trail"},
+    produce:   { zIndex: 10,  showAlways: false, icon: produce,   title: "Produce Trail" },
+    heritage:  { zIndex: 10,  showAlways: false, icon: heritage,  title: "Heritage Trail" },
+    nature:    { zIndex: 10,  showAlways: false, icon: nature,    title: "Nature Trail" },
+    river:     { zIndex: 10,  showAlways: false, icon: river,     title: "River Trail" },
+    riverbedz: { zIndex: 10,  showAlways: false, icon: riverbedz, title: "RiverBedz" },
+    fishing:   { zIndex: 10,  showAlways: false, icon: fishing,   title: "Fishing Trail" },
+    all:       { zIndex: 10,  showAlways: false, icon: null,      title: "All Trails" }
   },
 
   places = [
@@ -801,7 +802,7 @@ createMap = function() {
     else if (selGroup.length) {
       selItem = "";
       selTodo = undefined;
-      $headerTitle.text("Nearby");
+      $headerTitle.text(groups[selGroup].title);
       $topMarkerNav.height(64).show().trigger("updatelayout");
       revealCanvas();
       }
@@ -820,7 +821,7 @@ createMap = function() {
       fullLoad = true;
       selItem = "";
       selGroup = "";
-      $headerTitle.text("Nearby");
+      $headerTitle.text("Nearby - All Trails");
 
       }
     if (selLocationMe) {
@@ -1133,6 +1134,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
   var $button = $(this),
       selGroup = $button.jqmData( "group" );
 
+  $headerTitle.text(groups[selGroup].title);
   closeInfoWindow();
   if ($activeGroupButton) {
     $activeGroupButton.removeClass("ui-btn-active");
