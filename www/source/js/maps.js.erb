@@ -333,6 +333,15 @@ $(document).on('pageinit', ".ui-page", function() {
       $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
       };
 
+  /* Map buttons on Todo page collapsible headers */
+  $page.on("vclick", ".todo-map-btn", function(event) {
+    var
+      $span = $(this),
+      $collapsible = $span.closest(".ui-collapsible"),
+      listID = $collapsible.jqmData("list-id");
+    showMap("todo=" + listID, "fade");
+    });
+
   // Nearby tab on main tabbar
   $page.find(".nearby-tab a").on("click", function(event) {
     event.preventDefault();
@@ -361,23 +370,6 @@ $(document).on('pageinit', ".ui-page", function() {
     section = $li.jqmData("section");
     showMap("section=" + section, "fade");
     });
-
-  /* Map buttons on Todo page collapsible headers */
-  $(document).on("vclick", ".todo-map-btn", function(event) {
-    // Note this is not an <a> tag, so don't need to worry about click
-    var $span = $(this),
-        $collapsible = $span.closest(".ui-collapsible"),
-        listID = $collapsible.jqmData("list-id");
-    showMap("todo=" + listID, "fade");
-    });
-
-  });
-
-  $(document).on("pageremove", ".map-page", function() {
-    var $page = $(this),
-        gmap = $page.jqmData("gmap");
-    stopGeolocation();
-    gmap.destroy();
   });
 
   // Initialize a map page
@@ -983,6 +975,12 @@ $page.on( "createmap.rivertrails", function () {
 
 $page.on( "pagehide", function() {
   stopGeolocation();
+  });
+
+$page.on("pageremove", function() {
+  var gmap = $page.jqmData("gmap");
+  stopGeolocation();
+  gmap.destroy();
   });
 
 $(window).on("resize", function( event ) {
