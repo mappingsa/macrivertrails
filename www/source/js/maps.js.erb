@@ -912,9 +912,9 @@ createMap = function() {
     revealCanvas();
     }
 
-  var bounds = gmap.get("bounds");
     setTimeout ( function() {
       if (bounds) {
+        var bounds = gmap.get("bounds");
         map.fitBounds(bounds);
         gmap.refresh();
         }
