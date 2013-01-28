@@ -785,7 +785,9 @@ createMap = function(internal) {
 
     // Fresh start
     gmap.clear("services");  // Clear any previous route from the map
-    gmap.clear("markers");   // And markers...
+    if (!internal) {
+      gmap.clear("markers");   // And markers...
+      }
     gmap.clear("overlays");  // and overlays
     $directions.empty();
     $results.hide();
@@ -838,29 +840,31 @@ createMap = function(internal) {
       fullLoad = true;
       selItem = "";
       selGroup = "";
-      if (outOfRegion || !knownLocation) {
+      if (!internal) {
         $headerTitle.text("All Trails");
-        $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
-        popupTimer = setTimeout( function () {
-          outOfRegionPopup.open();
-            popupTimer = setTimeout(function () {
-              outOfRegionPopup.close();
-              popupTimer = undefined;
-              }, 6000);
-            },  internal ? 0 : 1000 );
-        } else {
-          $headerTitle.text("Nearby - All Trails");
+        if ( outOfRegion || !knownLocation) {
+          $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
+          popupTimer = setTimeout( function () {
+            outOfRegionPopup.open();
+              popupTimer = setTimeout(function () {
+                outOfRegionPopup.close();
+                popupTimer = undefined;
+                }, 6000);
+              },  internal ? 0 : 1000 );
+            }
           }
-
-      }
+        $headerTitle.text( 'Nearby - ' + $headerTitle.text() )
+        }
     if (selLocationMe) {
       $topMarkerNav.height(64).show().trigger("updatelayout");
-      // Set the appropriate tabbar button active
-      if ($activeGroupButton) {
-        $activeGroupButton.removeClass("ui-btn-active");
+      if (!internal) {
+        // Set the appropriate tabbar button active
+        if ($activeGroupButton) {
+          $activeGroupButton.removeClass("ui-btn-active");
+          }
+        $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+        $activeGroupButton.addClass("ui-btn-active");
         }
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
-      $activeGroupButton.addClass("ui-btn-active");
       }
     else if (selGroup.length) {
       if ($activeGroupButton) {
@@ -874,7 +878,6 @@ createMap = function(internal) {
 
     //---------- Add markers for selected places ------------v
 
-    gmap.clear( "markers" );
     gmap.set( "bounds", null );
     $.each( places, function(i, place) {
       var group = place.group,
@@ -913,18 +916,20 @@ createMap = function(internal) {
           openDirectionsSubpage(place, true);
           }
 
-        gmap.addMarker( {
-          position: position,
-          bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
-          optimized: true,
-          flat:true,
-          icon: groupIcon(group),
-          group: group,
-          item: item,
-          mTitle: title,
-          mLink: markerLink(place),
-          zIndex: zIndex
-          } ).click(function() { openInfoWindow(place, this); });
+        if (!internal) {
+          gmap.addMarker( {
+            position: position,
+            bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
+            optimized: true,
+            flat:true,
+            icon: groupIcon(group),
+            group: group,
+            item: item,
+            mTitle: title,
+            mLink: markerLink(place),
+            zIndex: zIndex
+            } ).click(function() { openInfoWindow(place, this); });
+          }
         }
     });
 
