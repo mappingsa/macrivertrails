@@ -772,7 +772,10 @@ revealCanvas = function() {
 createMap = function() {
     var lists, title;
 
+    // Fresh start
     gmap.clear("services");  // Clear any previous route from the map
+    gmap.clear("markers");   // And markers...
+    gmap.clear("overlays");  // and overlays
 
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
