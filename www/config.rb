@@ -168,7 +168,8 @@ helpers do
   end
 
   def external_link(uri)
-    '<a ' + external_href(uri) + '>' + uri + '</a>'
+    short_uri = uri.sub(/^https?\:\/\//, '')
+    '<a ' + external_href(uri) + '>' + short_uri + '</a>'
   end
 
   # Helper to add active class if current_page basename (not including extension)
