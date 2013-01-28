@@ -776,6 +776,9 @@ createMap = function() {
     gmap.clear("services");  // Clear any previous route from the map
     gmap.clear("markers");   // And markers...
     gmap.clear("overlays");  // and overlays
+    $directions.empty();
+    $results.hide();
+    $toPretty.text("");
 
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
@@ -879,8 +882,6 @@ createMap = function() {
           if (place.position !== oldDestination) {
             $page.jqmData("destination", place.position);
             $toPretty.text(title);
-            $directions.empty();
-            $results.hide();
             }
           $markerListBtn.hide();
           $topMarkerNav.height(0).hide().trigger("updatelayout");
