@@ -863,21 +863,22 @@ createMap = function() {
           lng = trim(coords[1]),
           showAlways = groupShowAlways(group),
           zIndex = groupZindex(group),
-          oldDestination;
-
+          oldDestination,
+          // True if current marker is the single marker of interest for "get directions"
+          isSingleMarker = loadingSingle && selGroup === group && selItem === item;
       if ( ( (selTodo === undefined) && (selGroup === group) && ( (selItem.length === 0) || (selItem === item) ) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
            || fullLoad
         ) {
-        if ( (loadingSingle) ||
+        if ( isSingleMarker ||
              (selTodo !== undefined && todoCount === 1 && !showAlways)   // Todo with only one place
-           ) {  // Want to see single place - "directions"
+           ) {  // Want to see single place, so center on it
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
           }
 
-        if ( loadingSingle ) {
+        if ( isSingleMarker ) {
           oldDestination = $page.jqmData("destination");
           if (place.position !== oldDestination) {
             $page.jqmData("destination", place.position);
