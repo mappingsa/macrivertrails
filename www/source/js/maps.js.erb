@@ -13,7 +13,7 @@
   //
   // Unwanted fallout from this is that the query string isn't maintained in the URL, and
   // so website users are unable to bookmark specific map configurations.
-  var mapQuery;
+  var mapQuery = "";
 
   function onInfoWindowLink (href) {
     $.mobile.changePage(href,
@@ -103,6 +103,14 @@ $(function() {
       "This might be because a position could not be determined at this time from GPS or other sources, " +
       "because your computer or device lacks geolocation services, or because you have not " +
       "enabled geolocation services.",
+
+      outOfRegionMessage =
+        "<p><span class='info'>We see you're not near here,</span> so we're showing you places near Dubbo, at the heart of the Macquarie River Trails region.</p>" +
+        "<p>If you were nearby, we'd instead show you places near your current location.</p>",
+
+      noGeolocationMessage =
+        "<p><span class='error'>We don't know your current location</span>, so we're showing you places near Dubbo, at the heart of the Macquarie River Trails region.</p>" +
+        "<p>If we knew your location we'd instead show you places near your location.</p>"
 
 //_place_data.js.erb start
   groups = {
@@ -420,7 +428,8 @@ $(document).on('pageinit', ".ui-page", function() {
       selLocation,
       selLocationMe,
       selTodo,
-      $noLocationPopup = $(".no-location-popup"),
+      outOfRegionPopup = $page.find(".out-of-region-popup").jqmData("popup"),
+      $outOfRegionPopup = $page.find(".out-of-region-popup"),
       staticHereMarker,
       geoLocationMarker,
       geoLocationTimeoutID,
@@ -433,6 +442,8 @@ $(document).on('pageinit', ".ui-page", function() {
       boundsChangedListener,
       zoomChangeTimer,
       zoomStartTime,             // Timestamp when last zoom step started
+      outOfRegion = false,
+      popupTimer,
 
   // Temporarily change subpage CSS to make it "visible" so that dimensions can be read.
  //  Because event processing is synchronous, the browser won't render the
@@ -769,7 +780,7 @@ revealCanvas = function() {
 
 // Not really "create" - map is already created
 // Modifies the map and map page, based on URL params
-createMap = function() {
+createMap = function(internal) {
     var lists, title;
 
     // Fresh start
@@ -827,7 +838,19 @@ createMap = function() {
       fullLoad = true;
       selItem = "";
       selGroup = "";
-      $headerTitle.text("Nearby - All Trails");
+      if (outOfRegion || !knownLocation) {
+        $headerTitle.text("All Trails");
+        $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
+        popupTimer = setTimeout( function () {
+          outOfRegionPopup.open();
+            popupTimer = setTimeout(function () {
+              outOfRegionPopup.close();
+              popupTimer = undefined;
+              }, 6000);
+            },  internal ? 0 : 1000 );
+        } else {
+          $headerTitle.text("Nearby - All Trails");
+          }
 
       }
     if (selLocationMe) {
@@ -977,20 +1000,20 @@ getUrlVars = function()
 
 // Modify map according to mapQuery, if mapQuery is present and has changed
 $page.on( "pagebeforeshow", function() {
-  if (mapQuery && ( mapQuery !== previousMapQuery) ) {
-    createMap();
-    previousMapQuery = mapQuery;
-    mapQuery = undefined;
-    }
-  resizeMapCanvas();
+  createMap();
   });
 
 $page.on( "createmap.rivertrails", function () {
-  createMap();
+  createMap(true);
   });
 
 $page.on( "pagehide", function() {
   stopGeolocation();
+  if (popupTimer) {
+    clearTimeout(popupTimer);
+    outOfRegionPopup.close();
+    popupTimer = undefined;
+  }
   });
 
 $page.on("pageremove", function() {

@@ -43,9 +43,8 @@ title: Mcquarie River Trails - Map
         .directions
         .ui-li.ui-li-divider.ui-btn.ui-bar-b.ui-corner-bottom.ui-btn-up-b-undefined
 
-  @popup.no-location-popup
-    p
-      | Unable to get current position
+
+  @popup.out-of-region-popup data-shadow="true" data-transition="pop"
 
   = partial :tabbar
 

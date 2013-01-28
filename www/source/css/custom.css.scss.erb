@@ -1489,8 +1489,25 @@ margin-left: -45px;
   z-index: 2;
   }
 
-.no-location-popup {
+.out-of-region-popup {
+  color: rgb(50, 50, 50);
+}
+
+.out-of-region-popup {
+  background-color: rgba(255, 255, 204, 0.9) !important;
   font-weight: bold;
+}
+
+.out-of-region-popup.is-apple-webkit {
+  -webkit-transform: translateZ(0);
+  }
+
+.error {
+  color: rgb(255, 0, 0);
+}
+
+.info {
+  color: rgb(0, 0, 255);
   }
 
   /* Trail pins are in @2x resolution (30x42). We can not use media query because they are not used
