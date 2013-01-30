@@ -1,9 +1,3 @@
-
-/*
-    build_target: '<%= build_target %>',
-    base_uri: '<%= base_uri %>',
-*/
-
 (function ($) {
   // Comment-out the following line in order to be able to evaluate expressions
   // in Safari debug console when at a breakpoint!
@@ -25,6 +19,7 @@
   $(document).on('pageinit', ".ui-page", function() {
     var
       $page = $(this),
+      pathRoot = $page.find(".page-info").jqmData("path-root"),
       $menu = $page.find(".menu"),
       $showMenuBtn = $page.find(".menuBtn"),
       $homeBtn = $page.find(".homeBtn"),
@@ -87,7 +82,7 @@
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
-      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'index.html' %>", { transition: transition } );
+      $.mobile.changePage( pathRoot + "index.html", { transition: transition } );
     });
 
     $backBtn.on("vclick click", function(event) {
@@ -143,7 +138,7 @@
       closeMenu(true);
         }
     else {
-      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %>" );
+      $.mobile.changePage( pathRoot + "itin-dialog.html" );
       }
   });
 
