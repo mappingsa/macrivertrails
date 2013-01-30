@@ -28,8 +28,10 @@ $(document).bind("mobileinit", function(){
     <% if build_target =~ /phonegap/ %>
 
       // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
-      // URL bar. For PhoneGap, it's better to disable pushstate
-      $.mobile.pushStateEnabled = false;
+      // URL bar. For PhoneGap, it's better to disable pushstate.
+      // However, we are going to need pushstate to implement maintaining map parameters
+      // on "back", so setting this true
+      $.mobile.pushStateEnabled = true;
 
       // Replace calls to window.history.back with PhoneGap navigation helper if available
       // It is recommended to set this to FALSE unless building for Android and doing full
