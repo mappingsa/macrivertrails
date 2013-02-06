@@ -214,7 +214,6 @@ phonegap-ios-debug:
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        # - jquery.ui.map
         - jquery.ui.map-patched
         - jquery.ui.map.services
         - jquery.ui.map.extensions
@@ -251,7 +250,6 @@ phonegap-android:
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        # - jquery.ui.map
         - jquery.ui.map-patched
         - jquery.ui.map.services
         - jquery.ui.map.extensions
