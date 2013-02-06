@@ -89,6 +89,7 @@ debug:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
         - maps
         - jquery.mobile-1.2.0
         - iscroll
@@ -123,6 +124,7 @@ web:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
         - maps
         - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
         - iscroll
@@ -166,6 +168,7 @@ phonegap-ios:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
         - maps
         - jquery.mobile-1.2.0.min
         - iscroll
@@ -205,6 +208,7 @@ phonegap-ios-debug:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
         - maps
         - jquery.mobile-1.2.0
         - iscroll
@@ -241,6 +245,7 @@ phonegap-android:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
         - maps
         - jquery.mobile-1.2.0.min
         - iscroll

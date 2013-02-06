@@ -3,18 +3,6 @@
     base_uri: '<%= base_uri %>'
 */
 
-  // Global variable with query string for map page. This is a standard HTTP query string,
-  // maintained this way in case I figure out a way to use a query string on the URL without
-  // jQuery Mobile creating duplicate map pages. It's used by the createMap function
-  // to modify the map according to the query parameters. It is then cleared. If the map
-  // page is entered again, then, the code will see the empty query string, and will not
-  // modify the map at all. In this way, when the user goes "back" to the map, nothing is
-  // done beyond transitioning to the dom-cached map page.
-  //
-  // Unwanted fallout from this is that the query string isn't maintained in the URL, and
-  // so website users are unable to bookmark specific map configurations.
-  var mapQuery = "";
-
   function onInfoWindowLink (href) {
     $.mobile.changePage(href,
       {
@@ -329,57 +317,6 @@ groupZindex = function(group) {
 groupIcon = function(group) {
   return groups[group].icon;
   };
-
-$(document).on('pageinit', ".ui-page", function() {
-  var
-    $page = $(this),
-    pathRoot = $page.find(".page-info").jqmData("path-root"),
-    mapUri = pathRoot + "map/index.html",
-
-    showMap = function(queryString, transition) {
-      mapQuery = queryString;
-      console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" )
-      $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
-      };
-
-  /* Map buttons on Todo page collapsible headers */
-  $page.on("vclick", ".todo-map-btn", function(event) {
-    var
-      $span = $(this),
-      $collapsible = $span.closest(".ui-collapsible"),
-      listID = $collapsible.jqmData("list-id");
-    showMap("todo=" + listID, "fade");
-    });
-
-  // Nearby tab on main tabbar
-  $page.find(".nearby-tab a").on("click", function(event) {
-    event.preventDefault();
-    if ( $page.is(".map-page") ) {
-      mapQuery = "location=me";
-      $page.trigger("createmap.rivertrails");
-      }
-    else {
-      showMap("location=me", "fade");
-      }
-    });
-
-  // Get Directions button on place menu
-  $page.find(".directions-btn").on("vclick click", function(event) {
-    event.preventDefault();
-    if (event.type === "click") { return; }  // For click, prevent the default action, since we already
-                                             // did everything we want on the vclick
-    var section = $page.jqmData("section"),
-      item = $page.jqmData("item");
-    showMap("section=" +  section + "&item=" + item);
-    });
-
-  $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
-    // Not an <a> tag, so don't need to deal with click
-    var $li = $(this),
-    section = $li.jqmData("section");
-    showMap("section=" + section, "fade");
-    });
-  });
 
   // Initialize a map page
   $(document).on( "pageinit", ".map-page", function() {
