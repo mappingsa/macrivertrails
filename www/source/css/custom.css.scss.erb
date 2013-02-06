@@ -1489,16 +1489,15 @@ margin-left: -45px;
   z-index: 2;
   }
 
-.out-of-region-popup {
+.out-of-region-popup,
+.offline-popup {
   color: rgb(50, 50, 50);
-}
-
-.out-of-region-popup {
   background-color: rgba(255, 255, 204, 0.9) !important;
   font-weight: bold;
 }
 
-.out-of-region-popup.is-apple-webkit {
+.is-apple-webkit .out-of-region-popup,
+.is-apple-webkit .offline-popup {
   -webkit-transform: translateZ(0);
   }
 

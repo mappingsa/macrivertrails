@@ -29,12 +29,39 @@ $(function() {
       $page = $(this),
       pathRoot = $page.find(".page-info").jqmData("path-root"),
       mapUri = pathRoot + "map/index.html",
+      offlinePopup = $page.find(".offline-popup").jqmData("popup"),
+      popupTimer,
+
+      showOfflinePopup = function() {
+        popupTimer = setTimeout( function () {
+          offlinePopup.open();
+            popupTimer = setTimeout(function () {
+              offlinePopup.close();
+              popupTimer = undefined;
+              }, 6000);
+            },0 );
+      },
 
       showMap = function(queryString, transition) {
         mapQuery = queryString;
         console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" )
-        $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+
+        if ( !navigator.onLine ) {
+          showOfflinePopup();
+          }
+        else {
+          $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+          }
+
         };
+
+  $page.on( "pagehide", function() {
+    if (popupTimer) {
+      clearTimeout(popupTimer);
+      offlinePopup.close();
+      popupTimer = undefined;
+      }
+    });
 
     /* Map buttons on Todo page collapsible headers */
     $page.on("vclick", ".todo-map-btn", function(event) {
