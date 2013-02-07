@@ -3,6 +3,7 @@ title: Mcquarie River Trails - Map
 ---
 @page.map-page data-dom-cache="true"
   = partial :middleman_info
+  script src="../js/jquery.ui-map" type="text/javascript"
   = partial :map_header
   .subpage-container-outer
     .close-directions-button
@@ -23,8 +24,6 @@ title: Mcquarie River Trails - Map
         ul.marker-list.ui-listview
         .markerListNote
 
-
-
     .directions-subpage.subpage data-iscroll='{"resizeWrapper":false}'
       .directions-endpoints
         .directions-endpoint.origin
@@ -43,10 +42,12 @@ title: Mcquarie River Trails - Map
         .directions
         .ui-li.ui-li-divider.ui-btn.ui-bar-b.ui-corner-bottom.ui-btn-up-b-undefined
 
-
   @popup.out-of-region-popup data-transition="fade"
 
   = partial :tabbar
+
+
+
 
 
 

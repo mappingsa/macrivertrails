@@ -80,7 +80,6 @@ debug:
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
         - jquery-1.8.2
         - geolocation
         - jquery.tinysort
@@ -90,17 +89,17 @@ debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - maps
         - jquery.mobile-1.2.0
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
         # - jquery.ui.map
-        - jquery.ui.map-patched
-        - jquery.ui.map.services
-        - jquery.ui.map.extensions
-        - google.maps.v3.utility.infobox.js
-        - google.maps.v3.utility.geolocationmarker.js
+        #- jquery.ui.map-patched
+        #- jquery.ui.map.services
+        #- jquery.ui.map.extensions
+        #- google.maps.v3.utility.infobox.js
+        #- google.maps.v3.utility.geolocationmarker.js
+        # - maps
 
 web:
     #base_uri: http://web2008/macriver/

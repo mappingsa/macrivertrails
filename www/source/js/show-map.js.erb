@@ -22,6 +22,20 @@
 // so website users are unable to bookmark specific map configurations.
 var mapQuery = "";
 
+// Set to true once the map API has been loaded
+var riverTrailsMapApiIsLoaded = false;
+
+// This has to be a global function in order for the Maps API to make the callback
+function riverTrailsMapApiLoadedCallback() {
+
+  alert("Google maps is fully loaded");
+  // By triggering an event on the current page, we can catch this event and navigate to the
+  // map if we are still on the same page as when the user hit some map button.
+  // But if the user has navigated away from that page, we can just silently ignore
+  // this, but now the map API is available for the next time the user hits a map button.
+  $.mobile.activePage.trigger("mapapiloaded.rivertrails");
+}
+
 $(function() {
 
   $(document).on('pageinit', ".ui-page", function() {
@@ -31,6 +45,8 @@ $(function() {
       mapUri = pathRoot + "map/index.html",
       offlinePopup = $page.find(".offline-popup").jqmData("popup"),
       popupTimer,
+      showMapQueryString,   // Query string from map request that was deferred due to map API not loaded
+      showMapTransition,    // deferred map request transition
 
       showOfflinePopup = function() {
         popupTimer = setTimeout( function () {
@@ -42,18 +58,40 @@ $(function() {
             },0 );
       },
 
+      loadMapApi = function () {
+      $.getScript("http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback")
+        .done(function(data, textStatus, jqxhr) {
+          alert("Map API loader loaded, data = '" + data + "' textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
+          })
+        .fail(function(jqxhr, settings, exception) {
+          alert("Map API load error");
+          });
+      },
+
       showMap = function(queryString, transition) {
         mapQuery = queryString;
         console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" )
 
-        if ( !navigator.onLine ) {
-          showOfflinePopup();
+        if ( navigator.onLine ) {
+          if (riverTrailsMapApiIsLoaded) {
+            $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+            }
+          else {
+            showMapQueryString = queryString;
+            showMapTransition = transition;
+            loadMapApi();
+            }
           }
         else {
-          $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+          showOfflinePopup();
           }
-
         };
+
+  $page.on( "mapapiloaded.rivertrails", function() {
+    if (showMapQueryString) {
+      $.mobile.changePage( mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
+      }
+    });
 
   $page.on( "pagehide", function() {
     if (popupTimer) {
