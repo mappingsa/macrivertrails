@@ -7,9 +7,10 @@ set :slim, {
   :pretty => true,
   :disable_escape => true,
   :shortcut => {
-    '@' => 'data-role',
-    '#' => 'id',
-    '.' => 'class'}
+    '@' => { :attr => 'data-role' },
+    '#' => { :attr => 'id' },
+    '.' => { :attr => 'class' }
+    }
   }
 
 set :erb, {
