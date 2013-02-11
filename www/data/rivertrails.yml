@@ -211,7 +211,7 @@ phonegap-ios-debug:
         - jquery.mobile.iscrollview
         - jquery.flexslider
         - phonegap-init
-    maps_cripts:
+    map_scripts:
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
