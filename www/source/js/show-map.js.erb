@@ -92,13 +92,13 @@ $(function() {
         };
 
   $page.on( "mapapiloaded.rivertrails", function() {
+
     jsLoaded = true;
-    loadScript(pathRoot + "js/jquery.ui.map-patched.js");
-    loadScript(pathRoot + "js/jquery.ui.map.services.js");
-    loadScript(pathRoot + "js/jquery.ui.map.extensions.js");
-    loadScript(pathRoot + "js/google.maps.v3.utility.infobox.js");
-    loadScript(pathRoot + "js/google.maps.v3.utility.geolocationmarker.js");
-    loadScript(pathRoot + "js/maps.js");
+
+   <% data.rivertrails[build_target].map_scripts.each do |script_name| %>
+     console.log("loading <%= script_name %>");
+     loadScript(pathRoot + "js/" + "<%= script_name %>" );
+   <% end %>
 
     if (showMapQueryString) {
       setTimeout( function() {
