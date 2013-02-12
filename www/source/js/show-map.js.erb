@@ -20,9 +20,8 @@
 //
 // Unwanted fallout from this is that the query string isn't maintained in the URL, and
 // so website users are unable to bookmark specific map configurations.
-var
-  mapQuery = "",
-  jsLoaded = false;
+var mapQuery = "";
+
 
 
 // This has to be a global function in order for the Maps API to make the callback
@@ -37,6 +36,18 @@ function riverTrailsMapApiLoadedCallback() {
 };
 
 $(function() {
+  var
+    jsLoaded = false,    // True if all map JS files have been loaded
+    jsIndex = 0,        // Index of the next JS file to load from YML
+    i,
+    mapScripts = [
+      <% lastScriptIndex = data.rivertrails[build_target].map_scripts.length - 1 %>
+      <% data.rivertrails[build_target].map_scripts.each_with_index do |script, index| %>
+          <% trailing_comma = index < lastScriptIndex ? ',' : '' %>
+          <% script_suffix = index > 0 ? '.js' : '' %>
+        "<%= "#{script}#{script_suffix}" %>"<%= trailing_comma %>
+      <% end %>
+      ];
 
   $(document).on('pageinit', ".ui-page", function() {
     var
@@ -58,18 +69,30 @@ $(function() {
             },0 );
       },
 
-      loadScript = function(script) {
-     $.getScript(script)
-        .done(function(data, textStatus, jqxhr) {
-          console.log(script + " loaded, textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
-          })
-        .fail(function(jqxhr, settings, exception) {
-          console.log ("Script load error " + script);
-          });
-      },
+      loadNextScript = function () {
+        var scriptName = "";
+        if (jsIndex > 0) {
+          scriptName += pathRoot + "js/"
+          }
+        scriptName += mapScripts[jsIndex];
+        console.log("loading " + scriptName);
+        $.getScript(scriptName)
+          .done(function(data, textStatus, jqxhr) {
+            console.log(scriptName + " loaded, textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
+            if (jsIndex < (mapScripts.length - 1)) {
+              jsIndex++;
+              if ( jsIndex !== 1 ) {  // Have to wait for callback from Google Maps API (always first script)
+                loadNextScript();
+                }
+              }
+            })
+          .fail(function(jqxhr, settings, exception) {
+            console.log ("Script load error " + scriptName);
+            });
+        },
 
       loadMapApi = function () {
-        loadScript("http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback");
+        loadNextScript();
       },
 
       showMap = function(queryString, transition) {
@@ -93,12 +116,8 @@ $(function() {
 
   $page.on( "mapapiloaded.rivertrails", function() {
 
-    jsLoaded = true;
-
-   <% data.rivertrails[build_target].map_scripts.each do |script_name| %>
-     console.log("loading <%= script_name %>");
-     loadScript(pathRoot + "js/" + "<%= script_name %>" );
-   <% end %>
+    jsLoaded = true; // Not really loaded yet, this is to prevent reloading everything again
+    loadNextScript();
 
     if (showMapQueryString) {
       setTimeout( function() {

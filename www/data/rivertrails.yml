@@ -94,11 +94,12 @@ debug:
         - jquery.mobile.iscrollview
         - jquery.flexslider
     map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
-      - google.maps.v3.utility.infobox.js
-      - google.maps.v3.utility.geolocationmarker.js
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
       - maps
 
 web:
@@ -127,11 +128,12 @@ web:
         - jquery.mobile.iscrollview
         - jquery.flexslider
     map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
-      - google.maps.v3.utility.infobox.js
-      - google.maps.v3.utility.geolocationmarker.js
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
       - maps
 
 
@@ -172,11 +174,12 @@ phonegap-ios:
         - jquery.flexslider
         - phonegap-init
     map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
-      - google.maps.v3.utility.infobox.js
-      - google.maps.v3.utility.geolocationmarker.js
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
       - maps
 
 # For debugging PhoneGap build with Web Inspector
@@ -215,8 +218,8 @@ phonegap-ios-debug:
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
-      - google.maps.v3.utility.infobox.js
-      - google.maps.v3.utility.geolocationmarker.js
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
       - maps
 
 phonegap-android:
@@ -249,9 +252,10 @@ phonegap-android:
         - jquery.flexslider
         - phonegap-init
     map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
       - jquery.ui.map-patched
       - jquery.ui.map.services
       - jquery.ui.map.extensions
-      - google.maps.v3.utility.infobox.js
-      - google.maps.v3.utility.geolocationmarker.js
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
       - maps
