@@ -875,7 +875,7 @@ createMap = function(internal) {
     //--------------- each  --------------------------------^
   addMyLocation();
   resizeMapCanvas();
-  gmap.refresh();
+
   if (!loadingSingle) {
     revealCanvas();
     }
@@ -884,13 +884,9 @@ createMap = function(internal) {
       if (bounds) {
         var bounds = gmap.get("bounds");
         map.fitBounds(bounds);
-        gmap.refresh();
         }
-      else {
-        gmap.refresh();
-      }
+      gmap.refresh();
     }, 0);
-
 
   }
 // _create_=.js.erb end
@@ -1093,6 +1089,7 @@ var closeDirectionsSubpage = function() {
     $directionsSubpage.removeClass("subpage-active slide out");
     $markerListBtn.show();
     });
+  gmap.refresh();
   };
 
 $page.on("vclick", ".close-directions-button", closeDirectionsSubpage);
