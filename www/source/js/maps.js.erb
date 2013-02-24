@@ -965,6 +965,7 @@ $page.on("pageremove", function() {
 
 $(window).on("resize", function( event ) {
   resizeMapCanvas();
+  gmap.refresh();
   });
 
 $markerListSubpage.on("vclick click vmouseover", ".place-list-item .ui-link-inherit", function(event) {
