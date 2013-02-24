@@ -798,9 +798,6 @@ createMap = function(internal) {
               },  internal ? 0 : 1000 );
             }
           }
-        if ( !$headerTitle.text().match('Nearby - ') ) {
-          $headerTitle.text( 'Nearby - ' + $headerTitle.text() )
-          }
 
           $topMarkerNav.height(64).show().trigger("updatelayout");
           if (!internal) {
