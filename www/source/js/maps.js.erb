@@ -882,8 +882,8 @@ createMap = function(internal) {
     }
 
     setTimeout ( function() {
+      var bounds = gmap.get("bounds");
       if (bounds) {
-        var bounds = gmap.get("bounds");
         map.fitBounds(bounds);
         }
       gmap.refresh();
