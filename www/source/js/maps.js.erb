@@ -363,7 +363,6 @@ groupIcon = function(group) {
       selGroup,
       selItem,
       selLocation,
-      selLocationMe,
       selTodo,
       outOfRegionPopup = $page.find(".out-of-region-popup").jqmData("popup"),
       $outOfRegionPopup = $page.find(".out-of-region-popup"),
@@ -735,7 +734,6 @@ createMap = function(internal) {
     selGroup = urlVars["section"] || "";
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
-    selLocationMe = selLocation === "me";
     selTodo = urlVars["todo"],   // This one only, undefined if not present
     todoCount = 0;               // Count of ToDo items to map
 
@@ -755,6 +753,7 @@ createMap = function(internal) {
       loadingSingle = true;
       selTodo = undefined;
       }
+
     // Group - clicked on a group header in Browse (same result as group button on map )
     // group=<group name>
     else if (selGroup.length) {
@@ -762,7 +761,14 @@ createMap = function(internal) {
       selTodo = undefined;
       $headerTitle.text(groups[selGroup].title);
       $topMarkerNav.height(64).show().trigger("updatelayout");
+
+      if ($activeGroupButton) {
+        $activeGroupButton.removeClass("ui-btn-active");
+        }
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
+      $activeGroupButton.addClass("ui-btn-active");
       }
+
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
       lists = localStore.getLists();
@@ -774,6 +780,8 @@ createMap = function(internal) {
       }
     // All places "nearby" button (location=me)
     else {
+      centerLoc = outOfRegion ? defaultLoc : userLoc;
+      gmap.option( "center", centerLoc );
       fullLoad = true;
       selItem = "";
       selGroup = "";
@@ -793,25 +801,18 @@ createMap = function(internal) {
         if ( !$headerTitle.text().match('Nearby - ') ) {
           $headerTitle.text( 'Nearby - ' + $headerTitle.text() )
           }
+
+          $topMarkerNav.height(64).show().trigger("updatelayout");
+          if (!internal) {
+            // Set the appropriate tabbar button active
+            if ($activeGroupButton) {
+              $activeGroupButton.removeClass("ui-btn-active");
+              }
+            $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+            $activeGroupButton.addClass("ui-btn-active");
+            }
+
         }
-    if (selLocationMe) {
-      $topMarkerNav.height(64).show().trigger("updatelayout");
-      if (!internal) {
-        // Set the appropriate tabbar button active
-        if ($activeGroupButton) {
-          $activeGroupButton.removeClass("ui-btn-active");
-          }
-        $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
-        $activeGroupButton.addClass("ui-btn-active");
-        }
-      }
-    else if (selGroup.length) {
-      if ($activeGroupButton) {
-        $activeGroupButton.removeClass("ui-btn-active");
-        }
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
-      $activeGroupButton.addClass("ui-btn-active");
-      }
 
     gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
 
