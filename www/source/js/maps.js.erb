@@ -1095,7 +1095,9 @@ var closeDirectionsSubpage = function() {
 $page.on("vclick", ".close-directions-button", closeDirectionsSubpage);
 $directionsSubpage.on("swipeleft", closeDirectionsSubpage);
 
+//----------------------------------------------------------
 // Top Navbar buttons. Shows markers for each trail ---
+//----------------------------------------------------------
 $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
 
   e.preventDefault();
@@ -1116,6 +1118,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
+  gmap.option( "center", centerLoc );
   zoomTo( knownLocation ? zoomLevelNearby : zoomLevelAll );
 
   addMyLocation();
