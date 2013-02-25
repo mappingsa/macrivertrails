@@ -34,6 +34,9 @@ $(function() {
     defaultLng = 148.604826,
 
     geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
+    unknownLocationPopupDelay = 5000,   // Delay before showing unknown location popup - don't popup if location known after this delay
+    popupDuration = 6000,               // mSec for popup to remain on display
+    externalPopupDelay = 1000,          // Delay before popup shown if map is not already shown
 
     previousMapQuery,        // Saved previous map query, to avoid unnecessary redraws
 
@@ -427,7 +430,7 @@ smoothZoom = function(targetZoom) {
     zoomChangeTimer = setTimeout(function() {
       zoomChangeTimer = undefined;
       smoothZoom(targetZoom);
-      }, smoothZoomTimePerLevel);
+      }, smoothZoomTimePerLevel );
       });
   },
 
@@ -473,7 +476,7 @@ resizeMapCanvas = function() {
     $directionsSubpage.css("height", newOuterWrapperHeight);
     setTimeout ( function() {
       $.mobile.silentScroll(0);
-      });
+      }, 0);
   },
 
 // _info_window.js.erb start
@@ -716,9 +719,16 @@ revealCanvas = function() {
   $markerListBtn.show();
 },
 
-// _location.js.erb end
-
-// _create.js.erb start
+showPopup = function() {
+  $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
+  popupTimer = setTimeout( function () {
+    outOfRegionPopup.open();
+      popupTimer = setTimeout(function () {
+        outOfRegionPopup.close();
+        popupTimer = undefined;
+        }, popupDuration);
+      },  internal ? 0 : externalPopupDelay );
+  },
 
 // Not really "create" - map is already created
 // Modifies the map and map page, based on URL params
@@ -797,27 +807,27 @@ createMap = function(pInternal) {
       selGroup = "";
       if (!internal) {
         $headerTitle.text("All Trails");
-        if ( outOfRegion || !knownLocation) {
-          $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
-          popupTimer = setTimeout( function () {
-            outOfRegionPopup.open();
-              popupTimer = setTimeout(function () {
-                outOfRegionPopup.close();
-                popupTimer = undefined;
-                }, 6000);
-              },  internal ? 0 : 1000 );
-            }
+        if ( outOfRegion ) {
+          showPopup();
           }
-          $topMarkerNav.height(64).show().trigger("updatelayout");
-          if (!internal) {
-            // Set the appropriate tabbar button active
-            if ($activeGroupButton) {
-              $activeGroupButton.removeClass("ui-btn-active");
-              }
-            $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
-            $activeGroupButton.addClass("ui-btn-active");
+        else if ( !knownLocation ) {
+          setTimeout( function() {
+          if ( !knownLocation )  { // Location still unknown?
+            showPopup();
             }
+          }, unknownLocationPopupDelay);
+          }
         }
+      $topMarkerNav.height(64).show().trigger("updatelayout");
+      if (!internal) {
+        // Set the appropriate tabbar button active
+        if ($activeGroupButton) {
+          $activeGroupButton.removeClass("ui-btn-active");
+          }
+        $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+        $activeGroupButton.addClass("ui-btn-active");
+        }
+      }
 
     gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
 
