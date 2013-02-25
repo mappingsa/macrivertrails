@@ -149,11 +149,11 @@ $(function() {
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
       if ( $page.is(".map-page") ) {
-        mapQuery = "location=me";
+        mapQuery = "";
         $page.trigger("createmap.rivertrails");
         }
       else {
-        showMap("location=me", "fade");
+        showMap("", "fade");
         }
       });
 

@@ -365,6 +365,7 @@ groupIcon = function(group) {
       selItem,
       selLocation,
       selTodo,
+      selNearby = false,   // True if linked to map with "nearby"
       outOfRegionPopup = $page.find(".out-of-region-popup").jqmData("popup"),
       $outOfRegionPopup = $page.find(".out-of-region-popup"),
       staticHereMarker,
@@ -381,6 +382,7 @@ groupIcon = function(group) {
       zoomStartTime,             // Timestamp when last zoom step started
       outOfRegion = false,
       popupTimer,
+      internal = false,          // True if internal map creation i.e. nearby button pressed while already on map
 
   // Temporarily change subpage CSS to make it "visible" so that dimensions can be read.
  //  Because event processing is synchronous, the browser won't render the
@@ -720,8 +722,9 @@ revealCanvas = function() {
 
 // Not really "create" - map is already created
 // Modifies the map and map page, based on URL params
-createMap = function(internal) {
+createMap = function(pInternal) {
     var lists, title;
+    internal = pInternal;
 
     // Fresh start
     gmap.clear("services");  // Clear any previous route from the map
@@ -738,7 +741,8 @@ createMap = function(internal) {
     selGroup = urlVars["section"] || "";
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
-    selTodo = urlVars["todo"],   // This one only, undefined if not present
+    selTodo = urlVars["todo"];      // undefined if not present
+    selNearby = urlVars["nearby"] !== undefined;
     todoCount = 0;               // Count of ToDo items to map
 
     if (selTodo) {
@@ -782,9 +786,11 @@ createMap = function(internal) {
       selItem = "";
       selGroup = "";
       }
-    // All places "nearby" button (location=me)
+
+    // All places "nearby" button
     else {
-      centerLoc = outOfRegion ? defaultLoc : userLoc;
+      selNearby = true;
+      centerLoc = (outOfRegion || !knownLocation ) ? defaultLoc : userLoc;
       gmap.option( "center", centerLoc );
       fullLoad = true;
       selItem = "";
@@ -802,7 +808,6 @@ createMap = function(internal) {
               },  internal ? 0 : 1000 );
             }
           }
-
           $topMarkerNav.height(64).show().trigger("updatelayout");
           if (!internal) {
             // Set the appropriate tabbar button active
@@ -812,7 +817,6 @@ createMap = function(internal) {
             $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
             $activeGroupButton.addClass("ui-btn-active");
             }
-
         }
 
     gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
@@ -925,8 +929,6 @@ getUrlVars = function()
   var vars = [],
       hash,
       i,
-      //url = $page.data("url"),
-      //hashes = url.toLowerCase().slice(url.indexOf("?") + 1).split("&");
       hashes = mapQuery.toLowerCase().split("&");
   for(i = 0; i < hashes.length; i++) {
     hash = hashes[i].split("=");
@@ -1121,7 +1123,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
-  centerLoc = outOfRegion ? defaultLoc : userLoc;
+  centerLoc = (outOfRegion || !knownLocation) ? defaultLoc : userLoc;
   gmap.option( "center", centerLoc );
   zoomTo( knownLocation ? zoomLevelNearby : zoomLevelAll );
 
