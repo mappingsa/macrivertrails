@@ -719,6 +719,16 @@ revealCanvas = function() {
   $markerListBtn.show();
 },
 
+fitBounds = function() {
+  setTimeout ( function() {
+  var bounds = gmap.get("bounds");
+  if (bounds) {
+    map.fitBounds(bounds);
+    }
+  gmap.refresh();
+  }, 0);
+},
+
 showPopup = function() {
   $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
   popupTimer = setTimeout( function () {
@@ -896,15 +906,9 @@ createMap = function(pInternal) {
     revealCanvas();
     }
 
-    setTimeout ( function() {
-      var bounds = gmap.get("bounds");
-      if (bounds) {
-        map.fitBounds(bounds);
-        }
-      gmap.refresh();
-    }, 0);
-
+  fitBounds();
   }
+
 // _create_=.js.erb end
 
 // _page_utils.js.erb start
@@ -1168,15 +1172,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
     });
 
   showMarkerList();
-
-  setTimeout ( function() {
-  var bounds = gmap.get("bounds");
-  if (bounds) {
-    map.fitBounds(bounds);
-    }
-  gmap.refresh();
-  }, 0);
-
+  fitBounds();
 });
 
 $submitDirections.on("vclick click",  function (event) {
