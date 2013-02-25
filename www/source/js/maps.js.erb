@@ -329,7 +329,8 @@ groupIcon = function(group) {
       tripOriginLoc = userLoc,                         // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
-      findMe = false,
+      findMe = false,      // User has hit location button in header
+      foundMe = false,     // ... and map has now centered on user
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
@@ -666,17 +667,17 @@ addMyLocation = function() {
 
     updateMarkerListDistances();
 
-    if (findMe) {
+    if (findMe && !foundMe) {   // User operated location button in header
       zoomTo(zoomLevelUser);
-    }
-
-    if ( (!outOfRegion) && (selTodo === undefined) ) {
+      centerLoc = userLoc;
+      gmap.option( "center", centerLoc );
+      foundMe = true;
+      }
+    else if ( (!outOfRegion) && (selTodo === undefined) ) {
       // Update map center and zoom
       centerLoc = userLoc;
       gmap.option( "center", centerLoc );
-      if (!findMe) {
-        gmap.option( "zoom", zoomLevelNearby );
-        }
+      gmap.option( "zoom", zoomLevelNearby );
       }
     });
 
@@ -1117,6 +1118,7 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
+  centerLoc = outOfRegion ? defaultLoc : userLoc;
   gmap.option( "center", centerLoc );
   zoomTo( knownLocation ? zoomLevelNearby : zoomLevelAll );
 
@@ -1183,6 +1185,7 @@ $locationBtn.on("vclick click", function(event) {
   if ($locationBtn.hasClass("on")) {
     if (geoLocationMarker) {
       findMe = false;
+      foundMe = false;
       addStaticHereMarker(geoLocationMarker.getPosition());
       }
     geoLocationContinuous = false;
@@ -1190,6 +1193,7 @@ $locationBtn.on("vclick click", function(event) {
     }
   else {
     findMe = true;
+    foundMe = false;
     if (knownLocation) {
       zoomTo(zoomLevelUser);
       }
