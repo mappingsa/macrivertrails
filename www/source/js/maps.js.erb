@@ -33,7 +33,7 @@ $(function() {
     defaultLat = -32.249085,  // Default center location (Dubbo)
     defaultLng = 148.604826,
 
-    geoLocationActiveTime = testing ? 20000 : 60000, // # of mSec to run dynamic geolocation before shutting off
+    geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
 
     previousMapQuery,        // Saved previous map query, to avoid unnecessary redraws
 
@@ -611,8 +611,11 @@ stopGeolocation = function() {
     geoLocationMarker.unbindAll();
     geoLocationMarker.setMap(null);
     geoLocationMarker = undefined;
-    $locationBtn.removeClass("on disabled").addClass("off");
     }
+  $locationBtn.removeClass("on disabled").addClass("off");
+  findMe = false;
+  foundMe = false;
+  geoLocationContinuous = false;
   },
 
 // Callback to shut off geolocation after a timeout
