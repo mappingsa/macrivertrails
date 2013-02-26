@@ -1108,7 +1108,7 @@ var closeDirectionsSubpage = function() {
     $directionsSubpage.removeClass("subpage-active slide out");
     $markerListBtn.show();
     });
-  gmap.refresh();
+  fitBounds();
   };
 
 $page.on("vclick", ".close-directions-button", closeDirectionsSubpage);
@@ -1178,15 +1178,32 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
 $submitDirections.on("vclick click",  function (event) {
   event.preventDefault();
   if (event.type === "click") { return; }
+
+  var
+    origin = $page.jqmData("origin"),
+    originCoords = origin.split(","),
+    originLatLng = new google.maps.LatLng(trim(originCoords[0]), trim(originCoords[1]) ),
+    destination = $page.jqmData("destination"),
+    destinationCoords = destination.split(","),
+    destinationLatLng = new google.maps.LatLng(trim(destinationCoords[0]), trim(destinationCoords[1]) );
+
+  console.log("origin: " + origin);
+  console.log("destination: " + destination);
+
   gmap.displayDirections ( {
-    origin: $page.jqmData("origin"),
-    destination: $page.jqmData("destination"),
+    origin: origin,
+    destination: destination,
     travelMode: google.maps.DirectionsTravelMode.DRIVING,
     },
     {
     panel: $directions[0] },
     function (result, status) {
       if (status === "OK") {
+        // Set map bounds to fit origin and destination
+        gmap.set( "bounds", null );
+        gmap.addBounds( originLatLng );
+        gmap.addBounds( destinationLatLng );
+        fitBounds();
         $results.show().trigger("updatelayout");
         }
       else {
