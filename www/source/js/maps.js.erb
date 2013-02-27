@@ -901,7 +901,9 @@ createMap = function(pInternal) {
 
     //--------------- each  --------------------------------^
   addMyLocation();
-  resizeMapCanvas();
+  setTimeout(function () {
+    resizeMapCanvas();
+    }, 0);
 
   if (!loadingSingle) {
     revealCanvas();
