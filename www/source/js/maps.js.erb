@@ -386,6 +386,7 @@ groupIcon = function(group) {
       outOfRegion = false,
       popupTimer,
       internal = false,          // True if internal map creation i.e. nearby button pressed while already on map
+      lastDirectionsPlace,       // Most recent place shown on the Directions subpage
 
   // Temporarily change subpage CSS to make it "visible" so that dimensions can be read.
  //  Because event processing is synchronous, the browser won't render the
@@ -1052,6 +1053,11 @@ $closeMarkerlistBtn.on("vclick scrollstart", function (event) {
   });
 
 var openDirectionsSubpage = function(place, instant) {
+  if (place !== lastDirectionsPlace) {
+    $results.hide();
+    lastDirectionsPlace = place;
+  }
+
   $closeMarkerlistBtn.hide();
   $page.jqmData("destination", place.position);
   $toPretty.text(place.title);
