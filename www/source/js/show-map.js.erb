@@ -37,6 +37,7 @@ function riverTrailsMapApiLoadedCallback() {
 
 $(function() {
   var
+    gmapsLoaded = false, // True if Google maps JS is fully loaded
     jsLoaded = false,    // True if all map JS files have been loaded
     jsIndex = 0,        // Index of the next JS file to load from YML
     i,
@@ -85,8 +86,15 @@ $(function() {
                 loadNextScript();
                 }
               }
+              else {
+                jsLoaded = true;
+                $.mobile.changePage( mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
+                }
             })
           .fail(function(jqxhr, settings, exception) {
+            // Fortunately, this should not happen, since the files are local
+            // If it somehow can happen, then we will need to keep track of which JS files have been loaded,
+            // so that we don't try to load them again
             console.log ("Script load error " + scriptName);
             });
         },
@@ -116,15 +124,8 @@ $(function() {
 
   $page.on( "mapapiloaded.rivertrails", function() {
 
-    jsLoaded = true; // Not really loaded yet, this is to prevent reloading everything again
+    gmapsLoaded = true;
     loadNextScript();
-
-    if (showMapQueryString) {
-      setTimeout( function() {
-        $.mobile.changePage( mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
-        }, 1000);
-      }
-    });
 
   $page.on( "pagehide", function() {
     if (popupTimer) {
