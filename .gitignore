@@ -60,5 +60,6 @@ phonegap/ios/www
 phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj
 
 phonegap/android/bin
+phonegap/android/gen
 
 
