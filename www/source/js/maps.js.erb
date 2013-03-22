@@ -1,6 +1,6 @@
 /*
     build_target: '<%= build_target %>',
-    base_uri: '<%= base_uri %>',
+    base_uri: '<%= base_uri %>'
 */
 
   function onInfoWindowLink (href) {
@@ -13,15 +13,16 @@
 
 $(function() {
   var
-    testing = <%= build_target == 'debug' %>,
-    testingOutOfRegion = false  // Set true for easy testing of dynamic user marker on real device when out of region
+    baseUri = "<%= base_uri ? base_uri : '../' %>",
+    testing = <%= build_target =~ /debug/ ? 'true' : 'false' %>,
+    testingOutOfRegion = false,  // Set true for easy testing of dynamic user marker on real device when out of region
 
     zoomLevelAll = 7,         // Initial zoom for nearby, todo, browse trail headers
     zoomLevelNearby = 11,     // nearby, todo, browse once location is known
     zoomLevelPlace = 14,      // Always use this zoom for get directions
     zoomLevelUser = 19,       // "locate me" button
 
-    useSmoothZoom = true,     // true to use smooth zoom for trail markers/location button
+    useSmoothZoom = false,     // true to use smooth zoom for trail markers/location button
     smoothZoomTimePerLevel = 0, // Mimimum time per zoom level, in mSec, seems best left at 0
 
     maxNearbyDist = 1000,     // Max km from default center to center on user location, or 0 to disable
@@ -33,6 +34,11 @@ $(function() {
     defaultLng = 148.604826,
 
     geoLocationActiveTime = testing ? 10000 : 60000, // # of mSec to run dynamic geolocation before shutting off
+    unknownLocationPopupDelay = 5000,   // Delay before showing unknown location popup - don't popup if location known after this delay
+    popupDuration = 6000,               // mSec for popup to remain on display
+    externalPopupDelay = 1000,          // Delay before popup shown if map is not already shown
+
+    previousMapQuery,        // Saved previous map query, to avoid unnecessary redraws
 
 
   // TODO: initialization of these marker images should be deferred to the first pageinit, so that
@@ -55,30 +61,32 @@ $(function() {
     use2X = pixelRatio >= 1.5,
     res = use2X ? "@2x" : "",
 
-    cycle = new google.maps.MarkerImage( "images/Cycle-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    heritage = new google.maps.MarkerImage( "images/Heritage-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    nature = new google.maps.MarkerImage("images/Nature-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    produce = new google.maps.MarkerImage("images/Produce-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    river = new google.maps.MarkerImage("images/River-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    riverbedz = new google.maps.MarkerImage("images/Riverbedz-pin-map" + res + ".png", pinSize, null, null, pinSize ),
-    fishing = new google.maps.MarkerImage("images/Fishing-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    cycle = new google.maps.MarkerImage( baseUri + "map/images/Cycle-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    heritage = new google.maps.MarkerImage( baseUri + "map/images/Heritage-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    nature = new google.maps.MarkerImage( baseUri + "map/images/Nature-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    produce = new google.maps.MarkerImage( baseUri + "map/images/Produce-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    river = new google.maps.MarkerImage(baseUri + "map/images/River-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    riverbedz = new google.maps.MarkerImage(baseUri + "map/images/Riverbedz-pin-map" + res + ".png", pinSize, null, null, pinSize ),
+    fishing = new google.maps.MarkerImage(baseUri + "map/images/Fishing-pin-map" + res + ".png", pinSize, null, null, pinSize ),
 
-    boatramp = new google.maps.MarkerImage("images/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
-    info = new google.maps.MarkerImage("images/info" + res + ".png", altPinSize, null, null, altPinSize ),
-    rv = new google.maps.MarkerImage("images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
+    boatramp = new google.maps.MarkerImage( baseUri + "map/images/boatramp" + res + ".png", altPinSize, null, null, altPinSize ),
+    info = new google.maps.MarkerImage( baseUri + "map/images/info" + res + ".png", altPinSize, null, null, altPinSize ),
+    rv = new google.maps.MarkerImage( baseUri + "map/images/rv" + res + ".png", altPinSize, null, null, altPinSize ),
 
-    hereMarker = new google.maps.MarkerImage ("images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
-
-
+    hereMarker = new google.maps.MarkerImage ( baseUri + "map/images/greendot" + res + ".png", hereMarkerSize, null, new google.maps.Point(8.5, 8.5), hereMarkerSize),
 
     hereMarkerZindex = 20,
 
     markerListItemTemplate =
-    '<li class="big-arrow" data-icon="false">' +
-      '<a href="|link|">|title||distance|' +
-        '<img src="<%= (base_uri ? base_uri : '../') + 'images/' %>|pin|-pin|res|.png" alt="|alt|" class="ui-li-icon trail-pin">' +
-      '</a>' +
-    '</li>',
+    '<li class="place-list-item big-arrow ui-btn ui-btn-up-c ui-btn-icon-right ui-li ui-li-has-count ui-li-has-icon" ' +
+        'data-icon="false" data-group="|g|" data-item="|i|" data-corners="false" data-shadow="false" ' +
+        'data-iconshadow="true" data-wrapperels="div" data-iconpos="right" data-theme="c">' +
+      '<div class="ui-btn-inner ui-li">' +
+        '<div class="ui-btn-text">' +
+          '<div class="directions-button"></div>' +
+          '<a class="ui-link-inherit">|t||d|' +
+            '<img src="' + baseUri + 'images/|p|-pin|r|.png" alt="|a|" class="ui-li-icon trail-pin ui-li-thumb">' +
+      '</a></div></div></li>',
 
     markerListNoteLocationKnown = "Distance displayed in list is based on a straight path from your location.",
     markerListNoteLocationUnknown =
@@ -87,18 +95,27 @@ $(function() {
       "because your computer or device lacks geolocation services, or because you have not " +
       "enabled geolocation services.",
 
+      outOfRegionMessage =
+        "<p><span class='info'>We see you're not near here,</span> so we're showing you places near Dubbo, at the heart of the Macquarie River Trails region.</p>" +
+        "<p>Were you nearby, we'd instead show you places near your current location.</p>",
+
+      noGeolocationMessage =
+        "<p><span class='error'>We don't know your current location</span>, so we're showing you places near Dubbo, at the heart of the Macquarie River Trails region.</p>" +
+        "<p>If we knew your location we'd instead show you places near your location.</p>"
+
 //_place_data.js.erb start
   groups = {
-    boatramp:  { zIndex: 1,   showAlways: true,  icon: boatramp },
-    rv:        { zIndex: 2,   showAlways: true,  icon: rv },
-    info:      { zIndex: 3,   showAlways: true,  icon: info },
-    cycle:     { zIndex: 10,  showAlways: false, icon: cycle },
-    produce:   { zIndex: 10,  showAlways: false, icon: produce },
-    heritage:  { zIndex: 10,  showAlways: false, icon: heritage },
-    nature:    { zIndex: 10,  showAlways: false, icon: nature },
-    river:     { zIndex: 10,  showAlways: false, icon: river },
-    riverbedz: { zIndex: 10,  showAlways: false, icon: riverbedz },
-    fishing:   { zIndex: 10,  showAlways: false, icon: fishing }
+    boatramp:  { zIndex: 1,   showAlways: true,  icon: boatramp,  title: "" },
+    rv:        { zIndex: 2,   showAlways: true,  icon: rv,        title: "" },
+    info:      { zIndex: 3,   showAlways: true,  icon: info,      title: "" },
+    cycle:     { zIndex: 10,  showAlways: false, icon: cycle,     title: "Cycle Trail"},
+    produce:   { zIndex: 10,  showAlways: false, icon: produce,   title: "Produce Trail" },
+    heritage:  { zIndex: 10,  showAlways: false, icon: heritage,  title: "Heritage Trail" },
+    nature:    { zIndex: 10,  showAlways: false, icon: nature,    title: "Nature Trail" },
+    river:     { zIndex: 10,  showAlways: false, icon: river,     title: "River Trail" },
+    riverbedz: { zIndex: 10,  showAlways: false, icon: riverbedz, title: "RiverBedz" },
+    fishing:   { zIndex: 10,  showAlways: false, icon: fishing,   title: "Fishing Trail" },
+    all:       { zIndex: 10,  showAlways: false, icon: null,      title: "All Trails" }
   },
 
   places = [
@@ -118,7 +135,6 @@ $(function() {
     {group: "info", item: "", position: "-32.243408, 148.601667", title: "Dubbo Visitor Information Centre" },
     {group: "info", item: "", position: "-31.699748, 147.837154", title: "Warren Visitor Information Centre" },
     {group: "info", item: "", position: "-32.233914, 148.242014", title: "Narromine Vistor Information Centre" },
-
     {group: "cycle", item: "geurie",  position: "-32.400028, 148.818317", title: "Geurie-Bald Hill Mountain Bike Trails" },
     {group: "cycle", item: "beni", position: "-32.246925, 148.72464", title: "Beni State Conservation Area cycling, Dubbo" },
     {group: "cycle", item: "powterpark", position: "-32.239314, 148.611986", title: "Powter Park BMX Track, Dubbo" },
@@ -130,7 +146,7 @@ $(function() {
     {group: "produce", item: "cottagecraft",  position: "-32.23074, 148.240036", title: "Narromine Cottage Craft Shop" },
     {group: "produce", item: "woodshed",  position: "-32.232971, 148.240082", title: "The Woodshed Gallery, Narromine" },
     {group: "produce", item: "ewetwo",  position: "-32.033397, 147.985794", title: "Ewe Two, Trangie" },
-    {group: "produce", item: "bellriver",  position: "-32.687631, 148.945311", title: "Bell River Estate, Wellington," },
+    {group: "produce", item: "bellriver",  position: "-32.687631, 148.945311", title: "Bell River Estate, Wellington" },
     {group: "produce", item: "cactuscafe",  position: "-32.551264, 148.942136", title: "Cactus Cafe and Gallery, Wellington" },
     {group: "produce", item: "lazyriver",  position: "-32.296532, 148.627426", title: "Lazy River Estate, Dubbo" },
     {group: "produce", item: "farmers",  position: "-32.243450, 148.601672", title: "Farmers Market, Dubbo" },
@@ -247,7 +263,7 @@ $(function() {
 // _utils.js.erb start
 // Utility functions included in the outer closure of maps.js
 
-<% if build_target == 'debug' %>
+<% if build_target =~ /debug/ %>
       // Formats number with fixed digits
     pad = function(num, digits, padChar) {
         var str = num.toString(),
@@ -265,8 +281,19 @@ $(function() {
       },
 <% end %>
 
+findPlace = function(group, item) {
+  var retval = null;
+  $.each( places, function(i, place) {
+    if (group === place.group && item === place.item) {
+      retval = place;
+      return false;
+    }
+  });
+  return retval;
+},
+
 logTime = function(msg) {
-<%if build_target == 'debug' %>
+<%if build_target =~ /debug/ %>
       var time = new Date();
       console.log(toTime(time) + " " + msg);
 <% end %>
@@ -292,18 +319,7 @@ groupZindex = function(group) {
 
 groupIcon = function(group) {
   return groups[group].icon;
-  }
-// _utils.js.erb.end
-    ;
-
-  logTime("maps.js");
-
-  $(document).on("pageremove", ".map-page", function() {
-    var $page = $(this),
-        gmap = $page.jqmData("gmap");
-    stopGeolocation();
-    gmap.destroy();
-  });
+  };
 
   // Initialize a map page
   $(document).on( "pageinit", ".map-page", function() {
@@ -316,21 +332,31 @@ groupIcon = function(group) {
       tripOriginLoc = userLoc,                         // Origin of trip for distance, directions
       fullLoad = false,
       loadingSingle = false,
-      findMe = false,
+      findMe = false,      // User has hit location button in header
+      foundMe = false,     // ... and map has now centered on user
       $canvas = $page.find( ".map-canvas" ),   // The element that holds the map
       gmap,     // The jquery.ui-map object
       map,      // The Google map object
-      iscrollview = $page.find( ".iscroll-wrapper" ).data( "iscrollview" ),
-      $to = $page.find( ".to" ),
       $toPretty = $page.find( ".toPretty" ),
-      $from = $page.find( ".from" ),
       $fromPretty = $page.find( ".fromPretty" ),
-      $directionsFields = $page.find( ".directionsFields" ),
       $markerList = $page.find( ".marker-list"),
-      markerListview = $markerList.data( "listview" ),
+      $subpageContainerOuter = $page.find(".subpage-container-outer"),
+      $subpageContainer = $page.find(".subpage-container"),
+      $markerListSubpage = $page.find(".markerlist-subpage"),
+      $directionsSubpage = $page.find(".directions-subpage"),
+      markerListScroller = $markerListSubpage.jqmData("iscrollview"),
+      directionsScroller = $directionsSubpage.jqmData("iscrollview"),
+      markerListview = $markerList.jqmData( "listview" ),
       $markerListNote = $page.find( ".markerListNote" ),
       $submitDirections = $page.find( ".submitDirections" ),
       $results = $page.find( ".results" ),
+      $directions = $page.find( ".directions" ),
+      $markerListBtn = $page.find(".markerlist-button"),
+      $markerListBtnInner = $page.find(".markerlist-button-inner"),
+      $closeMarkerlistBtn = $page.find(".close-markerlist-button"),
+      $closeMarkerlistBtnInner = $page.find(".close-markerlist-button-inner"),
+      $closeDirectionsBtn = $page.find(".close-directions-button"),
+      $closeDirectionsBtnInner = $page.find(".close-directions-button-inner"),
       $topMarkerNav = $page.find(".topMarkerNav"),
       $directions = $page.find(".directions"),
       $headerTitle = $page.find(".mapsheader h1"),
@@ -341,9 +367,10 @@ groupIcon = function(group) {
       selGroup,
       selItem,
       selLocation,
-      selLocationMe,
       selTodo,
-      $noLocationPopup = $(".no-location-popup"),
+      selNearby = false,   // True if linked to map with "nearby"
+      outOfRegionPopup = $page.find(".out-of-region-popup").jqmData("popup"),
+      $outOfRegionPopup = $page.find(".out-of-region-popup"),
       staticHereMarker,
       geoLocationMarker,
       geoLocationTimeoutID,
@@ -356,6 +383,32 @@ groupIcon = function(group) {
       boundsChangedListener,
       zoomChangeTimer,
       zoomStartTime,             // Timestamp when last zoom step started
+      outOfRegion = false,
+      popupTimer,
+      internal = false,          // True if internal map creation i.e. nearby button pressed while already on map
+      lastDirectionsPlace,       // Most recent place shown on the Directions subpage
+
+  // Temporarily change subpage CSS to make it "visible" so that dimensions can be read.
+ //  Because event processing is synchronous, the browser won't render the
+  // change, as long as the subpage style is set back before the callback returns. So, a hidden
+  // subpage will remain hidden as long as _restorePageVisibility() is called before return.
+  // This way, we can just use normal dimension functions and avoid using jquery.actual, which
+  // slows things down significantly.
+  //
+  // jquery.actual goes up the tree from the element being measured and sets every element to
+  // visible, which is unnecessary. (We only have to be concerned about the subpage element, which
+  // we set to display:none for all but the currently-visible page.) It also does this
+  // for every dimension read. This essentially does the same thing, but then allows us to "batch"
+  // reading dimensions
+  setSubPageVisible = function($subpage) {
+    var hidden = $subpage.is(":hidden");
+    if (hidden) { $subpage.css("display", "block"); }
+    return hidden;
+  },
+
+  restoreSubPageVisibility = function($subpage, hidden) {
+   if (hidden) { $subpage.css("display", ""); }
+  },
 
 // Smooth zoom from current level to desired level
 // Google Maps V3 doesn't provide this functionality. It will only smooth zoom one level
@@ -378,7 +431,7 @@ smoothZoom = function(targetZoom) {
     zoomChangeTimer = setTimeout(function() {
       zoomChangeTimer = undefined;
       smoothZoom(targetZoom);
-      }, smoothZoomTimePerLevel);
+      }, smoothZoomTimePerLevel );
       });
   },
 
@@ -401,6 +454,32 @@ zoomTo = function(targetZoom) {
       }
   },
 
+//--------------------------------------------------------
+//Resize the map canvas to fill the
+// viewport remaining after all fixed-height elements
+// Code taken from jquery.mobile.iscrollview, and slightly
+// modified.
+//--------------------------------------------------------
+resizeMapCanvas = function() {
+    var newWrapperHeight,
+        newOuterWrapperHeight,
+        markerNavHeight,
+        hidden = setSubPageVisible($markerListSubpage);
+    markerListScroller.resizeWrapper(true);
+    //markerNavHeight = parseInt($topMarkerNav.css("height"));
+    markerNavHeight = ( $topMarkerNav.is(":hidden") ) ? 0 : 64;
+    restoreSubPageVisibility($markerListSubpage, hidden);
+    newWrapperHeight = $markerListSubpage.height(),
+    newOuterWrapperHeight = newWrapperHeight + markerNavHeight;
+    $subpageContainer.css("height", newWrapperHeight);
+    $subpageContainerOuter.css("height", newOuterWrapperHeight);
+    $canvas.css("height", newWrapperHeight);
+    $directionsSubpage.css("height", newOuterWrapperHeight);
+    setTimeout ( function() {
+      $.mobile.silentScroll(0);
+      }, 0);
+  },
+
 // _info_window.js.erb start
 closeInfoWindow = function() {
   if (infoBox) {
@@ -418,7 +497,7 @@ openInfoWindow = function(place, markerElement) {
       options = {
         content: box,
         closeBoxMargin: "14px 5px 2px 2px",
-        closeBoxURL: "images/298-circlex.png",
+        closeBoxURL: baseUri + "map/images/298-circlex.png",
         infoBoxClearance: 2,
         pixelOffset: infoBoxOffset
         };
@@ -427,36 +506,34 @@ openInfoWindow = function(place, markerElement) {
   gmap.option( "center", centerLoc );
   infoBox = new InfoBox(options);
   infoBox.open(map, markerElement);
-
-  if ( (!loadingSingle) && knownLocation ) {
-    $to.attr("value",  place.position);
-    $toPretty.attr("value", place.title);
-    $directionsFields.show();
-    iscrollview.refresh();
-    }
-}
+},
 // _info_window.js.erb end
 // _marker.js.erb start
 // Map functions dealing with the markerlist. This is the list of places shown underneath
 // the map, which correspond to the trail markers shown on the map.
 
 showMarkerList = function(){
-var myMarkers = gmap.get( "markers" ),
-    list = "",
-    $markerListItems;
+  if ( !($markerListSubpage.hasClass("subpage-active")) ) { return; }  // Don't update if not shown
+  logTime("showMarkerList");
+  var markers = gmap.get( "markers" ),
+      markersLength = markers.length,
+      list = "",
+      $markerListItems,
+      i = 0,
+      markersLength = markers.length;
+  logTime("got markers from map");
 
-  $.each( myMarkers, function(i, tmarker) {
-    list += buildMarkerListItem( tmarker );
-    });
-
+  for (; i < markersLength; i++) {
+    list += buildMarkerListItem( markers[i] );
+    }
+  logTime("built markerlist string");
   $markerList.empty().append(list);
+  logTime("emptied and appended markerlist");
 
   // sort list by nearest and apply jQuery Mobile UI
-  $markerListItems = $markerList.find("li");
+  $markerListItems = $markerList.find(".place-list-item");
   $markerListItems.tsort("span.ml-sort");
-
-  markerListview.refresh();
-  $markerListNote.show();
+  logTime("sorted markerlist");
   },
 
 // Update the marker list distances
@@ -469,6 +546,7 @@ buildMarkerListItem = function(marker) {
   var position = marker.position,
       title = marker.mTitle,
       group = marker.group,
+      item = marker.item,
       link = marker.mLink,
       endRes = userLoc ? getMarkerDistance( position.lat(), position.lng(), userLoc.lat(), userLoc.lng() ) : 0,
       base = markerListItemTemplate,
@@ -477,30 +555,34 @@ buildMarkerListItem = function(marker) {
     return "";
     }
   endRes = Math.round( endRes*10 ) / 10;
-  base = base.replace( "|pin|", groupUC);
-  base = base.replace( "|res|", res);
-  base = base.replace( "|alt|", groupUC );
-  base = base.replace( "|link|", link.length ? link : "#" );
+  base = base
+    .replace( "|g|", group)
+    .replace( "|i|", item)
+    .replace( "|p|", groupUC)
+    .replace( "|r|", res)
+    .replace( "|a|", groupUC );
   if (knownLocation) {
-    base = base.replace( "|title|", title);
-    base = base.replace( "|distance|", '<span class="ui-li-count"><span class="ml-sort">' + endRes + "</span>km</span>" );
+    base = base
+      .replace( "|t|", title)
+      .replace( "|d|", '<span class="ui-li-count ui-btn-up-c ui-btn-corner-all"><span class="ml-sort">' + endRes + "</span>km</span>" );
     }
   else {
-    base = base.replace( "|title|", '<span class="ml-sort">' + title + "</span>" );
-    base = base.replace( "|distance|", "" );
+    base = base
+      .replace( "|t|", '<span class="ml-sort">' + title + "</span>" )
+      .replace( "|d|", "" );
     }
   return base;
   },
 
 markerListULReset = function() {
   $markerList.empty();
-  $markerListNote.hide();
+  $markerListNote.text( "" );
 },
 
 markerLink = function(place) {
   var group = place.group,
       dir = group.charAt(0).toUpperCase() + group.slice(1);
-  return "<%= (base_uri ? base_uri : '../')%>" + dir + "/" + place.item + ".html";
+  return baseUri + dir + "/" + place.item + ".html";
   }
 // _marker_list.js.erb end
 ,
@@ -511,12 +593,12 @@ addStaticHereMarker = function( pos ) {
       id: "client",
       position: pos,
       bounds: false,
-      optimized: false,
+      optimized: true,
       title: "My Location",
       visible: true,
       flat: true,
       zIndex: hereMarkerZindex,
-      } ).click(function() {addMyLocation()} );
+      } ).click(function() { addMyLocation(); } );
     },
 
 removeStaticHereMarker = function() {
@@ -535,8 +617,11 @@ stopGeolocation = function() {
     geoLocationMarker.unbindAll();
     geoLocationMarker.setMap(null);
     geoLocationMarker = undefined;
-    $locationBtn.removeClass("on disabled").addClass("off");
     }
+  $locationBtn.removeClass("on disabled").addClass("off");
+  findMe = false;
+  foundMe = false;
+  geoLocationContinuous = false;
   },
 
 // Callback to shut off geolocation after a timeout
@@ -570,16 +655,6 @@ addMyLocation = function() {
   geoLocationMarker = new GeolocationMarker(map);
   geoLocationMarker.setPositionOptions( { enableHighAccuracy: true } );
 
-  // updated accuracy callback
-  // We don't currently do anything here except log.
-  // The marker code handles changing the circle diameter
-  // This would be the place to display accuracy if we want to show a numeric figure
-  geoLocationMarker.addListener("accuracy_changed", function() {
-    var accuracy = geoLocationMarker.getAccuracy(),
-        position = geoLocationMarker.getPosition();
-    logTime("geolocation accuracy_changed to " + accuracy + " position = " + position);
-  });
-
   // updated location callback
   geoLocationMarker.addListener("position_changed", function() {
     var position = geoLocationMarker.getPosition(),
@@ -592,34 +667,26 @@ addMyLocation = function() {
 
     userLoc = position;
     tripOriginLoc = userLoc;
-    makePrettyAddress(tripOriginLoc, 1);
 
     // Location unknown -> known
     if (!knownLocation) {
       $markerListNote.text( markerListNoteLocationKnown );
-      $from.val( tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
-      if (loadingSingle) {
-        $directionsFields.show();
-        }
       knownLocation = true;
-      showMarkerList();
-      iscrollview.refresh();
-      }
-    else {
-      updateMarkerListDistances();
       }
 
-    if (findMe) {
+    updateMarkerListDistances();
+
+    if (findMe && !foundMe) {   // User operated location button in header
       zoomTo(zoomLevelUser);
-    }
-
-    if ( (!outOfRegion) && (selTodo === undefined) ) {
+      centerLoc = userLoc;
+      gmap.option( "center", centerLoc );
+      foundMe = true;
+      }
+    else if ( (!outOfRegion) && (selTodo === undefined) ) {
       // Update map center and zoom
       centerLoc = userLoc;
       gmap.option( "center", centerLoc );
-      if (!findMe) {
-        gmap.option( "zoom", zoomLevelNearby );
-        }
+      gmap.option( "zoom", zoomLevelNearby );
       }
     });
 
@@ -632,12 +699,8 @@ addMyLocation = function() {
     tripOriginLoc = undefined;
     knownLocation = false;
     $markerListNote.text( markerListNoteLocationUnknown );
-    $from.val("");    // Clear from field for directions
-    $directionsFields.hide();
     stopGeolocation();
    $locationBtn.removeClass("on off").addClass("disabled");
-    showMarkerList();   // Redundant if error callback subsequent to valid location, unlikely scenario
-    iscrollview.refresh();
   });
 
 
@@ -648,20 +711,59 @@ addMyLocation = function() {
     }
 },
 
-// _location.js.erb end
+revealCanvas = function() {
+  $markerListSubpage.removeClass("subpage-active transitioning slideup in out reverse");
+  $directionsSubpage.removeClass("subpage-active transitioning slide in out reverse");
+  $canvas.addClass("subpage-active");
+  $closeDirectionsBtn.hide();
+  $closeMarkerlistBtn.hide();
+  $markerListBtn.show();
+},
 
-// _create.js.erb start
-// Populate the map, based on URL params
-createMap = function() {
+fitBounds = function() {
+  setTimeout ( function() {
+  var bounds = gmap.get("bounds");
+  if (bounds) {
+    map.fitBounds(bounds);
+    }
+  gmap.refresh();
+  }, 0);
+},
+
+showPopup = function() {
+  $outOfRegionPopup.empty().append( knownLocation ? outOfRegionMessage : noGeolocationMessage );
+  popupTimer = setTimeout( function () {
+    outOfRegionPopup.open();
+      popupTimer = setTimeout(function () {
+        outOfRegionPopup.close();
+        popupTimer = undefined;
+        }, popupDuration);
+      },  internal ? 0 : externalPopupDelay );
+  },
+
+// Not really "create" - map is already created
+// Modifies the map and map page, based on URL params
+createMap = function(pInternal) {
     var lists, title;
+    internal = pInternal;
+
+    // Fresh start
+    gmap.clear("services");  // Clear any previous route from the map
+    if (!internal) {
+      gmap.clear("markers");   // And markers...
+      }
+    gmap.clear("overlays");  // and overlays
+    $directions.empty();
+    $results.hide();
+    $toPretty.text("");
 
     // attempt to get specifc marker data from item  page
     urlVars = getUrlVars();
     selGroup = urlVars["section"] || "";
     selItem = urlVars["item"] || "";
     selLocation = urlVars["location"] || "";
-    selLocationMe = selLocation === "me";
-    selTodo = urlVars["todo"],   // This one only, undefined if not present
+    selTodo = urlVars["todo"];      // undefined if not present
+    selNearby = urlVars["nearby"] !== undefined;
     todoCount = 0;               // Count of ToDo items to map
 
     if (selTodo) {
@@ -680,42 +782,68 @@ createMap = function() {
       loadingSingle = true;
       selTodo = undefined;
       }
+
     // Group - clicked on a group header in Browse (same result as group button on map )
     // group=<group name>
     else if (selGroup.length) {
       selItem = "";
       selTodo = undefined;
+      $headerTitle.text(groups[selGroup].title);
+      $topMarkerNav.height(64).show().trigger("updatelayout");
+
+      if ($activeGroupButton) {
+        $activeGroupButton.removeClass("ui-btn-active");
+        }
+      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
+      $activeGroupButton.addClass("ui-btn-active");
       }
+
     // Todo list. 0=Favourites, 1-n - Itineraries (todo=n)
     else if (selTodo !== undefined) {
       lists = localStore.getLists();
       title = lists[selTodo].title;
       $headerTitle.text(title);
       $topMarkerNav.height(0).hide().trigger("updatelayout");
-      iscrollview.resizeWrapper();
       selItem = "";
       selGroup = "";
       }
-    // All places "nearby" button (location=me)
+
+    // All places "nearby" button
     else {
+      selNearby = true;
+      centerLoc = (outOfRegion || !knownLocation ) ? defaultLoc : userLoc;
+      gmap.option( "center", centerLoc );
       fullLoad = true;
       selItem = "";
       selGroup = "";
-      }
-    // Set the appropriate tabbar button active
-    if (selLocationMe) {
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
-      $activeGroupButton.addClass("ui-btn-active");
-      }
-    else if (selGroup) {
-      $activeGroupButton = $page.find(".markerNav:jqmData(group=" + selGroup + ")" );
-      $activeGroupButton.addClass("ui-btn-active");
+      if (!internal) {
+        $headerTitle.text("All Trails");
+        if ( outOfRegion ) {
+          showPopup();
+          }
+        else if ( !knownLocation ) {
+          setTimeout( function() {
+          if ( !knownLocation )  { // Location still unknown?
+            showPopup();
+            }
+          }, unknownLocationPopupDelay);
+          }
+        }
+      $topMarkerNav.height(64).show().trigger("updatelayout");
+      if (!internal) {
+        // Set the appropriate tabbar button active
+        if ($activeGroupButton) {
+          $activeGroupButton.removeClass("ui-btn-active");
+          }
+        $activeGroupButton = $page.find(".markerNav:jqmData(group=all)");
+        $activeGroupButton.addClass("ui-btn-active");
+        }
       }
 
     gmap.option( "zoom", (loadingSingle || selTodo !== undefined) ? zoomLevelPlace : zoomLevelNearby );
 
     //---------- Add markers for selected places ------------v
-    gmap.clear( "markers" );
+
     gmap.set( "bounds", null );
     $.each( places, function(i, place) {
       var group = place.group,
@@ -726,62 +854,64 @@ createMap = function() {
           lat = trim(coords[0]),
           lng = trim(coords[1]),
           showAlways = groupShowAlways(group),
-          zIndex = groupZindex(group);
-
-      if ( ( (selTodo === undefined) && (selItem === item) && (selGroup === group) )
+          zIndex = groupZindex(group),
+          oldDestination,
+          // True if current marker is the single marker of interest for "get directions"
+          isSingleMarker = loadingSingle && selGroup === group && selItem === item;
+      if ( ( (selTodo === undefined) && (selGroup === group) && ( (selItem.length === 0) || (selItem === item) ) )
            || ( ( selTodo !== undefined ) && (localStore.isInList(selTodo, group, item)  === selTodo) )
            || showAlways
            || fullLoad
         ) {
-        if ( (selItem === item && selGroup === group) ||                 // Single place
+        if ( isSingleMarker ||
              (selTodo !== undefined && todoCount === 1 && !showAlways)   // Todo with only one place
-           ) {  // Want to see single place - "directions"
+           ) {  // Want to see single place, so center on it
           centerLoc = new google.maps.LatLng(lat, lng); // Center on the place
           gmap.option( "center", centerLoc );
           }
 
-        if ( selItem === item && selGroup === group) {
-          $to.attr("value",  place.position);          // Prepare to get directions,
-          $toPretty.attr("value", title);        // But don't show direcitons fields yet
-                                                       // (Not until/unless we get user location )
+        if ( isSingleMarker ) {
+          oldDestination = $page.jqmData("destination");
+          if (place.position !== oldDestination) {
+            $page.jqmData("destination", place.position);
+            $toPretty.text(title);
+            }
+          $markerListBtn.hide();
+          $topMarkerNav.height(0).hide().trigger("updatelayout");
+          $headerTitle.text("Directions");
+          openDirectionsSubpage(place, true);
           }
-        gmap.addMarker( {
-          position: position,
-          bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
-          optimized: false,
-          flat:true,
-          icon: groupIcon(group),
-          group: group,
-          mTitle: title,
-          mLink: markerLink(place),
-          zIndex: zIndex,
-          } ).click(function() { openInfoWindow(place, this); });
+
+        if (!internal) {
+          gmap.addMarker( {
+            position: position,
+            bounds: (selTodo !== undefined) && (todoCount > 1) && (!showAlways),
+            optimized: true,
+            flat:true,
+            icon: groupIcon(group),
+            group: group,
+            item: item,
+            mTitle: title,
+            mLink: markerLink(place),
+            zIndex: zIndex
+            } ).click(function() { openInfoWindow(place, this); });
+          }
         }
     });
+
     //--------------- each  --------------------------------^
-
-  if (loadingSingle) {
-    $topMarkerNav.height(0).hide().trigger("updatelayout");
-    iscrollview.resizeWrapper();
-    $headerTitle.text("Directions");
-    }
-
   addMyLocation();
-  iscrollview.refresh();
-
-  var bounds = gmap.get("bounds");
-    setTimeout ( function() {
-      if (bounds) {
-        map.fitBounds(bounds);
-        gmap.refresh();
-        }
-      else {
-        gmap.refresh();
-      }
+  setTimeout(function () {
+    resizeMapCanvas();
     }, 0);
 
+  if (!loadingSingle) {
+    revealCanvas();
+    }
 
+  fitBounds();
   }
+
 // _create_=.js.erb end
 
 // _page_utils.js.erb start
@@ -800,10 +930,10 @@ makePrettyAddress = function( loc, type ) {
   geocoder.geocode( {location: loc}, function(addresses, status ) {
     if (status === google.maps.GeocoderStatus.OK) {
       if (type === 1 ){
-        $fromPretty.attr( "value", addresses[0].formatted_address);
+        $fromPretty.text( addresses[0].formatted_address);
         }
       else {
-        $toPretty.attr( "value", addresses[0].formatted_address );
+        $toPretty.text( addresses[0].formatted_address );
         }
       }
     geocoderBusy = false;
@@ -816,8 +946,7 @@ getUrlVars = function()
   var vars = [],
       hash,
       i,
-      url = $page.data("url"),
-      hashes = url.toLowerCase().slice(url.indexOf("?") + 1).split("&");
+      hashes = mapQuery.toLowerCase().split("&");
   for(i = 0; i < hashes.length; i++) {
     hash = hashes[i].split("=");
     vars.push(hash[0]);
@@ -829,18 +958,185 @@ getUrlVars = function()
       ;
 
 //_page_events.js.erb start
-$page.on("resize", function( event ) {
-  gmap.refresh();
-  iscrollview.refresh();
+
+// Modify map according to mapQuery, if mapQuery is present and has changed
+$page.on( "pagebeforeshow", function() {
+  createMap();
   });
 
+$page.on( "createmap.rivertrails", function () {
+  createMap(true);
+  });
+
+$page.on( "pagehide", function() {
+  stopGeolocation();
+  if (popupTimer) {
+    clearTimeout(popupTimer);
+    outOfRegionPopup.close();
+    popupTimer = undefined;
+  }
+  });
+
+$page.on("pageremove", function() {
+  var gmap = $page.jqmData("gmap");
+  stopGeolocation();
+  gmap.destroy();
+  });
+
+$(window).on("resize", function( event ) {
+  resizeMapCanvas();
+  gmap.refresh();
+  });
+
+$markerListSubpage.on("vclick click vmouseover", ".place-list-item .ui-link-inherit", function(event) {
+
+  if (event.type === "click") {
+    event.preventDefault();
+    return;
+    }
+
+  if ($markerListSubpage.hasClass("transitioning")) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    return;
+    }
+
+  if (event.type === "vmouseover") {
+    return;
+    }
+
+  var $this = $(this),
+      $li = $this.closest("li"),
+      group = $li.jqmData("group"),
+      groupUC = group.charAt().toUpperCase() + group.slice(1),
+      item = $li.jqmData("item"),
+      url = baseUri + groupUC + "/" + item + ".html";
+  $.mobile.changePage(url, {"transition": "slide"} );
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  });
+
+$markerListBtn.on("vmouseover", function (event) {
+  $markerListBtnInner.addClass("hover");
+  });
+
+$markerListBtn.on("vmouseout", function (event) {
+  $markerListBtnInner.removeClass("hover");
+  });
+
+$markerListBtn.on("vclick scrollstart", function (event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  $markerListBtn.hide();
+  $markerListSubpage.addClass("subpage-active slideup in transitioning");
+  showMarkerList();
+  markerListScroller.refresh();
+
+  $markerListSubpage.animationComplete( function () {
+    $canvas.removeClass("subpage-active");
+    $markerListSubpage.removeClass("slideup in");
+    $closeMarkerlistBtn.show();
+    setTimeout( function() {
+      $markerListSubpage.removeClass("transitioning");
+      }, 500 );
+    });
+  });
+
+$closeMarkerlistBtn.on("vclick scrollstart", function (event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  $closeMarkerlistBtn.hide();
+  $canvas.addClass("subpage-active");
+  $markerListSubpage.addClass("slideup out reverse transitioning");
+  $markerListSubpage.animationComplete( function () {
+    $markerListSubpage.removeClass("subpage-active slideup out reverse transitioning");
+    $markerListBtn.show();
+    });
+  });
+
+var openDirectionsSubpage = function(place, instant) {
+  if (place !== lastDirectionsPlace) {
+    $results.hide();
+    lastDirectionsPlace = place;
+  }
+
+  $closeMarkerlistBtn.hide();
+  $page.jqmData("destination", place.position);
+  $toPretty.text(place.title);
+  if (knownLocation) {
+    $page.jqmData("origin", tripOriginLoc.lat() + "," + tripOriginLoc.lng() );   // Set from field for directions
+    makePrettyAddress(tripOriginLoc, 1);
+    }
+  else {
+    $page.jqmData("origin", defaultLoc.lat() + "," + defaultLoc.lng() );   // Set from field for directions
+    makePrettyAddress(defaultLoc, 1);
+    }
+  $headerTitle.text("Directions");
+  if (instant) {
+    $directionsSubpage.addClass("subpage-active");
+    $markerListSubpage.removeClass("subpage-active transitioning slide in out reverse");
+    $closeDirectionsBtn.show();
+    }
+  else {
+    $markerListSubpage.addClass("slide out reverse");
+    $directionsSubpage.addClass("subpage-active slide in reverse");
+    $markerListSubpage.animationComplete( function () {
+      $directionsSubpage.removeClass("slide in reverse");
+      $markerListSubpage.removeClass("subpage-active slide out reverse");
+      $closeDirectionsBtn.show();
+      });
+    }
+  };
+
+$page.on("vclick click", ".directions-button", function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }
+  var $this = $(this),
+      $li = $this.closest("li");
+      group = $li.jqmData("group"),
+      item = $li.jqmData("item"),
+      place = findPlace(group, item);
+
+  openDirectionsSubpage(place);
+});
+
+$markerListSubpage.on("swiperight", ".place-list-item", function() {
+  var $li = $(this),
+      group = $li.jqmData("group"),
+      item = $li.jqmData("item"),
+      place = findPlace(group, item);
+  openDirectionsSubpage(place);
+  });
+
+var closeDirectionsSubpage = function() {
+  $closeDirectionsBtn.hide();
+  $canvas.addClass("subpage-active");
+  $directionsSubpage.addClass("slide out");
+  $directionsSubpage.animationComplete( function () {
+    $directionsSubpage.removeClass("subpage-active slide out");
+    $markerListBtn.show();
+    });
+  fitBounds();
+  };
+
+$page.on("vclick", ".close-directions-button", closeDirectionsSubpage);
+$directionsSubpage.on("swipeleft", closeDirectionsSubpage);
+
+//----------------------------------------------------------
 // Top Navbar buttons. Shows markers for each trail ---
-$topMarkerNav.on("vclick", ".markerNav", function( e ){
+//----------------------------------------------------------
+$topMarkerNav.on("vclick click", ".markerNav", function( e ) {
+
+  e.preventDefault();
+  if (e.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+
   var $button = $(this),
       selGroup = $button.jqmData( "group" );
-  e.preventDefault();
+
+  $headerTitle.text(groups[selGroup].title);
   closeInfoWindow();
-  if ($.activeGroupButton) {
+  if ($activeGroupButton) {
     $activeGroupButton.removeClass("ui-btn-active");
     }
   $button.addClass("ui-btn-active");
@@ -849,6 +1145,8 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   gmap.set( "bounds", null );
   fullLoad = selGroup === "all";
 
+  centerLoc = (outOfRegion || !knownLocation) ? defaultLoc : userLoc;
+  gmap.option( "center", centerLoc );
   zoomTo( knownLocation ? zoomLevelNearby : zoomLevelAll );
 
   addMyLocation();
@@ -856,6 +1154,7 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
   $.each( places, function(i, place) {
     var group = place.group,
         item = place.item,
+        showAlways = groupShowAlways(group),
         position = place.position,
         coords = place.position.split(","),
         lat = trim(coords[0]),
@@ -866,11 +1165,12 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
     if ( fullLoad || showAlways || group === selGroup ){
       gmap.addMarker( {
         position: position,
-        bounds: false,
-        optimized: false,
+        bounds: !showAlways,
+        optimized: true,
         flat: true,
         icon: groupIcon(group),
         group: group,
+        item: item,
         mTitle: place.title,
         mLink: markerLink(place),
         zIndex: zIndex,
@@ -879,33 +1179,58 @@ $topMarkerNav.on("vclick", ".markerNav", function( e ){
 
     });
 
+  showMarkerList();
+  fitBounds();
 });
 
-$submitDirections.on("click",  function () {
+$submitDirections.on("vclick click",  function (event) {
+  event.preventDefault();
+  if (event.type === "click") { return; }
+
+  var
+    origin = $page.jqmData("origin"),
+    originCoords = origin.split(","),
+    originLatLng = new google.maps.LatLng(trim(originCoords[0]), trim(originCoords[1]) ),
+    destination = $page.jqmData("destination"),
+    destinationCoords = destination.split(","),
+    destinationLatLng = new google.maps.LatLng(trim(destinationCoords[0]), trim(destinationCoords[1]) );
+
+  console.log("origin: " + origin);
+  console.log("destination: " + destination);
+
   gmap.displayDirections ( {
-    origin: $from.val(),
-    destination: $to.val(),
-    travelMode: google.maps.DirectionsTravelMode.DRIVING
+    origin: origin,
+    destination: destination,
+    travelMode: google.maps.DirectionsTravelMode.DRIVING,
     },
-    { panel: $directions[0] },
-    function (success, response) {
-      if (success) {
-        $results.show();
+    {
+    panel: $directions[0] },
+    function (result, status) {
+      if (status === "OK") {
+        // Set map bounds to fit origin and destination
+        gmap.set( "bounds", null );
+        gmap.addBounds( originLatLng );
+        gmap.addBounds( destinationLatLng );
+        fitBounds();
+        $results.show().trigger("updatelayout");
         }
       else {
         $results.hide();
         }
-      iscrollview.refresh();
     });
-  return false;
   });
 
 // Location button in header bar
-$locationBtn.on("vclick", function(event) {
+$locationBtn.on("vclick click", function(event) {
+
   event.preventDefault();
+  if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                       // did everything we want on the vclick
+
   if ($locationBtn.hasClass("on")) {
     if (geoLocationMarker) {
       findMe = false;
+      foundMe = false;
       addStaticHereMarker(geoLocationMarker.getPosition());
       }
     geoLocationContinuous = false;
@@ -913,13 +1238,14 @@ $locationBtn.on("vclick", function(event) {
     }
   else {
     findMe = true;
+    foundMe = false;
     if (knownLocation) {
       zoomTo(zoomLevelUser);
       }
     geoLocationContinuous = true;
     addMyLocation();
     }
-});
+  });
 
 // _page_events.js.erb end
 
@@ -927,7 +1253,7 @@ $locationBtn.on("vclick", function(event) {
   $canvas.gmap( {
     center: defaultLoc,
     zoom: zoomLevelAll,
-    <% if build_target == 'debug' %>
+    <% if build_target =~ /debug/ %>
       zoomControlOptions: {
         style: google.maps.ZoomControlStyle.SMALL
       },
@@ -936,7 +1262,6 @@ $locationBtn.on("vclick", function(event) {
       gmap = this;
       $page.jqmData("gmap", gmap);
       map = gmap.get("map");
-      createMap();
       }
     });
 

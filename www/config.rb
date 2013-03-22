@@ -7,9 +7,10 @@ set :slim, {
   :pretty => true,
   :disable_escape => true,
   :shortcut => {
-    '@' => 'data-role',
-    '#' => 'id',
-    '.' => 'class'}
+    '@' => { :attr => 'data-role' },
+    '#' => { :attr => 'id' },
+    '.' => { :attr => 'class' }
+    }
   }
 
 set :erb, {
@@ -84,7 +85,7 @@ helpers do
   end
 
   def base_uri
-    data.rivertrails.debug.base_uri
+    data.rivertrails[build_target].base_uri
   end
 
   # returns relative path from provided or current file path to given path
@@ -164,11 +165,12 @@ helpers do
   end
 
   def external_href(uri)
-    'href="' + uri + '" rel="external" target="_blank"'
+    'href="' + uri + '" target="_blank"'
   end
 
   def external_link(uri)
-    '<a ' + external_href(uri) + '>' + uri + '</a>'
+    short_uri = uri.sub(/^https?\:\/\//, '')
+    '<a ' + external_href(uri) + '>' + short_uri + '</a>'
   end
 
   # Helper to add active class if current_page basename (not including extension)
@@ -197,26 +199,24 @@ configure :build do
   # activate :minify_css
 
   # Minify Javascript on build
-  if build_target != 'debug'
-    activate :minify_css
-    activate :minify_javascript
-    # This is a production build.
-    # The following files are pre-minified by the vendor. Do not include the
-    # uncompressed versions in the build.
-    # Using patched jQuery Mobile
-    #ignore '/js/jquery.mobile-1.2.0.js'
-    ignore '/js/jquery-1.7.2.js'
-    ignore '/js/jquery-1.8.2.js'
-    ignore '/css/jquery.mobile.structure-1.2.0.css'
-  else
+  if build_target =~ /debug/
     # This is a debug build, and we are not minifying JS/CSS
     # Do not include vendor pre-minified files in the build.
     ignore '/js/jquery.mobile-1.2.0.min.js'
     ignore '/js/jquery-1.7.2.min.js'
     ignore '/js/jquery-1.8.2.min.js'
     ignore '/css/jquery.mobile.structure-1.2.0.min.css'
+  else
+    activate :minify_css
+    activate :minify_javascript
+    # This is a production build.
+    # The following files are pre-minified by the vendor. Do not include the
+    # uncompressed versions in the build.
+    ignore '/js/jquery.mobile-1.2.0.js'
+    ignore '/js/jquery-1.7.2.js'
+    ignore '/js/jquery-1.8.2.js'
+    ignore '/css/jquery.mobile.structure-1.2.0.css'
   end
-
 
   # Enable cache buster
   # activate :cache_buster

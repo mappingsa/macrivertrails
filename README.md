@@ -31,3 +31,36 @@ code.
 The script in `www/buildall.sh` will run Middleman build for all of them.
 
 The builds are placed in the corresponding directories under the `/build` directory.
+
+PhoneGap
+--------
+IMPORTANT!
+
+You must manually create a symlink in phonegap/ios to the Middleman-built content. This symlink
+is not checked-in to the repo, because EGit (Eclipse Git) gets horribly confused over this, and
+also because you might like to link to alternate content (e.g. a debug build).
+
+```bash
+cd phonegap/ios
+ln -s ../../www/build/phonegap-ios www
+```
+
+This location is .gitignored, so that git won't bug you to check it in.
+
+Please remember you must do a Middleman build prior to building with XCode. I have not set-up
+XCode to automatically do the Middleman build.
+
+You also need to create a symlink to link `phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj` to the appropriate
+developer-specific  `project.pbxproj` file. Currently, these are project.jp.pbxproj (Jayme Peltz) and
+`project.jt.pbxproj` (Jon Tara)
+
+Make certain that the project is closed in XCode whenever you change this symlink!
+
+This location is also .gitignored, so that git won't bug you to check it in.
+
+```bash
+cd phonegap/ios/macriverTRAILS.xcodeproj
+ln -s project.jp.pbxproj project.pbxproj
+```
+There are better ways of doing this (new Xcode plain-text inheritable config fies) but this is an easy
+expediency for providing multiple build configurations.

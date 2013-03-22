@@ -80,8 +80,7 @@ debug:
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
-        - jquery-1.7.2
+        - jquery-1.8.2
         - geolocation
         - jquery.tinysort
         - store
@@ -89,17 +88,19 @@ debug:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
-        - maps
+        - show-map
         - jquery.mobile-1.2.0
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        # - jquery.ui.map
-        - jquery.ui.map-patched
-        - jquery.ui.map.services
-        - jquery.ui.map.extensions
-        - google.maps.v3.utility.infobox.js
-        - google.maps.v3.utility.geolocationmarker.js
+    map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
+      - jquery.ui.map-patched
+      - jquery.ui.map.services
+      - jquery.ui.map.extensions
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
+      - maps
 
 web:
     #base_uri: http://web2008/macriver/
@@ -113,27 +114,28 @@ web:
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
-        # We must use jQuery 1.7.2 for compatability with IE < 9
+        # We must use jQuery 1.7.2 to support IE < 9
         - http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
-        - geolocation
         - jquery.tinysort
         - store
         - jquery.mobile.init
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
-        - maps
+        - show-map
         - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        # - jquery.ui.map
-        - jquery.ui.map-patched
-        - jquery.ui.map.services
-        - jquery.ui.map.extensions
-        - google.maps.v3.utility.infobox.js
-        - google.maps.v3.utility.geolocationmarker.js
+    map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
+      - jquery.ui.map-patched
+      - jquery.ui.map.services
+      - jquery.ui.map.extensions
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
+      - maps
+
 
 # For Phonegap builds, the browser is using file: protocol. '/' refers to the
 # root of the filesystem, so site-relative URLs will not work, since the
@@ -142,11 +144,9 @@ web:
 # You can use either file-relative URLs (by not defining base_uri) or absolute
 # URLs, giving the path to the base using file:///. The latter is necessary
 # if the browser will not tolerate directory traversal (../) in relative URLs.
-phonegap:
-    # iOS:
+phonegap-ios:
+    # Substitute UUID for a-long-hex-string below
     #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
-    # Android
-    #base_uri: file:///android_asset/www/_assets/
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -157,9 +157,8 @@ phonegap:
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU
-        # We can use jQuery 1.7.2 for Android/iOS
-        - jquery-1.7.2.min
+        # We can use jQuery 1.8.2 for Android/iOS
+        - jquery-1.8.2.min
         - cordova-2.2.0
         - geolocation
         - jquery.tinysort
@@ -168,17 +167,95 @@ phonegap:
         - jquery.mobile.transition-handler-simple
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
+        - show-map
+        - jquery.mobile-1.2.0.min
+        - iscroll
+        - jquery.mobile.iscrollview
+        - jquery.flexslider
+        - phonegap-init
+    map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
+      - jquery.ui.map-patched
+      - jquery.ui.map.services
+      - jquery.ui.map.extensions
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
+      - maps
+
+# For debugging PhoneGap build with Web Inspector
+# We use un-minimized assets
+phonegap-ios-debug:
+    # Substitute UUID for a-long-hex-string below
+    #base_uri: file:///var/mobile/Applications/a-long-hex-string/rivertrails.app/www/
+    stylesheets:
+        - webfonts-cabin
+        - webfonts-caviar
+        - jquery.mobile.theme-rivertrails-1.2.0
+        - jquery.mobile.structure-1.2.0
+        - jquery.mobile.simultaneous-transitions-replace
+        - flexslider
+        - jquery.mobile.iscrollview
+        - custom
+    scripts:
+        # We can use jQuery 1.8.2 for Android/iOS
+        - jquery-1.8.2
+        - cordova-2.2.0
+        - geolocation
+        - jquery.tinysort
+        - store
+        - jquery.mobile.init
+        - jquery.mobile.transition-handler-simple
+        - jquery.mobile.simultaneous-transitions-replace-simple
+        - base
+        - show-map
+        - maps
+        - jquery.mobile-1.2.0
+        - iscroll
+        - jquery.mobile.iscrollview
+        - jquery.flexslider
+        - phonegap-init
+    map_scripts:
+      - jquery.ui.map-patched
+      - jquery.ui.map.services
+      - jquery.ui.map.extensions
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
+      - maps
+
+phonegap-android:
+    base_uri: file:///android_asset/www/_assets/
+    stylesheets:
+        - webfonts-cabin
+        - webfonts-caviar
+        - jquery.mobile.theme-rivertrails-1.2.0
+        - jquery.mobile.structure-1.2.0.min
+        - jquery.mobile.simultaneous-transitions-replace
+        - flexslider
+        - jquery.mobile.iscrollview
+        - custom
+    scripts:
+        # We can use jQuery 1.8.2 for Android/iOS
+        - jquery-1.8.2.min
+        - cordova-2.2.0
+        - geolocation
+        - jquery.tinysort
+        - store
+        - jquery.mobile.init
+        - jquery.mobile.transition-handler-simple
+        - jquery.mobile.simultaneous-transitions-replace-simple
+        - base
+        - show-map
         - maps
         - jquery.mobile-1.2.0.min
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
-        # - jquery.ui.map
-        - jquery.ui.map-patched
-        - jquery.ui.map.services
-        - jquery.ui.map.extensions
-        - google.maps.v3.utility.infobox.js
-        - google.maps.v3.utility.geolocationmarker.js
         - phonegap-init
-
-
+    map_scripts:
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
+      - jquery.ui.map-patched
+      - jquery.ui.map.services
+      - jquery.ui.map.extensions
+      - google.maps.v3.utility.infobox
+      - google.maps.v3.utility.geolocationmarker
+      - maps

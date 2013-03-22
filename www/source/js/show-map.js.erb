@@ -1,0 +1,180 @@
+//---------------------------------------------------------------------------------------
+// Show map from anywhere in rivertrails
+// Hooks various button events and calls showmap()
+//
+// showmap() needs to check for network connectivity and only allow use of map
+// if we have connectivity. Then, if not yet done, dynamically load the Google Maps V3
+// API and JS files that depend on it.
+//
+// (Doesn't do this yet - just extracting this to a separate file that will be loaded
+// at application startup, so that this is possible.)
+//---------------------------------------------------------------------------------------
+
+// Global variable with query string for map page. This is a standard HTTP query string,
+// maintained this way in case I figure out a way to use a query string on the URL without
+// jQuery Mobile creating duplicate map pages. It's used by the createMap function
+// to modify the map according to the query parameters. It is then cleared. If the map
+// page is entered again, then, the code will see the empty query string, and will not
+// modify the map at all. In this way, when the user goes "back" to the map, nothing is
+// done beyond transitioning to the dom-cached map page.
+//
+// Unwanted fallout from this is that the query string isn't maintained in the URL, and
+// so website users are unable to bookmark specific map configurations.
+var mapQuery = "";
+
+
+
+// This has to be a global function in order for the Maps API to make the callback
+function riverTrailsMapApiLoadedCallback() {
+
+  console.log("Google maps is fully loaded");
+  // By triggering an event on the current page, we can catch this event and navigate to the
+  // map if we are still on the same page as when the user hit some map button.
+  // But if the user has navigated away from that page, we can just silently ignore
+  // this, but now the map API is available for the next time the user hits a map button.
+  $.mobile.activePage.trigger("mapapiloaded.rivertrails");
+};
+
+$(function() {
+  var
+    gmapsLoaded = false, // True if Google maps JS is fully loaded
+    jsLoaded = false,    // True if all map JS files have been loaded
+    jsIndex = 0,        // Index of the next JS file to load from YML
+    i,
+    mapScripts = [
+      <% lastScriptIndex = data.rivertrails[build_target].map_scripts.length - 1 %>
+      <% data.rivertrails[build_target].map_scripts.each_with_index do |script, index| %>
+          <% trailing_comma = index < lastScriptIndex ? ',' : '' %>
+          <% script_suffix = index > 0 ? '.js' : '' %>
+        "<%= "#{script}#{script_suffix}" %>"<%= trailing_comma %>
+      <% end %>
+      ];
+
+  $(document).on('pageinit', ".ui-page", function() {
+    var
+      $page = $(this),
+      pathRoot = $page.find(".page-info").jqmData("path-root"),
+      mapUri = pathRoot + "map/index.html",
+      offlinePopup = $page.find(".offline-popup").jqmData("popup"),
+      popupTimer,
+      showMapQueryString,   // Query string from map request that was deferred due to map API not loaded
+      showMapTransition,    // deferred map request transition
+
+      showOfflinePopup = function() {
+        popupTimer = setTimeout( function () {
+          offlinePopup.open();
+            popupTimer = setTimeout(function () {
+              offlinePopup.close();
+              popupTimer = undefined;
+              }, 6000);
+            },0 );
+      },
+
+      loadNextScript = function () {
+        var scriptName = "";
+        if (jsIndex > 0) {
+          scriptName += pathRoot + "js/"
+          }
+        scriptName += mapScripts[jsIndex];
+        console.log("loading " + scriptName);
+        $.getScript(scriptName)
+          .done(function(data, textStatus, jqxhr) {
+            console.log(scriptName + " loaded, textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
+            if (jsIndex < (mapScripts.length - 1)) {
+              jsIndex++;
+              if ( jsIndex !== 1 ) {  // Have to wait for callback from Google Maps API (always first script)
+                loadNextScript();
+                }
+              }
+              else {
+                jsLoaded = true;
+                $.mobile.changePage( mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
+                }
+            })
+          .fail(function(jqxhr, settings, exception) {
+            // Fortunately, this should not happen, since the files are local
+            // If it somehow can happen, then we will need to keep track of which JS files have been loaded,
+            // so that we don't try to load them again
+            console.log ("Script load error " + scriptName);
+            });
+        },
+
+      loadMapApi = function () {
+        loadNextScript();
+      },
+
+      showMap = function(queryString, transition) {
+        mapQuery = queryString;
+        console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" )
+
+        if ( navigator.onLine ) {
+          if (jsLoaded) {
+            $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
+            }
+          else {
+            showMapQueryString = queryString;
+            showMapTransition = transition;
+            loadMapApi();
+            }
+          }
+        else {
+          showOfflinePopup();
+          }
+        };
+
+  $page.on( "mapapiloaded.rivertrails", function() {
+
+    gmapsLoaded = true;
+    loadNextScript();
+
+  $page.on( "pagehide", function() {
+    if (popupTimer) {
+      clearTimeout(popupTimer);
+      offlinePopup.close();
+      popupTimer = undefined;
+      }
+    });
+
+    /* Map buttons on Todo page collapsible headers */
+    $page.on("vclick", ".todo-map-btn", function(event) {
+      var
+        $span = $(this),
+        $collapsible = $span.closest(".ui-collapsible"),
+        listID = $collapsible.jqmData("list-id");
+      showMap("todo=" + listID, "fade");
+      });
+
+    // Nearby tab on main tabbar
+    $page.find(".nearby-tab a").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      if ( $page.is(".map-page") ) {
+        mapQuery = "";
+        $page.trigger("createmap.rivertrails");
+        }
+      else {
+        showMap("", "fade");
+        }
+      });
+
+    // Get Directions button on place menu
+    $page.find(".directions-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      var section = $page.jqmData("section"),
+        item = $page.jqmData("item");
+      showMap("section=" +  section + "&item=" + item);
+      });
+
+    $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
+      // Not an <a> tag, so don't need to deal with click
+      var $li = $(this),
+      section = $li.jqmData("section");
+      showMap("section=" + section, "fade");
+      });
+    });
+
+
+});

@@ -1,72 +1,116 @@
-
-/*
-    build_target: '<%= build_target %>',
-    base_uri: '<%= base_uri %>',
-*/
-
 (function ($) {
   // Comment-out the following line in order to be able to evaluate expressions
   // in Safari debug console when at a breakpoint!
   //"use strict";
 
-  var refreshScroller = function(slider) {
-    $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
-    };
+  var
+    refreshScroller = function(slider) {
+      $(slider).closest(".iscroll-wrapper").iscrollview("refresh");
+      };
 
+  $(window).on("popstate", function(event) {
+    $.noop();
+    });
+
+  $(window).on("pagebeforechange", function(event, toPage, options) {
+    $.noop();
+    });
 
   $(document).on('pageinit', ".ui-page", function() {
     var
       $page = $(this),
+      pathRoot = $page.find(".page-info").jqmData("path-root"),
       $menu = $page.find(".menu"),
-      $showMenuBtn = $page.find(".showMenu"),
+      $showMenuBtn = $page.find(".menuBtn"),
+      $homeBtn = $page.find(".homeBtn"),
+      $backBtn = $page.find(".backBtn"),
+      $slider = $page.find(".flexslider");
 
-      closeMenu = function(fadeTime) {
-        $menu.animate(
-          { opacity: "0" },
-          fadeTime === undefined ? 400 : fadeTime,
-          "linear",
-          function() { $menu.hide(); }
-          );
+      closeMenu = function(slow) {
+        if (slow) {
+          $menu.addClass("slow");
+          }
+        else {
+          $menu.removeClass("slow");
+          }
+        $menu.removeClass("visible");
          },
 
-      openMenu = function(fadeTime) {
-        $menu.css("opacity", "0");
-        $menu.animate(
-          { opacity: "0.85" },
-          fadeTime === undefined ? 400 : fadeTime,
-          "linear"
-          );
-        $menu.show();
+      openMenu = function() {
+        $menu.removeClass("slow").addClass("visible");
         };
 
     $page.on("pagebeforeshow", function() {
-      $menu.hide();
+      $menu.removeClass("visible");
     });
 
+    $page.on("pagebeforehide", function() {
+      var slider = $slider.jqmData("flexslider");
+      if (slider) {
+        slider.pause();
+        }
+    });
+
+    $page.on("pageshow", function() {
+      var slider = $slider.jqmData("flexslider");
+      if (slider) {
+        slider.pause();  // Goofy - otherwise it will have multiple players!
+        slider.play();
+        }
+      });
+
     // Show menu
-    $showMenuBtn.bind("vclick", function(event) {
-      var menuIsHidden = $menu.is(":hidden");
+    $showMenuBtn.on("vmousedown click", function(event) {
+
       event.preventDefault();
-      if (menuIsHidden) {
-        openMenu();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      var menuIsShown = $menu.hasClass("visible");
+      if (menuIsShown) {
+        closeMenu();
         }
       else {
-        closeMenu();
+        openMenu();
           }
     });
 
-    $page.find(".go-web, .go-phone, .go-mail").bind("vclick", function(event) {
+    $homeBtn.on("vclick click", function(event) {
+      var
+        $a = $(this),
+        transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      $.mobile.changePage( pathRoot + "index.html", { transition: transition } );
+    });
+
+    $backBtn.on("vclick click", function(event) {
+      var
+        $a = $(this),
+        transition = $a.jqmData("transition") || $.mobile.defautPageTransition;
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
+      window.history.back();
+    });
+
+    $page.find(".go-web, .go-phone, .go-mail").on("vclick", function(event) {
       var $a = $(this),
           $menu = $page.find(".menu");
       closeMenu();
       });
 
-    $page.find(".toggle-fav").bind("vclick", function(event) {
+    $page.find(".toggle-fav").on("vclick click", function(event) {
+
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
           title = $page.jqmData("title");
-      event.preventDefault();
       if ( $a.hasClass("is-fav") ) {
         localStore.removeFavourite(section, item);
         $a.removeClass("is-fav").find("span").text("MAKE FAVOURITE");
@@ -75,44 +119,51 @@
           localStore.saveFavourite( { listID: 0, section: section, item: item, title: title } );
           $a.addClass("is-fav").find("span").text("REMOVE FAV");
           }
-        closeMenu(1000);
+        closeMenu(true);
     });
 
     // Add to Itinerary button on place menu
-    $page.find(".itin-btn").on("vclick", function(event) {
+    $page.find(".itin-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
     var $a = $(this),
         section = $page.jqmData("section"),
-        sectionUC = section.charAt().toUpperCase() + section.slice(1),
+        sectionUC = section.charAt(0).toUpperCase() + section.slice(1),
         item = $page.jqmData("item"),
         title = $page.jqmData("title");
-    event.preventDefault();
     if ( $a.hasClass("is-itin") ) {
       localStore.removeFromItinerary( section, item );
       $a.removeClass("is-itin").find("span").text("ADD TO ITINERARY");
-      closeMenu(1000);
+      closeMenu(true);
         }
     else {
-      $.mobile.changePage( "<%= (base_uri ? base_uri : '../') + 'itin-dialog.html' %> " );
+      $.mobile.changePage( pathRoot + "itin-dialog.html" );
       }
   });
 
     // Add to Itinerary button (list item) on Add Itinerary popup
-    $page.find(".itin-list").on("vclick", ".itin-add-btn", function(event) {
+    $page.find(".itin-list").on("vclick click", ".itin-add-btn", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
           title = $page.jqmData("title"),
           $li = $a.closest("li"),
           id = $li.jqmData("itin-id");
-      event.preventDefault();
       localStore.saveInItinerary( {listID: id, section: section, item: item, title: title} );
       setTimeout(function() {
         $page.dialog("close");
         }, 0);
     });
 
-    // Add to New Itinerary button on Add Itinerary popup
-    $page.find(".new-itin-submit-btn").on("vclick", function(event) {
+    // Add New Itinerary button on Add Itinerary popup
+    $page.find(".new-itin-submit-btn").on("vclick click", function(event) {
+      event.preventDefault();
+      if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
       var $a = $(this),
           section = $page.jqmData("section"),
           item = $page.jqmData("item"),
@@ -121,23 +172,11 @@
           $textInput = $form.find("input"),
           val = $textInput.val(),
           listID;
-      event.preventDefault();
       listID = localStore.addList(val.toUpperCase());
       localStore.saveInItinerary( {listID: listID, section: section, item: item, title: title} );
       setTimeout(function() {
         $page.dialog("close");
         }, 0);
-    });
-
-    $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
-      var $li = $(this),
-      section = $li.jqmData("section");
-      event.preventDefault();
-      $.mobile.changePage("map/index.html",
-        {
-          "data": "section=" + section,
-          "transition": "fade"
-        } );
     });
 
     $('.homeImageSlider').flexslider({
@@ -146,7 +185,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       touch: true,
       smoothHeight: false,
       start: refreshScroller,
@@ -160,7 +200,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       slideshow: true,
       touch: true,
       smoothHeight: false,
@@ -176,7 +217,8 @@
       controlNav: false,
       directionNav: false,
       animation: "slide",
-      pauseOnHover: true,
+      pauseOnAction: false,
+      pauseOnHover: false,
       slideshow: true,
       touch: true,
       randomize: false,
@@ -249,7 +291,11 @@
   });
 
   // "delete" buttons to the right of items on ToDo page
-  $(document).on("vclick", ".btn-remove-todo", function(event) {
+  $(document).on("vclick click", ".btn-remove-todo", function(event) {
+
+    event.preventDefault();
+    if (event.type === "click") { return; }  // For click, prevent the default action, since we already
+                                               // did everything we want on the vclick
     var $a = $(this),
         $li = $a.closest("li"),
         section = $li.jqmData("section"),
@@ -257,7 +303,6 @@
         $wrapper = $li.closest(".ui-listview"),
         $collapsible = $li.closest(".ui-collapsible"),
         listID = $collapsible.jqmData("list-id");
-    event.preventDefault();
     $li.remove();
     localStore.removeFromList( listID, section, item );
     if (!$wrapper.children().length) {
@@ -273,21 +318,6 @@
         }
       }
     $wrapper.iscrollview("refresh");
-  });
-
-  /* Map buttons on Todo page collapsible headers */
-  $(document).on("vclick", ".todo-map-btn", function(event) {
-    var $span = $(this),
-        $collapsible = $span.closest(".ui-collapsible"),
-        listID = $collapsible.jqmData("list-id");
-
-    $.mobile.changePage( "map/index.html",
-      {
-        "data" :       "todo=" + listID,
-        "transition" : "fade"
-      }
-    );
-
   });
 
   }(jQuery));
@@ -309,7 +339,7 @@ var localStore = function() {
          <a href="|href|">|title|\
          <img src="images/|pin|-pin.png" alt="|alt|" class="ui-li-icon trail-pin">\
          </a>\
-         <a class="btn-remove-todo" href="#" data-ajax="false">Remove</a>\
+         <a class="btn-remove-todo">Remove</a>\
          </li>',
 
       listTemplate = ' \
@@ -318,7 +348,7 @@ var localStore = function() {
           <ul data-role="listview" data-split-icon="delete">|list|</ul>\
         </div>',
 
-      itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn" href="#" data-ajax="false">|title|</a></li>';
+      itinPopupTemplate = '<li class="li-itin" data-icon="plus" data-itin-id="|id|"><a class="itin-add-btn">|title|</a></li>';
 
       defaultLists = [
         { listID: 0, title: "MY FAVOURITES" },
@@ -573,7 +603,7 @@ var localStore = function() {
       else {
         $.each(savedItems, function(i) {
           var thisItem = itemTemplate,
-              sectionUC = this.section.charAt().toUpperCase() + this.section.slice(1);
+              sectionUC = this.section.charAt(0).toUpperCase() + this.section.slice(1);
           if (listID === this.listID) {
             thisItem = thisItem.replace('|section|', this.section);
             thisItem = thisItem.replace('|item|', this.item);

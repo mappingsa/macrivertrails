@@ -13,6 +13,7 @@ $(document).bind("mobileinit", function(){
         isApple = (/^apple computer/).test(vendor),
         isIOS = (/iphone|ipod|ipad/).test(platform),
         isAndroid = (/android/).test(platform),
+        isFirefox = (/firefox/i).test(navigator.userAgent),
         isAppleWebkit =  isWebkit && isApple,
         isAppleWebkitMobile = isAppleWebkit && isIOS,
         isAppleWebkitDesktop = isAppleWebkit && !isIOS,
@@ -24,14 +25,17 @@ $(document).bind("mobileinit", function(){
         hintAcceleration = isAppleWebkit,     // true if should hint hardware acceleration
         $html = $("html");  // Where we will put the classes
 
-    <% if build_target == 'phonegap' %>
-
+    <% if build_target =~ /phonegap/ %>
       // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
-      // URL bar. For PhoneGap, it's better to disable pushstate
-      $.mobile.pushStateEnabled = false;
+      // URL bar. For PhoneGap, it's better to disable pushstate.
+      // However, we are going to need pushstate to implement maintaining map parameters
+      // on "back", so setting this true
+      $.mobile.pushStateEnabled = true;
 
       // Replace calls to window.history.back with PhoneGap navigation helper if available
-      $.mobile.phonegapNavigationEnabled = true;
+      // It is recommended to set this to FALSE unless building for Android and doing full
+      // page refreshes (.e.g. data-rel="external"). We don't so set this false
+      $.mobile.phonegapNavigationEnabled = false;
 
       // Allow cross-domain calls
       $.support.cors = true;
@@ -62,22 +66,25 @@ $(document).bind("mobileinit", function(){
       // Make this a separate class, in case other platforms might need this as well
       // Currently, I don't know of any, but it seems prudent to keep this separate
       $html.addClass("hint-acceleration");
-    }
+      }
     if (isAppleWebkitMobile) {
       $html.addClass("is-apple-webkit-mobile");
-    }
+      }
     if (isAppleWebkitFullscreen) {
       $html.addClass("is-apple-webkit-mobile-fullscreen");
-    }
+      }
     if (isAppleWebkitMobileWebview) {
       $html.addClass("is-apple-webkit-mobile-webview");
-    }
+      }
     if (isAppleWebkitDesktop) {
       $html.addClass("is-apple-webkit-desktop");
-    }
+      }
     if (isIpad) {
       $html.addClass("is-ipad");
-    }
+      }
+    if (isFirefox) {
+      $html.addClass("is-firefox");
+      }
 
 
 });

@@ -1,5 +1,14 @@
 @import 'paths';
 
+$hotspotBackgroundColor: <%= build_target =~ /debug/ ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
+
+/* page-info div contains static information about the page placed there by Middleman, in
+   data- attributes. This is used as a convenient alternative to placing the data- attributes
+   in the page div itself. */
+.page-info {
+  display: none;   // Make sure that this div doesn't affect rendering
+}
+
 .ui-mobile {
   /* optimizeSpeed is the default. Using optimizeLegibility here will typically DOUBLE
      rendering time! So, think twice about using optimizeLegibility */
@@ -38,11 +47,13 @@
 /* Fixes for page transition flicker */
 
 .is-apple-webkit .ui-page,
-.is-apple-webkit .ui-page > div {
+.is-apple-webkit .ui-page > div,
+.is-apple-webkit .subpage {
   -webkit-transform: translateZ(0); /* This should be for iOS only */
 }
 
-.ui-page {
+.ui-page,
+.subpage {
  -webkit-backface-visibility: hidden;
 }
 
@@ -52,20 +63,87 @@
   overflow: visible;
 }
 
-.is-apple-webkit .iscroll-content * {
-  -webkit-transform: translateZ(0);
-}
-
 .iscroll-scroller {
   width: 100%;
 }
 
 /* Remove excessive padding from inset list pages */
-.map-page .iscroll-content,
 .todo-page .iscroll-content,
 .trail-page .iscroll-content {
   padding-left: 8px !important;
   padding-right: 8px !important;
+}
+
+/* Map sub-pages, works similar to JQM pages for transitions within a page */
+
+.subpage-container {
+  position: relative;
+}
+
+.subpage {
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  display: none;
+  border: 0;
+  overflow: none;
+}
+
+.subpage-active {
+  display: block;
+  overflow: visible;
+}
+
+.place-list-item {
+  position: relative;
+}
+
+.directions-subpage {
+  padding: 0.5em;
+}
+
+.directions-endpoints {
+  margin-bottom: 10px;
+}
+
+.directions-endpoint {
+  margin-bottom: 6px;
+}
+
+.directions-endpoint h2 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+
+.directions-endpoint p {
+  border-width: 0;
+  border-style: none;
+  border-radius: 7px;
+  padding: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 150, 0, 0.6);
+  -webkit-box-shadow: 4px 4px 5px rgba(0,0,0,0.5);
+  -moz-box-shadow: 4px 4px 5px rgba(0,0,0,0.5);
+  box-shadow: 4px 4px 5px rgba(0,0,0,0.5);
+}
+
+.submitDirections {
+  margin-top: 0;
+}
+
+.directions-button {
+  position: absolute;
+  width: 30px;
+  height: 38px;    // May not be right on different platforms
+  z-index: 1;
+  background-color: $hotspotBackgroundColor;
 }
 
 /* Theme overrides. */
@@ -122,9 +200,22 @@
    ========================================================================== */
 .ui-body-c,
 .ui-dialog.ui-overlay-c {
-   background: imageUrl('whitey.png') 0 0;
+   background-image: imageUrl('whitey.png');
    background-size: 203px 317px;
    text-shadow: none;
+}
+
+
+.map-page.ui-body-c,
+.map-page .ui-body-c,
+.browse-page.ui-body-c,
+.browse-page .ui-body-c {
+  background-image: none;
+  background-color: #f9f9f9;  // Copied from theme
+  }
+
+.map-page .subpage {
+  background-color: #f9f9f9;  // TODO: not sure where background transparency is coming from - just override it
 }
 
 
@@ -198,7 +289,7 @@ that they will override CSS in the standard JQM structure CSS */
 .shadow2 {width:100%}
 
 
-.main_div_blue {
+.home-page {
   background-size: auto;
   background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
@@ -341,17 +432,44 @@ that they will override CSS in the standard JQM structure CSS */
 }
 
 /* =============================================================================
-   (ex) Slide out menu (no longer slide-out)
+   (ex) Fading place menu
    ========================================================================== */
-
 .menu {
   background:#262C3A;
   -webkit-text-size-adjust:none !important;
+  -moz-text-size-adjust:none !important;
+  -o-text-size-adjust:none !important;
   -ms-text-size-adjust:none !important;
-  display: none;
-  z-index: 10;
+  text-size-adjust:none !important;
   position: absolute;
   right: 0;
+  z-index: 1;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -moz-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -o-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  -ms-transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+  transition: visibility 0s linear 0.6s, opacity 0.6s ease-out;
+}
+
+.menu.slow {
+  -webkit-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -moz-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -o-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  -ms-transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+  transition: visibility 0s linear 1.2s, opacity 1.2s ease-out;
+}
+
+.menu.visible {
+  visibility: visible;
+  opacity: 1.0;
+  -webkit-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  -o-transition-delay: 0s;
+  -ms-transition-delay: 0s;
+  transition-delay: 0s;
+
 }
 
 .menu ul {
@@ -393,25 +511,20 @@ that they will override CSS in the standard JQM structure CSS */
   background-image: none !important;
 }
 
-.menuBtn {
-  width:36px;
-  height:36px;
+.ui-header .menuBtn {
+  width:48px;
+  height:40px;
+  top: 0;
+  right: 0;
   background-color: transparent;
-  background-position: top left;
+  background-position: 8px 6px;
   background-repeat: no-repeat;
-  background-size: 100% auto;
-  background-image: imageUrl('icon_list_bullets.png');
+  background-size: 32px 28px;
+  background-image: imageUrl('icon-menu.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .menuBtn { background-image: imageUrl('icon_list_bullets@2x.png'); }
-}
-
-.menuBtn .ui-btn-inner{
-  border:none;
-}
-.menuBtn:hover{
-  border:none !important;
+  .ui-header .menuBtn { background-image: imageUrl('icon-menu@2x.png'); }
 }
 
 /* =============================================================================
@@ -874,7 +987,7 @@ h1.ui-title {
    Footer Nav Icons  Recommend to delete CSS for icons you do not use
    ========================================================================== */
 .custom-icons .ui-btn .ui-btn-inner {
-    padding-top: 35px !important;
+    //padding-top: 28px !important;
 }
 
 .custom-icons .ui-btn .ui-icon {
@@ -1005,18 +1118,13 @@ div.map {
   padding-right: 0;
 }
 
-.map-wrapper {
-  padding: 2px;
-  margin-top: 6px;
-}
 
 .map-canvas {
-  height: 240px !important;
   width: 100% !important;
 }
 
 .marker-list {
-  margin-top: 6px !important;
+  margin-top: 0 !important;
 }
 
 
@@ -1171,53 +1279,184 @@ margin-left: -45px;
 }
 
 %hdrBtn {
-  width: 30px; height: 30px;
+  width: 48px;
+  height: 40px;
+  top: 0;
   background: {
     color: transparent;
     position: top left;
     repeat: no-repeat;
-    size: 100% auto;
+    size: 30px 30px;
   }
 }
 
-.homeBtn {
+.ui-header .homeBtn {
   @extend %hdrBtn;
+  right: 0;
+  background-position: 12px 5px;
   background-image: imageUrl('icon_home.png');
 }
 
-.backBtn {
+.ui-header .backBtn {
   @extend %hdrBtn;
+  left: 0;
+  background-position: 4px 6px;
   background-image: imageUrl('icon_arrow_left.png');
 }
 
-.locationBtn {
-  @extend %hdrBtn;
-}
-
 .ui-header .locationBtn {
+  @extend %hdrBtn;
   position: absolute;
-  top: 6px;
-  right: 42px;
+  background-position: 18px 6px;
+  right: 46px;
 }
 
-.locationBtn.on {
+.markerlist-subpage,
+.directions-subpage {
+   background-image: imageUrl('whitey.png');
+   background-size: 203px 317px;
+   z-index: 2;
+}
+
+.markerListNote {
+  text-align: center;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 1ex;
+  padding-bottom: 1ex;
+  }
+
+.results {
+  display: none;
+}
+
+.results .ui-li-divider {
+  border-left-width: 0;
+  border-right-width: 0;
+}
+
+.directions-subpage .ui-disabled {
+  filter: Alpha(Opacity=100);
+  opacity: 1.0;
+}
+
+.markerlist-button {
+  position: absolute;
+  height: 40px;
+  width: 60px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -30px;
+  background-color: $hotspotBackgroundColor;
+  z-index: 3000;
+  }
+
+ .markerlist-button-inner {
+  position: absolute;
+  height: 26px;
+  width: 50px;
+  bottom: 0;
+  left: 50%;
+  margin-left: -25px;
+  background-color: rgba(0, 200, 0, .7);
+  background-image: imageUrl('259-list.png');
+  background-size: 30px 21px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(100, 100, 100, .8);
+  border-bottom-style: none;
+  -webkit-box-shadow: 0 -9px 6px -6px #777;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -webkit-transform: translateY(20px);
+  }
+
+.markerlist-button-inner.hover {
+  -webkit-transform: translateY(0);
+}
+
+.close-markerlist-button {
+  position: absolute;
+  height: 40px;
+  width: 60px;
+  top: 0;
+  left: 50%;
+  margin-left: -30px;
+  background-color: $hotspotBackgroundColor;
+  z-index: 3000;
+  display: none;
+  }
+
+.close-markerlist-button-inner {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  top: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-top-color: rgba(0, 255, 0, 0.6);
+  border-right-color: transparent;
+  height: 0;
+  width: 0;
+}
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .markerlist-button-inner {
+    background-image: imageUrl('259-list@2x.png');
+  }
+}
+
+.close-directions-button {
+  position: absolute;
+  height: 60px;
+  width: 40px;
+  top: 50%;
+  margin-top: -30px;
+  right: 0;
+  background-color: $hotspotBackgroundColor;
+  z-index: 3000;
+  display: none;
+}
+
+.close-directions-button-inner {
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  right: 0;
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-bottom-color: transparent;
+  border-top-color: transparent;
+  border-right-color: rgba(0, 255, 0, 1.0);
+  border-left-color: transparent;
+  height: 0;
+  width: 0;
+}
+
+.ui-header .locationBtn.on {
   background-image: imageUrl('location-on.png');
 }
 
-.locationBtn.off {
+.ui-header .locationBtn.off {
   background-image: imageUrl('location-off.png');
 }
 
-.locationBtn.disabled {
+.ui-header .locationBtn.disabled {
   background-image: imageUrl('location-off-cross.png');
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
-  .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
-  .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
-  .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
-  .locationBtn.disabled { background-image: imageUrl('location-off-cross@2x.png'); }
+  .ui-header .homeBtn { background-image: imageUrl('icon_home@2x.png'); }
+  .ui-header .backBtn { background-image: imageUrl('icon_arrow_left@2x.png'); }
+  .ui-header .locationBtn.on { background-image: imageUrl('location-on@2x.png'); }
+  .ui-header .locationBtn.off { background-image: imageUrl('location-off@2x.png'); }
+  .ui-header .locationBtn.disabled { background-image: imageUrl('location-off-cross@2x.png'); }
 }
 
 .mapsheader .ui-title {
@@ -1250,8 +1489,25 @@ margin-left: -45px;
   z-index: 2;
   }
 
-.no-location-popup {
+.ui-body-c.out-of-region-popup,
+.ui-body-c.offline-popup {
+  background-image: none;
+  color: rgb(50, 50, 50);
+  background-color: rgb(255, 255, 204);
   font-weight: bold;
+}
+
+.is-apple-webkit .out-of-region-popup,
+.is-apple-webkit .offline-popup {
+  -webkit-transform: translateZ(0);
+  }
+
+.error {
+  color: rgb(255, 0, 0);
+}
+
+.info {
+  color: rgb(0, 0, 255);
   }
 
   /* Trail pins are in @2x resolution (30x42). We can not use media query because they are not used
@@ -1287,6 +1543,14 @@ margin-left: -45px;
   float: left;
   background-image: imageUrl('04-squiggle.png');
   background-size: 100% auto;
+}
+
+.tabbar {
+  height: 47px;
+}
+
+.tabbar .ui-btn-icon-top .ui-icon {
+  top: 0;
 }
 
 .menu .itin-btn.is-itin .fav-icon {

@@ -1,12 +1,13 @@
+= partial :offline_popup
 = blank_line
-@footer data-position="fixed" data-id="tabbar" data-transition="none" data-tap-toggle="false"
+.tabbar@footer data-position="fixed" data-id="tabbar" data-transition="none" data-tap-toggle="false"
   @navbar.custom-icons data-grid="d"
     ul
       li.browse-tab
         a href="#{root_uri 'browse.html'}" data-icon="custom" data-theme="b" data-transition="fade"
           | BROWSE
       li.nearby-tab
-        a href="#{map_uri 'index.html'}?location=me" data-icon="custom" data-theme="b" data-transition="fade"
+       a data-icon="custom" data-theme="b"
           | NEARBY
       li.fishing-tab
         a href="#{info_uri 'fishing.html'}" data-icon="custom" data-theme="b" data-transition="fade"

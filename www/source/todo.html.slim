@@ -1,9 +1,9 @@
 @page.todo-page
   = partial :middleman_info
   @header.rtheader.todoheader data-position="fixed" data-transition="none" data-tap-toggle="false"
-    a@none.backBtn.ui-btn-left data-rel="back" href="#{home_uri}"
+    a@none.backBtn.ui-btn-left data-ajax="false" href="#{home_uri}"
     h1 To do
-    a@none.homeBtn.ui-btn-right href="#{home_uri}" data-transition="none"
+    a@none.homeBtn.ui-btn-right data-ajax="false" data-transition="none"
   @content data-iscroll="true"
     div
   = partial :tabbar
