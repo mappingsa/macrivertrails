@@ -36,15 +36,16 @@ PhoneGap
 --------
 IMPORTANT!
 
-You must manually create a symlink in phonegap/ios to the Middleman-built content. This symlink
-is not checked-in to the repo, because EGit (Eclipse Git) gets horribly confused over this, and
-also because you might like to link to alternate content (e.g. a debug build).
+You must manually create a symlink in phonegap/ios/android to the Middleman-built content.
+This symlinkis not checked-in to the repo, because EGit (Eclipse Git) gets horribly
+confused over this, and also because you might like to link to alternate content
+(e.g. a debug build).
 
 ```bash
 cd phonegap/ios
 ln -s ../../www/build/phonegap-ios www
 cd phonegap/android/assets
-ln -s ../../../www/build/phonegap-ios www
+ln -s ../../../www/build/phonegap-android www
 ```
 
 This location is .gitignored, so that git won't bug you to check it in.
