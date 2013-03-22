@@ -223,7 +223,7 @@ phonegap-ios-debug:
       - maps
 
 phonegap-android:
-    base_uri: file:///android_asset/www/_assets/
+    #base_uri: file:///android_asset/www/_assets/
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -236,7 +236,7 @@ phonegap-android:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2.min
-        - cordova-2.2.0
+        - cordova-2.2.0-android
         - geolocation
         - jquery.tinysort
         - store
