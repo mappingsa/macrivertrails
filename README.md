@@ -43,6 +43,8 @@ also because you might like to link to alternate content (e.g. a debug build).
 ```bash
 cd phonegap/ios
 ln -s ../../www/build/phonegap-ios www
+cd phonegap/android/assets
+ln -s ../../../www/build/phonegap-ios www
 ```
 
 This location is .gitignored, so that git won't bug you to check it in.
