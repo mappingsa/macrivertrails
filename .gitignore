@@ -59,4 +59,6 @@ phonegap/ios/www
 # file - i.e. project.jp.pbxproj or project.jt.pbxproj
 phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj
 
+phonegap/android/bin
+
 
