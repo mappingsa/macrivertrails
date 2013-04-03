@@ -159,7 +159,7 @@ phonegap-ios:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2.min
-        - cordova-2.2.0
+        - cordova-ios-2.2.0
         - geolocation
         - jquery.tinysort
         - store
@@ -199,7 +199,7 @@ phonegap-ios-debug:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2
-        - cordova-2.2.0
+        - cordova-ios-2.2.0
         - geolocation
         - jquery.tinysort
         - store
@@ -208,7 +208,6 @@ phonegap-ios-debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - maps
         - jquery.mobile-1.2.0
         - iscroll
         - jquery.mobile.iscrollview
@@ -223,7 +222,7 @@ phonegap-ios-debug:
       - maps
 
 phonegap-android:
-    base_uri: file:///android_asset/www/_assets/
+    #base_uri: file:///android_asset/www/_assets/
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
@@ -236,7 +235,7 @@ phonegap-android:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2.min
-        - cordova-2.2.0
+        - cordova-android-2.2.0
         - geolocation
         - jquery.tinysort
         - store
@@ -245,7 +244,6 @@ phonegap-android:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - maps
         - jquery.mobile-1.2.0.min
         - iscroll
         - jquery.mobile.iscrollview

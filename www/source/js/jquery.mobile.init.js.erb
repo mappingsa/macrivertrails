@@ -26,7 +26,6 @@ $(document).bind("mobileinit", function(){
         $html = $("html");  // Where we will put the classes
 
     <% if build_target =~ /phonegap/ %>
-
       // Pushstate should be enabled for website, as otherwise user will see confusing URLs in
       // URL bar. For PhoneGap, it's better to disable pushstate.
       // However, we are going to need pushstate to implement maintaining map parameters

@@ -33,7 +33,7 @@ function riverTrailsMapApiLoadedCallback() {
   // But if the user has navigated away from that page, we can just silently ignore
   // this, but now the map API is available for the next time the user hits a map button.
   $.mobile.activePage.trigger("mapapiloaded.rivertrails");
-};
+}
 
 $(function() {
   var
@@ -73,7 +73,7 @@ $(function() {
       loadNextScript = function () {
         var scriptName = "";
         if (jsIndex > 0) {
-          scriptName += pathRoot + "js/"
+          scriptName += pathRoot + "js/";
           }
         scriptName += mapScripts[jsIndex];
         console.log("loading " + scriptName);
@@ -174,7 +174,10 @@ $(function() {
       section = $li.jqmData("section");
       showMap("section=" + section, "fade");
       });
-    });
+
+    });  //$page.on( "mapapiloaded.rivertrails"
 
 
-});
+  }); // $(document).on('pageinit', ".ui-page"
+
+});  //$(function() {
