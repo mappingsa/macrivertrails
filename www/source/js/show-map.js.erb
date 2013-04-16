@@ -10,6 +10,10 @@
 // at application startup, so that this is possible.)
 //---------------------------------------------------------------------------------------
 
+/*jslint browser: true, sloppy: true, white: true, nomen: true, regexp: true, todo: true,
+maxerr: 50, indent: 2 */
+/*global $:false, jQuery:false, iScroll:false, console:false, Event:false*/
+
 // Global variable with query string for map page. This is a standard HTTP query string,
 // maintained this way in case I figure out a way to use a query string on the URL without
 // jQuery Mobile creating duplicate map pages. It's used by the createMap function
@@ -26,6 +30,7 @@ var mapQuery = "";
 
 // This has to be a global function in order for the Maps API to make the callback
 function riverTrailsMapApiLoadedCallback() {
+  "use strict";
 
   console.log("Google maps is fully loaded");
   // By triggering an event on the current page, we can catch this event and navigate to the
@@ -36,6 +41,7 @@ function riverTrailsMapApiLoadedCallback() {
 }
 
 $(function() {
+  "use strict";
   var
     gmapsLoaded = false, // True if Google maps JS is fully loaded
     jsLoaded = false,    // True if all map JS files have been loaded
@@ -81,7 +87,7 @@ $(function() {
           .done(function(data, textStatus, jqxhr) {
             console.log(scriptName + " loaded, textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
             if (jsIndex < (mapScripts.length - 1)) {
-              jsIndex++;
+              jsIndex += 1;
               if ( jsIndex !== 1 ) {  // Have to wait for callback from Google Maps API (always first script)
                 loadNextScript();
                 }
@@ -105,7 +111,7 @@ $(function() {
 
       showMap = function(queryString, transition) {
         mapQuery = queryString;
-        console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" )
+        console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" );
 
         if ( navigator.onLine ) {
           if (jsLoaded) {
