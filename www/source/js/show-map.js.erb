@@ -26,11 +26,9 @@ maxerr: 50, indent: 2 */
 // so website users are unable to bookmark specific map configurations.
 var mapQuery = "";
 
-
-
 // This has to be a global function in order for the Maps API to make the callback
 function riverTrailsMapApiLoadedCallback() {
-  "use strict";
+  //"use strict";
 
   console.log("Google maps is fully loaded");
   // By triggering an event on the current page, we can catch this event and navigate to the
@@ -41,7 +39,7 @@ function riverTrailsMapApiLoadedCallback() {
 }
 
 $(function() {
-  "use strict";
+  //"use strict";
   var
     gmapsLoaded = false, // True if Google maps JS is fully loaded
     jsLoaded = false,    // True if all map JS files have been loaded
@@ -62,6 +60,9 @@ $(function() {
       pathRoot = $page.find(".page-info").jqmData("path-root"),
       mapUri = pathRoot + "map/index.html",
       offlinePopup = $page.find(".offline-popup").jqmData("popup"),
+      $nearbyTab = $page.find(".nearby-tab .ui-btn"),
+      $directionsBtn = $page.find(".directions-btn"),
+      $browseList = $page.find(".browse-list"),
       popupTimer,
       showMapQueryString,   // Query string from map request that was deferred due to map API not loaded
       showMapTransition,    // deferred map request transition
@@ -129,9 +130,9 @@ $(function() {
         };
 
   $page.on( "mapapiloaded.rivertrails", function() {
-
     gmapsLoaded = true;
     loadNextScript();
+  });
 
   $page.on( "pagehide", function() {
     if (popupTimer) {
@@ -151,7 +152,7 @@ $(function() {
       });
 
     // Nearby tab on main tabbar
-    $page.find(".nearby-tab a").on("vclick click", function(event) {
+    $nearbyTab.on("vclick click", function(event) {
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
@@ -165,7 +166,7 @@ $(function() {
       });
 
     // Get Directions button on place menu
-    $page.find(".directions-btn").on("vclick click", function(event) {
+    $directionsBtn.on("vclick click", function(event) {
       event.preventDefault();
       if (event.type === "click") { return; }  // For click, prevent the default action, since we already
                                                // did everything we want on the vclick
@@ -174,16 +175,14 @@ $(function() {
       showMap("section=" +  section + "&item=" + item);
       });
 
-    $page.find(".browse-list").on("vclick", ".ui-li-divider", function(event) {
+    $browseList.on("vclick", ".ui-li-divider", function(event) {
       // Not an <a> tag, so don't need to deal with click
       var $li = $(this),
       section = $li.jqmData("section");
       showMap("section=" + section, "fade");
       });
 
-    });  //$page.on( "mapapiloaded.rivertrails"
 
+    }); // $(document).on('pageinit', ".ui-page"
 
-  }); // $(document).on('pageinit', ".ui-page"
-
-});  //$(function() {
+  });  //$(function() {
