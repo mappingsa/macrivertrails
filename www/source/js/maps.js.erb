@@ -161,17 +161,17 @@ $(function() {
     {group: "produce", item: "weigela",  position: "-31.700983, 147.836667", title: "Weigela Design, Warren" },
     {group: "produce", item: "macquariegrove",  position: "-32.219036, 148.241789", title: "Macquarie Grove Vineyards, Narromine" },
     {group: "heritage", item: "cavesbottle",  position: "-32.620367, 148.939019", title: "Caves Bottle House, Wellington" },
-    {group: "heritage", item: "oxley", position: "-32.551336, 148.942775", title: "Oxley Museum, Wellington" }, 
+    {group: "heritage", item: "oxley", position: "-32.551336, 148.942775", title: "Oxley Museum, Wellington" },
     {group: "heritage", item: "loungegallery",     position: "-32.244167, 148.582703", title: "Lounge Gallery and Cafe, Dubbo" },
-    {group: "heritage", item: "hermitagehill",  position: "-32.560369, 148.960497", title: "Hermitage Hill Resort" }, 
+    {group: "heritage", item: "hermitagehill",  position: "-32.560369, 148.960497", title: "Hermitage Hill Resort" },
     {group: "heritage", item: "wellingtoncaves",  position: "-32.620994, 148.938186", title: "Wellington Caves Phosphate Mine and Osawano Japanese Gardens" },
-    {group: "heritage", item: "lion",  position: "-32.540578, 148.930692", title: "Lion of Waterloo country pub, Wellington" },  
+    {group: "heritage", item: "lion",  position: "-32.540578, 148.930692", title: "Lion of Waterloo country pub, Wellington" },
     {group: "heritage", item: "dundullimal",  position: "-32.286239, 148.602864", title: "Dundullimal Homestead Dubbo" },
     {group: "heritage", item: "pioneer",  position: "-32.302008, 148.625236", title: "Pioneer cemetery, Dubbo" },
     {group: "heritage", item: "westernplains",  position: "-32.249912, 148.609604", title: "Western Plains Cultural Centre, Dubbo" },
     {group: "heritage", item: "gaol",  position: "-32.245766, 148.601624", title: "Old Dubbo Gaol" },
     {group: "heritage", item: "shoyeon",  position: "-32.253908, 148.634189", title: "Shoyeon Japanese Garden, Dubbo" },
-    {group: "heritage", item: "aviation",  position: "-32.222778, 148.229125", title: "Narromine Aviation Museum" },  
+    {group: "heritage", item: "aviation",  position: "-32.222778, 148.229125", title: "Narromine Aviation Museum" },
     {group: "nature", item: "burrendonggarden",  position: "-32.688297, 149.108519", title: "Burrendong Botanic Garden and Arboretum" },
     {group: "nature", item: "tarongazoo",  position: "-32.272233, 148.586328", title: "Taronga Western Plains Zoo, Dubbo" },
     {group: "nature", item: "dubbobotanic",  position: "-32.253117, 148.635050", title: "Dubbo Regional Botanic Garden" },
@@ -1146,6 +1146,9 @@ $topMarkerNav.on("vclick click", ".markerNav", function( e ) {
   var $button = $(this),
       selGroup = $button.jqmData( "group" );
 
+  if (!selGroup) {
+      return;         // Blank button
+  }
   $headerTitle.text(groups[selGroup].title);
   closeInfoWindow();
   if ($activeGroupButton) {
