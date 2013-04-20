@@ -31,7 +31,7 @@ regexp:false, todo:true */
 
 /*
 jquery.mobile.iscrollview.js
-Version: 1.2.6
+Version: 1.2.9
 jQuery Mobile iScroll4 view widget
 Copyright (c), 2012, 2013 Watusiware Corporation
 Distributed under the MIT License
@@ -64,8 +64,8 @@ Further changes: @addyosmani
 Licensed under the MIT license
 
 dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provided in demo)
-             jQuery 1.6.4  (JQM 1.0.1) or 1.7.1 (JQM 1.1) or 1.7.2 (JQM 1.2)
-             JQuery Mobile = 1.0.1 or 1.1 or 1.2-alpha1
+             jQuery - see jQuery Mobile documentation, depends on JQM version
+             JQuery Mobile = 1.0.1 through 1.3.1
 */
 
 ;   // Ignore jslint/jshint warning - for safety - terminate previous file if unterminated
@@ -385,7 +385,7 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
     // If you have multiple scrollers, only enable this for one of them
     scrollTopOnResize: true,
 
-    scrollTopOnOrientatationChange: true,
+    scrollTopOnOrientationChange: true,
 
     // iScroll scrolls the first child of the wrapper. I don't see a use case for having more
     // than one child. What kind of mess is going to be shown in that case? So, by default, we
@@ -983,13 +983,23 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
     if (this._instanceCount() === 1) {
       this.$page.addClass(this.options.pageClass);
       this.$page.find(this.options.fixedHeightSelector).each(function() {  // Iterate over headers/footers/etc.
-        $(this).addClass(_this.options.fixedHeightClass);
-        });
+        var
+          $fixedHeightElement = $(this),
+          // We need to exclude headers/footers in popups and panels.
+          // We cannot simply use a selector that requires the fixed-height element
+          // to be a child of .ui-page, because of the complication that JQM
+          // moves persistent headers/footers out of the page during transitions.
+          isPopup = $fixedHeightElement.closest(".ui-popup").length !== 0,
+          isPanel = $fixedHeightElement.closest(".ui-panel").length !== 0;
+        if (!isPopup && !isPanel) {
+          $fixedHeightElement.addClass(_this.options.fixedHeightClass);
+        }
+      });
       if (HasTouch && this.options.preventPageScroll) {
         this._bindPage("touchmove", _pageTouchmoveFunc);
-        }
       }
-    },
+    }
+  },
 
   _undoAdaptPage: function() {
     var _this = this;
@@ -1008,17 +1018,17 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
     var barsHeight = 0,
         fixedHeightSelector = "." + this.options.fixedHeightClass,
         // Persistent footers are sometimes inside the page, sometimes outside of all pages! (as
-        // direct descendant of <body>). And sometimes both. During transitions, the page that
+        // direct descendant of <body>/.ui-mobile-viewport). And sometimes both. During transitions, the page that
         // is transitioning in will have had it's persistent footer moved outside of the page,
         // while all other pages will have their persistent footer internal to the page.
         //
         // To deal with this, we find iscroll-fixed elements in the page, as well as outside
-        // of the page (as direct descendants of <body>). We avoid double-counting persistent
+        // of the page (as direct descendants of <body>/.ui-mobile-viewport). We avoid double-counting persistent
         // footers that have the same data-id. (Experimentally, then, we also permit the user
         // to place fixed-height elements outside of the page, but unsure if this is of any
         // practical use.)
         $barsInPage = this.$page.find(fixedHeightSelector),
-        $barsOutsidePage = $("body").children(fixedHeightSelector);
+        $barsOutsidePage = $(".ui-mobile-viewport").children(fixedHeightSelector);
 
     $barsInPage.each(function() {  // Iterate over headers/footers/etc.
         barsHeight += $(this).outerHeight(true);
@@ -1080,8 +1090,15 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
       case "content-box":     // AKA W3C  Ignore jshint warning
       default:                // Ignore jslint warning
         // We will subtract padding, border, margin
-        adjust = $elem.outerHeight(true) - $elem.height();
-        break;
+        // However...
+        // wrapper will never have padding, at least once we are done
+        // modifying it. This function is called before any removal of
+        // padding, though. So, if $wrapper, use same calculation as for padding-box,
+        // ignoring padding.
+        // (We actually don't call this for anything but $wrapper, but preseve
+        // functionality in case we ever use it on another element)
+          adjust = $elem.outerHeight($elem !== this.$wrapper ) - $elem.height();
+          break;
       }
     return adjust;
     },
@@ -1185,7 +1202,7 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
   // will not be visible until the user pulls up.
   //--------------------------------------------------------
   _expandScrollerToFillWrapper: function() {
-    if (this.options.scrollShortContent || this.$pullDown.length || this.pullUp.length) {
+    if (this.options.scrollShortContent || this.$pullDown.length || this.$pullUp.length) {
       if (this._firstScrollerExpand) {
         this._origScrollerStyle = this.$scroller.attr("style") || null;
         this._firstScrollerExpand = false;
@@ -1840,6 +1857,8 @@ dependency:  iScroll 4.1.9 https://github.com/cubiq/iscroll or later (4.2 provid
     });
 
 }( jQuery, window, document ));
+
+jQuery(document).trigger("iscroll_init");
 
 // Self-init
 jQuery(document).bind("pagecreate", function (e) {
