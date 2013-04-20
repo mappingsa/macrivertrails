@@ -62,3 +62,6 @@ phonegap/android/assets/www
 phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj
 
 
+
+.ruby-gemset
+/www/.ruby-version
