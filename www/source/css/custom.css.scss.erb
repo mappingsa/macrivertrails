@@ -335,6 +335,9 @@ that they will override CSS in the standard JQM structure CSS */
 .cycle-tile { background-image: imageUrl('Image-Cycle.png'); }
 .riverbedz-tile { background-image: imageUrl('Image-Riverbedz.png'); }
 .fishing-tile { background-image: imageUrl('Image-Fishing.png'); }
+.bird-tile { background-image: imageUrl('Image-Bird.png'); }
+.education-tile { background-image: imageUrl('Image-Education.png'); }
+.tucker-tile { background-image: imageUrl('Image-Tucker.png'); }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .river-tile { background-image: imageUrl('Image-River@2x.png'); }
@@ -345,6 +348,9 @@ that they will override CSS in the standard JQM structure CSS */
   .cycle-tile { background-image: imageUrl('Image-Cycle@2x.png'); }
   .riverbedz-tile { background-image: imageUrl('Image-Riverbedz@2x.png'); }
   .fishing-tile { background-image: imageUrl('Image-Fishing@2x.png'); }
+  .bird-tile { background-image: imageUrl('Image-Bird@x2.png'); }
+  .education-tile { background-image: imageUrl('Image-Education@x2.png'); }
+  .tucker-tile { background-image: imageUrl('Image-Tucker@x2.png'); }
 }
 
 .home-menu a {
@@ -394,6 +400,18 @@ that they will override CSS in the standard JQM structure CSS */
   right: 100px;
   background-image: imageUrl('art.png');
 }
+.home-bird .icon {
+  right: 110px;
+  background-image: imageUrl('bird.png');
+}
+.home-education .icon {
+  right: 170px;
+  background-image: imageUrl('education.png');
+}
+.home-tucker .icon {
+  right: 135px;
+  background-image: imageUrl('tucker.png');
+}
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 .home-produce .icon   { background-image: imageUrl('produce@2x.png'); }
@@ -404,6 +422,9 @@ that they will override CSS in the standard JQM structure CSS */
 .home-riverbedz .icon { background-image: imageUrl('riverbedz@2x.png'); }
 .home-fishing .icon   { background-image: imageUrl('fishing@2x.png'); }
 .home-art .icon       { background-image: imageUrl('art@2x.png'); }
+.home-bird .icon      { background-image: imageUrl('bird@2x.png'); }
+.home-education .icon { background-image: imageUrl('education@2x.png'); }
+.home-tucker .icon    { background-image: imageUrl('tucker@2x.png'); }
 }
 
 .home-menu .tile-title {
@@ -592,6 +613,21 @@ height:1px;
 background:#717171;
 border-bottom:1px solid #579397;
 }
+.bird-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #ff3600;
+}
+.education-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #61fad6;
+}
+.tucker-line-separator{
+height:1px;
+background:#717171;
+border-bottom:1px solid #a6693a;
+}
 
 /* =============================================================================
    Page Images
@@ -719,6 +755,36 @@ art {
 font-size: 15px;
 color: #FFFFFF;
 background: #579397;
+display: block;
+padding: .5em;
+font-weight: normal;
+margin: 0 0 20px;
+border-radius: .4em;
+}
+bird {
+font-size: 15px;
+color: #FFFFFF;
+background: #ff3600;
+display: block;
+padding: .5em;
+font-weight: normal;
+margin: 0 0 20px;
+border-radius: .4em;
+}
+education {
+font-size: 15px;
+color: #FFFFFF;
+background: #61fad6;
+display: block;
+padding: .5em;
+font-weight: normal;
+margin: 0 0 20px;
+border-radius: .4em;
+}
+tucker {
+font-size: 15px;
+color: #FFFFFF;
+background: #a6693a;
 display: block;
 padding: .5em;
 font-weight: normal;
@@ -1292,6 +1358,15 @@ ul.tweetList{
 .artheader {
     background-color:#579397;
 }
+.birdheader {
+    background-color:#ff3600;
+}
+.educationheader {
+    background-color:#61fad6;
+}
+.tuckerheader {
+    background-color:#a6693a;
+}
 
 #bottomList {
     color:#F3F0E1;
@@ -1603,6 +1678,9 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 .ui-icon-custom-pin-riverbedz {background-image: imageUrl('Riverbedz-pin.png'); background-size: 25px 18px; }
 .ui-icon-custom-pin-fishing   {background-image: imageUrl('Fishing-pin.png');   background-size: 25px 18px; }
 .ui-icon-custom-pin-art       {background-image: imageUrl('Art-pin.png');       background-size: 25px 18px; }
+.ui-icon-custom-pin-bird      {background-image: imageUrl('Bird-pin.png');      background-size: 25px 18px; }
+.ui-icon-custom-pin-education {background-image: imageUrl('Education-pin.png'); background-size: 25px 18px; }
+.ui-icon-custom-pin-tucker    {background-image: imageUrl('Tucker-pin.png');    background-size: 25px 18px; }
 
 /* Retina icons */
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
@@ -1626,6 +1704,9 @@ span.ui-icon.ui-icon.shadow.zoomout { width: 22px; height:22px; }
 .ui-icon-custom-pin-riverbedz {background-image: imageUrl('Riverbedz-pin@2x.png'); }
 .ui-icon-custom-pin-fishing   {background-image: imageUrl('Fishing-pin@2x.png'); }
 .ui-icon-custom-pin-art       {background-image: imageUrl('Art-pin@2x.png'); }
+.ui-icon-custom-pin-bird      {background-image: imageUrl('Bird-pin@2x.png'); }
+.ui-icon-custom-pin-education {background-image: imageUrl('Education-pin@2x.png'); }
+.ui-icon-custom-pin-tucker    {background-image: imageUrl('Tucker-pin@2x.png'); }
 }
 
 .place-menu-icon {
