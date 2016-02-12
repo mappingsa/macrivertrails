@@ -1,3 +1,5 @@
+require 'slim'
+
 set :slim, {
   :layout_engine => :slim,
   :tabsize => 2,
