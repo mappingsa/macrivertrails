@@ -1,7 +1,6 @@
 require 'slim'
 
 set :slim, {
-  :layout_engine => :slim,
   :tabsize => 2,
   :format => :html,
   :pretty => true,
