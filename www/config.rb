@@ -3,7 +3,7 @@ require 'slim'
 set :slim, {
   :layout_engine => :slim,
   :tabsize => 2,
-  :format => :html5,
+  :format => :html,
   :pretty => true,
   :disable_escape => true,
   :shortcut => {
