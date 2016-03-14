@@ -1,0 +1,12 @@
+$buildTarget: '<%= build_target %>';
+$baseURI: '<%= base_uri %>';
+$imagePath: '<%= base_uri ? (base_uri + 'images/') : '../images/' %>';
+$typePath: 'type/';
+
+@function imageUrl($path) {
+  @return url('#{$imagePath}#{$path}')
+}
+
+@function typeUrl($path) {
+  @return url('#{$typePath}#{$path}')
+}

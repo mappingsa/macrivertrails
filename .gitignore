@@ -9,6 +9,7 @@
 .AppleDouble
 *.swp
 *.lock
+!Gemfile.lock
 profile
 
 # Windows nuisance files
