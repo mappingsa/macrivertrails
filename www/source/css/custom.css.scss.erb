@@ -1,4 +1,4 @@
-@import 'paths';
+<%= partial "paths" %>
 
 $hotspotBackgroundColor: <%= build_target =~ /debug/ ? 'rgba(255,0,0,0.2)' : 'transparent' %>;
 
@@ -37,8 +37,8 @@ $hotspotBackgroundColor: <%= build_target =~ /debug/ ? 'rgba(255,0,0,0.2)' : 'tr
   /* Disable Safari scrollbars, because jQuery Mobile annoyingly insists on setting the
      min-height of the page to 320px. It does this (unsuccessfully, in 1.0.1, but successfully
      in 1.1) in order to keep the Mobile Safari location bar from appearing during page
-     transitions. But this causes a problem in desktop Safari if the height is <320px.
-     If you resize to <320 in a desktop browser, you will see a scrollbar if you do not
+     transitions. But this causes a problem in desktop Safari if the height is  less than 320px.
+     If you resize to  less than 320 in a desktop browser, you will see a scrollbar if you do not
      use this style.
  */
   overflow:hidden;

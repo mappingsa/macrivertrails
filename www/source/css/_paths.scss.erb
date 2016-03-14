@@ -3,13 +3,6 @@ $baseURI: '<%= base_uri %>';
 $imagePath: '<%= base_uri ? (base_uri + 'images/') : '../images/' %>';
 $typePath: 'type/';
 
-/*
-    $buildTarget: '#{$buildTarget}',
-    $baseUri: '#{$baseURI}',
-    $imagePath: '#{$imagePath}',
-    $typePath: '#{$typePath}'
-*/
-
 @function imageUrl($path) {
   @return url('#{$imagePath}#{$path}')
 }
