@@ -8,9 +8,9 @@ site generator.
 
 Prerequisites
 -------------
-Ruby 2.3.0
-Middleman 4.1.1
-Slim 3.0.6
+- Ruby 2.3.0
+- Middleman 4.1.1
+- Slim 3.0.6
 
 To Build
 --------
