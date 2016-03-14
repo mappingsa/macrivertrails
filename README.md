@@ -8,11 +8,9 @@ site generator.
 
 Prerequisites
 -------------
-Ruby 1.8.1 -> 1.9.3
-RubyGems
-Middleman 3.0.5
-Slim 1.3.1
-Temple 0.5.3
+Ruby 2.3.0
+Middleman 4.1.1
+Slim 3.0.6
 
 To Build
 --------
