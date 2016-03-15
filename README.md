@@ -15,7 +15,7 @@ Prerequisites
 To Build
 --------
 The Middleman configuration will look for an environment variable MIDDLEMAN_BUILD_TARGET. This
-can currently have three different values, each of which corresponds to a different build
+can currently have 5 different values, each of which corresponds to a different build
 of rivertrails.
 
 debug - For testing locally with a desktop browser. All assets (JS/CSS) are un-minified.
@@ -23,8 +23,12 @@ debug - For testing locally with a desktop browser. All assets (JS/CSS) are un-m
 web - For deployment to web. CDN assets are used where available. Otherwise, minified assets are
 used.
 
-phonegap - For deployment on Phonegap. Uses local, minified assets, and enables Phonegap-specific
+phonegap-ios - For deployment on Phonegap for iOS. Uses local, minified assets, and enables Phonegap-specific
 code.
+
+phonegap-ios-debug - Same as phonegap-ios, but debugging-friendly
+
+phonegap-android - For deployment on Phonegap for Android.
 
 The script in `www/buildall.sh` will run Middleman build for all of them.
 
