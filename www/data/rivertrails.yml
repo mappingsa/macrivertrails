@@ -199,7 +199,7 @@ phonegap-ios-debug:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2
-        - cordova-ios-2.2.0
+        - cordova-ios-4.0.1
         - geolocation
         - jquery.tinysort
         - store
@@ -235,7 +235,7 @@ phonegap-android:
     scripts:
         # We can use jQuery 1.8.2 for Android/iOS
         - jquery-1.8.2.min
-        - cordova-android-2.2.0
+        - cordova-android-5.1.1
         - geolocation
         - jquery.tinysort
         - store
