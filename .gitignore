@@ -51,18 +51,9 @@ xcuserdata
 # XCode temporary files that should never be committed
 *~.nib
 
-# Phonegap www directory content pointed-to by symlink
-phonegap/ios/www/*
-# For now, ignore the symlink as well, as it isn't commiting correctly
-phonegap/ios/www
-phonegap/android/assets/www/*
-phonegap/android/assets/www
-
-# Ignore Phonegap project.pbxproj. You need to create a symlink to the appropriate developer-specific
-# file - i.e. project.jp.pbxproj or project.jt.pbxproj
-phonegap/ios/macriverTRAILS.xcodeproj/project.pbxproj
-
-
-
 .ruby-gemset
 /www/.ruby-version
+
+phonegap/macriverTRAILS/www
+phonegap/macriverTRAILS/platforms
+phonegap/macriverTRAILS/plugins
