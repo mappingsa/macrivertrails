@@ -4,7 +4,7 @@
 		{
 			"path": ".",
       "name": "Maquarie River Trails",
-      "folder_exclude_patterns": [".settings", "www/.bundle"],
+      "folder_exclude_patterns": [".settings", "www/.bundle", "www/build"],
       "file_exclude_patterns": [".project"]
 		}
 	],
