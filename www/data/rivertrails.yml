@@ -73,14 +73,14 @@ debug:
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
-        - jquery.mobile.theme-rivertrails-1.2.0
-        - jquery.mobile.structure-1.2.0
+        - jquery.mobile.theme-rivertrails-1.2.1
+        - jquery.mobile.structure-1.2.1
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        - jquery-1.8.2
+        - jquery-1.8.3
         - geolocation
         - jquery.tinysort
         - store
@@ -89,7 +89,7 @@ debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - jquery.mobile-1.2.0
+        - jquery.mobile-1.2.1
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -108,14 +108,15 @@ web:
         - webfonts-cabin-google
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.0
-        - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css  # Microsoft CDN
+        - http://code.jquery.com/mobile/1.2.1/jquery.mobile.structure-1.2.1.min.css  # jQuery CDN
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
     scripts:
         # We must use jQuery 1.7.2 to support IE < 9
-        - http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+        # But it is silly to support IE < 9 today...
+        - http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js
         - jquery.tinysort
         - store
         - jquery.mobile.init
@@ -123,7 +124,7 @@ web:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - http://ajax.aspnetcdn.com/ajax/jquery.mobile/1.2.0/jquery.mobile-1.2.0.min.js  # Microsoft CDN
+        - http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js  # jQuery CDN
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -150,15 +151,15 @@ phonegap-ios:
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
-        - jquery.mobile.theme-rivertrails-1.2.0
-        - jquery.mobile.structure-1.2.0.min
+        - jquery.mobile.theme-rivertrails-1.2.1.min
+        - jquery.mobile.structure-1.2.1.min
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        # We can use jQuery 1.8.2 for Android/iOS
-        - jquery-1.8.2.min
+        # We can use jQuery 1.8.3 for Android/iOS
+        - jquery-1.8.3.min
         - cordova-ios-4.0.1
         - geolocation
         - jquery.tinysort
@@ -168,7 +169,7 @@ phonegap-ios:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - jquery.mobile-1.2.0.min
+        - jquery.mobile-1.2.1.min
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -190,15 +191,15 @@ phonegap-ios-debug:
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
-        - jquery.mobile.theme-rivertrails-1.2.0
-        - jquery.mobile.structure-1.2.0
+        - jquery.mobile.theme-rivertrails-1.2.1
+        - jquery.mobile.structure-1.2.1
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        # We can use jQuery 1.8.2 for Android/iOS
-        - jquery-1.8.2
+        # We can use jQuery 1.8.3 for Android/iOS
+        - jquery-1.8.3
         - cordova-ios-4.0.1
         - geolocation
         - jquery.tinysort
@@ -208,7 +209,7 @@ phonegap-ios-debug:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - jquery.mobile-1.2.0
+        - jquery.mobile-1.2.1
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
@@ -226,15 +227,15 @@ phonegap-android:
     stylesheets:
         - webfonts-cabin
         - webfonts-caviar
-        - jquery.mobile.theme-rivertrails-1.2.0
-        - jquery.mobile.structure-1.2.0.min
+        - jquery.mobile.theme-rivertrails-1.2.1.min
+        - jquery.mobile.structure-1.2.1.min
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
     scripts:
-        # We can use jQuery 1.8.2 for Android/iOS
-        - jquery-1.8.2.min
+        # We can use jQuery 1.8.3 for Android/iOS
+        - jquery-1.8.3.min
         - cordova-android-5.1.1
         - geolocation
         - jquery.tinysort
@@ -244,7 +245,7 @@ phonegap-android:
         - jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
-        - jquery.mobile-1.2.0.min
+        - jquery.mobile-1.2.1.min
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
