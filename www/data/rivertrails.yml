@@ -107,7 +107,7 @@ web:
     stylesheets:
         - webfonts-cabin-google
         - webfonts-caviar
-        - jquery.mobile.theme-rivertrails-1.2.0
+        - jquery.mobile.theme-rivertrails-1.2.1
         - http://code.jquery.com/mobile/1.2.1/jquery.mobile.structure-1.2.1.min.css  # jQuery CDN
         - jquery.mobile.simultaneous-transitions-replace
         - flexslider
