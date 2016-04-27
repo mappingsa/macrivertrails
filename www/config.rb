@@ -40,7 +40,7 @@ configure :build do
     # uncompressed versions in the build.
     ignore '/js/jquery.mobile-1.2.1.js'
     ignore '/js/jquery-1.8.2.js'
-    ignore '/css/jquery.mobile.structure-1.2.0.css'
+    ignore '/css/jquery.mobile.structure-1.2.1.css'
   end
 
   # Use relative URLs if we do not have a base
