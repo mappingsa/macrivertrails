@@ -43,6 +43,8 @@ $(function() {
   var
     gmapsLoaded = false, // True if Google maps JS is fully loaded
     jsLoaded = false,    // True if all map JS files have been loaded
+	gmapsloading = false, // fix a race condition
+	gmapsloadflag = false,
     jsIndex = 0,        // Index of the next JS file to load from YML
     i,
     mapScripts = [
@@ -78,10 +80,22 @@ $(function() {
       },
 
       loadNextScript = function () {
+	  console.log("LNS"+jsIndex);
         var scriptName = "";
+		
+		if(jsIndex == 0 && gmapsloading == true)
+			return;
+		if(jsIndex == 0 && gmapsloading == false)
+			gmapsloading = true;
+		
         if (jsIndex > 0) {
           scriptName += pathRoot + "js/";
           }
+		
+		
+			
+
+			
         scriptName += mapScripts[jsIndex];
         console.log("loading " + scriptName);
         $.getScript(scriptName)
@@ -89,39 +103,45 @@ $(function() {
             console.log(scriptName + " loaded, textStatus = '" + textStatus + "' jqxhr.status = '" + jqxhr.status + "'");
             if (jsIndex < (mapScripts.length - 1)) {
               jsIndex += 1;
-              if ( jsIndex !== 1 ) {  // Have to wait for callback from Google Maps API (always first script)
+              //if ( jsIndex !== 1 ) {  // Have to wait for callback from Google Maps API (always first script)
                 loadNextScript();
-                }
-              }
+              //  }
+              } 
               else {
+			  //console.log("999 "+mapUri);
                 jsLoaded = true;
-                $.mobile.changePage( mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
+                $.mobile.changePage( '/'+mapUri, showMapTransition ? { transition: showMapTransition} : undefined );
+
                 }
-            })
-          .fail(function(jqxhr, settings, exception) {
-            // Fortunately, this should not happen, since the files are local
+            })    
+          .fail(function(jqxhr, settings, exception) { 
+            // Fortunately, this should not happen, since the files are local 
             // If it somehow can happen, then we will need to keep track of which JS files have been loaded,
             // so that we don't try to load them again
             console.log ("Script load error " + scriptName);
-            });
-        },
+            });              
+        },   
 
-      loadMapApi = function () {
+      loadMapApi = function () { 
+		console.log("LMAPI");
         loadNextScript();
       },
 
       showMap = function(queryString, transition) {
         mapQuery = queryString;
         console.log( "showMap pathRoot = '" + pathRoot + "', mapUri = '" + mapUri + "'" );
-
+		console.log(mapQuery);
+		
         if ( navigator.onLine ) {
           if (jsLoaded) {
+
             $.mobile.changePage( mapUri, transition ? { transition: transition} : undefined );
             }
           else {
             showMapQueryString = queryString;
             showMapTransition = transition;
             loadMapApi();
+			
             }
           }
         else {
@@ -131,6 +151,7 @@ $(function() {
 
   $page.on( "mapapiloaded.rivertrails", function() {
     gmapsLoaded = true;
+	console.log("PAGE LOADED");
     loadNextScript();
   });
 
@@ -158,10 +179,11 @@ $(function() {
                                                // did everything we want on the vclick
       if ( $page.is(".map-page") ) {
         mapQuery = "";
-        $page.trigger("createmap.rivertrails");
+        //$page.trigger("createmap.rivertrails");
         }
       else {
         showMap("", "fade");
+		$page.trigger("createmap.rivertrails");
         }
       });
 

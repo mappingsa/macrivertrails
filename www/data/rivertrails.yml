@@ -75,7 +75,8 @@ debug:
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.1
         - jquery.mobile.structure-1.2.1
-        - jquery.mobile.simultaneous-transitions-replace
+        #- jquery.mobile.structure-1.4.5
+        #- jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
@@ -85,19 +86,20 @@ debug:
         - jquery.tinysort
         - store
         - jquery.mobile.init
-        - jquery.mobile.transition-handler-simple
-        - jquery.mobile.simultaneous-transitions-replace-simple
+        #- jquery.mobile.transition-handler-simple
+        #- jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
         - jquery.mobile-1.2.1
+        #- jquery.mobile-1.4.5
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
     map_scripts:
-      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
-      - jquery.ui.map-patched
-      - jquery.ui.map.services
-      - jquery.ui.map.extensions
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback&key=AIzaSyCz0I4E9cgnM0iUjeoGyhT_FL9AW2c6YqI
+      #- jquery.ui.map-patched
+      #- jquery.ui.map.services
+      #- jquery.ui.map.extensions
       - google.maps.v3.utility.infobox
       - google.maps.v3.utility.geolocationmarker
       - maps
@@ -109,7 +111,8 @@ web:
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.1
         - http://code.jquery.com/mobile/1.2.1/jquery.mobile.structure-1.2.1.min.css  # jQuery CDN
-        - jquery.mobile.simultaneous-transitions-replace
+        #- http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css  # jQuery CDN
+        #- jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
@@ -120,19 +123,20 @@ web:
         - jquery.tinysort
         - store
         - jquery.mobile.init
-        - jquery.mobile.transition-handler-simple
-        - jquery.mobile.simultaneous-transitions-replace-simple
+        #- jquery.mobile.transition-handler-simple
+        #- jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
         - http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js  # jQuery CDN
+        #- http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js  # jQuery CDN
         - iscroll
         - jquery.mobile.iscrollview
         - jquery.flexslider
     map_scripts:
-      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
-      - jquery.ui.map-patched
-      - jquery.ui.map.services
-      - jquery.ui.map.extensions
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback&key=AIzaSyCz0I4E9cgnM0iUjeoGyhT_FL9AW2c6YqI
+      #- jquery.ui.map-patched
+      #- jquery.ui.map.services
+      #- jquery.ui.map.extensions
       - google.maps.v3.utility.infobox
       - google.maps.v3.utility.geolocationmarker
       - maps
@@ -153,7 +157,7 @@ phonegap-ios:
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.1.min
         - jquery.mobile.structure-1.2.1.min
-        - jquery.mobile.simultaneous-transitions-replace
+        #- jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
@@ -165,8 +169,8 @@ phonegap-ios:
         - jquery.tinysort
         - store
         - jquery.mobile.init
-        - jquery.mobile.transition-handler-simple
-        - jquery.mobile.simultaneous-transitions-replace-simple
+        #- jquery.mobile.transition-handler-simple
+        #- jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
         - jquery.mobile-1.2.1.min
@@ -175,10 +179,10 @@ phonegap-ios:
         - jquery.flexslider
         - phonegap-init
     map_scripts:
-      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
-      - jquery.ui.map-patched
-      - jquery.ui.map.services
-      - jquery.ui.map.extensions
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback&key=AIzaSyCz0I4E9cgnM0iUjeoGyhT_FL9AW2c6YqI
+      #- jquery.ui.map-patched
+      #- jquery.ui.map.services
+      #- jquery.ui.map.extensions
       - google.maps.v3.utility.infobox
       - google.maps.v3.utility.geolocationmarker
       - maps
@@ -193,7 +197,7 @@ phonegap-ios-debug:
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.1
         - jquery.mobile.structure-1.2.1
-        - jquery.mobile.simultaneous-transitions-replace
+        #- jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
@@ -205,8 +209,8 @@ phonegap-ios-debug:
         - jquery.tinysort
         - store
         - jquery.mobile.init
-        - jquery.mobile.transition-handler-simple
-        - jquery.mobile.simultaneous-transitions-replace-simple
+        #- jquery.mobile.transition-handler-simple
+        #- jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
         - jquery.mobile-1.2.1
@@ -215,9 +219,9 @@ phonegap-ios-debug:
         - jquery.flexslider
         - phonegap-init
     map_scripts:
-      - jquery.ui.map-patched
-      - jquery.ui.map.services
-      - jquery.ui.map.extensions
+      #- jquery.ui.map-patched
+      #- jquery.ui.map.services
+      #- jquery.ui.map.extensions
       - google.maps.v3.utility.infobox
       - google.maps.v3.utility.geolocationmarker
       - maps
@@ -229,7 +233,7 @@ phonegap-android:
         - webfonts-caviar
         - jquery.mobile.theme-rivertrails-1.2.1.min
         - jquery.mobile.structure-1.2.1.min
-        - jquery.mobile.simultaneous-transitions-replace
+        #- jquery.mobile.simultaneous-transitions-replace
         - flexslider
         - jquery.mobile.iscrollview
         - custom
@@ -241,8 +245,8 @@ phonegap-android:
         - jquery.tinysort
         - store
         - jquery.mobile.init
-        - jquery.mobile.transition-handler-simple
-        - jquery.mobile.simultaneous-transitions-replace-simple
+        #- jquery.mobile.transition-handler-simple
+        #- jquery.mobile.simultaneous-transitions-replace-simple
         - base
         - show-map
         - jquery.mobile-1.2.1.min
@@ -251,10 +255,10 @@ phonegap-android:
         - jquery.flexslider
         - phonegap-init
     map_scripts:
-      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback
-      - jquery.ui.map-patched
-      - jquery.ui.map.services
-      - jquery.ui.map.extensions
+      - http://maps.googleapis.com/maps/api/js?sensor=true&region=AU&callback=riverTrailsMapApiLoadedCallback&key=AIzaSyCz0I4E9cgnM0iUjeoGyhT_FL9AW2c6YqI
+      #- jquery.ui.map-patched
+      #- jquery.ui.map.services
+      #- jquery.ui.map.extensions
       - google.maps.v3.utility.infobox
       - google.maps.v3.utility.geolocationmarker
       - maps
