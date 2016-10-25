@@ -12,7 +12,7 @@
  */
 
 $(document).on("mobileinit", function createSimpleHandler() {
-  var simpleHandler = function( name, reverse, $to_p, $from_p ) {
+  var simpleHandler = function( name, reverse, $to_p, $from_p) {
 
     var deferred = new $.Deferred(),
         none = !$.support.cssTransitions || !name || name === "none",
@@ -21,7 +21,7 @@ $(document).on("mobileinit", function createSimpleHandler() {
 
     toggleViewportClass = function() {
       $.mobile.pageContainer.toggleClass( "ui-mobile-viewport-transitioning viewport-" + name );
-      },
+    },
 
     done = function() {
       if ( $from ) {
@@ -32,9 +32,12 @@ $(document).on("mobileinit", function createSimpleHandler() {
       $to
         .height( "" )
         .removeClass( "out in reverse " + name );
+      setTimeout(function () {
+          $.mobile.activePage.addClass($.mobile.activePageClass);
+      }, 10);
       toggleViewportClass();
       deferred.resolve( name, reverse, $to, $from, true );
-      };
+    };
 
     $to.addClass( $.mobile.activePageClass );
     // Note: In many applications the following line may be unnecessary, and may be removed
@@ -42,9 +45,9 @@ $(document).on("mobileinit", function createSimpleHandler() {
     if (none) {
       if ( $from ) {
         $from.removeClass( $.mobile.activePageClass );
-        }
+      }
       deferred.resolve( name, reverse, $to, $from, true );
-      } else {
+    } else {
         var screenHeight = $.mobile.getScreenHeight(),
             reverseClass = reverse ? " reverse" : "";
         toggleViewportClass();
@@ -56,9 +59,9 @@ $(document).on("mobileinit", function createSimpleHandler() {
           $from
             .height( screenHeight )
             .addClass( name + " out" + reverseClass );
-          }
-      }
-    return deferred.promise();
+        }
     }
+    return deferred.promise();
+  }
   $.mobile.transitionHandlers.simple = simpleHandler;
 });

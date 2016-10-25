@@ -30,12 +30,12 @@ $(document).bind("mobileinit", function installSimultaneousTransitions() {
 
   $.each(classicTransitionKeys, function(i) {
     $.mobile.transitionHandlers[classicTransitionKeys[i]] = simultaneousHandler;
-    });
+  });
 
   $.each(plusTransitionKeys, function(i) {
     var key = plusTransitionKeys[i];
     $.mobile.transitionHandlers[key] = simultaneousHandler;
     $.mobile.transitionFallbacks[key] = "fade";
-    });
+  });
 
 });
